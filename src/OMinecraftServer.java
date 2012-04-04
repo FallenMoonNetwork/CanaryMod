@@ -680,8 +680,9 @@ public class OMinecraftServer implements Runnable, OICommandListener, OIServer {
         return (String[]) this.h.e().toArray(new String[0]);
     }
 
+ //CanaryMod: Let Mojang know we exist to!
     public String getServerModName() {
-        return "vanilla";
+        return "CanaryMod";
     }
 
     // $FF: synthetic method
