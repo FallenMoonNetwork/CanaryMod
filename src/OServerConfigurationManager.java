@@ -104,7 +104,7 @@ public class OServerConfigurationManager {
 
         var2.b(var1);
         this.a(var1.w).a(var1);
-
+u();
         for (int var3 = 0; var3 < this.b.size(); ++var3) {
             OEntityPlayerMP var4 = (OEntityPlayerMP) this.b.get(var3);
 
@@ -691,6 +691,29 @@ public class OServerConfigurationManager {
     public int k() {
         return this.e;
     }
+
+private void u() {
+    OPlayerUsageSnoope usage = new OPlayerUsageSnooper("server");
+    usage.a("version", this.c.i());
+    usage.a("os_name", System.getProperty("os.name"));
+    usage.a("os_version", System.getProperty("os_version"));
+    usage.a("version", this.c.i());
+	usage.a("os_architecture", System.getProperty("os.arch"));
+    usage.a("memory_total", Long.valueOf(Runtime.getRuntime().totalMemory()));
+	usage.a("memory_max", Long.valueOf(Runtime.getRuntime().maxMemory()));
+	usage.a("memory_free", Long.valueOf(Runtime.getRuntime().freeMemory()));
+	usage.a("java_version", System.getProperty("java.version"));
+	usage.a("cpu_cores", Integer.valueOf(Runtime.getRuntime().availableProcessors()));
+	usage.a("players_current", Integer.valueOf(j()));
+	usage.a("players_max", Integer.valueOf(k()));
+	usage.a("players_seen", Integer.valueOf(t().length));
+	usage.a("uses_auth", Boolean.valueOf(this.c.n));
+	usage.a("server_brand", this.c.getServerModName());
+   usage.a();
+}
+  public String[] t() {
+        return this.c.e[0].r().d().g();
+	  }
     
     /**
      * Returns the list of bans
