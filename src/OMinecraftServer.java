@@ -681,7 +681,7 @@ public class OMinecraftServer implements Runnable, OICommandListener, OIServer {
     }
 
     public String getServerModName() {
-        return "vanilla";
+        return "CanaryMod";
     }
 
     // $FF: synthetic method
