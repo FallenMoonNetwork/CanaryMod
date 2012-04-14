@@ -89,6 +89,8 @@ public class etc {
     private boolean                       playerList_colors = true;
     private boolean                       playerList_enabled = true;
     
+    public boolean	                      allowEnchantableItemStacking = false;
+    
     //Connection Manager
     private ConnectionService cs;
 
@@ -217,6 +219,8 @@ public class etc {
                 protectFromSpam = PluginLoader.HookResult.PREVENT_ACTION;
             }
 
+            allowEnchantableItemStacking = properties.getBoolean("allow-enchantable-item-stacking", false);
+            
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             File file = new File("version.txt");
 

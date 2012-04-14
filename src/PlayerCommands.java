@@ -418,48 +418,60 @@ public class PlayerCommands {
 
                 if (Item.isValidItem(itemId)) {
                     if (allowedItem || player.canIgnoreRestrictions()) {
-                        Item i = new Item(itemId, amount, -1, damage);
-
-                        log.info("Giving " + toGive.getName() + " some " + i.toString());
-                        // toGive.giveItem(itemId, amount);
-                        Inventory inv = toGive.getInventory();
-                        ArrayList<Item> list = new ArrayList<Item>();
-
-                        for (Item it : inv.getContents()) {
-                            if (it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage()) {
-                                list.add(it);
-                            }
-                        }
-
-                        for (Item it : list) {
-                            if (it.getAmount() < 64) {
-                                if (amount >= 64 - it.getAmount()) {
-                                    amount -= 64 - it.getAmount();
-                                    it.setAmount(64);
-                                    toGive.giveItem(it);
-                                } else {
-                                    it.setAmount(it.getAmount() + amount);
-                                    amount = 0;
-                                    toGive.giveItem(it);
-                                }
-                            }
-                        }
-                        if (amount != 0) {
-                            i.setAmount(64);
-                            while (amount > 64) {
-                                amount -= 64;
-                                toGive.giveItem(i);
-                                i.setSlot(-1);
-                            }
-                            i.setAmount(amount);
-                            toGive.giveItem(i);
-                        }
-                        if (toGive.getName().equalsIgnoreCase(caller.getName())) {
-                            caller.notify("There you go " + caller.getName() + ".");
-                        } else {
-                            caller.notify("Gift given! :D");
-                            toGive.notify("Enjoy your gift! :D");
-                        }
+                    	// This is a bit of a hack, this whole function should
+                    	// probably be rewritten to use .giveItem()
+                    	if (!toGive.isAdmin() &&
+                    		!etc.getInstance().allowEnchantableItemStacking &&
+                    		((itemId >= 256 && itemId <= 258) || 
+                             (itemId >= 267 && itemId <= 279) || 
+                             (itemId >= 283 && itemId <= 286) ||
+                             (itemId >= 298 && itemId <= 317) ||
+                             (itemId == 261))) {
+                    		toGive.giveItem(itemId, amount);
+                    	} else {
+	                    	Item i = new Item(itemId, amount, -1, damage);
+	
+	                        log.info("Giving " + toGive.getName() + " some " + i.toString());
+	                        // toGive.giveItem(itemId, amount);
+	                        Inventory inv = toGive.getInventory();
+	                        ArrayList<Item> list = new ArrayList<Item>();
+	
+	                        for (Item it : inv.getContents()) {
+	                            if (it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage()) {
+	                                list.add(it);
+	                            }
+	                        }
+	
+	                        for (Item it : list) {
+	                            if (it.getAmount() < 64) {
+	                                if (amount >= 64 - it.getAmount()) {
+	                                    amount -= 64 - it.getAmount();
+	                                    it.setAmount(64);
+	                                    toGive.giveItem(it);
+	                                } else {
+	                                    it.setAmount(it.getAmount() + amount);
+	                                    amount = 0;
+	                                    toGive.giveItem(it);
+	                                }
+	                            }
+	                        }
+	                        if (amount != 0) {
+	                            i.setAmount(64);
+	                            while (amount > 64) {
+	                                amount -= 64;
+	                                toGive.giveItem(i);
+	                                i.setSlot(-1);
+	                            }
+	                            i.setAmount(amount);
+	                            toGive.giveItem(i);
+	                        }
+	                        if (toGive.getName().equalsIgnoreCase(caller.getName())) {
+	                            caller.notify("There you go " + caller.getName() + ".");
+	                        } else {
+	                            caller.notify("Gift given! :D");
+	                            toGive.notify("Enjoy your gift! :D");
+	                        }
+                    	}
                     } else if (!allowedItem && !player.canIgnoreRestrictions()) {
                         caller.notify("You are not allowed to spawn that item.");
                     }
