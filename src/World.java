@@ -261,7 +261,7 @@ public class World {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
 
         for (Object o : world.b) {
-            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityLavaSlime || o instanceof OEntityVillager || o instanceof OEntitySquid || o instanceof OEntitySnowMan) {
+            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityLavaSlime || o instanceof OEntityVillager || o instanceof OEntitySquid || o instanceof OEntityGolem) {
                 toRet.add(new Mob((OEntityLiving) o));
             } else if (o instanceof OEntityPlayerMP) {
                 toRet.add(((OEntityPlayerMP) o).getPlayer());
