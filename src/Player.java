@@ -1455,4 +1455,12 @@ public class Player extends HumanEntity implements MessageReceiver {
 
         return false;
     }
+    /**
+     * Method to send a specified OPacket to a player.
+     * @param player The specified Player entity.
+     * @param packet The specified OPacket.
+     */
+    public void sendPacket(OPacket packet){
+    	getEntity().a.b(packet);
+    }
 }
