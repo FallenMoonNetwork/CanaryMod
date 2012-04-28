@@ -2,7 +2,8 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * PluginListener.java - Extend this and register it to listen to specific hooks.
+ * PluginListener.java - Extend this and register it to listen to specific
+ * hooks.
  * 
  * @author Maine
  */
@@ -14,7 +15,8 @@ public class PluginListener {
     public enum Priority {
 
         /**
-         * Highly critical for hooks that absolutely must occur before any others. Use carefully.
+         * Highly critical for hooks that absolutely must occur before any
+         * others. Use carefully.
          */
         CRITICAL,
         /**
@@ -60,27 +62,31 @@ public class PluginListener {
     }
 
     /**
-     * Called during the early login process to check whether or not to kick the player
+     * Called during the early login process to check whether or not to kick the
+     * player
      * 
      * @param user
      * @return kick reason. null if you don't want to kick the player.
      * 
-     * @deprecated use {@link #onLoginChecks(java.lang.String, java.lang.String) } instead.
+     * @deprecated use
+     *             {@link #onLoginChecks(java.lang.String, java.lang.String) }
+     *             instead.
      */
     @Deprecated
     public String onLoginChecks(String user) {
         return null;
     }
-    
+
     /**
-     * Called during the early login process to check whether or not to kick the player
+     * Called during the early login process to check whether or not to kick the
+     * player
      * 
      * @param user
      * @param IP
      * @return kick reason. null if you don't want to kick the player.
-     *
+     * 
      */
-    public String onLoginChecks(String user, String IP){
+    public String onLoginChecks(String user, String IP) {
         return onLoginChecks(user);
     }
 
@@ -101,7 +107,8 @@ public class PluginListener {
     }
 
     /**
-     * Called when a player talks. If you return true the message won't be sent out.
+     * Called when a player talks. If you return true the message won't be sent
+     * out.
      * 
      * @param player
      * @param message
@@ -115,35 +122,39 @@ public class PluginListener {
     }
 
     /**
-     * Called when a player talks. If you return true the message won't be sent out.
+     * Called when a player talks. If you return true the message won't be sent
+     * out.
      * 
      * @param player
      * @param sbMessage
      * @return false if you want the message to be sent.
      * 
-     * @deprecated use HookParameters onChat(HookParametersChat) to get the information
+     * @deprecated use HookParameters onChat(HookParametersChat) to get the
+     *             information
      */
     @Deprecated
     public boolean onChat(Player player, StringBuilder sbMessage) {
         return onChat(player, sbMessage.toString());
     }
-    
+
     /**
      * Called when a player talks.
      * 
      * @param parametersChat
      * 
-     * @return parametersChat   use parametersChat.setCanceled(true) to stop the message
+     * @return parametersChat use parametersChat.setCanceled(true) to stop the
+     *         message
      */
-    public HookParametersChat onChat(HookParametersChat parametersChat){
-        if(onChat(parametersChat.getPlayer(), parametersChat.getMessage())){
+    public HookParametersChat onChat(HookParametersChat parametersChat) {
+        if (onChat(parametersChat.getPlayer(), parametersChat.getMessage())) {
             parametersChat.setCanceled(true);
         }
         return parametersChat;
     }
 
     /**
-     * Called before the command is parsed. Return true if you don't want the command to be parsed.
+     * Called before the command is parsed. Return true if you don't want the
+     * command to be parsed.
      * 
      * @param player
      * @param split
@@ -154,7 +165,8 @@ public class PluginListener {
     }
 
     /**
-     * Called before the console command is parsed. Return true if you don't want the server command to be parsed by the server.
+     * Called before the console command is parsed. Return true if you don't
+     * want the server command to be parsed by the server.
      * 
      * @param split
      * @return false if you want the command to be parsed.
@@ -203,7 +215,9 @@ public class PluginListener {
     }
 
     /**
-     * Called when someone presses right click aimed at a block. You can intercept this to add your own right click actions to different item types (see itemInHand)
+     * Called when someone presses right click aimed at a block. You can
+     * intercept this to add your own right click actions to different item
+     * types (see itemInHand)
      * 
      * @param player
      * @param blockPlaced
@@ -211,18 +225,21 @@ public class PluginListener {
      * @param itemInHand
      * @return false if you want the action to go through
      * 
-     * @deprecated use {@link #onBlockRightClick(Player, Block, Item)} to get the information
+     * @deprecated use {@link #onBlockRightClick(Player, Block, Item)} to get
+     *             the information
      * @see #onBlockRightClick(Player, Block, Item)
      * @see #onBlockPlace(Player, Block, Block, Item)
      * @see #onItemUse(Player, Block, Block, Item)
      */
     @Deprecated
-    public boolean onBlockCreate(Player player, Block blockPlaced, Block blockClicked, int itemInHand) {
+    public boolean onBlockCreate(Player player, Block blockPlaced,
+            Block blockClicked, int itemInHand) {
         return false;
     }
 
     /**
-     * Called when a person left clicks a block. Block status: 0 = Started Digging, 2 = Stopped digging.
+     * Called when a person left clicks a block. Block status: 0 = Started
+     * Digging, 2 = Stopped digging.
      * 
      * @param player
      * @param block
@@ -244,7 +261,8 @@ public class PluginListener {
     }
 
     /**
-     * Called when a player swings their arm, aka left clicks (even if no block is in front of them)
+     * Called when a player swings their arm, aka left clicks (even if no block
+     * is in front of them)
      * 
      * @param player
      *            player swinging
@@ -259,8 +277,10 @@ public class PluginListener {
      *            player who dropped the item
      * @param item
      *            item that was dropped
-     * @deprecated Use onItemDrop(Player, ItemEntity) instead. You can still get the Item via ItemEntity.getItem()
-     * @return true if you don't want the dropped item to be spawned in the world
+     * @deprecated Use onItemDrop(Player, ItemEntity) instead. You can still get
+     *             the Item via ItemEntity.getItem()
+     * @return true if you don't want the dropped item to be spawned in the
+     *         world
      */
     @Deprecated
     public boolean onItemDrop(Player player, Item item) {
@@ -274,7 +294,8 @@ public class PluginListener {
      *            player who dropped the item
      * @param item
      *            item that was dropped
-     * @return true if you don't want the dropped item to be spawned in the world
+     * @return true if you don't want the dropped item to be spawned in the
+     *         world
      */
     public boolean onItemDrop(Player player, ItemEntity item) {
         return onItemDrop(player, item.getItem());
@@ -287,7 +308,8 @@ public class PluginListener {
      *            player who picked up the item
      * @param item
      *            item that was picked up
-     * @deprecated Use onItemPickUp(Player, ItemEntity) instead. You can still get the Item via ItemEntity.getItem()
+     * @deprecated Use onItemPickUp(Player, ItemEntity) instead. You can still
+     *             get the Item via ItemEntity.getItem()
      * @return true if you want to leave the item where it was
      */
     @Deprecated
@@ -389,12 +411,14 @@ public class PluginListener {
      * 
      * @return true if you don't want the explosion to occur.
      */
-    public boolean onExplosion(Block block, BaseEntity entity, List blocksaffected) {
+    public boolean onExplosion(Block block, BaseEntity entity,
+            List blocksaffected) {
         return false;
     }
 
     /**
-     * Called when fluid wants to flow to a certain block. (10 & 11 for lava and 8 & 9 for water)
+     * Called when fluid wants to flow to a certain block. (10 & 11 for lava and
+     * 8 & 9 for water)
      * 
      * @param blockFrom
      *            the block where the fluid came from. (blocktype = fluid type)
@@ -418,7 +442,8 @@ public class PluginListener {
     }
 
     /**
-     * Called when a living object is attacked. tip: Use isMob() and isPlayer() and getPlayer().
+     * Called when a living object is attacked. tip: Use isMob() and isPlayer()
+     * and getPlayer().
      * 
      * @param type
      *            type of damage dealt.
@@ -431,7 +456,8 @@ public class PluginListener {
      * 
      * @return
      */
-    public boolean onDamage(PluginLoader.DamageType type, BaseEntity attacker, BaseEntity defender, int amount) {
+    public boolean onDamage(PluginLoader.DamageType type, BaseEntity attacker,
+            BaseEntity defender, int amount) {
         return false;
     }
 
@@ -451,11 +477,15 @@ public class PluginListener {
     }
 
     /**
-     * Called whenever a redstone source (wire, switch, torch) changes its current.
+     * Called whenever a redstone source (wire, switch, torch) changes its
+     * current.
      * 
-     * Standard values for wires are 0 for no current, and 14 for a strong current. Default behaviour for redstone wire is to lower the current by one every block.
+     * Standard values for wires are 0 for no current, and 14 for a strong
+     * current. Default behaviour for redstone wire is to lower the current by
+     * one every block.
      * 
-     * For other blocks which provide a source of redstone current, the current value will be 1 or 0 for on and off respectively.
+     * For other blocks which provide a source of redstone current, the current
+     * value will be 1 or 0 for on and off respectively.
      * 
      * @param block
      * @param oldLevel
@@ -488,14 +518,18 @@ public class PluginListener {
      *            the piston's block
      * @param isSticky
      *            Whether the piston is sticky
-     * @return false if you want the piston to attempt retracting the attached block.
+     * @return false if you want the piston to attempt retracting the attached
+     *         block.
      */
     public boolean onPistonRetract(Block block, boolean isSticky) {
         return false;
     }
 
     /**
-     * Called when the game is checking the physics for a certain block. This method is called frequently whenever a nearby block is changed, or if the block has just been placed. Currently the only supported blocks are sand, gravel and portals.
+     * Called when the game is checking the physics for a certain block. This
+     * method is called frequently whenever a nearby block is changed, or if the
+     * block has just been placed. Currently the only supported blocks are sand,
+     * gravel and portals.
      * 
      * @param block
      *            Block which requires special physics
@@ -525,7 +559,8 @@ public class PluginListener {
      * @param damage
      * @return false to set damage
      */
-    public boolean onVehicleDamage(BaseVehicle vehicle, BaseEntity attacker, int damage) {
+    public boolean onVehicleDamage(BaseVehicle vehicle, BaseEntity attacker,
+            int damage) {
         return false;
     }
 
@@ -546,7 +581,8 @@ public class PluginListener {
      * @param collisioner
      * @return false to ignore damage
      */
-    public Boolean onVehicleCollision(BaseVehicle vehicle, BaseEntity collisioner) {
+    public Boolean onVehicleCollision(BaseVehicle vehicle,
+            BaseEntity collisioner) {
         return false;
     }
 
@@ -597,7 +633,8 @@ public class PluginListener {
      *            the item being used (in hand)
      * @return true to prevent using the item.
      */
-    public boolean onItemUse(Player player, Block blockPlaced, Block blockClicked, Item itemInHand) {
+    public boolean onItemUse(Player player, Block blockPlaced,
+            Block blockClicked, Item itemInHand) {
         return false;
     }
 
@@ -610,12 +647,15 @@ public class PluginListener {
      * @param itemInHand
      * @return true if you want to undo the block placement
      */
-    public boolean onBlockPlace(Player player, Block blockPlaced, Block blockClicked, Item itemInHand) {
+    public boolean onBlockPlace(Player player, Block blockPlaced,
+            Block blockClicked, Item itemInHand) {
         return false;
     }
 
     /**
-     * Called when someone presses right click aimed at a block. You can intercept this to add your own right click actions to different item types (see itemInHand)
+     * Called when someone presses right click aimed at a block. You can
+     * intercept this to add your own right click actions to different item
+     * types (see itemInHand)
      * 
      * @deprecated Use {@link #onBlockRightClick(Player, Block, Item) } instead.
      * @param player
@@ -623,39 +663,51 @@ public class PluginListener {
      * @param itemInHand
      */
     @Deprecated
-    public void onBlockRightClicked(Player player, Block blockClicked, Item itemInHand) {
+    public void onBlockRightClicked(Player player, Block blockClicked,
+            Item itemInHand) {
     }
 
     /**
-     * Called when someone presses right click aimed at a block. You can intercept this to add your own right click actions to different item types (see itemInHand)
+     * Called when someone presses right click aimed at a block. You can
+     * intercept this to add your own right click actions to different item
+     * types (see itemInHand)
      * 
      * @param player
      * @param blockClicked
      * @param itemInHand
      * @return true if you wish to cancel the click
      */
-    public boolean onBlockRightClick(Player player, Block blockClicked, Item itemInHand) {
+    public boolean onBlockRightClick(Player player, Block blockClicked,
+            Item itemInHand) {
         onBlockRightClicked(player, blockClicked, itemInHand);
         return false;
     }
 
     /**
-     * Called when water or lava tries to populate a block, you can prevent crushing of torches, railways, flowers etc. You can alternatively allow to let normally solid blocks be crushed.
+     * Called when water or lava tries to populate a block, you can prevent
+     * crushing of torches, railways, flowers etc. You can alternatively allow
+     * to let normally solid blocks be crushed.
      * 
      * @param currentState
-     *            the current tristate, once it's set to a non DEFAULT_ACTION it is final.
+     *            the current tristate, once it's set to a non DEFAULT_ACTION it
+     *            is final.
      * @param liquidBlockId
      *            the type of the attacking block
      * @param targetBlock
      *            the block to be destroyed
      * @return final after a non DEFAULT_ACTION
      */
-    public PluginLoader.HookResult onLiquidDestroy(PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock) {
+    public PluginLoader.HookResult onLiquidDestroy(
+            PluginLoader.HookResult currentState, int liquidBlockId,
+            Block targetBlock) {
         return PluginLoader.HookResult.DEFAULT_ACTION;
     }
 
     /**
-     * Called when an entity (attacker) tries to hurt a player (defender). Returning 'true' prevents all damage, returning 'false' lets the game handle it. Remember that the damage will be lessened by the amount of {@link LivingEntity#getLastDamage()} the defender has.
+     * Called when an entity (attacker) tries to hurt a player (defender).
+     * Returning 'true' prevents all damage, returning 'false' lets the game
+     * handle it. Remember that the damage will be lessened by the amount of
+     * {@link LivingEntity#getLastDamage()} the defender has.
      * 
      * @param attacker
      *            the giver
@@ -665,12 +717,14 @@ public class PluginListener {
      *            of damage the entity tries to do
      * @return
      */
-    public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
+    public boolean onAttack(LivingEntity attacker, LivingEntity defender,
+            Integer amount) {
         return false;
     }
 
     /**
-     * Called when a player attempts to open an inventory; whether it's a workbench, a chest or their own player inventory
+     * Called when a player attempts to open an inventory; whether it's a
+     * workbench, a chest or their own player inventory
      * 
      * @param player
      *            user who attempted to open the inventory
@@ -682,31 +736,36 @@ public class PluginListener {
     public boolean onOpenInventory(Player player, Inventory inventory) {
         return false;
     }
-    
+
     /**
-     * Called when a player attempts to open an inventory; whether it's a workbench, a chest or their own player inventory
+     * Called when a player attempts to open an inventory; whether it's a
+     * workbench, a chest or their own player inventory
      * 
-     * @param openInventory The parameter object for this hook
+     * @param openInventory
+     *            The parameter object for this hook
      * @return true if to disable open inventory
      */
     public boolean onOpenInventory(HookParametersOpenInventory openInventory) {
-        if (onOpenInventory(openInventory.getPlayer(), openInventory.getInventory()))
-        {
+        if (onOpenInventory(openInventory.getPlayer(),
+                openInventory.getInventory())) {
             return true;
         }
         return false;
     }
-    
+
     /**
-     * Called when a player closes an inventory; whether it's a workbench, a chest or their own player inventory
+     * Called when a player closes an inventory; whether it's a workbench, a
+     * chest or their own player inventory
      * 
-     * @param closeInventory The parameter object for this hook
+     * @param closeInventory
+     *            The parameter object for this hook
      */
     public void onCloseInventory(HookParametersCloseInventory closeInventory) {
     }
 
     /**
-     * Called when a sign is shown to a player, most often when they come into range of a sign.
+     * Called when a sign is shown to a player, most often when they come into
+     * range of a sign.
      * 
      * @param player
      *            Player who this sign is being shown to
@@ -717,7 +776,8 @@ public class PluginListener {
     }
 
     /**
-     * Called when a sign is changed by a player (Usually, when they first place it)
+     * Called when a sign is changed by a player (Usually, when they first place
+     * it)
      * 
      * @param player
      *            Player who changed the sign
@@ -749,9 +809,11 @@ public class PluginListener {
      *            Wolf being tamed
      * @param shouldSucceed
      *            True if the taming should have succeeded normally
-     * @return Whether the taming should succeed (ALLOW_ACTION), fail (PREVENT_ACTION), or do random as always (DEFAULT_ACTION)
+     * @return Whether the taming should succeed (ALLOW_ACTION), fail
+     *         (PREVENT_ACTION), or do random as always (DEFAULT_ACTION)
      */
-    public PluginLoader.HookResult onTame(Player player, Mob wolf, boolean shouldSucceed) {
+    public PluginLoader.HookResult onTame(Player player, Mob wolf,
+            boolean shouldSucceed) {
         return PluginLoader.HookResult.DEFAULT_ACTION;
     }
 
@@ -856,9 +918,12 @@ public class PluginListener {
      *            Player who wants to use the command.
      * @param command
      *            The command itself.
-     * @return Whether the player is allowed (ALLOW_ACTION), prohibited (PREVENT_ACTION), or when another plugin should decide (DEFAULT_ACTION)
+     * @return Whether the player is allowed (ALLOW_ACTION), prohibited
+     *         (PREVENT_ACTION), or when another plugin should decide
+     *         (DEFAULT_ACTION)
      */
-    public PluginLoader.HookResult canPlayerUseCommand(Player player, String command) {
+    public PluginLoader.HookResult canPlayerUseCommand(Player player,
+            String command) {
         return PluginLoader.HookResult.DEFAULT_ACTION;
     }
 
@@ -879,7 +944,10 @@ public class PluginListener {
     }
 
     /**
-     * Called when a chunk is generated. Tips: Return a byte[32768] if you want to generate a new chunk. The index of the block is: (x * 16 + z) * 128 + y where 0<=x<16, 0<=z<16 and 0<=y<128 Use world.getRandomSeed() or (x * 0x4f9939f508L + z * 0x1ef1565bd5L) as seed for your Random.
+     * Called when a chunk is generated. Tips: Return a byte[32768] if you want
+     * to generate a new chunk. The index of the block is: (x * 16 + z) * 128 +
+     * y where 0<=x<16, 0<=z<16 and 0<=y<128 Use world.getRandomSeed() or (x *
+     * 0x4f9939f508L + z * 0x1ef1565bd5L) as seed for your Random.
      * 
      * @param x
      * @param z
@@ -891,10 +959,12 @@ public class PluginListener {
     }
 
     /**
-     * Called when a spawnpoint is generated. If you don't implement this when overriding onChunkCreate, this could cause an OutOfMemoryError.
+     * Called when a spawnpoint is generated. If you don't implement this when
+     * overriding onChunkCreate, this could cause an OutOfMemoryError.
      * 
      * @param world
-     * @return The location of the spawnpoint. The values are rounded to integers, elevation and pitch are ignored.
+     * @return The location of the spawnpoint. The values are rounded to
+     *         integers, elevation and pitch are ignored.
      */
     public Location onSpawnpointCreate(World world) {
         return null;
@@ -932,22 +1002,24 @@ public class PluginListener {
 
     /**
      * Called when a player respawns
+     * 
      * @param player
-     *          Player that respawns
+     *            Player that respawns
      * @deprecated Use {@link #onPlayerRespawn(Player, Location) } instead.
      */
     @Deprecated
-    public void onPlayerRespawn(Player player) {}
-    
+    public void onPlayerRespawn(Player player) {
+    }
+
     /**
      * Called when a player respawns
+     * 
      * @param player
-     *          Player that respawns
+     *            Player that respawns
      * @param spawnLocation
-     *          Location the player will spawn at
+     *            Location the player will spawn at
      */
-    public void onPlayerRespawn(Player player, Location spawnLocation)
-    {
+    public void onPlayerRespawn(Player player, Location spawnLocation) {
         onPlayerRespawn(player);
     }
 
@@ -995,7 +1067,8 @@ public class PluginListener {
      *            The milking player
      * @param cow
      *            The milked cow
-     * @deprecated Use {@link #onEntityRightClick(Player, Entity, Item) } instead.
+     * @deprecated Use {@link #onEntityRightClick(Player, Entity, Item) }
+     *             instead.
      * @return true if to prevent the player from milking the cow
      */
     @Deprecated
@@ -1028,7 +1101,8 @@ public class PluginListener {
      * 
      * @return the new food level
      */
-    public int onFoodLevelChange(Player player, int oldFoodLevel, int newFoodLevel) {
+    public int onFoodLevelChange(Player player, int oldFoodLevel,
+            int newFoodLevel) {
         return newFoodLevel;
     }
 
@@ -1041,7 +1115,8 @@ public class PluginListener {
      * 
      * @return new Level of FoodExhaustion
      */
-    public Float onFoodExhaustionChange(Player player, Float oldLevel, Float newLevel) {
+    public Float onFoodExhaustionChange(Player player, Float oldLevel,
+            Float newLevel) {
         return newLevel;
     }
 
@@ -1054,7 +1129,8 @@ public class PluginListener {
      * 
      * @return new Level of FoodExhaustion
      */
-    public Float onFoodSaturationChange(Player player, Float oldLevel, Float newLevel) {
+    public Float onFoodSaturationChange(Player player, Float oldLevel,
+            Float newLevel) {
         return newLevel;
     }
 
@@ -1068,7 +1144,8 @@ public class PluginListener {
      * 
      * @return modified potionEffect or null for no effect
      */
-    public PotionEffect onPotionEffect(LivingEntity entity, PotionEffect potionEffect) {
+    public PotionEffect onPotionEffect(LivingEntity entity,
+            PotionEffect potionEffect) {
         return potionEffect;
     }
 
@@ -1106,7 +1183,8 @@ public class PluginListener {
      *            (the playerlist entry)
      * @return the playerlistentry to show.
      */
-    public PlayerlistEntry onGetPlayerlistEntry(Player player, PlayerlistEntry entry) {
+    public PlayerlistEntry onGetPlayerlistEntry(Player player,
+            PlayerlistEntry entry) {
         return entry;
     }
 
@@ -1117,39 +1195,54 @@ public class PluginListener {
      * @param hookParametersConnect
      * @return modified hookParametersConnect
      */
-    public Object onPlayerConnect(Player player, HookParametersConnect hookParametersConnect) {
+    public Object onPlayerConnect(Player player,
+            HookParametersConnect hookParametersConnect) {
         return hookParametersConnect;
     }
 
     /**
      * Called when player connects to the server
      * 
-     * @param player Player that is disconnecting.
-     * @param hookParametersDisconnect Object holding parameters for this hook
+     * @param player
+     *            Player that is disconnecting.
+     * @param hookParametersDisconnect
+     *            Object holding parameters for this hook
      * @return modified hookParametersConnect
      */
-    public Object onPlayerDisconnect(Player player, HookParametersDisconnect hookParametersDisconnect) {
+    public Object onPlayerDisconnect(Player player,
+            HookParametersDisconnect hookParametersDisconnect) {
         return hookParametersDisconnect;
     }
 
     /**
-     * Called when someone presses right click aimed at an entity. You can intercept this to add your own right click actions to different item types (see itemInHand) Some interactions update the player's item in hand (for example shearing a sheep), but some do not (like using an item on a player). If you want to update the item stack anyways, you should return ALLOW_ACTION.
+     * Called when someone presses right click aimed at an entity. You can
+     * intercept this to add your own right click actions to different item
+     * types (see itemInHand) Some interactions update the player's item in hand
+     * (for example shearing a sheep), but some do not (like using an item on a
+     * player). If you want to update the item stack anyways, you should return
+     * ALLOW_ACTION.
      * 
      * @param player
      * @param entityClicked
      * @param itemInHand
-     * @return ALLOW_ACTION to allow interaction and always update the item stack the player is holding, DEFAULT_ACTION to allow interaction and update the item stack if needed by default. PREVENT_ACTION to prevent the interaction when right clicking completely.
+     * @return ALLOW_ACTION to allow interaction and always update the item
+     *         stack the player is holding, DEFAULT_ACTION to allow interaction
+     *         and update the item stack if needed by default. PREVENT_ACTION to
+     *         prevent the interaction when right clicking completely.
      */
 
-    public PluginLoader.HookResult onEntityRightClick(Player player, BaseEntity entityClicked, Item itemInHand) {
+    public PluginLoader.HookResult onEntityRightClick(Player player,
+            BaseEntity entityClicked, Item itemInHand) {
         if (entityClicked.entity instanceof OEntityCow) {
-            return onCowMilk(player, new Mob((OEntityCow) entityClicked.entity)) ? PluginLoader.HookResult.PREVENT_ACTION : PluginLoader.HookResult.DEFAULT_ACTION;
+            return onCowMilk(player, new Mob((OEntityCow) entityClicked.entity)) ? PluginLoader.HookResult.PREVENT_ACTION
+                    : PluginLoader.HookResult.DEFAULT_ACTION;
         }
         return PluginLoader.HookResult.DEFAULT_ACTION;
     }
 
     /**
-     * Called when a Mob Entity targets a player for following and/or attacking. You can interrupt this by returning true.
+     * Called when a Mob Entity targets a player for following and/or attacking.
+     * You can interrupt this by returning true.
      * 
      * @param player
      * @param mob
@@ -1159,51 +1252,62 @@ public class PluginListener {
     public boolean onMobTarget(Player player, LivingEntity mob) {
         return false;
     }
-    
+
     /**
      * Called when a Block updates
      * 
-     * @param block The block that's being updated
-     * @return false to allow the update, true to cancel it.
-     * NOTE: Only farmland right now
+     * @param block
+     *            The block that's being updated
+     * @return false to allow the update, true to cancel it. NOTE: Only farmland
+     *         right now
      * @deprecated Use {@link #onBlockUpdate(Block, int) } instead.
      */
     @Deprecated
     public boolean onBlockUpdate(Block block) {
         return false;
     }
-    
+
     /**
      * Called when a Block updates
      * 
-     * @param oldBlock The Block that's being modified
-     * @param newBlockId  The block ID of the new block
+     * @param oldBlock
+     *            The Block that's being modified
+     * @param newBlockId
+     *            The block ID of the new block
      * @return false to allow the update, true to cancel it.
      */
-    public boolean onBlockUpdate(Block oldBlock, int newBlockId){ 
+    public boolean onBlockUpdate(Block oldBlock, int newBlockId) {
         return onBlockUpdate(oldBlock);
     }
-    
+
     /**
      * Called when player enchants an item
      * 
-     * @param enchantParameters The HookParametersEnchant object used to modify enchantment result
+     * @param enchantParameters
+     *            The HookParametersEnchant object used to modify enchantment
+     *            result
      * @return modified enchantParameters
      */
 
     public Object onEnchant(HookParametersEnchant enchantParameters) {
         return enchantParameters;
     }
-    
+
     /**
      * Called when a dispenser is activated with an item in it.
      * 
-     * @param dispenser - Block the dispenser is located at.
-     * @param tobedispensed - BaseEntity that is to be dispensed. If no entity
-     *                        is to be dispensed, this parameter will be null.
+     * @param dispenser
+     *            - Block the dispenser is located at.
+     * @param tobedispensed
+     *            - BaseEntity that is to be dispensed. If no entity is to be
+     *            dispensed, this parameter will be null.
      * @return false to allow the dispense, true to cancel it.
      */
-    public boolean onDispense(Dispenser dispenser, BaseEntity tobedispensed){
+    public boolean onDispense(Dispenser dispenser, BaseEntity tobedispensed) {
         return false;
+    }
+
+    public void onLightChange(int xcord, int zcord, int ycord, int level) {
+
     }
 }
