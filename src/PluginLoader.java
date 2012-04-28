@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -342,6 +341,12 @@ public class PluginLoader {
          * Calls{@Link PluginListener#onDispense(Block,Item) }
          */
         DISPENSE, //
+            //
+        /**
+         * Calls{@Link PluginListener#onLightChange(int,int,int,int) }
+         */
+        //
+        LIGHT_CHANGE,
         /**
          * For internal use only.
          *///
@@ -1201,6 +1206,10 @@ public class PluginLoader {
                             
                         case DISPENSE:
                             toRet = listener.onDispense((Dispenser) parameters[0], (BaseEntity) parameters[1]);
+                            break;
+                      
+                        case LIGHT_CHANGE:
+                            listener.onLightChange((Integer) parameters[0], (Integer) parameters[1], (Integer) parameters[2], (Integer) parameters[3]);
                             break;
                         }
                        } catch (UnsupportedOperationException ex) {}

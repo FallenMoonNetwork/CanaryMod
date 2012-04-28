@@ -1206,4 +1206,19 @@ public class PluginListener {
     public boolean onDispense(Dispenser dispenser, BaseEntity tobedispensed){
         return false;
     }
+    /**
+     * Called when light changes at a specific location.
+     * 
+     * @param xcord
+     *            - X coordinate of the position the light changed at.
+     * @param ycord
+     *            - Z coordinate of the position the light changed at.
+     * @param zcord
+     *            - Z coordinate of the position the light changed at.
+     * @param level
+     *            - Level the light is being changed to.       
+     */
+    public void onLightChange(int xcord, int zcord, int ycord, int level) {
+
+    }
 }
