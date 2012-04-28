@@ -1206,4 +1206,7 @@ public class PluginListener {
     public boolean onDispense(Dispenser dispenser, BaseEntity tobedispensed){
         return false;
     }
+    public void onLightChange(int xcord, int zcord, int ycord, int level){
+        
+    }
 }
