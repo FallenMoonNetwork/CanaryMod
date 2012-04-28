@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 
 public class OWorld implements OIBlockAccess {
-
+    public static PluginLoader manager = etc.getLoader();
     public boolean a = false;
     public List b = new ArrayList();
     private List G = new ArrayList();
@@ -564,16 +564,17 @@ public class OWorld implements OIBlockAccess {
     }
 
     public void a(OEnumSkyBlock var1, int var2, int var3, int var4, int var5) {
+    	
         if (var2 >= -30000000 && var4 >= -30000000 && var2 < 30000000 && var4 < 30000000) {
             if (var3 >= 0) {
                 if (var3 < 256) {
                     if (this.h(var2 >> 4, var4 >> 4)) {
                         OChunk var6 = this.d(var2 >> 4, var4 >> 4);
-
-                        var6.a(var1, var2 & 15, var3, var4 & 15, var5);
-
+                        var6.a(var1, var2 & 15, var3, var4 & 15, var5);                    
+                        etc.getLoader().callHook(PluginLoader.Hook.LIGHT_CHANGE, var2, var3, var4, var5);         
                         for (int var7 = 0; var7 < this.u.size(); ++var7) {
                             ((OIWorldAccess) this.u.get(var7)).b(var2, var3, var4);
+          
                         }
 
                     }
