@@ -249,7 +249,7 @@ public class OWorld implements OIBlockAccess {
     }
 
     private boolean h(int var1, int var2) {
-        return this.v.a(var1, var2);
+        return (this.v != null ? this.v.a(var1, var2) : false);
     }
 
     public OChunk c(int var1, int var2) {
