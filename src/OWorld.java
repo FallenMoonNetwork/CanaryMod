@@ -571,7 +571,7 @@ public class OWorld implements OIBlockAccess {
                         OChunk var6 = this.d(var2 >> 4, var4 >> 4);
 
                         var6.a(var1, var2 & 15, var3, var4 & 15, var5);
-                        PluginLoader.Hook.LIGHT_CHANGE, var2, var3,var4, var5);
+                        etc.getLoader().callHook(PluginLoader.Hook.LIGHT_CHANGE, var2, var3,var4, var5);
                         for (int var7 = 0; var7 < this.u.size(); ++var7) {
                             ((OIWorldAccess) this.u.get(var7)).b(var2, var3, var4);
                         }
