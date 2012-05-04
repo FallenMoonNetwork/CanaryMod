@@ -477,6 +477,8 @@ public class World {
                 return new NoteBlock((OTileEntityNote) localav);
             } else if (localav instanceof OTileEntityBrewingStand) {
                 return new BrewingStand((OTileEntityBrewingStand) localav);
+            } else if (localav instanceof OTileEntityRecordPlayer) {
+            	return new JukeBox((OTileEntityRecordPlayer) localav);
             }
         }
         return null;
