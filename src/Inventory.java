@@ -64,4 +64,6 @@ public interface Inventory {
     public String getName();
 
     public void setName(String value);
+    
+	public boolean insertItem(Item item);
 }

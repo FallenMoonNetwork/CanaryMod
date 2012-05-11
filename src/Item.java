@@ -456,6 +456,24 @@ public class Item {
     }
 
     /**
+     * Returns the max amount (stack size)
+     * 
+     * @return amount
+     */
+    public int getMaxAmount() {
+    	return this.itemStack.a().d();
+    }
+   
+    /**
+     * Sets the max amount (stack size)
+     * 
+     * @param amount
+     */
+    public void setMaxAmount(int amount) {
+    	this.itemStack.a().e(amount);
+    }
+    
+    /**
      * Returns true if specified item id is a valid item id.
      * 
      * @param itemId

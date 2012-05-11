@@ -405,4 +405,46 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
             container.setContentsAt(i, null);
         }
     }
+    
+    /**
+     * Adds the item to the set, appending to stacks
+     * or with no or full stack, adds a new stack.
+     * Stack sizes correspond with the max of the item
+     *
+     * @param item
+     * @return true if all items are in the inventory,
+     *          false when items are left over. item is updated to the leftover-amount.
+     */
+	public boolean insertItem(Item item) {
+		int amount = item.getAmount();
+		Item itemExisting;
+		int maxAmount = item.getMaxAmount();
+		
+        while (amount > 0) {
+        	// Get an existing item with at least 1 spot free
+        	itemExisting = this.getItemFromId(item.getItemId(), maxAmount-1);
+        	
+        	// Add the items to the existing stack of items
+            if (itemExisting != null) {
+            	// Add as much items as possible to the stack
+                int k = Math.min(maxAmount - itemExisting.getAmount(), item.getAmount());
+                this.setSlot(item.getItemId(), itemExisting.getAmount() + k, itemExisting.getSlot());
+                amount -= k;
+                continue;
+            }
+            // We still have slots, but no stack, create a new stack.
+            if(this.getEmptySlot() != -1) {
+            	this.addItem(new Item(item.getItemId(), amount));
+            	amount = 0;
+            	continue;
+            }
+            
+            // No free slots, no incomplete stacks: full
+            // make sure the stored items are removed
+            item.setAmount(amount);
+        	return false;
+        }
+        
+        return true;
+	}
 }
