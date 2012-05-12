@@ -35,6 +35,8 @@ public class Location implements java.io.Serializable {
      * World
      */
     public int dimension;
+    
+    public String world;
 
     /**
      * Creates a location
@@ -65,6 +67,7 @@ public class Location implements java.io.Serializable {
     public Location(World world, double x, double y, double z) {
         this(x, y, z);
         this.dimension = world.getType().getId();
+        this.world = world.getName();
     }
 
     /**
@@ -82,6 +85,7 @@ public class Location implements java.io.Serializable {
         z = Z;
         rotX = rotation;
         rotY = pitch;
+        world = etc.getServer().getDefaultWorld().getName();
     }
 
     /**
@@ -97,6 +101,7 @@ public class Location implements java.io.Serializable {
     public Location(World world, double X, double Y, double Z, float rotation, float pitch) {
         this(X, Y, Z, rotation, pitch);
         this.dimension = world.getType().getId();
+        this.world = world.getName();
     }
 
     /**
@@ -106,7 +111,7 @@ public class Location implements java.io.Serializable {
      *          dimension.
      */
     public World getWorld() {
-        return etc.getServer().getWorld(dimension);
+        return etc.getMCServer().getWorld(world, dimension).world;
     }
     
     /**

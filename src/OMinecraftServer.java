@@ -60,6 +60,7 @@ public class OMinecraftServer implements Runnable, OICommandListener, OIServer {
 
     public OMinecraftServer() {
         super();
+        
         new OThreadSleepForever(this);
     }
 
@@ -163,7 +164,7 @@ public class OMinecraftServer implements Runnable, OICommandListener, OIServer {
         return true;
     }
 
-    protected void loadWorld(String name, long seed, World.Type worldType) {
+    public void loadWorld(String name, long seed, World.Type worldType) {
         this.a(new OAnvilSaveConverter(new File(".")), name, seed, worldType.getNative());
     }
 
@@ -175,8 +176,8 @@ public class OMinecraftServer implements Runnable, OICommandListener, OIServer {
 
         OWorldServer[] toLoad = new OWorldServer[3];
 
-        this.worlds.put(var2, toLoad);
-        this.worldTickNanos.put(var2, new long[toLoad.length][100]);
+//        this.worlds.put(var2, toLoad);
+//        this.worldTickNanos.put(var2, new long[toLoad.length][100]);
         int var6 = this.d.a("gamemode", 0);
 
         var6 = OWorldSettings.a(var6);
@@ -208,7 +209,8 @@ public class OMinecraftServer implements Runnable, OICommandListener, OIServer {
             toLoad[var10].s().d(var6);
             this.h.a(toLoad);
         }
-
+        this.worlds.put(var2, toLoad);
+        this.worldTickNanos.put(var2, new long[toLoad.length][100]);
         short var23 = 196;
         long var12 = System.currentTimeMillis();
 

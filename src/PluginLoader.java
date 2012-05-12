@@ -85,6 +85,10 @@ public class PluginLoader {
          *///
         ITEM_PICK_UP, //
         /**
+         * Calls {@link PluginListener#onItemTouchGround(ItemEntity) }
+         *///
+        ITEM_TOUCH_GROUND, //
+        /**
          * Calls {@link PluginListener#onTeleport(Player, Location, Location) }
          *///
         TELEPORT, //
@@ -874,6 +878,12 @@ public class PluginLoader {
                                 toRet = true;
                             }
                             break;
+                            
+                        case ITEM_TOUCH_GROUND:
+                        	if(listener.onItemTouchGround((ItemEntity) parameters[0])) {
+                        		toRet = true;
+                        	}
+                        	break;
 
                         case TELEPORT:
                             if (listener.onTeleport((Player) parameters[0], (Location) parameters[1], (Location) parameters[2])) {

@@ -125,6 +125,9 @@ public class ONetLoginHandler extends ONetHandler {
             this.e.h.a(var2, var3);
             //this.e.h.a((OPacket) (new OPacket3Chat("\u00a7e" + var2.v + " joined the game.")));
             this.e.h.c(var2);
+            //System.out.println("World in var2 in NetLoginHandler: " + var2.bi);
+            //CanaryMod world null fix ? 
+            var2.getPlayer().world = var2.bi.world;
             var5.a(var2.bm, var2.bn, var2.bo, var2.bs, var2.bt);
             this.e.c.a(var5);
             var5.b((OPacket) (new OPacket4UpdateTime(var3.o())));

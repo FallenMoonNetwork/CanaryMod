@@ -1258,7 +1258,7 @@ public class etc {
     }
     
     private CanaryConnection _getConnection() throws SQLException {
-        return cs.getConnection();
+        return ConnectionService.getInstance().getConnection();
     }
 
     /**

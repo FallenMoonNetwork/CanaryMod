@@ -6,6 +6,7 @@
  */
 public class BaseEntity {
     OEntity entity;
+    World world;
 
     /**
      * Creates an interface for an entity
@@ -14,6 +15,7 @@ public class BaseEntity {
      */
     public BaseEntity(OEntity entity) {
         this.entity = entity;
+        this.world = this.entity.bi.world;
     }
 
     /**
@@ -42,6 +44,13 @@ public class BaseEntity {
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
         entity.b(x, y, z, rotation, pitch);
     }
+    
+    public void teleportTo(double x, double y, double z, float rotation, float pitch, World world) {
+        this.entity.bi = world.getWorld();
+        this.world = world;
+        //teleportTo(x,y,z,rotation,pitch);
+        entity.b(x, y, z, rotation, pitch);
+    }
 
     /**
      * Teleports to the other entity
@@ -60,7 +69,12 @@ public class BaseEntity {
      *            location to teleport to
      */
     public void teleportTo(Location location) {
-        teleportTo(location.x, location.y, location.z, location.rotX, location.rotY);
+        if(!(entity.bi.world.equals(location.getWorld()))) {
+            teleportTo(location.x, location.y, location.z, location.rotX, location.rotY, location.getWorld());
+        }
+        else {
+            teleportTo(location.x, location.y, location.z, location.rotX, location.rotY);
+        }
     }
 
     /**
@@ -349,7 +363,7 @@ public class BaseEntity {
      * @return the World this entity is in
      */
     public World getWorld() {
-        return getEntity().bi.world;
+        return world;
     }
 
     /**

@@ -40,6 +40,10 @@ public class OEntityItem extends OEntity {
         if (this.c > 0) {
             --this.c;
         }
+        
+        // CanaryMod start
+        boolean tmpTouchesGround = this.bx;
+        // CanaryMod end
 
         this.bj = this.bm;
         this.bk = this.bn;
@@ -63,6 +67,15 @@ public class OEntityItem extends OEntity {
             if (var2 > 0) {
                 var1 = OBlock.m[var2].ce * 0.98F;
             }
+            
+            // CanaryMod start
+            // It does touch the ground now, but didn't in last tick
+            if(!tmpTouchesGround) {
+            	if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_TOUCH_GROUND, item)) {
+                    this.X(); // kill the item
+            	}
+            }
+            // CanaryMod end
         }
 
         this.bp *= (double) var1;

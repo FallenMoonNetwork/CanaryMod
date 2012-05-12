@@ -307,6 +307,17 @@ public class PluginListener {
     public boolean onItemPickUp(Player player, ItemEntity item) {
         return onItemPickUp(player, item.getItem());
     }
+    
+    /**
+     * Called when an item begins touching the ground
+     * 
+     * @param item
+     *            item that began touching the ground
+     * @return true to destroy the item
+     */
+    public boolean onItemTouchGround(ItemEntity item) {
+    	return false;
+    }
 
     /**
      * Called when either a lava block or a lighter tries to light something on
