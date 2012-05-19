@@ -303,7 +303,6 @@ public class World {
         spawn.z = info.e() + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;
-        spawn.world = getName();
         return spawn;
     }
 

@@ -65,7 +65,7 @@ public abstract class OEntity {
     public boolean cd;
     public boolean ce;
     // CanaryMod Start
-    BaseEntity entity;// = new BaseEntity(this); //<- moved to bottom of ctor
+    BaseEntity entity = new BaseEntity(this);
     public static PluginLoader manager = etc.getLoader();
 
     // CanaryMod end
@@ -106,7 +106,6 @@ public abstract class OEntity {
         this.bY.a(0, Byte.valueOf((byte) 0));
         this.bY.a(1, Short.valueOf((short) 300));
         this.b();
-        entity = new BaseEntity(this);
     }
 
     protected abstract void b();

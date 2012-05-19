@@ -519,10 +519,6 @@ public class Player extends HumanEntity implements MessageReceiver {
         loc.z = getZ();
         loc.rotX = getRotation();
         loc.rotY = getPitch();
-        if(world != null) {
-            loc.world = world.getName();
-            System.out.println("World in Player.getLocation(): " + getWorld().getName());
-        }
         loc.dimension = getWorld().getType().getId();
         return loc;
     }
@@ -879,7 +875,6 @@ public class Player extends HumanEntity implements MessageReceiver {
 
     @Override
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        System.out.println("Calling bare number tp");
         OEntityPlayerMP player = getEntity();
 
         // If player is in vehicle - eject them before they are teleported.
@@ -887,7 +882,6 @@ public class Player extends HumanEntity implements MessageReceiver {
             player.b(player.bh);
         }
         player.a.a(x, y, z, rotation, pitch);
-        //super.teleportTo(new Location(world,x,y,z,rotation,pitch));
     }
 
     /**

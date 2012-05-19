@@ -57,7 +57,7 @@ public class OWorld implements OIBlockAccess {
     public boolean F;
     
     // CanaryMod
-    public World world;//  = new World((OWorldServer) this); <- moved to ctor bottom
+    public final World world = new World((OWorldServer) this);
     boolean loadedpreload = false;
     public final String name;
 
@@ -114,7 +114,6 @@ public class OWorld implements OIBlockAccess {
         this.B();
         
         this.name = var2; // CanaryMod: store world name in an accessible place.
-        world = new World((OWorldServer) this);
     }
 
     protected OIChunkProvider b() {

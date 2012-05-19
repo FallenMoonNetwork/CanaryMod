@@ -225,11 +225,11 @@ public class ONetServerHandler extends ONetHandler implements OICommandListener 
                 double var21 = var11 - this.e.bo;
                 double var23 = var15 * var15 + var19 * var19 + var21 * var21;
 
-//                if (var23 > 100.0D) {
-//                    a.warning(this.e.v + " moved too quickly!");
-//                    this.a("You moved too quickly :( (Hacking?)");
-//                    return;
-//                } // XXX
+                if (var23 > 100.0D) {
+                    a.warning(this.e.v + " moved too quickly!");
+                    this.a("You moved too quickly :( (Hacking?)");
+                    return;
+                }
 
                 float var25 = 0.0625F;
                 boolean var26 = var2.a(this.e, this.e.bw.b().e((double) var25, (double) var25, (double) var25)).size() == 0;
