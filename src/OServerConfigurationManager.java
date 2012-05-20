@@ -150,7 +150,8 @@ public class OServerConfigurationManager {
         Player player = temp.getPlayer();
         String ip = var1.b.c().toString();
         ip = ip.substring(ip.indexOf("/") + 1);
-        ip = ip.substring(0, ip.indexOf(":"));
+        ip = ip.substring(0, ip.lastIndexOf(":"));
+        
         if (etc.getDataSource().isOnBanList(var2, ip)) {
             Ban ban = etc.getDataSource().getBan(var2, ip);
             var1.a(ban.getReason());

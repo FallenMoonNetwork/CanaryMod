@@ -529,7 +529,8 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return
      */
     public String getIP() {
-        return getEntity().a.b.c().toString().split(":")[0].substring(1);
+    	String ip = getEntity().a.b.c().toString();
+        return ip.substring(1,ip.lastIndexOf(":"));
     }
 
     /**

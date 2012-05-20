@@ -787,8 +787,30 @@ public class FlatFileSource extends DataSource {
                     Ban ban = new Ban();
 
 
-                    if (split[0].contains("."))
+                    if (split[0].contains(".")) // IPv4
                         ban.setIp(split[0]);
+                    else if(split[0].length() == 32) { // IPv6
+                    	// Convert the expanded address to the compressed version
+                    	// The string also has the : removed, so we add those first
+                    	
+                    	StringBuilder sb = new StringBuilder();
+                    	
+                    	for(int i = 0; i < 8; i++) {
+                    		String piece = split[0].substring(i*4, i*4+4);
+                    		
+                    		if(piece == "0000")
+                    			sb.append("0");
+                    		else {
+                    			Integer r = Integer.parseInt(piece,16);
+                    			sb.append(Integer.toHexString(r));
+                    		}
+                    		if(i != 7)
+                    			sb.append(":");
+                    	}
+                    	String longAddr = sb.toString();
+                    	
+                    	ban.setIp(longAddr);
+                    }
                     else
                         ban.setName(split[0]);
                     if (split.length >= 2) {
@@ -1487,7 +1509,20 @@ public class FlatFileSource extends DataSource {
     public void addBan(Ban ban) {
         String loc = etc.getInstance().getBanListLoc();
         boolean byIp = !ban.getIp().isEmpty();
-
+        String value = byIp ? ban.getIp() : ban.getName();
+        
+        // Transform Ipv6 addresses 
+        if(byIp && value.indexOf(":") != -1) {
+        	String[] lst = value.split(":");
+        	StringBuilder sb = new StringBuilder();
+        	for(String p : lst) {
+        		for(int i = 0; i < 4-p.length(); i++)
+        			sb.append("0");
+        		sb.append(p);
+        	}
+        	value = sb.toString();
+        }
+        
         try {
             // Now to save...
             BufferedReader reader = new BufferedReader(new FileReader(new File(loc)));
@@ -1500,7 +1535,7 @@ public class FlatFileSource extends DataSource {
             
             reader.close();
 
-            toWrite.append(byIp ? ban.getIp() : ban.getName())
+            toWrite.append(value)
                    .append(":").append(ban.getReason()).append(":")
                    .append(ban.getTimestamp()).append(LINE_SEP);
 
@@ -1607,7 +1642,7 @@ public class FlatFileSource extends DataSource {
 
     //Grouplist
     @Override
-    public List getGroupList() {
+    public List<Group> getGroupList() {
         return this.groups;
     }
 
