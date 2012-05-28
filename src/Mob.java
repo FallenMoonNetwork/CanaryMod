@@ -26,7 +26,7 @@ public class Mob extends LivingEntity {
      * @deprecated Use {@link #Mob(java.lang.String, World)} instead.
      */
     public Mob(String mob) {
-        this(mob, etc.getServer().getDefaultWorld());
+        this((OEntityLiving) OEntityList.a(mob, etc.getMCServer().a(0)));
     }
     
     /**
@@ -171,6 +171,13 @@ public class Mob extends LivingEntity {
         loc.rotY = getPitch();
         loc.dimension = getWorld().getType().getId();
         return loc;
+    }
+    
+    public boolean isInLove(){
+    	if (getEntity() instanceof OEntityAnimal){
+    		return ((OEntityAnimal) getEntity()).r_();
+    	}
+    	return false;
     }
 
 }
