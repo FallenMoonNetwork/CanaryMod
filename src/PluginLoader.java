@@ -350,6 +350,11 @@ public class PluginLoader {
          * Calls{@Link PluginListener#onLightChange(int,int,int,int) }
          */
         //
+        DEATH,
+         /**
+         * Calls{@Link PluginListener#onDeath(LivingEntity entity) }
+         */
+        //
         LIGHT_CHANGE,
         /**
          * For internal use only.
@@ -1220,6 +1225,10 @@ public class PluginLoader {
                       
                         case LIGHT_CHANGE:
                             listener.onLightChange((Integer) parameters[0], (Integer) parameters[1], (Integer) parameters[2], (Integer) parameters[3]);
+                            break;
+                            
+                            case DEATH:
+                            listener.onDeath((LivingEntity) parameters[0]);
                             break;
                         }
                        } catch (UnsupportedOperationException ex) {}

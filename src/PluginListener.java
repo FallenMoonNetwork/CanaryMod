@@ -1233,4 +1233,13 @@ public class PluginListener {
     public void onLightChange(int xcord, int ycord, int zcord, int level) {
 
     }
+        /**
+     * Called when a LivingEntity dies.
+     * 
+     * @param entity
+     *            - Entity that has died.
+     */
+    public void onDeath(LivingEntity entity) {
+
+    }
 }

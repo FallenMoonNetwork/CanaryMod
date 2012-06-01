@@ -1304,7 +1304,11 @@ public abstract class OEntityLiving extends OEntity {
         return var1 + var4;
     }
 
-    public void aH() {}
+    public void aH() {
+    	LivingEntity entity = new LivingEntity(this);
+       manager.callHook(PluginLoader.Hook.DEATH, entity);
+
+    }
 
     public boolean l() {
         return this.bi.a(this.bw) && this.bi.a((OEntity) this, this.bw).size() == 0 && !this.bi.c(this.bw);
