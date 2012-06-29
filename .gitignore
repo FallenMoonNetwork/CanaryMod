@@ -1,0 +1,12 @@
+.classpath
+.externalToolBuilders/*
+.project
+.settings/*
+bin/*
+build/*
+dist/*
+files/*
+jarjar/*
+!jarjar/rules.rules
+nbproject/*
+servero/*
