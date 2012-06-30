@@ -14,6 +14,9 @@ public class OEntityThrownEnderpearl extends OEntityThrowable {
     }
 
     protected void a(OMovingObjectPosition var1) {
+        BaseEntity vara = new BaseEntity(this);
+        int varb = 3;
+etc.getLoader().callHook(PluginLoader.Hook.IMPACT, vara, varb);
         if (var1.g != null && var1.g.a(ODamageSource.a((OEntity) this, this.c), 0)) {
             ;
         }
@@ -40,6 +43,7 @@ public class OEntityThrownEnderpearl extends OEntityThrowable {
             }
 
             this.X();
+            
         }
 
     }
