@@ -1258,4 +1258,15 @@ public class PluginListener {
     public void onDeath(LivingEntity entity) {
 
     }
+    /**
+   * Called when a Throwable hits something.
+   * 
+   * @param baseEntity
+   *            - The item that has been thrown.
+   * @param int
+   *            - The type of item. PARAMS: 1=egg, 2=snowball, 3=enderpearl
+   */
+    public void onImpact(BaseEntity baseEntity, int i) {
+            
+        }
 }

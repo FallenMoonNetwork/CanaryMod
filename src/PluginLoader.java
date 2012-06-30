@@ -357,9 +357,14 @@ public class PluginLoader {
         //
         LIGHT_CHANGE,
         /**
+         * Calls{@Link PluginListener#onImpact(BaseEntity entity, int data) }
+         */
+        //
+        IMPACT,
+        /**
          * For internal use only.
          *///
-        NUM_HOOKS;
+        NUM_HOOKS, 
     }
 
 
@@ -1224,8 +1229,12 @@ public class PluginLoader {
                             listener.onLightChange((Integer) parameters[0], (Integer) parameters[1], (Integer) parameters[2], (Integer) parameters[3]);
                             break;
                             
-                            case DEATH:
+                        case DEATH:
                             listener.onDeath((LivingEntity) parameters[0]);
+                            break;
+                            
+                        case IMPACT:
+                            listener.onImpact((BaseEntity) parameters[0], (Integer) parameters[1]);
                             break;
                         }
                        } catch (UnsupportedOperationException ex) {}
