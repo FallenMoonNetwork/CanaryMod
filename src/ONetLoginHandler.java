@@ -97,10 +97,10 @@ public class ONetLoginHandler extends ONetHandler {
             //The world the player will spawn in is set here.
             //We had the LoginChecks hook in this.e.h.a(this, var1.b); so we have a specific world
             //already specified and only get the right dimension here if that's needed.
-            var2.a((OWorld) this.e.getWorld(var2.bi.name, var2.w)); 
+            var2.a((OWorld) this.e.getWorld(var2.bi.name, var2.dimension)); 
             var2.c.a((OWorldServer) var2.bi);
-            a.info(this.b() + " logged in with entity id " + var2.bd + " at (" + var2.bm + ", " + var2.bn + ", " + var2.bo + " in world "+var2.bi.name+". Dimension: "+var2.w+")");
-            OWorldServer var3 = this.e.getWorld(var2.bi.name, var2.w);
+            a.info(this.b() + " logged in with entity id " + var2.bd + " at (" + var2.bm + ", " + var2.bn + ", " + var2.bo + " in world "+var2.bi.name+". Dimension: "+var2.dimension+")");
+            OWorldServer var3 = this.e.getWorld(var2.bi.name, var2.dimension);
             OChunkCoordinates var4 = var3.p();
 
             var2.c.b(var3.s().m());
@@ -130,7 +130,7 @@ public class ONetLoginHandler extends ONetHandler {
             this.e.h.a(var2, var3);
             //this.e.h.a((OPacket) (new OPacket3Chat("\u00a7e" + var2.v + " joined the game.")));
             this.e.h.c(var2);
-            var5.a(var2.bm, var2.bn, var2.bo, var2.bs, var2.bt, var2.w, var2.bi.name);
+            var5.a(var2.bm, var2.bn, var2.bo, var2.bs, var2.bt, var2.dimension, var2.bi.name);
             this.e.c.a(var5);
             var5.b((OPacket) (new OPacket4UpdateTime(var3.o())));
 

@@ -119,7 +119,7 @@ public class OContainerEnchantment extends OContainer {
     public boolean a(OEntityPlayer var1, int var2) {
         OItemStack var3 = this.a.g_(0);
 
-        if (this.c[var2] > 0 && var3 != null && (var1.M >= this.c[var2] || var1.L.d)) {
+        if (this.c[var2] > 0 && var3 != null && (var1.level >= this.c[var2] || var1.L.d)) {
             if (!this.h.F) {
                 List var4 = OEnchantmentHelper.b(this.l, var3, this.c[var2]);
 
@@ -135,7 +135,7 @@ public class OContainerEnchantment extends OContainer {
                             var4.add(new OEnchantmentData(enchantment.getEnchantment(), enchantment.getLevel()));
                         }
 						
-						var1.e_(this.c[var2]);
+						var1.decreaseLevelBy(this.c[var2]);
 						Iterator var5 = var4.iterator();
 
 						while (var5.hasNext()) {

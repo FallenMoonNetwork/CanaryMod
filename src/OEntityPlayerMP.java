@@ -68,8 +68,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         super.a(var1);
     }
 
-    public void e_(int var1) {
-        super.e_(var1);
+    public void decreaseLevelBy(int var1) {
+        super.decreaseLevelBy(var1);
         this.ci = -1;
     }
 
@@ -185,7 +185,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
                 }
 
                 if (var17) {
-                    OWorldServer var18 = this.b.getWorld(this.bi.name, this.w);
+                    OWorldServer var18 = this.b.getWorld(this.bi.name, this.dimension);
 
                     if (var18.i(var14.a << 4, 0, var14.b << 4)) {
                         OChunk var11 = var18.d(var14.a, var14.b);
@@ -220,7 +220,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
                         boolean var15 = false;
                         byte var16;
 
-                        if (this.w == -1) {
+                        if (this.dimension == -1) {
                             var16 = 0;
                         } else {
                             var16 = -1;
@@ -272,25 +272,25 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         }
             
         // CanaryMod: Update experience
-        if (this.N != this.ci) {
+        if (this.totalXP != this.ci) {
             // updates your experience when it is changed.
             if (!etc.getInstance().isExpEnabled()) {
-                N = 0;
-                M = 0;
-            } else if ((Boolean) manager.callHook(PluginLoader.Hook.EXPERIENCE_CHANGE, getPlayer(), ci, N)) {
-                N = ci;
+                totalXP = 0;
+                level = 0;
+            } else if ((Boolean) manager.callHook(PluginLoader.Hook.EXPERIENCE_CHANGE, getPlayer(), ci, totalXP)) {
+                totalXP = ci;
             }
         }
     
-        if (this.N != this.ci) {
-            this.ci = this.N;
-            this.a.b((OPacket) (new OPacket43Experience(this.O, this.N, this.M)));
+        if (this.totalXP != this.ci) {
+            this.ci = this.totalXP;
+            this.a.b((OPacket) (new OPacket43Experience(this.levelProgress, this.totalXP, this.level)));
         }
 
     }
 
     public void e(int var1) {
-        if (this.w == 1 && var1 == 1) {
+        if (this.dimension == 1 && var1 == 1) {
             this.a((OStatBase) OAchievementList.C);
             this.bi.e(this);
             this.j = true;
@@ -300,7 +300,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             OChunkCoordinates var2 = this.b.getWorld(this.bi.name, var1).d();
 
             if (var2 != null) {
-                this.a.a((double) var2.a, (double) var2.b, (double) var2.c, 0.0F, 0.0F, this.w, this.bi.name);
+                this.a.a((double) var2.a, (double) var2.b, (double) var2.c, 0.0F, 0.0F, this.dimension, this.bi.name);
             }
 
             this.b.h.a(this, 1);
@@ -370,7 +370,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             OPacket17Sleep var6 = new OPacket17Sleep(this, 0, var1, var2, var3);
 
             var5.a(this, var6);
-            this.a.a(this.bm, this.bn, this.bo, this.bs, this.bt, this.w, this.bi.name);
+            this.a.a(this.bm, this.bn, this.bo, this.bs, this.bt, this.dimension, this.bi.name);
             this.a.b((OPacket) var6);
         }
 
@@ -386,7 +386,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
         super.a(var1, var2, var3);
         if (this.a != null) {
-            this.a.a(this.bm, this.bn, this.bo, this.bs, this.bt, this.w, this.bi.name);
+            this.a.a(this.bm, this.bn, this.bo, this.bs, this.bt, this.dimension, this.bi.name);
         }
 
     }
@@ -394,7 +394,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     public void b(OEntity var1) {
         super.b(var1);
         this.a.b((OPacket) (new OPacket39AttachEntity(this, this.bh)));
-        this.a.a(this.bm, this.bn, this.bo, this.bs, this.bt, this.w, this.bi.name);
+        this.a.a(this.bm, this.bn, this.bo, this.bs, this.bt, this.dimension, this.bi.name);
     }
 
     protected void a(double var1, boolean var3) {}
@@ -671,7 +671,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     public void a_(double var1, double var3, double var5) {
-        this.a.a(var1, var3, var5, this.bs, this.bt, this.w, this.bi.name);
+        this.a.a(var1, var3, var5, this.bs, this.bt, this.dimension, this.bi.name);
     }
 
     public void c(OEntity var1) {
