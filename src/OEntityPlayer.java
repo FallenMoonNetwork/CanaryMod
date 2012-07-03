@@ -16,7 +16,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public boolean t = false;
     public int u = 0;
     public String v;
-    public int w;
+    public int dimension;
     public int x = 0;
     public double y;
     public double z;
@@ -35,9 +35,9 @@ public abstract class OEntityPlayer extends OEntityLiving {
     protected boolean J = false;
     public float K;
     public OPlayerCapabilities L = new OPlayerCapabilities();
-    public int M;
-    public int N;
-    public float O;
+    public int level;
+    public int totalXP;
+    public float levelProgress;
     private OItemStack d;
     private int e;
     protected float P = 0.1F;
@@ -476,12 +476,12 @@ public abstract class OEntityPlayer extends OEntityLiving {
         ONBTTagList var2 = var1.n("Inventory");
 
         this.k.b(var2);
-        this.w = var1.f("Dimension");
+        this.dimension = var1.f("Dimension");
         this.E = var1.o("Sleeping");
         this.a = var1.e("SleepTimer");
-        this.O = var1.h("XpP");
-        this.M = var1.f("XpLevel");
-        this.N = var1.f("XpTotal");
+        this.levelProgress = var1.h("XpP");
+        this.level = var1.f("XpLevel");
+        this.totalXP = var1.f("XpTotal");
         if (this.E) {
             this.F = new OChunkCoordinates(OMathHelper.b(this.bm), OMathHelper.b(this.bn), OMathHelper.b(this.bo));
             this.a(true, true, false);
@@ -498,12 +498,12 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public void b(ONBTTagCompound var1) {
         super.b(var1);
         var1.a("Inventory", (ONBTBase) this.k.a(new ONBTTagList()));
-        var1.a("Dimension", this.w);
+        var1.a("Dimension", this.dimension);
         var1.a("Sleeping", this.E);
         var1.a("SleepTimer", (short) this.a);
-        var1.a("XpP", this.O);
-        var1.a("XpLevel", this.M);
-        var1.a("XpTotal", this.N);
+        var1.a("XpP", this.levelProgress);
+        var1.a("XpLevel", this.level);
+        var1.a("XpTotal", this.totalXP);
         if (this.b != null) {
             var1.a("SpawnX", this.b.a);
             var1.a("SpawnY", this.b.b);
@@ -1103,56 +1103,76 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public void g(int var1) {
         addXP(var1);
     }
-    
+    //added check weather @param is positive
     public void addXP(int var1) {
-        int var2 = Integer.MAX_VALUE - this.N;
+    	if(var1<0)
+    		throw new IllegalArgumentException("cannot add negative value");
+        int var2 = Integer.MAX_VALUE - this.totalXP;
         if (var1 > var2) {
             var1 = var2;
         }
         
         this.q += var1;
-        this.O += (float) var1 / (float) this.ae();
-        this.N += var1;
+        this.levelProgress += (float) var1 / (float) this.calcReqXP();
+        this.totalXP += var1;
         levelUp();
     }
-
+    //added check weather @param is positive
+    //called levelDown() method
     public void removeXP(int var1) {
+    	if(var1<0)
+    		throw new IllegalArgumentException("cannot remove negative value");
         this.q -= var1;
-        this.O -= (float) var1 / (float) this.ae();
-        this.N -= var1;
-        levelUp();
+        this.levelProgress -= (float) var1 / (float) this.calcReqXP();
+        this.totalXP -= var1;
+        levelDown();
     }
-
+    //before calculating the progress and calling levelUp() set level to 0 so it's working properly
     public void setXP(int var1) {
         this.q = var1;
-        this.O = (float) var1 / (float) this.ae();
-        this.N = var1;
+        this.level = 0;
+        this.levelProgress = (float) var1 / (float) this.calcReqXP();
+        this.totalXP = var1;
         levelUp();
+    }
+    //TODO: add hook
+    //decreases the level if the progress is negative
+    public void levelDown(){
+    	while(levelProgress < 0) {
+    	    levelProgress = calcReqXP()*(levelProgress)/calcReqXP(level-1);
+    	    levelProgress++;
+    	    decreaseLevelBy(1);
+    	}
     }
     
     public void levelUp() {
-        for (; this.O >= 1.0F; this.O /= (float) this.ae()) {
-            this.O = (this.O - 1.0F) * (float) this.ae();
-            this.H();
+        for (; this.levelProgress >= 1.0F; this.levelProgress /= (float) this.calcReqXP()) {
+            this.levelProgress = (this.levelProgress - 1.0F) * (float) this.calcReqXP();
+            this.increaseLevel();
             
             manager.callHook(PluginLoader.Hook.LEVEL_UP, ((OEntityPlayerMP) this).getPlayer());
         }
     }
 
-    public void e_(int var1) {
-        this.M -= var1;
-        if (this.M < 0) {
-            this.M = 0;
+    public void decreaseLevelBy(int var1) {
+        this.level -= var1;
+        if (this.level < 0) {
+            this.level = 0;
         }
 
     }
-
-    public int ae() {
-        return 7 + (this.M * 7 >> 1);
+    
+    public int calcReqXP() {
+        return 7 + (this.level * 7 >> 1);
     }
-
-    private void H() {
-        ++this.M;
+    public int calcReqXP(int level) {
+    	if(level < 0)
+    		level = 0;
+        return 7 + (level * 7 >> 1);
+    }
+    
+    private void increaseLevel() {
+        ++this.level;
     }
 
     public void c(float var1) {
@@ -1192,7 +1212,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
     }
 
     protected int a(OEntityPlayer var1) {
-        int var2 = this.M * 7;
+        int var2 = this.level * 7;
 
         return var2 > 100 ? 100 : var2;
     }
@@ -1211,9 +1231,9 @@ public abstract class OEntityPlayer extends OEntityLiving {
         this.k.a(var1.k);
         this.ap = var1.ap;
         this.n = var1.n;
-        this.M = var1.M;
-        this.N = var1.N;
-        this.O = var1.O;
+        this.level = var1.level;
+        this.totalXP = var1.totalXP;
+        this.levelProgress = var1.levelProgress;
         this.q = var1.q;
     }
 

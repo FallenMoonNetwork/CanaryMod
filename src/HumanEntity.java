@@ -45,6 +45,6 @@ public class HumanEntity extends LivingEntity {
      */
     @Override
     public World getWorld() {
-        return etc.getMCServer().getWorld(getEntity().bi.name, getEntity().w).world;
+        return etc.getMCServer().getWorld(getEntity().bi.name, getEntity().dimension).world;
     }
 }

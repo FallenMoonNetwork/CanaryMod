@@ -1149,7 +1149,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return
      */
     public int getXP() {
-        return getEntity().N;
+        return getEntity().totalXP;
     }
 
     /**
@@ -1158,7 +1158,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return
      */
     public int getLevel() {
-        return getEntity().M;
+        return getEntity().level;
     }
 
     /**
@@ -1204,7 +1204,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      *
      */
     public void updateXP() {
-        getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().O, getEntity().N, getEntity().M)));
+        getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().levelProgress, getEntity().totalXP, getEntity().level)));
     }
 
     /**

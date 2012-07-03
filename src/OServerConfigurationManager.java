@@ -74,9 +74,9 @@ public class OServerConfigurationManager {
         mgrs[0].b(var1);
         mgrs[1].b(var1);
         mgrs[2].b(var1);
-        this.getManager(var1.bi.name, var1.w).removePlayer(var1);
-        this.getManager(var1.bi.name, var1.w).addPlayer(var1);
-        OWorldServer var2 = this.c.getWorld(var1.bi.name, var1.w);
+        this.getManager(var1.bi.name, var1.dimension).removePlayer(var1);
+        this.getManager(var1.bi.name, var1.dimension).addPlayer(var1);
+        OWorldServer var2 = this.c.getWorld(var1.bi.name, var1.dimension);
 
         var2.G.c((int) var1.bm >> 4, (int) var1.bo >> 4);
     }
@@ -112,7 +112,7 @@ public class OServerConfigurationManager {
 
         this.a(new OPacket201PlayerInfo(entry.getName(), entry.isShow(), 1000));
         this.b.add(var1);
-        OWorldServer var2 = this.c.getWorld(var1.bi.name, var1.w);
+        OWorldServer var2 = this.c.getWorld(var1.bi.name, var1.dimension);
 
         var2.G.c((int) var1.bm >> 4, (int) var1.bo >> 4);
 
@@ -121,7 +121,7 @@ public class OServerConfigurationManager {
         }
 
         var2.b(var1);
-        this.getManager(var2.name, var1.w).addPlayer(var1);
+        this.getManager(var2.name, var1.dimension).addPlayer(var1);
         this.u();
 
         for (int var3 = 0; var3 < this.b.size(); ++var3) {
@@ -141,14 +141,14 @@ public class OServerConfigurationManager {
     }
 
     public void d(OEntityPlayerMP var1) {
-        this.getManager(var1.bi.name, var1.w).updateMountedMovingPlayer(var1);
+        this.getManager(var1.bi.name, var1.dimension).updateMountedMovingPlayer(var1);
     }
 
     public void e(OEntityPlayerMP var1) {
         this.saveHandlers.get(var1.bi.name).a(var1); //save player
-        this.c.getWorld(var1.bi.name, var1.w).e(var1);
+        this.c.getWorld(var1.bi.name, var1.dimension).e(var1);
         this.b.remove(var1);
-        this.getManager(var1.bi.name, var1.w).removePlayer(var1);
+        this.getManager(var1.bi.name, var1.dimension).removePlayer(var1);
         // CanaryMod: Player color and Prefix
         if (etc.getInstance().isPlayerList_enabled()) {
             PlayerlistEntry entry = var1.getPlayer().getPlayerlistEntry(false);
@@ -269,10 +269,10 @@ public class OServerConfigurationManager {
         var1.bi.getEntityTracker().untrackEntity(var1);
         this.b.remove(var1);
         var1.bi.world.removePlayerFromWorld(var1.getPlayer()); //Calls despawn method in OWorld
-        this.getManager(var1.bi.name, var1.w).removePlayer(var1);
+        this.getManager(var1.bi.name, var1.dimension).removePlayer(var1);
         OChunkCoordinates var4 = var1.ab();
 
-        var1.w = var2;
+        var1.dimension = var2;
         OEntityPlayerMP var5 = new OEntityPlayerMP(this.c, var1.bi, var1.v, new OItemInWorldManager(var1.bi));
 
         if (var3) {
@@ -310,13 +310,13 @@ public class OServerConfigurationManager {
             var5.c(var5.bm, var5.bn + 1.0D, var5.bo);
         }
 
-        var5.a.b((OPacket) (new OPacket9Respawn(var5.w, (byte) var5.bi.q, var5.bi.s().p(), var5.bi.y(), var5.c.a())));
-        var5.a.a(var5.bm, var5.bn, var5.bo, var5.bs, var5.bt, var5.w, var5.bi.name);
+        var5.a.b((OPacket) (new OPacket9Respawn(var5.dimension, (byte) var5.bi.q, var5.bi.s().p(), var5.bi.y(), var5.c.a())));
+        var5.a.a(var5.bm, var5.bn, var5.bo, var5.bs, var5.bt, var5.dimension, var5.bi.name);
         this.a(var5, var6);
         
         this.b.add(var5); 
 //        var5.bi.getEntityTracker().trackEntity(var5); //no need to add player to tracker
-        this.getManager(var5.bi.name, var5.w).addPlayer(var5);
+        this.getManager(var5.bi.name, var5.dimension).addPlayer(var5);
         var5.bi.world.addPlayerToWorld(var5.getPlayer());
         var5.x();
         var5.E();
@@ -331,27 +331,27 @@ public class OServerConfigurationManager {
     // CanaryMod used to be a(OEntityPlayerMP var1, int var2) to teleport player to other dimensions.
     // Added createPortal option to cancel portal creation if not needed.
     public void sendPlayerToOtherDimension(OEntityPlayerMP var1, int var2, boolean createPortal) {
-        int var3 = var1.w;
-        OWorldServer var4 = this.c.getWorld(var1.bi.name, var1.w);
+        int var3 = var1.dimension;
+        OWorldServer var4 = this.c.getWorld(var1.bi.name, var1.dimension);
 
-        var1.w = var2;
-        OWorldServer var5 = this.c.getWorld(var1.bi.name, var1.w);
+        var1.dimension = var2;
+        OWorldServer var5 = this.c.getWorld(var1.bi.name, var1.dimension);
 
-        var1.a.b((OPacket) (new OPacket9Respawn(var1.w, (byte) var1.bi.q, var5.s().p(), var5.y(), var1.c.a())));
+        var1.a.b((OPacket) (new OPacket9Respawn(var1.dimension, (byte) var1.bi.q, var5.s().p(), var5.y(), var1.c.a())));
         var4.f(var1);
         var1.bE = false;
         double var6 = var1.bm;
         double var8 = var1.bo;
         double var10 = 8.0D;
 
-        if (var1.w == -1) {
+        if (var1.dimension == -1) {
             var6 /= var10;
             var8 /= var10;
             var1.c(var6, var1.bn, var8, var1.bs, var1.bt);
             if (var1.aE()) {
                 var4.a(var1, false);
             }
-        } else if (var1.w == 0) {
+        } else if (var1.dimension == 0) {
             var6 *= var10;
             var8 *= var10;
             var1.c(var6, var1.bn, var8, var1.bs, var1.bt);
@@ -383,7 +383,7 @@ public class OServerConfigurationManager {
         }
 
         this.a(var1);
-        var1.a.a(var1.bm, var1.bn, var1.bo, var1.bs, var1.bt, var1.w, var1.bi.name);
+        var1.a.a(var1.bm, var1.bn, var1.bo, var1.bs, var1.bt, var1.dimension, var1.bi.name);
         var1.a((OWorld) var5);
         var1.c.a(var5);
         this.a(var1, var5);
@@ -441,7 +441,7 @@ public class OServerConfigurationManager {
         for (int var3 = 0; var3 < this.b.size(); ++var3) {
             OEntityPlayerMP var4 = (OEntityPlayerMP) this.b.get(var3);
 
-            if (var4.w == var2) {
+            if (var4.dimension == var2) {
                 //CanaryMod re-route time updates to world-specific entity trackers
                 var4.bi.getEntityTracker().sendPacketToPlayersAndEntity(var4, var1);
                 //var4.a.b(var1);
@@ -693,7 +693,7 @@ public class OServerConfigurationManager {
             for (int var12 = 0; var12 < this.b.size(); ++var12) {
                 OEntityPlayerMP var13 = (OEntityPlayerMP) this.b.get(var12);
 
-                if (var13 != var1 && var13.w == var10) {
+                if (var13 != var1 && var13.dimension == var10) {
                     double var14 = var2 - var13.bm;
                     double var16 = var4 - var13.bn;
                     double var18 = var6 - var13.bo;
@@ -708,7 +708,7 @@ public class OServerConfigurationManager {
             for (int var12 = 0; var12 < this.b.size(); ++var12) {
                 OEntityPlayerMP var13 = (OEntityPlayerMP) this.b.get(var12);
 
-                if (var13 != var1 && var13.w == var10 && worldName.equals(var13.bi.name)) {
+                if (var13 != var1 && var13.dimension == var10 && worldName.equals(var13.bi.name)) {
                     double var14 = var2 - var13.bm;
                     double var16 = var4 - var13.bn;
                     double var18 = var6 - var13.bo;
