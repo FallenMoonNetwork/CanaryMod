@@ -1124,19 +1124,22 @@ public abstract class OEntityPlayer extends OEntityLiving {
         this.q -= var1;
         this.levelProgress -= (float) var1 / (float) this.calcReqXP();
         this.totalXP -= var1;
-        levelUp();
+        levelDown();
     }
 
     public void setXP(int var1) {
         this.q = var1;
+        this.level = 0;
         this.levelProgress = (float) var1 / (float) this.calcReqXP();
         this.totalXP = var1;
         levelUp();
     }
-    
+    //TODO: add hook
     public void levelDown(){
-    	for (; this.levelProgress < 0F ; ){
-    		
+    	while(levelProgress < 0) {
+    	    levelProgress = calcReqXP()*(levelProgress)/calcReqXP(level-1);
+    	    levelProgress++;
+    	    decreaseLevelBy(1);
     	}
     }
     
@@ -1159,6 +1162,11 @@ public abstract class OEntityPlayer extends OEntityLiving {
     
     public int calcReqXP() {
         return 7 + (this.level * 7 >> 1);
+    }
+    public int calcReqXP(int level) {
+    	if(level < 0)
+    		level = 0;
+        return 7 + (level * 7 >> 1);
     }
     
     private void increaseLevel() {
