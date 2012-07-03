@@ -1103,7 +1103,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
     public void g(int var1) {
         addXP(var1);
     }
-    
+    //added check weather @param is positive
     public void addXP(int var1) {
     	if(var1<0)
     		throw new IllegalArgumentException("cannot add negative value");
@@ -1117,7 +1117,8 @@ public abstract class OEntityPlayer extends OEntityLiving {
         this.totalXP += var1;
         levelUp();
     }
-
+    //added check weather @param is positive
+    //called levelDown() method
     public void removeXP(int var1) {
     	if(var1<0)
     		throw new IllegalArgumentException("cannot remove negative value");
@@ -1126,7 +1127,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         this.totalXP -= var1;
         levelDown();
     }
-
+    //before calculating the progress and calling levelUp() set level to 0 so it's working properly
     public void setXP(int var1) {
         this.q = var1;
         this.level = 0;
@@ -1135,6 +1136,7 @@ public abstract class OEntityPlayer extends OEntityLiving {
         levelUp();
     }
     //TODO: add hook
+    //decreases the level if the progress is negative
     public void levelDown(){
     	while(levelProgress < 0) {
     	    levelProgress = calcReqXP()*(levelProgress)/calcReqXP(level-1);
