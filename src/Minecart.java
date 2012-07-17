@@ -138,4 +138,29 @@ public class Minecart extends BaseVehicle {
         }
         return null;
     }
+    
+    /**
+     * makes a powered minecart powered for 1 tick ?
+     * 
+     * @param power
+     */
+   public void setPowered(boolean power){
+       if (getType() == Type.PoweredMinecart) {
+   		getEntity().a(power);
+   	}
+   	return;
+   }
+   
+   /**
+    * returns true if the poweredminecart is powered
+    * returns false if the minecart is not powered type
+    * 
+    * @return powered
+    */
+   public boolean isPowered(){
+   	if (getType() == Type.PoweredMinecart) {
+   		return getEntity().k();
+   	}
+   	return false;
+   }
 }
