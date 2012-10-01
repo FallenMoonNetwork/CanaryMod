@@ -692,7 +692,7 @@ public class Item {
             enchantments = new Enchantment[size];
             for (int i = 0; i < size; i++) {
                 ONBTTagCompound tag = (ONBTTagCompound) itemStack.q().b(i);
-                enchantments[i] = new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+                enchantments[i] = new Enchantment(Enchantment.Type.fromId(tag.d("id")), tag.d("lvl"));
             }
         }
         return enchantments;
@@ -711,7 +711,7 @@ public class Item {
                 index = 0;
             }
             ONBTTagCompound tag = (ONBTTagCompound) itemStack.q().b(index);
-            return new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+            return new Enchantment(Enchantment.Type.fromId(tag.d("id")), tag.d("lvl"));
         }
         return null;
     }
@@ -724,7 +724,7 @@ public class Item {
     public Enchantment getEnchantment() {
         if (itemStack != null && itemStack.v()) {
             ONBTTagCompound tag = (ONBTTagCompound) itemStack.q().b(0);
-            return new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+            return new Enchantment(Enchantment.Type.fromId(tag.d("id")), tag.d("lvl"));
         }
         return null;
     }
