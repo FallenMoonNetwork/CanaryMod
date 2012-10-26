@@ -1,4 +1,3 @@
-
 public class OEntitySpider extends OEntityMob {
 
     public OEntitySpider(OWorld oworld) {
@@ -13,15 +12,15 @@ public class OEntitySpider extends OEntityMob {
         this.af.a(16, new Byte((byte) 0));
     }
 
-    public void h_() {
-        super.h_();
-        if (!this.p.K) {
+    public void j_() {
+        super.j_();
+        if (!this.p.J) {
             this.e(this.F);
         }
 
     }
 
-    public int aM() {
+    public int aS() {
         return 16;
     }
 
@@ -29,97 +28,107 @@ public class OEntitySpider extends OEntityMob {
         return (double) this.O * 0.75D - 0.5D;
     }
 
-    protected boolean e_() {
-        return false;
-    }
-
-    protected OEntity k() {
+    protected OEntity j() {
         float f = this.c(1.0F);
 
         double d0 = 16.0D;
-        OEntityPlayer oentityplayer = this.p.b(this, d0);
 
-        if (f < 0.5F && oentityplayer != null && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, (Player) oentityplayer.entity.getPlayer(), entity)) {
-            return oentityplayer;
+        if ((f < 0.5F) && (etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, (Player) oentityplayer.entity.getPlayer(), entity))) {
+            return this.p.b(this, d);
         } else {
             return null;
         }
     }
 
-    protected String aQ() {
-        return "mob.spider";
+    protected String aW() {
+        return "mob.spider.say";
     }
 
-    protected String aR() {
-        return "mob.spider";
+    protected String aX() {
+        return "mob.spider.say";
     }
 
-    protected String aS() {
+    protected String aY() {
         return "mob.spiderdeath";
     }
 
+    protected void a(int i1, int i2,int i3,int i4){
+        this.p.a(n, az, z, z);
+    }
+    
     protected void a(OEntity oentity, float f) {
         float f1 = this.c(1.0F);
 
-        if (f1 > 0.5F && this.Z.nextInt(100) == 0) {
-            this.a = null;
-        } else {
-            if (f > 2.0F && f < 6.0F && this.Z.nextInt(10) == 0) {
-                if (this.E) {
-                    double d0 = oentity.t - this.t;
-                    double d1 = oentity.v - this.v;
-                    float f2 = OMathHelper.a(d0 * d0 + d1 * d1);
+        if (f1 > 0.5F && this.aa.nextInt(100) == 0) {
+            this.a_ = null;
+            return;
+        }
+        if (f > 2.0F && f < 6.0F && this.Z.nextInt(10) == 0) {
+            if (this.E) {
+                double d1 = oentity.t - this.t;
+                double d2 = oentity.v - this.v;
+                float f2 = OMathHelper.a(d1 * d1 + d2 * d2);
 
-                    this.w = d0 / (double) f2 * 0.5D * 0.800000011920929D + this.w * 0.20000000298023224D;
-                    this.y = d1 / (double) f2 * 0.5D * 0.800000011920929D + this.y * 0.20000000298023224D;
-                    this.x = 0.4000000059604645D;
-                }
-            } else {
-                super.a(oentity, f);
+                this.w = d1 / (double) f2 * 0.5D * 0.800000011920929D + this.w * 0.2000000029802322D;
+                this.y = d1 / (double) f2 * 0.5D * 0.800000011920929D + this.y * 0.2000000029802322D;
+                this.x = 0.4000000059604645D;
             }
-
+        } else {
+            super.a(oentity, f);
         }
     }
 
-    protected int aT() {
-        return OItem.K.bT;
+    protected int aZ() {
+        return OItem.K.cf;
     }
 
     protected void a(boolean flag, int i) {
         super.a(flag, i);
-        if (flag && (this.Z.nextInt(3) == 0 || this.Z.nextInt(1 + i) > 0)) {
-            this.b(OItem.bu.bT, 1);
+        
+        if (flag && (this.aa.nextInt(3) == 0 || this.aa.nextInt(1 + i) > 0)) {
+            this.b(OItem.bu.cf, 1);
         }
-
     }
 
-    public boolean f_() {
-        return this.p();
+    public boolean g_() {
+        return this.o();
     }
 
-    public void aj() {}
+    public void am() {}
 
-    public OEnumCreatureAttribute bt() {
+    public OEnumCreatureAttribute bz() {
         return OEnumCreatureAttribute.c;
     }
 
     public boolean e(OPotionEffect opotioneffect) {
-        return opotioneffect.a() == OPotion.u.H ? false : super.e(opotioneffect);
+        if (opotioneffect.a() == OPotion.u.H)
+            return false;
+        return super.e(opotioneffect);
     }
 
-    public boolean p() {
-        return (this.af.a(16) & 1) != 0;
+    public boolean o() {
+        return (this.ag.a(16) & 1) != 0;
     }
 
-    public void e(boolean flag) {
-        byte b0 = this.af.a(16);
+    public void f(boolean flag1) {
+        byte b = this.ag.a(16);
 
-        if (flag) {
-            b0 = (byte) (b0 | 1);
+        if (flag1) {
+            b = (byte) (b | 0x1);
         } else {
-            b0 &= -2;
+            b = (byte)(b & 0xFFFFFFFE);
         }
 
-        this.af.b(16, Byte.valueOf(b0));
+        this.ag.b(16, Byte.valueOf(b));
+    }
+    
+    public void bD() {
+        if (this.p.u.nextInt(100) == 0) {
+            OEntitySkeleton oEntitySkeleton = new OEntitySkeleton(this.p);
+            oEntitySkeleton.b.(this.t, this.u, this.v, this.z, 0.0F);
+            oEntitySkeleton.bD();
+            this.p.d(oEntitySkeleton);
+            oEntitySkeleton.a(this);
+        }
     }
 }
