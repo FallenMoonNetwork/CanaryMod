@@ -22,11 +22,11 @@ public class Sheep extends Mob {
 	 * @param sheared Sheared or not
 	 */
 	public void setSheared(boolean sheared){
-		int i = getEntity().bY.a(16);
+		int i = getEntity().af.a(16);
 		if (sheared){
-			getEntity().bY.b(16, Byte.valueOf((byte)(i | 0x10)));
+			getEntity().af.b(16, Byte.valueOf((byte)(i | 0x10)));
 		} else {
-			getEntity().bY.b(16, Byte.valueOf((byte)(i & 0xFFFFFFEF)));
+			getEntity().af.b(16, Byte.valueOf((byte)(i & 0xFFFFFFEF)));
 		}
 	}
 
@@ -36,7 +36,7 @@ public class Sheep extends Mob {
 	 * @return If this sheep has wool.
 	 */
 	public boolean isSheared(){
-		return (getEntity().bY.a(16) & 0x10) != 0;
+		return (getEntity().af.a(16) & 0x10) != 0;
 	}
 
 	/**
@@ -45,8 +45,8 @@ public class Sheep extends Mob {
 	 * @param color int value of the new color.
 	 */
 	public void setWoolColor(int color){
-		int i = getEntity().bY.a(16);
-		getEntity().bY.b(16, Byte.valueOf((byte)(i & 0xF0 | color & 0xF)));
+		int i = getEntity().af.a(16);
+		getEntity().af.b(16, Byte.valueOf((byte)(i & 0xF0 | color & 0xF)));
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class Sheep extends Mob {
 	 * @return int value of wool color.
 	 */
 	public int getColor(){
-		return getEntity().bY.a(16) & 0xF;
+		return getEntity().af.a(16) & 0xF;
 	}
 
 	/**

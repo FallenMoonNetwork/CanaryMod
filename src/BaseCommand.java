@@ -1,8 +1,11 @@
+
+import java.util.List;
+
 /**
  * Contains methods common to all types of chat commands.
- * 
+ *
  * @author lightweight
- * 
+ *
  */
 public abstract class BaseCommand {
     public final String tooltip;
@@ -43,9 +46,18 @@ public abstract class BaseCommand {
     /**
      * Executes a command. Note: should not be called directly. Use
      * parseCommand() instead!
-     * 
+     *
      * @param player
      * @param parameters
      */
-    abstract void execute(MessageReceiver caller, String[] parameters);
+    protected abstract void execute(MessageReceiver caller, String[] parameters);
+
+    /**
+     * Called by the server to autocomplete this command's options.
+     * @param currentText The text behind the client's cursor.
+     * @return A list containing all options for the last word.
+     */
+    public List<String> autoComplete(String currentText) {
+        return null;
+    }
 }

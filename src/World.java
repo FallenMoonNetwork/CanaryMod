@@ -120,7 +120,7 @@ public class World {
      * @return the dimension type
      */
     public Dimension getType() {
-        return Dimension.fromId(world.t.g);
+        return Dimension.fromId(world.v.h);
     }
 
     /**
@@ -129,7 +129,7 @@ public class World {
      * @return time server time
      */
     public long getTime() {
-        return world.o();
+        return world.D();
     }
 
     /**
@@ -156,7 +156,7 @@ public class World {
         // World info for each world overwrites the other on save,
         // make sure they're the same. (Like you see it in the nether or end)
         for (World w : etc.getServer().getWorld(this.getName()))
-            w.getWorld().a(time);
+            w.getWorld().b(time);
     }
 
     /**
@@ -182,7 +182,7 @@ public class World {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
 
-        for (Object o : world.b) {
+        for (Object o : world.f) {
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityMagmaCube) {
                 toRet.add(new Mob((OEntityLiving) o));
             }
@@ -198,7 +198,7 @@ public class World {
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
 
-        for (Object o : world.b) {
+        for (Object o : world.f) {
             if (o instanceof OEntityAnimal || o instanceof OEntitySquid || o instanceof OEntitySnowman) {
                 toRet.add(new Mob((OEntityLiving) o));
             }
@@ -214,7 +214,7 @@ public class World {
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
 
-        for (Object o : world.b) {
+        for (Object o : world.f) {
             if (o instanceof OEntityMinecart) {
                 toRet.add(((OEntityMinecart) o).cart);
             }
@@ -230,7 +230,7 @@ public class World {
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
 
-        for (Object o : world.b) {
+        for (Object o : world.f) {
             if (o instanceof OEntityBoat) {
                 toRet.add(((OEntityBoat) o).boat);
             }
@@ -246,7 +246,7 @@ public class World {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
 
-        for (Object o : world.b) {
+        for (Object o : world.f) {
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityMagmaCube || o instanceof OEntityVillager || o instanceof OEntitySquid || o instanceof OEntitySnowman) {
                 toRet.add(new Mob((OEntityLiving) o));
             } else if (o instanceof OEntityMinecart) {
@@ -270,7 +270,7 @@ public class World {
     public List<ItemEntity> getItemList() {
         List<ItemEntity> toRet = new ArrayList<ItemEntity>();
 
-        for (Object o : world.b) {
+        for (Object o : world.f) {
             if (o instanceof OEntityItem) {
                 toRet.add(((OEntityItem) o).item);
             }
@@ -287,7 +287,7 @@ public class World {
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
 
-        for (Object o : world.b) {
+        for (Object o : world.f) {
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityMagmaCube || o instanceof OEntityVillager || o instanceof OEntitySquid || o instanceof OEntityGolem) {
                 toRet.add(new Mob((OEntityLiving) o));
             } else if (o instanceof OEntityPlayerMP) {
@@ -305,7 +305,7 @@ public class World {
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
 
-        for (Object o : world.b) {
+        for (Object o : world.f) {
             if (o instanceof OEntityMinecart) {
                 toRet.add(((OEntityMinecart) o).cart);
             } else if (o instanceof OEntityBoat) {
@@ -322,17 +322,35 @@ public class World {
      */
     public Location getSpawnLocation() {
         // More structure ftw
-        OWorldInfo info = world.x;
+        OWorldInfo info = world.z;
         Location spawn = new Location();
 
         spawn.x = info.c() + 0.5D;
-        spawn.y = world.f(info.c(), info.e()) + 1.5D;
+        spawn.y = info.d() + 0.5D;
         spawn.z = info.e() + 0.5D;
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;
         spawn.dimension = 0;
         spawn.world = world.name;
         return spawn;
+    }
+    
+    /**
+     * Sets the spawn location for this level, NOT only this world.
+     * @param x The spawn's new x location
+     * @param y The spawn's new y location
+     * @param z The spawn's new z location
+     */
+    public void setSpawnLocation(int x, int y, int z) {
+        this.getWorld().J().a(x, y, z);
+    }
+    
+    /**
+     * Sets the spawn location for this level, NOT only this world.
+     * @param location The new spawn location.
+     */
+    public void setSpawnLocation(Location location) {
+        this.setSpawnLocation(etc.floor(location.x), etc.floor(location.y), etc.floor(location.z));
     }
 
     /**
@@ -366,7 +384,7 @@ public class World {
      * @return block data
      */
     public int getBlockData(int x, int y, int z) {
-        return world.c(x, y, z);
+        return world.g(x, y, z);
     }
 
     /**
@@ -381,7 +399,7 @@ public class World {
     public boolean setBlockData(int x, int y, int z, int data) {
         boolean toRet = world.d(x, y, z, data);
 
-        etc.getMCServer().h.a(new OPacket53BlockChange(x, y, z, world), getType().getId());
+        etc.getMCServer().ad().sendPacketToDimension(new OPacket53BlockChange(x, y, z, world), getName(), getType().getId());
         ComplexBlock block = getComplexBlock(x, y, z);
 
         if (block != null) {
@@ -411,7 +429,7 @@ public class World {
      * @return highest block altitude
      */
     public int getHighestBlockY(int x, int z) {
-        return world.e(x, z);
+        return world.f(x, z);
     }
 
     /**
@@ -489,7 +507,7 @@ public class World {
      * @return complex block
      */
     public ComplexBlock getOnlyComplexBlock(int x, int y, int z) {
-        OTileEntity localav = world.b(x, y, z);
+        OTileEntity localav = world.p(x, y, z);
 
         if (localav != null) {
             if (localav instanceof OTileEntityChest) {
@@ -621,14 +639,14 @@ public class World {
      * @return returns the ItemEntity that was dropped
      */
     public ItemEntity dropItem(double x, double y, double z, Item item) {
-        double d1 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d2 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d3 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d1 = world.u.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = world.u.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = world.u.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
         OEntityItem oei = new OEntityItem(world, x + d1, y + d2, z + d3, item.getBaseItem() != null ? item.getBaseItem() : new OItemStack(item.getItemId(), item.getAmount(), item.getDamage()));
 
         oei.c = 10;
-        world.b(oei);
+        world.d(oei);
         return oei.item;
     }
 
@@ -686,7 +704,7 @@ public class World {
      * @return true if the chunk is loaded
      */
     public boolean isChunkLoaded(int x, int z) {
-        return world.G.a(x, z);
+        return world.b.a(x, z);
     }
 
     /**
@@ -722,7 +740,7 @@ public class World {
      * @return chunk
      */
     public Chunk loadChunk(int x, int z) {
-        return world.v.c(x, z).chunk;
+        return world.b.d(x, z).chunk;
     }
 
     /**
@@ -759,7 +777,7 @@ public class World {
      */
     public Chunk getChunk(int x, int z) {
         if (isChunkLoaded(x, z)) {
-            return world.G.b(x, z).chunk;
+            return world.b.d(x, z).chunk;
         } else {
             return null;
         }
@@ -784,7 +802,7 @@ public class World {
      * @return true if the block is being powered
      */
     public boolean isBlockPowered(int x, int y, int z) {
-        return world.w(x, y, z);
+        return world.y(x, y, z);
     }
 
     /**
@@ -806,7 +824,7 @@ public class World {
      * @return true if the block is being indirectly powered
      */
     public boolean isBlockIndirectlyPowered(int x, int y, int z) {
-        return world.x(x, y, z);
+        return world.z(x, y, z);
     }
 
     /**
@@ -818,13 +836,13 @@ public class World {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.THUNDER_CHANGE, this, thundering)) {
             return;
         }
-        world.x.a(thundering);
+        world.z.a(thundering); //could be wrong, hard to differentiate between booleans
 
         // Thanks to Bukkit for figuring out these numbers
         if (thundering) {
-            setThunderTime(world.r.nextInt(12000) + 3600);
+            setThunderTime(world.u.nextInt(12000) + 3600);
         } else {
-            setThunderTime(world.r.nextInt(168000) + 12000);
+            setThunderTime(world.u.nextInt(168000) + 12000);
         }
     }
 
@@ -834,7 +852,7 @@ public class World {
      * @param ticks ticks of thunder
      */
     public void setThunderTime(int ticks) {
-        world.x.b(ticks);
+        world.z.f(ticks);
     }
 
     /**
@@ -846,13 +864,13 @@ public class World {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.WEATHER_CHANGE, this, raining)) {
             return;
         }
-        world.x.b(raining);
+        world.z.b(raining);
 
         // Thanks to Bukkit for figuring out these numbers
         if (raining) {
-            setRainTime(world.r.nextInt(12000) + 3600);
+            setRainTime(world.u.nextInt(12000) + 3600);
         } else {
-            setRainTime(world.r.nextInt(168000) + 12000);
+            setRainTime(world.u.nextInt(168000) + 12000);
         }
     }
 
@@ -862,7 +880,7 @@ public class World {
      * @param ticks ticks of rain
      */
     public void setRainTime(int ticks) {
-        world.x.c(ticks);
+        world.z.g(ticks);
     }
 
     /**
@@ -871,7 +889,7 @@ public class World {
      * @return whether it's thundering
      */
     public boolean isThundering() {
-        return world.x.i();
+        return world.z.n();
     }
 
     /**
@@ -880,7 +898,7 @@ public class World {
      * @return the thunder ticks
      */
     public int getThunderTime() {
-        return world.x.j();
+        return world.z.o();
     }
 
     /**
@@ -889,7 +907,7 @@ public class World {
      * @return whether it's raining
      */
     public boolean isRaining() {
-        return world.x.k();
+        return world.z.p();
     }
 
     /**
@@ -898,7 +916,7 @@ public class World {
      * @return the rain ticks
      */
     public int getRainTime() {
-        return world.x.l();
+        return world.z.q();
     }
 
     @Override
@@ -924,7 +942,7 @@ public class World {
      * @param power The power of the explosion. TNT has a power of 4.
      */
     public void explode(BaseEntity exploder, double x, double y, double z, float power) {
-        world.a(exploder.entity, x, y, z, power);
+        world.a(exploder.entity, x, y, z, power, false); //I believe that the last false determines whether or not the explosion is considered 'huge'. I'm not sure what that entails -gregthegeek
     }
 
     /**
@@ -933,7 +951,7 @@ public class World {
      * @return seed of the world
      */
     public long getRandomSeed() {
-        return world.n();
+        return world.D();
     }
 
     /**
@@ -945,7 +963,7 @@ public class World {
      * @param newlevel The light level.
      */
     public void setLightLevel(int x, int y, int z, int newlevel) {
-        this.getWorld().a(OEnumSkyBlock.b, x, y, z, newlevel);
+        this.getWorld().b(OEnumSkyBlock.b, x, y, z, newlevel);
     }
 
     /**
@@ -957,7 +975,7 @@ public class World {
      * @return Light level of the location.
      */
     public float getLightLevel(int x, int y, int z) {
-        return this.getWorld().m(x, y, z);
+        return this.getWorld().k(x, y, z);
     }
 
     /**
@@ -971,8 +989,8 @@ public class World {
         for (int x2 = x - 2; x2 <= x + 2; x2++) {
             for (int y2 = y - 2; y2 <= y + 2; y2++) {
                 for (int z2 = z - 2; z2 <= z + 2; z2++) {
-                    this.getWorld().b(x2, y2, z2, this.getWorld().a(x2, y2, z2),
-                            this.getWorld().c(x2, y2, z2));
+                    this.getWorld().d(x2, y2, z2, this.getWorld().b(x2, y2, z2),// WWOL: a(int int int) to b(int int int) not sure there is so many similar ones.
+                            this.getWorld().g(x2, y2, z2));
                 }
             }
         }
@@ -982,12 +1000,16 @@ public class World {
        return world.getEntityTracker();
     }
     
+    public PlayerManager getPlayerManager() {
+        return world.r().getCanaryPlayerManager();
+    }
+    
     public void removePlayerFromWorld(Player player) {
         world.f((OEntity)player.getEntity());
     }
     
     public void addPlayerToWorld(Player player) {
-        world.b((OEntity)player.getEntity());
+        world.d((OEntity)player.getEntity());
     }
     
     /**

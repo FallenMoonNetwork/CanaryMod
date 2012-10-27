@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class Server {
 
-    private OMinecraftServer server;
+    private ODedicatedServer server;
 
     /**
      * Creates a server
@@ -22,7 +22,7 @@ public class Server {
      * @param server
      */
     public Server(OMinecraftServer server) {
-        this.server = server;
+        this.server = (ODedicatedServer) server;
     }
 
     /**
@@ -31,7 +31,7 @@ public class Server {
      * @param msg Message text to send
      */
     public void messageAll(String msg) {
-        server.h.a(new OPacket3Chat(msg));
+        server.ab().a(new OPacket3Chat(msg));
     }
 
     /**
@@ -52,7 +52,7 @@ public class Server {
      *
      */
     public void unban(String player) {
-        server.h.b(player);
+        server.ab().e().b(player);
         etc.getDataSource().expireBan(new Ban(player));
     }
 
@@ -60,9 +60,10 @@ public class Server {
      * Uses the specified console command
      *
      * @param command
+     * @throws OCommandNotFoundException if the command was not found.
      */
     public void useConsoleCommand(String command) {
-        server.a(command, server);
+        server.D().a(server, command);
     }
 
     /**
@@ -70,29 +71,10 @@ public class Server {
      *
      * @param command command to use
      * @param player player to use command as
+     * @throws OCommandNotFoundException if the command was not found.
      */
     public void useConsoleCommand(String command, Player player) {
-        server.a(command, player.getUser().a);
-    }
-
-    /**
-     * Starts a timer using the built-in timer system.
-     *
-     * @param uniqueString must be unique identifier for this timer
-     * @param time time till it expires (6000 roughly equals 5 minutes)
-     */
-    public void setTimer(String uniqueString, int time) {
-        OMinecraftServer.b.put(uniqueString, time);
-    }
-
-    /**
-     * Check to see if your timer has expired yet.
-     *
-     * @param uniqueString unique identifier
-     * @return false if timer has expired
-     */
-    public boolean isTimerExpired(String uniqueString) {
-        return OMinecraftServer.b.containsKey(uniqueString);
+        server.D().a(player.getEntity(), command);
     }
 
     /**
@@ -144,7 +126,7 @@ public class Server {
      *
      * @return
      */
-    public OMinecraftServer getMCServer() {
+    public ODedicatedServer getMCServer() {
         return server;
     }
 
@@ -159,8 +141,8 @@ public class Server {
 
         name = name.toLowerCase();
 
-        for (OEntityPlayerMP player : (List<OEntityPlayerMP>) server.h.b) {
-            String playerName = player.v;
+        for (OEntityPlayerMP player : (List<OEntityPlayerMP>) server.ab().b) {
+            String playerName = player.bJ;
 
             if (playerName.toLowerCase().equals(name)) {
                 // Perfect match found
@@ -187,7 +169,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        OEntityPlayerMP user = server.h.i(name);
+        OEntityPlayerMP user = server.ab().f(name);
 
         return user == null ? null : user.getPlayer();
     }
@@ -200,7 +182,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
 
-        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.h.b) {
+        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.ab().b) {
             toRet.add(oepmp.getPlayer());
         }
         return toRet;
@@ -212,7 +194,7 @@ public class Server {
      * @return list of player names
      */
     public String getPlayerNames() {
-        return server.h.c();
+        return server.ab().c();
     }
 
     /**
@@ -571,7 +553,7 @@ public class Server {
      * Saves all player inventories to file
      */
     public void saveInventories() {
-        server.h.g();
+        server.ab().g();
     }
 
     /**
@@ -788,7 +770,7 @@ public class Server {
      * @return the default dimension
      */
     public World getDefaultWorld() {
-        return server.getWorld(server.m(), 0).world;
+        return server.getWorld(server.I(), 0).world;
     }
 
     /**
@@ -805,7 +787,7 @@ public class Server {
      * </code></blockquote>
      */
     public World getWorld(int dimension) {
-        return server.getWorld(server.m(), dimension).world;
+        return server.getWorld(server.I(), dimension).world;
     }
 
     /**
@@ -821,7 +803,7 @@ public class Server {
             if (recipe[i] instanceof Block.Type) {
                 recipe[i] = OBlock.m[((Block.Type) recipe[i]).getType()];
             } else if (recipe[i] instanceof Item.Type) {
-                recipe[i] = OItem.d[((Item.Type) recipe[i]).getId()];
+                recipe[i] = OItem.e[((Item.Type) recipe[i]).getId()];
             }
         }
         OCraftingManager.a().a(item.getBaseItem(), recipe);
@@ -840,12 +822,12 @@ public class Server {
             if (recipe[i] instanceof Block.Type) {
                 recipe[i] = OBlock.m[((Block.Type) recipe[i]).getType()];
             } else if (recipe[i] instanceof Item.Type) {
-                recipe[i] = OItem.d[((Item.Type) recipe[i]).getId()];
+                recipe[i] = OItem.e[((Item.Type) recipe[i]).getId()];
             }
         }
         OCraftingManager.a().b(item.getBaseItem(), recipe);
     }
-
+    
     /**
      * Adds a smelting recipe to the furnace recipes.
      * {@code from} is the item that is put into the furnace, and should have
@@ -857,10 +839,25 @@ public class Server {
      * equal 1.
      */
     public void addSmeltingRecipe(Item from, Item to) {
+        this.addSmeltingRecipe(from, to, 0F);
+    }
+
+    /**
+     * Adds a smelting recipe to the furnace recipes.
+     * {@code from} is the item that is put into the furnace, and should have
+     * amount 1. {@code to} is the result after smelting.
+     *
+     * @param from The inserted item
+     * @param to The resulting item
+     * @param xp TODO: check wtf this is
+     * @throws IllegalArgumentException if the amount of {@code from} doesn't
+     * equal 1.
+     */
+    public void addSmeltingRecipe(Item from, Item to, float xp) {
         if (from.getAmount() != 1) {
             throw new IllegalArgumentException("The 'from' amount should be 1");
         }
-        OFurnaceRecipes.a().a(from.getItemId(), to.getBaseItem());
+        OFurnaceRecipes.a().a(from.getItemId(), to.getBaseItem(), xp);
     }
 
     /**
@@ -915,7 +912,7 @@ public class Server {
      */
     public World[] loadWorld(String name, World.Type type, long seed) {
         if (!server.worlds.containsKey(name)) {
-            server.loadWorld(name, seed, type);
+            server.a(name, name, seed, type.getNative());
         }
 
         OWorldServer[] nativeWorlds = server.worlds.get(name);
@@ -950,6 +947,6 @@ public class Server {
      * @return
      */
     public PlayerManager getPlayerManager(World world) {
-        return server.h.getManager(world.getName(), world.getType().getId());
+        return world.getPlayerManager();
     }
 }

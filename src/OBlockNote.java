@@ -3,16 +3,17 @@ public class OBlockNote extends OBlockContainer {
 
     public OBlockNote(int i) {
         super(i, 74, OMaterial.d);
+        this.a(OCreativeTabs.d);
     }
 
     public int a(int i) {
-        return this.bN;
+        return this.cl;
     }
 
     public void a(OWorld oworld, int i, int j, int k, int l) {
         if (l > 0) {
-            boolean flag = oworld.x(i, j, k);
-            OTileEntityNote otileentitynote = (OTileEntityNote) oworld.b(i, j, k);
+            boolean flag = oworld.z(i, j, k);
+            OTileEntityNote otileentitynote = (OTileEntityNote) oworld.p(i, j, k);
 
             if (otileentitynote != null && otileentitynote.b != flag) {
                 if (flag) {
@@ -25,14 +26,14 @@ public class OBlockNote extends OBlockContainer {
 
     }
 
-    public boolean a(OWorld oworld, int i, int j, int k, OEntityPlayer oentityplayer) {
-        if (oworld.F) {
+    public boolean a(OWorld oworld, int i, int j, int k, OEntityPlayer oentityplayer, int l, float f, float f1, float f2) {
+        if (oworld.J) {
             return true;
         } else {
-            OTileEntityNote otileentitynote = (OTileEntityNote) oworld.b(i, j, k);
+            OTileEntityNote otileentitynote = (OTileEntityNote) oworld.p(i, j, k);
 
             if (otileentitynote != null) {
-                otileentitynote.c();
+                otileentitynote.a();
                 otileentitynote.a(oworld, i, j, k);
             }
 
@@ -40,9 +41,9 @@ public class OBlockNote extends OBlockContainer {
         }
     }
 
-    public void b(OWorld oworld, int i, int j, int k, OEntityPlayer oentityplayer) {
-        if (!oworld.F) {
-            OTileEntityNote otileentitynote = (OTileEntityNote) oworld.b(i, j, k);
+    public void a(OWorld oworld, int i, int j, int k, OEntityPlayer oentityplayer) {
+        if (!oworld.J) {
+            OTileEntityNote otileentitynote = (OTileEntityNote) oworld.p(i, j, k);
 
             if (otileentitynote != null) {
                 otileentitynote.a(oworld, i, j, k);
@@ -51,16 +52,15 @@ public class OBlockNote extends OBlockContainer {
         }
     }
 
-    public OTileEntity a_() {
+    public OTileEntity a(OWorld oworld) {
         return new OTileEntityNote();
     }
 
-    public void a(OWorld oworld, int i, int j, int k, int l, int i1) {
+    public void b(OWorld oworld, int i, int j, int k, int l, int i1) {
         float f = (float) Math.pow(2.0D, (double) (i1 - 12) / 12.0D);
         String s = "harp";
 
         if (l == 1) {
-            // CanaryMod: bd gets jarjar'd, reverse here
             s = "bd";
         }
 

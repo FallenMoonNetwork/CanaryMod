@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
+public class OAnvilChunkLoader implements OIThreadedFileIO, OIChunkLoader {
 
     private List a = new ArrayList();
     private Set b = new HashSet();
@@ -30,9 +30,13 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
 
         synchronized (this.c) {
             if (this.b.contains(ochunkcoordintpair)) {
-                for (int k = 0; k < this.a.size(); ++k) {
-                    if (((OAnvilChunkLoaderPending) this.a.get(k)).a.equals(ochunkcoordintpair)) {
-                        onbttagcompound = ((OAnvilChunkLoaderPending) this.a.get(k)).b;
+                Iterator iterator = this.a.iterator();
+
+                while (iterator.hasNext()) {
+                    OAnvilChunkLoaderPending oanvilchunkloaderpending = (OAnvilChunkLoaderPending) iterator.next();
+
+                    if (oanvilchunkloaderpending.a.equals(ochunkcoordintpair)) {
+                        onbttagcompound = oanvilchunkloaderpending.b;
                         break;
                     }
                 }
@@ -40,7 +44,7 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
         }
 
         if (onbttagcompound == null) {
-            DataInputStream datainputstream = ORegionFileCache.b(this.d, i, j);
+            DataInputStream datainputstream = ORegionFileCache.c(this.d, i, j);
 
             if (datainputstream == null) {
                 return null;
@@ -53,29 +57,28 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
     }
 
     protected OChunk a(OWorld oworld, int i, int j, ONBTTagCompound onbttagcompound) {
-        if (!onbttagcompound.c("Level")) {
+        if (!onbttagcompound.b("Level")) {
             System.out.println("Chunk file at " + i + "," + j + " is missing level data, skipping");
             return null;
-        } else if (!onbttagcompound.m("Level").c("Sections")) {
+        } else if (!onbttagcompound.l("Level").b("Sections")) {
             System.out.println("Chunk file at " + i + "," + j + " is missing block data, skipping");
             return null;
         } else {
-            OChunk ochunk = this.a(oworld, onbttagcompound.m("Level"));
+            OChunk ochunk = this.a(oworld, onbttagcompound.l("Level"));
 
             if (!ochunk.a(i, j)) {
                 System.out.println("Chunk file at " + i + "," + j + " is in the wrong location; relocating. (Expected " + i + ", " + j + ", got " + ochunk.g + ", " + ochunk.h + ")");
                 onbttagcompound.a("xPos", i);
                 onbttagcompound.a("zPos", j);
-                ochunk = this.a(oworld, onbttagcompound.m("Level"));
+                ochunk = this.a(oworld, onbttagcompound.l("Level"));
             }
 
-            ochunk.i();
             return ochunk;
         }
     }
 
     public void a(OWorld oworld, OChunk ochunk) {
-        oworld.m();
+        oworld.C();
 
         try {
             ONBTTagCompound onbttagcompound = new ONBTTagCompound();
@@ -83,7 +86,7 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
 
             onbttagcompound.a("Level", (ONBTBase) onbttagcompound1);
             this.a(ochunk, oworld, onbttagcompound1);
-            this.a(ochunk.k(), onbttagcompound);
+            this.a(ochunk.l(), onbttagcompound);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -114,7 +117,7 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
         Object object = this.c;
 
         synchronized (this.c) {
-            if (this.a.size() <= 0) {
+            if (this.a.isEmpty()) {
                 return false;
             }
 
@@ -134,7 +137,7 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
     }
 
     private void a(OAnvilChunkLoaderPending oanvilchunkloaderpending) throws IOException {
-        DataOutputStream dataoutputstream = ORegionFileCache.c(this.d, oanvilchunkloaderpending.a.a, oanvilchunkloaderpending.a.b);
+        DataOutputStream dataoutputstream = ORegionFileCache.d(this.d, oanvilchunkloaderpending.a.a, oanvilchunkloaderpending.a.b);
 
         OCompressedStreamTools.a(oanvilchunkloaderpending.b, (DataOutput) dataoutputstream);
         dataoutputstream.close();
@@ -147,13 +150,12 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
     public void b() {}
 
     private void a(OChunk ochunk, OWorld oworld, ONBTTagCompound onbttagcompound) {
-        oworld.m();
         onbttagcompound.a("xPos", ochunk.g);
         onbttagcompound.a("zPos", ochunk.h);
-        onbttagcompound.a("LastUpdate", oworld.o());
+        onbttagcompound.a("LastUpdate", oworld.E());
         onbttagcompound.a("HeightMap", ochunk.f);
         onbttagcompound.a("TerrainPopulated", ochunk.k);
-        OExtendedBlockStorage[] aoextendedblockstorage = ochunk.h();
+        OExtendedBlockStorage[] aoextendedblockstorage = ochunk.i();
         ONBTTagList onbttaglist = new ONBTTagList("Sections");
         OExtendedBlockStorage[] aoextendedblockstorage1 = aoextendedblockstorage;
         int i = aoextendedblockstorage.length;
@@ -163,23 +165,23 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
         for (int j = 0; j < i; ++j) {
             OExtendedBlockStorage oextendedblockstorage = aoextendedblockstorage1[j];
 
-            if (oextendedblockstorage != null && oextendedblockstorage.f() != 0) {
+            if (oextendedblockstorage != null) {
                 onbttagcompound1 = new ONBTTagCompound();
-                onbttagcompound1.a("Y", (byte) (oextendedblockstorage.c() >> 4 & 255));
+                onbttagcompound1.a("Y", (byte) (oextendedblockstorage.d() >> 4 & 255));
                 onbttagcompound1.a("Blocks", oextendedblockstorage.g());
-                if (oextendedblockstorage.h() != null) {
-                    onbttagcompound1.a("Add", oextendedblockstorage.h().a);
+                if (oextendedblockstorage.i() != null) {
+                    onbttagcompound1.a("Add", oextendedblockstorage.i().a);
                 }
 
-                onbttagcompound1.a("Data", oextendedblockstorage.i().a);
-                onbttagcompound1.a("SkyLight", oextendedblockstorage.k().a);
-                onbttagcompound1.a("BlockLight", oextendedblockstorage.j().a);
+                onbttagcompound1.a("Data", oextendedblockstorage.j().a);
+                onbttagcompound1.a("SkyLight", oextendedblockstorage.l().a);
+                onbttagcompound1.a("BlockLight", oextendedblockstorage.k().a);
                 onbttaglist.a((ONBTBase) onbttagcompound1);
             }
         }
 
         onbttagcompound.a("Sections", (ONBTBase) onbttaglist);
-        onbttagcompound.a("Biomes", ochunk.l());
+        onbttagcompound.a("Biomes", ochunk.m());
         ochunk.m = false;
         ONBTTagList onbttaglist1 = new ONBTTagList();
 
@@ -216,7 +218,7 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
         List list = oworld.a(ochunk, false);
 
         if (list != null) {
-            long k = oworld.o();
+            long k = oworld.E();
             ONBTTagList onbttaglist3 = new ONBTTagList();
             Iterator iterator1 = list.iterator();
 
@@ -238,43 +240,44 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
     }
 
     private OChunk a(OWorld oworld, ONBTTagCompound onbttagcompound) {
-        int i = onbttagcompound.f("xPos");
-        int j = onbttagcompound.f("zPos");
+        int i = onbttagcompound.e("xPos");
+        int j = onbttagcompound.e("zPos");
         OChunk ochunk = new OChunk(oworld, i, j);
 
-        ochunk.f = onbttagcompound.l("HeightMap");
-        ochunk.k = onbttagcompound.o("TerrainPopulated");
-        ONBTTagList onbttaglist = onbttagcompound.n("Sections");
+        ochunk.f = onbttagcompound.k("HeightMap");
+        ochunk.k = onbttagcompound.n("TerrainPopulated");
+        ONBTTagList onbttaglist = onbttagcompound.m("Sections");
         byte b0 = 16;
         OExtendedBlockStorage[] aoextendedblockstorage = new OExtendedBlockStorage[b0];
 
-        for (int k = 0; k < onbttaglist.d(); ++k) {
-            ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.a(k);
-            byte b1 = onbttagcompound1.d("Y");
+        for (int k = 0; k < onbttaglist.c(); ++k) {
+            ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.b(k);
+            byte b1 = onbttagcompound1.c("Y");
             OExtendedBlockStorage oextendedblockstorage = new OExtendedBlockStorage(b1 << 4);
 
-            oextendedblockstorage.a(onbttagcompound1.k("Blocks"));
-            if (onbttagcompound1.c("Add")) {
-                oextendedblockstorage.a(new ONibbleArray(onbttagcompound1.k("Add"), 4));
+            oextendedblockstorage.a(onbttagcompound1.j("Blocks"));
+            if (onbttagcompound1.b("Add")) {
+                // CanaryMod: "fix" crashing bug. Nobody uses block IDs over 255 anyway.
+                // oextendedblockstorage.a(new ONibbleArray(onbttagcompound1.j("Add"), 4));
             }
 
-            oextendedblockstorage.b(new ONibbleArray(onbttagcompound1.k("Data"), 4));
-            oextendedblockstorage.d(new ONibbleArray(onbttagcompound1.k("SkyLight"), 4));
-            oextendedblockstorage.c(new ONibbleArray(onbttagcompound1.k("BlockLight"), 4));
-            oextendedblockstorage.d();
+            oextendedblockstorage.b(new ONibbleArray(onbttagcompound1.j("Data"), 4));
+            oextendedblockstorage.d(new ONibbleArray(onbttagcompound1.j("SkyLight"), 4));
+            oextendedblockstorage.c(new ONibbleArray(onbttagcompound1.j("BlockLight"), 4));
+            oextendedblockstorage.e();
             aoextendedblockstorage[b1] = oextendedblockstorage;
         }
 
         ochunk.a(aoextendedblockstorage);
-        if (onbttagcompound.c("Biomes")) {
-            ochunk.a(onbttagcompound.k("Biomes"));
+        if (onbttagcompound.b("Biomes")) {
+            ochunk.a(onbttagcompound.j("Biomes"));
         }
 
-        ONBTTagList onbttaglist1 = onbttagcompound.n("Entities");
+        ONBTTagList onbttaglist1 = onbttagcompound.m("Entities");
 
         if (onbttaglist1 != null) {
-            for (int l = 0; l < onbttaglist1.d(); ++l) {
-                ONBTTagCompound onbttagcompound2 = (ONBTTagCompound) onbttaglist1.a(l);
+            for (int l = 0; l < onbttaglist1.c(); ++l) {
+                ONBTTagCompound onbttagcompound2 = (ONBTTagCompound) onbttaglist1.b(l);
                 OEntity oentity = OEntityList.a(onbttagcompound2, oworld);
 
                 ochunk.m = true;
@@ -284,11 +287,11 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
             }
         }
 
-        ONBTTagList onbttaglist2 = onbttagcompound.n("TileEntities");
+        ONBTTagList onbttaglist2 = onbttagcompound.m("TileEntities");
 
         if (onbttaglist2 != null) {
-            for (int i1 = 0; i1 < onbttaglist2.d(); ++i1) {
-                ONBTTagCompound onbttagcompound3 = (ONBTTagCompound) onbttaglist2.a(i1);
+            for (int i1 = 0; i1 < onbttaglist2.c(); ++i1) {
+                ONBTTagCompound onbttagcompound3 = (ONBTTagCompound) onbttaglist2.b(i1);
                 OTileEntity otileentity = OTileEntity.c(onbttagcompound3);
 
                 if (otileentity != null) {
@@ -297,14 +300,14 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
             }
         }
 
-        if (onbttagcompound.c("TileTicks")) {
-            ONBTTagList onbttaglist3 = onbttagcompound.n("TileTicks");
+        if (onbttagcompound.b("TileTicks")) {
+            ONBTTagList onbttaglist3 = onbttagcompound.m("TileTicks");
 
             if (onbttaglist3 != null) {
-                for (int j1 = 0; j1 < onbttaglist3.d(); ++j1) {
-                    ONBTTagCompound onbttagcompound4 = (ONBTTagCompound) onbttaglist3.a(j1);
+                for (int j1 = 0; j1 < onbttaglist3.c(); ++j1) {
+                    ONBTTagCompound onbttagcompound4 = (ONBTTagCompound) onbttaglist3.b(j1);
 
-                    oworld.d(onbttagcompound4.f("x"), onbttagcompound4.f("y"), onbttagcompound4.f("z"), onbttagcompound4.f("i"), onbttagcompound4.f("t"));
+                    oworld.b(onbttagcompound4.e("x"), onbttagcompound4.e("y"), onbttagcompound4.e("z"), onbttagcompound4.e("i"), onbttagcompound4.e("t"));
                 }
             }
         }

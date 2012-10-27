@@ -8,20 +8,20 @@ public class OItemSeeds extends OItem {
         super(i);
         this.a = j;
         this.b = k;
+        this.a(OCreativeTabs.l);
     }
 
-    public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l) {
+    public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l, float f, float f1, float f2) {
         if (l != 1) {
             return false;
-        } else if (oentityplayer.d(i, j, k) && oentityplayer.d(i, j + 1, k)) {
+        } else if (oentityplayer.a(i, j, k, l, oitemstack) && oentityplayer.a(i, j + 1, k, l, oitemstack)) {
             int i1 = oworld.a(i, j, k);
 
-            if (i1 == this.b && oworld.g(i, j + 1, k)) {
+            if (i1 == this.b && oworld.c(i, j + 1, k)) {
                 // CanaryMod: Seeds
-                Block blockClicked = new Block(oworld.world, i1, i, j, k);
-
-                blockClicked.setFaceClicked(Block.Face.fromId(l));
-                Block blockPlaced = new Block(oworld.world, oworld.a(i, j + 1, k), i, j + 1, k);
+                Block blockClicked = this.getBlockInfo(oworld, i, j, k, l);
+                
+                Block blockPlaced = oworld.world.getBlockAt(i, j + 1, k);
 
                 // Call the hook
                 Player player = ((OEntityPlayerMP) oentityplayer).getPlayer();

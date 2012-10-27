@@ -11,7 +11,7 @@ public class Dispenser extends BaseContainerBlock implements ComplexBlock {
     public void fire() {
         OWorld oworld = this.getWorld().getWorld();
         
-        // OBlock.R = OBlockDispenser, oworld.w = Random
-        OBlock.P.a(oworld, this.getX(), this.getY(), this.getZ(), oworld.r);
+        // OBlock.P = OBlockDispenser, c = dispenseItem, oworld.v = Random
+        ((OBlockDispenser) OBlock.P).c(oworld, this.getX(), this.getY(), this.getZ(), oworld.v);
     }
 }

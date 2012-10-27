@@ -22,5 +22,11 @@ public class Colors {
     public static final String LightPurple = "\u00A7d";
     public static final String Yellow = "\u00A7e";
     public static final String White = "\u00A7f";
+    public static final String Random = "\u00A7k";
+    public static final String Bold = "\u00A7l";
+    public static final String Strike = "\u00A7m";
+    public static final String Underline = "\u00A7n";
+    public static final String Italic = "\u00A7o";
+    public static final String Reset = "\u00A7r";
     public static final String Marker = "\u00A7";
 }

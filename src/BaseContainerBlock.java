@@ -23,35 +23,39 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
     }
 
     public int getX() {
-        return container.l;
+        return this.container.l;
     }
 
     public int getY() {
-        return container.m;
+        return this.container.m;
     }
 
     public int getZ() {
-        return container.n;
+        return this.container.n;
     }
 
     public World getWorld() {
-        return container.k.world;
+        return this.container.k.world;
     }
 
     public Block getBlock() {
-        return getWorld().getBlockAt(getX(), getY(), getZ());
+        return this.getWorld().getBlockAt(this.getX(), this.getY(), this.getZ());
     }
 
+    @Override
     public void update() {
-        container.q_();
+        this.container.g(); // TileEntity.updateEntity
+        this.container.d(); // IInventory.onInventoryChanged
     }
 
+    @Override
     public String getName() {
-        return container.getName();
+        return this.container.getName();
     }
 
+    @Override
     public void setName(String value) {
-        container.setName(value);
+        this.container.setName(value);
     }
 
     /**
@@ -106,6 +110,6 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
 
     @Override
     public String toString() {
-        return String.format(name + " [x=%d, y=%d, z=%d, world=%d]", getX(), getY(), getZ(), getWorld().getType().getId());
+        return String.format(this.name + " [x=%d, y=%d, z=%d, world=%s, dimension=%d]", this.getX(), this.getY(), this.getZ(), this.getWorld().getName(), this.getWorld().getType().getId());
     }
 }

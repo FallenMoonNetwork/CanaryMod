@@ -85,7 +85,7 @@ public class Minecart extends BaseVehicle {
      */
     public Minecart(World world, double x, double y, double z, Type type) {
         super(new OEntityMinecart(world.getWorld(), x, y, z, type.getType()));
-        world.getWorld().b(entity);
+        world.getWorld().d(entity);
     }
 
     /**
@@ -114,7 +114,7 @@ public class Minecart extends BaseVehicle {
      * @return returns current damage
      */
     public int getDamage() {
-        return getEntity().l();
+        return getEntity().i();
     }
 
     /**

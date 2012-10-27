@@ -1,7 +1,9 @@
-
-import java.util.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
+@SuppressWarnings("LoggerStringConcat")
 public class ServerConsoleCommands {
 
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -29,6 +31,7 @@ public class ServerConsoleCommands {
         add("kickall", kickall);
         add("time", time);
         add("weather", weather);
+        add("toggledownfall", weather);
         add("thunder", thunder);
     }
 
@@ -69,10 +72,6 @@ public class ServerConsoleCommands {
      * @return
      */
     public static boolean parseServerConsoleCommand(MessageReceiver caller, String command, String[] args) {
-        if (instance == null) {
-            instance = new ServerConsoleCommands();
-        }
-
         BaseCommand cmd = instance.getCommand(command);
 
         if (cmd != null) {
@@ -83,15 +82,32 @@ public class ServerConsoleCommands {
         return false;
     }
 
+    /**
+     * Searches for and returns {@code command} if found, {@code null}
+     * otherwise.
+     *
+     * @param command The command to search for
+     * @return {@code command} if found, {@code null} otherwise
+     */
     public BaseCommand getCommand(String command) {
         return commands.get(command);
     }
+
+    /**
+     * Returns the <tt>ServerConsoleCommands</tt> instance.
+     * @return the <tt>ServerConsoleCommands</tt> as used by the server.
+     */
+    public static ServerConsoleCommands getInstance() {
+        return instance;
+    }
+
     public static final BaseCommand reload = new BaseCommand("- Reloads CanaryMod") {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             etc.getInstance().load();
             etc.getInstance().loadData();
+            etc.getDataSource().loadGroups();
             for (Player p : etc.getServer().getPlayerList()) {
                 p.getUser().reloadPlayer();
             }
@@ -102,7 +118,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand modify = new BaseCommand("<player> <key> <value> - Type /modify for more info", "Overriden onBadSyntax", 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             if (parameters.length > 2 && parameters[2].contains(":")) {
                 for (int i = 3; i < parameters.length; i++) {
                     if (!parameters[i].contains(":")) {
@@ -252,7 +268,7 @@ public class ServerConsoleCommands {
     public final static BaseCommand whitelist = new BaseCommand("<toggle|add|remove> [player]", "whitelist <toggle|add|remove>", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             if (parameters[1].equalsIgnoreCase("toggle")) {
                 caller.notify((etc.getInstance().toggleWhitelist() ? "Whitelist enabled" : "Whitelist disabled"));
             } else if (parameters.length == 3) {
@@ -273,7 +289,7 @@ public class ServerConsoleCommands {
     public final static BaseCommand reservelist = new BaseCommand("<add|remove> <player>", "reservelist <add|remove> <player>", 3, 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             if (parameters[1].equalsIgnoreCase("add")) {
                 etc.getDataSource().addToReserveList(parameters[2]);
                 caller.notify(parameters[2] + " added to reservelist");
@@ -288,14 +304,14 @@ public class ServerConsoleCommands {
     public final static BaseCommand listplugins = new BaseCommand("- Lists all plugins") {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             caller.notify("Plugins" + Colors.White + ": " + etc.getLoader().getPluginList());
         }
     };
     public final static BaseCommand reloadplugin = new BaseCommand("<plugin> - Reloads plugin", "Correct usage is: /reloadplugin [plugin]", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             if (etc.getLoader().reloadPlugin(parameters[1])) {
                 caller.notify("Plugin reloaded.");
             } else {
@@ -306,7 +322,7 @@ public class ServerConsoleCommands {
     public final static BaseCommand enableplugin = new BaseCommand("<plugin> - Enables plugin", "Correct usage is: /enableplugin [plugin]", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             if (etc.getLoader().enablePlugin(parameters[1])) {
                 caller.notify("Plugin enabled.");
             } else {
@@ -317,7 +333,7 @@ public class ServerConsoleCommands {
     public final static BaseCommand disableplugin = new BaseCommand("<plugin> - Disables plugin", "Correct usage is: /disableplugin [plugin]", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             etc.getLoader().disablePlugin(parameters[1]);
             caller.notify("Plugin disabled.");
         }
@@ -325,7 +341,7 @@ public class ServerConsoleCommands {
     public final static BaseCommand version = new BaseCommand("- Displays the server version") {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             if (!etc.getInstance().getTainted()) {
                 if (etc.getInstance().isCrow()) {
                     caller.notify(Colors.Gold + "Crow Test Build " + etc.getInstance().getVersionStr());
@@ -340,7 +356,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand banlist = new BaseCommand("['IPs'] - Gives a list of (IP) bans") {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             boolean ips = false;
 
             if (split.length == 2 && split[1].equalsIgnoreCase("ips")) {
@@ -348,16 +364,16 @@ public class ServerConsoleCommands {
             }
 
             if (!ips) {
-                caller.notify(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().h.getBans());
+                caller.notify(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().ab().getBans());
             } else {
-                caller.notify(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().h.getIpBans());
+                caller.notify(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().ab().getIpBans());
             }
         }
     };
     public static final BaseCommand banip = new BaseCommand("<Player> [Reason] - Bans the player's IP", "Correct usage is: /banip [player] <reason> (optional) NOTE: this permabans IPs.", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             Player player = etc.getServer().matchPlayer(split[1]);
 
             if (player != null) {
@@ -391,7 +407,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand ban = new BaseCommand("<Player> [Reason] - Bans the player", "Correct usage is: /ban [player] <reason> (optional)", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             Player player = etc.getServer().matchPlayer(split[1]);
 
             if (player != null) {
@@ -430,7 +446,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand unban = new BaseCommand("<Player> - Unbans the player", "Correct usage is: /unban [player]", 2, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             etc.getServer().unban(split[1]);
             caller.notify("Unbanned " + split[1]);
         }
@@ -438,11 +454,11 @@ public class ServerConsoleCommands {
     public static final BaseCommand unbanip = new BaseCommand("<IP> - Unbans the IP", "Correct usage is: /unbanip [ip]", 2, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] parameters) {
+        protected void execute(MessageReceiver caller, String[] parameters) {
             caller.notify("This command is going to be phased out.");
             caller.notify("For new bans, you can just use /unban to unban IPs.");
             etc.getDataSource().expireBan(new Ban(parameters[1]));
-            etc.getMCServer().h.d(parameters[1]);
+            etc.getMCServer().ab().f().b(parameters[1]);
             caller.notify("Unbanned " + parameters[1]);
         }
     };
@@ -450,7 +466,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand tempban = new BaseCommand("['ip'] <player> <time> [reason] - Bans the player for the specified time", "Overridden because multiline", 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             boolean byIp = split[1].equalsIgnoreCase("ip");
             if (byIp) {
                 split = (split[0] + " " + etc.combineSplit(2, split, " ")).split(" ");
@@ -549,7 +565,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand kick = new BaseCommand("<Player> [Reason] - Kicks player", "Correct usage is: /kick [player] <reason> (optional)", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             Player player = etc.getServer().matchPlayer(split[1]);
 
             if (player != null) {
@@ -575,7 +591,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand kickall = new BaseCommand("[Reason] - Kicks all players", "Correct usage is: /kickall <reason> (optional)", 1) {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             log.info("Kicking all players.");
             Object[] playerObjects = etc.getServer().getPlayerList().toArray();
             for (Object playerObject : playerObjects) {
@@ -596,7 +612,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand time = new BaseCommand("[world] <time|'day'|'night'|'check'|'raw'rawtime> - Changes or checks the time", "Correct usage is: /time <day|night|check|raw> (rawtime)", 2, 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             World world;
 
             if (caller instanceof Player) {
@@ -637,7 +653,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand weather = new BaseCommand("[on|off] (optional) - Set weather to the specified value (default: toggle)", "Usage: /weather [on|off]", 1, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -662,7 +678,7 @@ public class ServerConsoleCommands {
     public static final BaseCommand thunder = new BaseCommand("[on|off] (optional) - Set thunder to the specified value (default: toggle)", "Usage: /thunder [on|off]", 1, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -683,4 +699,9 @@ public class ServerConsoleCommands {
             }
         }
     };
+
+    static {
+        // CanaryMod: Initialize *after* all the commands
+        instance = new ServerConsoleCommands();
+    }
 }

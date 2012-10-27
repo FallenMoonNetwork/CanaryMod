@@ -20,60 +20,60 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
         this.c = oiinventory1;
     }
 
-    public int c() {
-        return this.b.c() + this.c.c();
+    public int k_() {
+        return this.b.k_() + this.c.k_();
     }
 
-    public String e() {
+    public String b() {
         return this.a;
     }
 
-    public OItemStack g_(int i) {
-        return i >= this.b.c() ? this.c.g_(i - this.b.c()) : this.b.g_(i);
+    public OItemStack a(int i) {
+        return i >= this.b.k_() ? this.c.a(i - this.b.k_()) : this.b.a(i);
     }
 
     public OItemStack a(int i, int j) {
-        return i >= this.b.c() ? this.c.a(i - this.b.c(), j) : this.b.a(i, j);
+        return i >= this.b.k_() ? this.c.a(i - this.b.k_(), j) : this.b.a(i, j);
     }
 
-    public OItemStack b(int i) {
-        return i >= this.b.c() ? this.c.b(i - this.b.c()) : this.b.b(i);
+    public OItemStack a_(int i) {
+        return i >= this.b.k_() ? this.c.a_(i - this.b.k_()) : this.b.a_(i);
     }
 
     public void a(int i, OItemStack oitemstack) {
-        if (i >= this.b.c()) {
-            this.c.a(i - this.b.c(), oitemstack);
+        if (i >= this.b.k_()) {
+            this.c.a(i - this.b.k_(), oitemstack);
         } else {
             this.b.a(i, oitemstack);
         }
 
     }
 
-    public int a() {
-        return this.b.a();
+    public int c() {
+        return this.b.c();
     }
 
-    public void G_() {
-        this.b.G_();
-        this.c.G_();
+    public void d() {
+        this.b.d();
+        this.c.d();
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
         return this.b.a(oentityplayer) && this.c.a(oentityplayer);
     }
 
+    public void l_() {
+        this.b.l_();
+        this.c.l_();
+    }
+
     public void f() {
         this.b.f();
         this.c.f();
     }
-
-    public void g() {
-        this.b.g();
-        this.c.g();
-    }
     
     public OItemStack[] getContents() {
-        int size = getContentsSize();
+        int size = this.getContentsSize();
         OItemStack[] result = new OItemStack[size];
 
         for (int i = 0; i < size; i++) {
@@ -83,41 +83,41 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
     }
 
     public void setContents(OItemStack[] aoitemstack) {
-        int size = getContentsSize();
+        int size = this.getContentsSize();
 
         for (int i = 0; i < size; i++) {
-            setContentsAt(i, aoitemstack[i]);
+            this.setContentsAt(i, aoitemstack[i]);
         }
     }
 
     public OItemStack getContentsAt(int i) {
-        return g_(i);
+        return this.a(i);
     }
 
     public void setContentsAt(int i, OItemStack oitemstack) {
-        a(i, oitemstack);
+        this.a(i, oitemstack);
     }
 
     public int getContentsSize() {
-        return c();
+        return this.i_();
     }
 
     public String getName() {
-        return a;
+        return this.a;
     }
 
     public void setName(String s) {
-        a = s;
+        this.a = s;
     }
 
     public Block getChestBlock() {
-        if (b instanceof OTileEntityChest) {
-            OTileEntityChest block = (OTileEntityChest) b;
+        if (this.b instanceof OTileEntityChest) {
+            OTileEntityChest block = (OTileEntityChest) this.b;
 
             return block.k.world.getBlockAt(block.l, block.m, block.n);
         }
-        if (c instanceof OTileEntityChest) {
-            OTileEntityChest block = (OTileEntityChest) c;
+        if (this.c instanceof OTileEntityChest) {
+            OTileEntityChest block = (OTileEntityChest) this.c;
 
             return block.k.world.getBlockAt(block.l, block.m, block.n);
         }

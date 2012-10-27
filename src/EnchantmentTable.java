@@ -6,7 +6,7 @@ public class EnchantmentTable extends ItemArray<OInventoryBasic> implements Inve
     private final OContainerEnchantment enchantTable;
     
     public EnchantmentTable(OContainerEnchantment block) {
-        super(block.a);
+        super((OInventoryBasic) block.e);
         enchantTable = block;
     }
 
@@ -48,7 +48,7 @@ public class EnchantmentTable extends ItemArray<OInventoryBasic> implements Inve
      * @return an int[3] containing the levels of the slots 
      */
     public int[] getEnchantLevels() {
-        return enchantTable.c;
+        return enchantTable.g;
     }
     
 }

@@ -9,7 +9,7 @@ public class TamableEntity extends Mob{
 	 * @return True if tamed.
 	 */
 	public boolean isTame(){
-		return getEntity().u_();
+		return getEntity().n();
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class TamableEntity extends Mob{
 	 * @return The name of the player who owns this animal.
 	 */
 	public String getOwnerName(){
-		return getEntity().A();
+		return getEntity().p();
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class TamableEntity extends Mob{
 	 * @return A Player instance of this animals owner, else null.
 	 */
 	public Player getOwner(){
-		LivingEntity le = new LivingEntity(getEntity().bi.a(getOwnerName()));
+		LivingEntity le = new LivingEntity(getEntity().q());
 		if (le.isPlayer()){
 			return le.getPlayer();
 		} else {
@@ -68,11 +68,11 @@ public class TamableEntity extends Mob{
 	 * @param sitting If this animal should be sitting.
 	 */
 	public void setSitting(boolean sitting){
-		int i = getEntity().bY.a(16);
+		int i = getEntity().af.a(16);
 		if (sitting)
-			getEntity().bY.b(16, Byte.valueOf((byte)(i | 0x1)));
+			getEntity().af.b(16, Byte.valueOf((byte)(i | 0x1)));
 		else
-			getEntity().bY.b(16, Byte.valueOf((byte)(i & 0xFFFFFFFE)));
+			getEntity().af.b(16, Byte.valueOf((byte)(i & 0xFFFFFFFE)));
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class TamableEntity extends Mob{
 	 * @return Sitting or not.
 	 */
 	public boolean isSitting(){
-		return getEntity().v_();
+		return getEntity().o();
 	}
 
     @Override

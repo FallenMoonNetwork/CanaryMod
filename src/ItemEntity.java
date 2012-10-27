@@ -47,7 +47,7 @@ public class ItemEntity extends BaseEntity {
 
     @Override
     public World getWorld() {
-        return getEntity().bi.world;
+        return getEntity().p.world;
     }
 
 }

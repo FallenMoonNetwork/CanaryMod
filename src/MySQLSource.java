@@ -375,15 +375,13 @@ public class MySQLSource extends DataSource {
 
         try {
             conn = etc.getConnection();
-            ps = conn.prepareStatement("INSERT INTO " + table_users + " (name, groups, prefix, commands, admin, canmodifyworld, ignoresrestrictions, ip) VALUES (?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO " + table_users + " (name, groups, prefix, commands, `admin/unrestricted`, ip) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, player.getName());
             ps.setString(2, etc.combineSplit(0, player.getGroups(), ","));
             ps.setString(3, player.getPrefix());
             ps.setString(4, etc.combineSplit(0, player.getCommands(), ","));
-            ps.setBoolean(5, player.getAdmin());
-            ps.setBoolean(6, player.canModifyWorld());
-            ps.setBoolean(7, player.ignoreRestrictions());
-            ps.setString(8, player.getIps() != null ? etc.combineSplit(0, player.getIps(), ",") : "");
+            ps.setInt(5, player.getRestrictions());
+            ps.setString(6, player.getIps() != null ? etc.combineSplit(0, player.getIps(), ",") : "");
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
@@ -415,15 +413,13 @@ public class MySQLSource extends DataSource {
 
         try {
             conn = etc.getConnection();
-            ps = conn.prepareStatement("UPDATE " + table_users + " SET groups = ?, prefix = ?, commands = ?, admin = ?, canmodifyworld = ?, ignoresrestrictions = ?, ip = ? WHERE id = ?");
+            ps = conn.prepareStatement("UPDATE " + table_users + " SET groups = ?, prefix = ?, commands = ?, `admin/unrestricted` = ?, ip = ? WHERE id = ?");
             ps.setString(1, etc.combineSplit(0, player.getGroups(), ","));
             ps.setString(2, player.getPrefix());
             ps.setString(3, etc.combineSplit(0, player.getCommands(), ","));
-            ps.setBoolean(4, player.getAdmin());
-            ps.setBoolean(5, player.canModifyWorld());
-            ps.setBoolean(6, player.ignoreRestrictions());
-            ps.setString(7, player.getIps() != null ? etc.combineSplit(0, player.getIps(), ",") : "");
-            ps.setInt(8, player.getSqlId());
+            ps.setInt(4, player.getRestrictions());
+            ps.setString(5, player.getIps() != null ? etc.combineSplit(0, player.getIps(), ",") : "");
+            ps.setInt(6, player.getSqlId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             log.log(Level.SEVERE, "Unable to update user in users table", ex);
@@ -786,9 +782,23 @@ public class MySQLSource extends DataSource {
                 player.setGroups(rs.getString("groups").split(","));
                 player.setCommands(rs.getString("commands").split(","));
                 player.setPrefix(rs.getString("prefix"));
-                player.setAdmin(rs.getBoolean("admin"));
-                player.setCanModifyWorld(rs.getBoolean("canmodifyworld"));
-                player.setIgnoreRestrictions(rs.getBoolean("ignoresrestrictions"));
+                player.setRestrictions(rs.getInt("admin/unrestricted"));
+                if(rs.wasNull()) {
+                	for (String str : player.getGroups()) {
+                        Group group = etc.getDataSource().getGroup(str);
+
+                        if (group != null) {
+                            if (group.Administrator) {
+                                player.setRestrictions(2);
+                                break;
+                            } else if (group.IgnoreRestrictions) {
+                            	player.setRestrictions(1);
+                            } else if (!group.CanModifyWorld && !player.canIgnoreRestrictions()) {
+                            	player.setRestrictions(-1);
+                            }
+                        }
+                    }
+                }
                 StringBuilder ips = new StringBuilder();
                 for (String ip : rs.getString("ip").split(",")) {
                     if (ip.isEmpty() || ip.equals(" ") || !ip.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")) {
