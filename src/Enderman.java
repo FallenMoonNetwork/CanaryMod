@@ -10,21 +10,7 @@ public class Enderman extends Mob {
      * @return Block
      */
     public Block getBlockInHand() {
-        return new Block(Block.Type.fromId(getEntity().A()), getEntity().E());
-    }
-    
-    /**
-     * Sets the block the enderman is holding.
-     * @param blockID - the block ID that the enderman should hold.
-     * @return True if the enderman can hold the block or not.
-     */
-    public boolean setBlockInHand(int blockID) {
-        if (OEntityEnderman.canHoldItem(blockID)) {
-            getEntity().b(blockID);
-            getEntity().c(0);
-            return true;
-        }
-        return false;
+        return new Block(Block.Type.fromId(getEntity().p()), getEntity().q());
     }
     
     /**
@@ -35,10 +21,20 @@ public class Enderman extends Mob {
      */
     public boolean setBlockInHand(int blockID, int blockData) {
         if (OEntityEnderman.canHoldItem(blockID)) {
-            getEntity().b(blockID);
-            getEntity().c(blockData);
+            getEntity().a(blockID);
+            getEntity().b(blockData);
+            return true;
         }
         return false;
+    }
+    
+    /**
+     * Sets the block the enderman is holding.
+     * @param blockID - the block ID that the enderman should hold.
+     * @return True if the enderman can hold the block or not.
+     */
+    public boolean setBlockInHand(int blockID) {
+        return this.setBlockInHand(blockID, 0);
     }
     
     /**
@@ -47,11 +43,7 @@ public class Enderman extends Mob {
      * @return True if the enderman can hold the block or not.
      */
     public boolean setBlockInHand(Block block) {
-        if (OEntityEnderman.canHoldItem(block.getType())) {
-            getEntity().b(block.getType());
-            getEntity().c(block.getData());
-        }
-        return false;
+        return this.setBlockInHand(block.getType(), block.getData());
     }
     
     /**
@@ -65,6 +57,7 @@ public class Enderman extends Mob {
     /**
      *  Allows or prevents the enderman from picking up a specific block
      *  @param blockID - the block to allow or prevent the enderman from picking up.
+     * @param holdable  Whether the enderman should be able to hold the block or not.
      */
     public void setHoldable(int blockID, boolean holdable) {
         OEntityEnderman.setHoldable(blockID, holdable);

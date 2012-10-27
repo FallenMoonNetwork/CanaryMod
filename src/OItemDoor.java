@@ -6,10 +6,11 @@ public class OItemDoor extends OItem {
     public OItemDoor(int i, OMaterial omaterial) {
         super(i);
         this.a = omaterial;
-        this.bQ = 1;
+        this.cg = 1;
+        this.a(OCreativeTabs.d);
     }
 
-    public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l) {
+    public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l, float f, float f1, float f2) {
         if (l != 1) {
             return false;
         } else {
@@ -17,20 +18,18 @@ public class OItemDoor extends OItem {
             OBlock oblock;
 
             if (this.a == OMaterial.d) {
-                oblock = OBlock.aE;
+                oblock = OBlock.aH;
             } else {
-                oblock = OBlock.aL;
+                oblock = OBlock.aO;
             }
 
-            if (oentityplayer.d(i, j, k) && oentityplayer.d(i, j + 1, k)) {
-                if (!oblock.c(oworld, i, j, k)) {
+            if (oentityplayer.a(i, j, k, l, oitemstack) && oentityplayer.a(i, j + 1, k, l, oitemstack)) {
+                if (!oblock.b(oworld, i, j, k)) {
                     return false;
                 } else {
                     // CanaryMod hook: onItemUse
-                    Block blockClicked = new Block(oworld.world, oworld.world.getBlockIdAt(i, j, k), i, j, k);
-
-                    blockClicked.setFaceClicked(Block.Face.fromId(l));
-                    Block blockPlaced = new Block(oworld.world, oblock.bO, i, j, k);
+                    Block blockClicked = this.getBlockInfo(oworld, i, j, k, l);
+                    Block blockPlaced = new Block(oworld.world, oblock.cm, i, j, k);
 
                     // Call the hook
                     if (oentityplayer instanceof OEntityPlayerMP) {
@@ -40,8 +39,8 @@ public class OItemDoor extends OItem {
                             return false;
                         }
                     }
-                    
-                    int i1 = OMathHelper.b((double) ((oentityplayer.bs + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
+
+                    int i1 = OMathHelper.c((double) ((oentityplayer.z + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
 
                     a(oworld, i, j, k, i1, oblock);
                     --oitemstack.a;
@@ -73,10 +72,10 @@ public class OItemDoor extends OItem {
             b0 = 1;
         }
 
-        int i1 = (oworld.e(i - b0, j, k - b1) ? 1 : 0) + (oworld.e(i - b0, j + 1, k - b1) ? 1 : 0);
-        int j1 = (oworld.e(i + b0, j, k + b1) ? 1 : 0) + (oworld.e(i + b0, j + 1, k + b1) ? 1 : 0);
-        boolean flag = oworld.a(i - b0, j, k - b1) == oblock.bO || oworld.a(i - b0, j + 1, k - b1) == oblock.bO;
-        boolean flag1 = oworld.a(i + b0, j, k + b1) == oblock.bO || oworld.a(i + b0, j + 1, k + b1) == oblock.bO;
+        int i1 = (oworld.s(i - b0, j, k - b1) ? 1 : 0) + (oworld.s(i - b0, j + 1, k - b1) ? 1 : 0);
+        int j1 = (oworld.s(i + b0, j, k + b1) ? 1 : 0) + (oworld.s(i + b0, j + 1, k + b1) ? 1 : 0);
+        boolean flag = oworld.a(i - b0, j, k - b1) == oblock.cm || oworld.a(i - b0, j + 1, k - b1) == oblock.cm;
+        boolean flag1 = oworld.a(i + b0, j, k + b1) == oblock.cm || oworld.a(i + b0, j + 1, k + b1) == oblock.cm;
         boolean flag2 = false;
 
         if (flag && !flag1) {
@@ -85,11 +84,11 @@ public class OItemDoor extends OItem {
             flag2 = true;
         }
 
-        oworld.o = true;
-        oworld.b(i, j, k, oblock.bO, l);
-        oworld.b(i, j + 1, k, oblock.bO, 8 | (flag2 ? 1 : 0));
-        oworld.o = false;
-        oworld.h(i, j, k, oblock.bO);
-        oworld.h(i, j + 1, k, oblock.bO);
+        oworld.s = true;
+        oworld.d(i, j, k, oblock.cm, l);
+        oworld.d(i, j + 1, k, oblock.cm, 8 | (flag2 ? 1 : 0));
+        oworld.s = false;
+        oworld.h(i, j, k, oblock.cm);
+        oworld.h(i, j + 1, k, oblock.cm);
     }
 }

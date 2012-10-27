@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("LoggerStringConcat")
 public class PlayerCommands {
 
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -65,10 +66,6 @@ public class PlayerCommands {
      * @return true if {@code command} was found, false otherwise
      */
     public static boolean parsePlayerCommand(MessageReceiver caller, String command, String[] args) {
-        if (instance == null) {
-            instance = new PlayerCommands();
-        }
-
         BaseCommand cmd = instance.getCommand(command);
 
         if (cmd != null) {
@@ -89,11 +86,20 @@ public class PlayerCommands {
     public BaseCommand getCommand(String command) {
         return commands.get(command);
     }
+
+    /**
+     * Returns the <tt>PlayerCommands</tt> instance.
+     * @return the <tt>PlayerCommands</tt> as used by the server.
+     */
+    public static PlayerCommands getInstance() {
+        return instance;
+    }
+
     @Command
     public static final BaseCommand help = new BaseCommand("<Page|Pattern> - Shows a list of commands. 7 per page.") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             // Meh, not the greatest way, but not the worst either.
             List<String> availableCommands = new ArrayList<String>();
 
@@ -164,7 +170,7 @@ public class PlayerCommands {
     public static final BaseCommand mute = new BaseCommand("<Player> - Mutes the player", "Correct usage is: /mute <player>", 2, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player player = etc.getServer().matchPlayer(args[1]);
 
             if (player != null) {
@@ -188,7 +194,7 @@ public class PlayerCommands {
     public static final BaseCommand tell = new BaseCommand("<Player> <Message> - Sends a message to player", "Correct usage is: /msg <player> <message>", 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if ((caller instanceof Player) && ((Player) caller).isMuted()) {
                 caller.notify("You are currently muted.");
                 return;
@@ -213,14 +219,15 @@ public class PlayerCommands {
     public static final BaseCommand kit = new BaseCommand("<Kit> - Gives a kit. To get a list of kits type /kit", "Available kits (overridden)", 2, 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
             Player toGive = (Player) caller;
+            Player player = toGive;
 
             if (args.length > 2) {
-                if (caller instanceof Player && !((Player) caller).canIgnoreRestrictions()) {
+                if (!player.canIgnoreRestrictions()) {
                     onBadSyntax(caller, args);
                 } else {
                     toGive = etc.getServer().matchPlayer(args[2]);
@@ -231,39 +238,37 @@ public class PlayerCommands {
 
             if (toGive != null) {
                 if (kit != null) {
-                    if (!((Player) caller).isInGroup(kit.Group) && !kit.Group.equals("")) {
+                    if (!player.isInGroup(kit.Group) && !kit.Group.equals("")) {
                         caller.notify("That kit does not exist.");
-                    } else if (((Player) caller).getOnlyOneUseKits().contains(kit.Name)) {
+                    } else if (player.getOnlyOneUseKits().contains(kit.Name)) {
                         caller.notify("You can only get this kit once per login.");
-                    } else if (OMinecraftServer.b.containsKey(caller.getName() + " " + kit.Name)) {
+                    } else if (!player.canUseCooldownKit(kit)) {
                         caller.notify("You can't get this kit again for a while.");
                     } else {
-                        {
-                            if (!((Player) caller).canIgnoreRestrictions()) {
-                                if (kit.Delay >= 0) {
-                                    OMinecraftServer.b.put(caller.getName() + " " + kit.Name, kit.Delay);
-                                } else {
-                                    ((Player) caller).getOnlyOneUseKits().add(kit.Name);
-                                }
+                        if (!((Player) caller).canIgnoreRestrictions()) {
+                            if (kit.Delay >= 0) {
+                                player.addCooldownKit(kit, kit.Delay);
+                            } else {
+                                player.getOnlyOneUseKits().add(kit.Name);
                             }
+                        }
 
-                            log.info(caller.getName() + " got a kit!");
-                            toGive.notify("Enjoy this kit!");
-                            for (Entry<String, Integer> entry : kit.IDs.entrySet()) {
+                        log.info(caller.getName() + " got a kit!");
+                        toGive.notify("Enjoy this kit!");
+                        for (Entry<String, Integer> entry : kit.IDs.entrySet()) {
+                            try {
+                                int itemId;
+
                                 try {
-                                    int itemId = 0;
-
-                                    try {
-                                        itemId = Integer.parseInt(entry.getKey());
-                                    } catch (NumberFormatException n) {
-                                        itemId = etc.getDataSource().getItem(entry.getKey());
-                                    }
-
-                                    toGive.giveItem(itemId, kit.IDs.get(entry.getKey()));
-                                } catch (Exception e1) {
-                                    log.info("Got an exception while giving out a kit (Kit name \"" + kit.Name + "\"). Are you sure all the Ids are numbers?");
-                                    caller.notify("The server encountered a problem while giving the kit :(");
+                                    itemId = Integer.parseInt(entry.getKey());
+                                } catch (NumberFormatException n) {
+                                    itemId = etc.getDataSource().getItem(entry.getKey());
                                 }
+
+                                toGive.giveItem(itemId, entry.getValue());
+                            } catch (Exception e1) {
+                                log.info("Got an exception while giving out a kit (Kit name \"" + kit.Name + "\"). Are you sure all the Ids are numbers?");
+                                caller.notify("The server encountered a problem while giving the kit :(");
                             }
                         }
                     }
@@ -286,7 +291,7 @@ public class PlayerCommands {
     public static final BaseCommand tp = new BaseCommand("<Player> - Teleports to player.", "Correct usage is: /tp <player>", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -314,7 +319,7 @@ public class PlayerCommands {
     public static final BaseCommand tphere = new BaseCommand("<Player> - Teleports the player to you", "Correct usage is: /tphere <player>", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -342,7 +347,7 @@ public class PlayerCommands {
     public static final BaseCommand playerlist = new BaseCommand("- Shows a list of players") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             caller.notify("Player list (" + etc.getServer().getPlayerList().size() + "/" + etc.getInstance().getPlayerLimit() + "): " + Colors.White + etc.getServer().getPlayerNames());
         }
     };
@@ -350,7 +355,7 @@ public class PlayerCommands {
     public static final BaseCommand item = new BaseCommand("<ID> [Amount] [Damage] [Player] - Gives items", "Correct usage is: /item <itemid> [amount] [damage] [player]", 2, 5) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -416,60 +421,60 @@ public class PlayerCommands {
 
                 if (Item.isValidItem(itemId)) {
                     if (allowedItem || player.canIgnoreRestrictions()) {
-                    	// This is a bit of a hack, this whole function should
-                    	// probably be rewritten to use .giveItem()
-                    	if (!toGive.isAdmin() &&
-                    		!etc.getInstance().allowEnchantableItemStacking &&
-                    		((itemId >= 256 && itemId <= 258) || 
-                             (itemId >= 267 && itemId <= 279) || 
+                        // This is a bit of a hack, this whole function should
+                        // probably be rewritten to use .giveItem()
+                        if (!toGive.isAdmin() &&
+                            !etc.getInstance().allowEnchantableItemStacking &&
+                            ((itemId >= 256 && itemId <= 258) ||
+                             (itemId >= 267 && itemId <= 279) ||
                              (itemId >= 283 && itemId <= 286) ||
                              (itemId >= 298 && itemId <= 317) ||
                              (itemId == 261))) {
-                    		toGive.giveItem(itemId, amount);
-                    	} else {
-	                    	Item i = new Item(itemId, amount, -1, damage);
-	
-	                        log.info("Giving " + toGive.getName() + " some " + i.toString());
-	                        // toGive.giveItem(itemId, amount);
-	                        Inventory inv = toGive.getInventory();
-	                        ArrayList<Item> list = new ArrayList<Item>();
-	
-	                        for (Item it : inv.getContents()) {
-	                            if (it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage()) {
-	                                list.add(it);
-	                            }
-	                        }
-	
-	                        for (Item it : list) {
-	                            if (it.getAmount() < 64) {
-	                                if (amount >= 64 - it.getAmount()) {
-	                                    amount -= 64 - it.getAmount();
-	                                    it.setAmount(64);
-	                                    toGive.giveItem(it);
-	                                } else {
-	                                    it.setAmount(it.getAmount() + amount);
-	                                    amount = 0;
-	                                    toGive.giveItem(it);
-	                                }
-	                            }
-	                        }
-	                        if (amount != 0) {
-	                            i.setAmount(64);
-	                            while (amount > 64) {
-	                                amount -= 64;
-	                                toGive.giveItem(i);
-	                                i.setSlot(-1);
-	                            }
-	                            i.setAmount(amount);
-	                            toGive.giveItem(i);
-	                        }
-	                        if (toGive.getName().equalsIgnoreCase(caller.getName())) {
-	                            caller.notify("There you go " + caller.getName() + ".");
-	                        } else {
-	                            caller.notify("Gift given! :D");
-	                            toGive.notify("Enjoy your gift! :D");
-	                        }
-                    	}
+                            toGive.giveItem(itemId, amount);
+                        } else {
+                            Item i = new Item(itemId, amount, -1, damage);
+
+                            log.info("Giving " + toGive.getName() + " some " + i.toString());
+                            // toGive.giveItem(itemId, amount);
+                            Inventory inv = toGive.getInventory();
+                            ArrayList<Item> list = new ArrayList<Item>();
+
+                            for (Item it : inv.getContents()) {
+                                if (it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage()) {
+                                    list.add(it);
+                                }
+                            }
+
+                            for (Item it : list) {
+                                if (it.getAmount() < 64) {
+                                    if (amount >= 64 - it.getAmount()) {
+                                        amount -= 64 - it.getAmount();
+                                        it.setAmount(64);
+                                        toGive.giveItem(it);
+                                    } else {
+                                        it.setAmount(it.getAmount() + amount);
+                                        amount = 0;
+                                        toGive.giveItem(it);
+                                    }
+                                }
+                            }
+                            if (amount != 0) {
+                                i.setAmount(64);
+                                while (amount > 64) {
+                                    amount -= 64;
+                                    toGive.giveItem(i);
+                                    i.setSlot(-1);
+                                }
+                                i.setAmount(amount);
+                                toGive.giveItem(i);
+                            }
+                            if (toGive.getName().equalsIgnoreCase(caller.getName())) {
+                                caller.notify("There you go " + caller.getName() + ".");
+                            } else {
+                                caller.notify("Gift given! :D");
+                                toGive.notify("Enjoy your gift! :D");
+                            }
+                        }
                     } else if (!allowedItem && !player.canIgnoreRestrictions()) {
                         caller.notify("You are not allowed to spawn that item.");
                     }
@@ -486,7 +491,7 @@ public class PlayerCommands {
     public static final BaseCommand clothdye = new BaseCommand("<Color> [Amount] - Gives you the specified dye/cloth", "Overridden", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             try {
                 String color = args[1];
 
@@ -602,7 +607,7 @@ public class PlayerCommands {
     public static final BaseCommand me = new BaseCommand("<Message> - * hey0 says hi!") {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             if (caller instanceof Player && ((Player) caller).isMuted()) {
                 caller.notify("You are currently muted.");
                 return;
@@ -620,7 +625,7 @@ public class PlayerCommands {
     public static final BaseCommand sethome = new BaseCommand("- Sets your home") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player) && args.length < 2) {
                 return;
             }
@@ -637,15 +642,6 @@ public class PlayerCommands {
                 caller.notify("Could not find player.");
                 return;
             }
-//            World.Dimension worldType = player.getWorld().getType();
-//            if (worldType != World.Dimension.NORMAL) {
-//                if (player.canIgnoreRestrictions()) {
-//                    player.switchWorlds(World.Dimension.NORMAL.getId());
-//                } else {
-//                    player.notify("You cannot set a home in the " + worldType + ", mortal.");
-//                    return;
-//                }
-//            }
             World world = player.getWorld();
             if (world.getType() != World.Dimension.NORMAL) {
                 if (player.canIgnoreRestrictions()) {
@@ -674,7 +670,7 @@ public class PlayerCommands {
     public static final BaseCommand spawn = new BaseCommand("- Teleports you to spawn") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player) && args.length < 2) {
                 return;
             }
@@ -709,7 +705,7 @@ public class PlayerCommands {
     public static final BaseCommand setspawn = new BaseCommand("- Sets the spawn point to your position.") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player) && args.length < 2) {
                 return;
             }
@@ -732,8 +728,8 @@ public class PlayerCommands {
                 return;
             }
 
-            for (World w : etc.getServer().getWorld(player.getWorld().getName())) {
-                w.getWorld().s().a((int) player.getX(), (int) player.getY(), (int) player.getZ());
+            for (World world : etc.getServer().getWorld(player.getWorld().getName())) {
+                world.setSpawnLocation(player.getLocation());
             }
 
             log.info("Spawn position changed.");
@@ -748,7 +744,7 @@ public class PlayerCommands {
     public static final BaseCommand home = new BaseCommand("- Teleports you home") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -786,7 +782,7 @@ public class PlayerCommands {
     public static final BaseCommand warp = new BaseCommand("<Warp> - Warps to the specified warp.", "Correct usage is: /warp <warpname>", 2, 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player toWarp;
             Warp warp = etc.getDataSource().getWarp(args[1]);
 
@@ -828,7 +824,7 @@ public class PlayerCommands {
                                 return;
                             }
                         }
-                        
+
 
                         toWarp.teleportTo(warp.Location);
                         toWarp.sendMessage(Colors.Rose + "Woosh!");
@@ -845,7 +841,7 @@ public class PlayerCommands {
     public static final BaseCommand listwarps = new BaseCommand("- Gives a list of available warps") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -865,7 +861,7 @@ public class PlayerCommands {
     public static final BaseCommand setwarp = new BaseCommand("<Warp> - Sets the warp to your current position.", "Overridden", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -896,7 +892,7 @@ public class PlayerCommands {
     public static final BaseCommand removewarp = new BaseCommand("<Warp> - Removes the specified warp.", "Correct usage is: /removewarp <warpname>", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Warp warp = etc.getDataSource().getWarp(args[1]);
 
             if (warp != null) {
@@ -911,7 +907,7 @@ public class PlayerCommands {
     public static final BaseCommand mode = new BaseCommand("- Changes your gamemode") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (args.length == 3 && (!(caller instanceof Player) || ((Player) caller).isAdmin())) {
                 Player player = etc.getServer().matchPlayer(args[2]);
 
@@ -921,7 +917,7 @@ public class PlayerCommands {
                     try {
                         int mode = Integer.parseInt(args[1]);
 
-                        mode = OWorldSettings.a(mode);
+                        mode = OEnumGameType.a(mode).e;
                         if (player.getCreativeMode() != mode) {
                             caller.notify(Colors.Yellow + "Setting " + player.getName() + " to game mode " + mode);
                             player.setCreativeMode(mode);
@@ -938,7 +934,7 @@ public class PlayerCommands {
                         Player player = ((Player) caller);
                         int mode = Integer.parseInt(args[1]);
 
-                        mode = OWorldSettings.a(mode);
+                        mode = OEnumGameType.a(mode).e;
                         if (player.getCreativeMode() != mode) {
                             player.notify(Colors.Yellow + "Setting your game mode to " + mode);
                             player.setCreativeMode(mode);
@@ -968,7 +964,7 @@ public class PlayerCommands {
     public static final BaseCommand getpos = new BaseCommand("- Displays your current position.") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -989,7 +985,7 @@ public class PlayerCommands {
     public static final BaseCommand compass = new BaseCommand("- Gives you a compass reading.") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -1007,7 +1003,7 @@ public class PlayerCommands {
     public static final BaseCommand motd = new BaseCommand("- Displays the MOTD") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             etc.getInstance().getMotd(caller);
         }
     };
@@ -1015,7 +1011,7 @@ public class PlayerCommands {
     public static final BaseCommand spawnmob = new BaseCommand("<Name> [Amount] - Spawns a mob at the looked-at position", "Correct usage is: /spawnmob <name> [amount]", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -1070,7 +1066,7 @@ public class PlayerCommands {
                         for (int i = 0; i < mobnumber; i++) {
                             Mob mob = new Mob(args[1], loc);
 
-                            mob.spawn(new Mob(args[2]));
+                            mob.spawn(new Mob(args[2], mob.getWorld()));
                         }
                     }
                 } catch (NumberFormatException nfe) {
@@ -1083,7 +1079,7 @@ public class PlayerCommands {
     public static final BaseCommand clearinventory = new BaseCommand("- Clears your inventory") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
 
             Player target;
 
@@ -1110,7 +1106,8 @@ public class PlayerCommands {
     @Command
     public static final BaseCommand mspawn = new BaseCommand("<Mob> - Change the looked at mob spawner's mob", "Correct usage is: /mspawn <name>.", 1, 2) {
 
-        void execute(MessageReceiver caller, String[] args) {
+        @Override
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -1127,7 +1124,6 @@ public class PlayerCommands {
                     } else {
                         if (!Mob.isValid(args[1])) {
                             caller.notify(String.format("%s is not a valid mob name.", args[1]));
-                            return;
                         } else {
                             ms.setSpawn(args[1]);
                             caller.notify("Mob spawner set to " + args[1]);
@@ -1141,10 +1137,10 @@ public class PlayerCommands {
         }
     };
     @Command
-    public static final BaseCommand xp = new BaseCommand("<level|total|add|remove> [Player] [value] - XP status", "Usage: /xp <level|total|add|remove> [Player] <value>", 2, 4) {
+    public static final BaseCommand xp = new BaseCommand("<level|total|add|remove> [Player] [value] - XP status", "Usage: /xp <level|total|add|remove> [Player] <value>", 1, 4) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -1157,7 +1153,6 @@ public class PlayerCommands {
 
                     if (p == null) {
                         player.notify(args[2] + " does not exist!");
-                        return;
                     } else {
                         if (args[1].equalsIgnoreCase("level")) {
                             player.sendMessage(p.getName() + " is level " + Colors.Yellow + p.getLevel());
@@ -1185,7 +1180,6 @@ public class PlayerCommands {
 
                 if (p == null) {
                     player.notify(args[2] + " does not exist!");
-                    return;
                 } else {
                     try {
                         int xp = Integer.parseInt(args[3]);
@@ -1206,6 +1200,40 @@ public class PlayerCommands {
                 } else if (args[1].equalsIgnoreCase("total")) {
                     player.sendMessage("You have " + Colors.Yellow + player.getXP() + Colors.White + " Total EXP");
                 }
+            } else {
+                int currentLevel = player.getLevel();
+                int targetLevel = currentLevel + 1;
+
+                double whole = Math.floor((float) targetLevel);
+                double partial = (float) targetLevel - whole;
+
+                double wholeXp = 0;
+                double partialXp = 0;
+
+                if(!etc.getInstance().isOldExperience()) {
+                    double low = whole;
+                    double mid = Math.max(0, whole - 15);
+                    double high = Math.max(0, whole - 30);
+                    wholeXp = low * 17 + (mid * (mid - 1) / 2) * 3 + (high * (high - 1) / 2) * 7;
+                    double nextXp = (low * 17 + (mid * (mid - 1) / 2) * 3 + (high * (high - 1) / 2) * 7) - wholeXp;
+                    partialXp = nextXp * partial;
+                } else {
+                    double odd = Math.ceil(whole/2);
+                    double even = Math.floor(whole/2);
+                    double oddXp = (odd * (odd + 1) / 2) * 7;
+                    double evenXp = (even * (even + 1) / 2) * 7 + even * 3;
+                    wholeXp = oddXp + evenXp;
+                    partialXp = (7 + Math.floor((whole + 1) * 7 / 2)) * partial;
+                }
+
+                int targetXp = (int) (wholeXp + partialXp);
+
+                player.sendMessage("User: " + Colors.Yellow + player.getName() + Colors.White);
+                player.sendMessage("Lvl: " + Colors.Yellow + player.getLevel() + Colors.White);
+                player.sendMessage("Exp: " + Colors.Yellow + player.getXP() + Colors.White + " / " + Colors.Yellow + (int) Math.ceil(targetXp) + Colors.White);
+                if(player.isAdmin()) {
+                    player.sendMessage(Colors.Yellow + (etc.getInstance().isOldExperience() ? "Pre-":"Post ") + "1.3.2 Experience System" + Colors.White);
+                }
             }
         }
     };
@@ -1213,7 +1241,7 @@ public class PlayerCommands {
     public static final BaseCommand foodlevel = new BaseCommand("<add|remove|set> [Player] [value] - Sets player food level", "Correct usage is: /foodlevel <add|remove|set> [player] <value>", 2, 4) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player subject = (Player) caller;
             String command = "add";
             int foodLevel = 20;
@@ -1254,7 +1282,7 @@ public class PlayerCommands {
     public static final BaseCommand god = new BaseCommand("<Player> - Makes player invulnerable", "Correct usage is: /god <player>", 1, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player subject = (Player) caller;
             String info = Colors.Yellow + "You are";
 
@@ -1282,7 +1310,7 @@ public class PlayerCommands {
     public static final BaseCommand kill = new BaseCommand("<Player> - Kill the specified player", "Correct usage is: /kill <player>", 1, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player killer = (Player) caller;
             if (args.length == 2) {
                 Player victim = etc.getServer().matchPlayer(args[1]);
@@ -1318,7 +1346,7 @@ public class PlayerCommands {
         }
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player subject = null;
             if (args.length == 2) {
                 subject = etc.getServer().matchPlayer(args[1]);
@@ -1339,7 +1367,7 @@ public class PlayerCommands {
                 sendData(caller, "Food Saturation: ", String.format("%.2f", subject.getFoodSaturationLevel()));
                 sendData(caller, "Experience: ", subject.getXP());
                 sendData(caller, "Level: ", subject.getLevel());
-                sendData(caller, "Mode: ", subject.getEntity().c.a());
+                sendData(caller, "Mode: ", OEnumGameType.a(subject.getCreativeMode()).b());
                 Location l = subject.getLocation();
 
                 sendData(caller, "Position: ", String.format("X: %.2f Y: %.2f Z: %.2f Pitch: %.2f Yawn: %.2f", l.x, l.y, l.z, l.rotX, l.rotY));
@@ -1357,4 +1385,9 @@ public class PlayerCommands {
             }
         }
     };
+
+    static {
+        // CanaryMod: Initialize *after* all the commands
+        instance = new PlayerCommands();
+    }
 }

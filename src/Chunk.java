@@ -46,7 +46,7 @@ public class Chunk {
      * @return new chunk
      */
     public static Chunk regenerateChunk(OWorld world, int x, int z) {
-        return ((OWorldServer)world).G.regenerateChunk(x, z).chunk;
+        return ((OWorldServer)world).b.regenerateChunk(x, z).chunk;
     }
 
     /**
@@ -92,7 +92,7 @@ public class Chunk {
     public boolean setBlockIdAt(int x, int y, int z, int id) {
         if (isLoaded()) {
             // handles notification
-            return getWorld().setBlockAt(id, x | (getX() << 4), y, x | (getZ() << 4));
+            return getWorld().setBlockAt(id, (x & 0xF) | (getX() << 4), y, (z & 0xF) | (getZ() << 4));
         } else {
             return chunk.a(x, y, z, id);
         }
@@ -119,7 +119,7 @@ public class Chunk {
     public void setBlockDataAt(int x, int y, int z, int data) {
         if (isLoaded()) {
             // handles notification
-            getWorld().setBlockData(x | (getX() << 4), y, x | (getZ() << 4), data);
+            getWorld().setBlockData((x & 0xF) | (getX() << 4), y, (z & 0xF) | (getZ() << 4), data);
         } else {
             chunk.b(x, y, z, data);
         }
@@ -133,7 +133,7 @@ public class Chunk {
      * @return block data
      */
     public int getBlockDataAt(int x, int y, int z) {
-        return chunk.b(x, y, z);
+        return chunk.c(x, y, z);
     }
 
     /**
@@ -142,7 +142,7 @@ public class Chunk {
      * @return biomedata
      */
     public byte[] getBiomeData() {
-        return chunk.l();
+        return chunk.m();
     }
 
     /**
@@ -159,7 +159,7 @@ public class Chunk {
      * resends chunk data to clients
      */
     public void update() {
-        etc.getMCServer().h.a(new OPacket51MapChunk(chunk, true, 0));
+        etc.getMCServer().ab().a(new OPacket51MapChunk(chunk, true, 0));
     }
 
     /**

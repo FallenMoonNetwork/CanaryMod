@@ -6,14 +6,14 @@ import java.util.Random;
 
 public class OContainerEnchantment extends OContainer {
 
-    public OIInventory a = new OSlotEnchantmentTable(this, "Enchant", 1);
+    public OIInventory e = new OSlotEnchantmentTable(this, "Enchant", 1);
     private OWorld h;
     private int i;
     private int j;
     private int k;
     private Random l = new Random();
-    public long b;
-    public int[] c = new int[3];
+    public long f;
+    public int[] g = new int[3];
 
     public OContainerEnchantment(OInventoryPlayer oinventoryplayer, OWorld oworld, int i, int j, int k) {
         super();
@@ -21,7 +21,7 @@ public class OContainerEnchantment extends OContainer {
         this.i = i;
         this.j = j;
         this.k = k;
-        this.a((OSlot) (new OSlotEnchantment(this, this.a, 0, 25, 47)));
+        this.a((OSlot) (new OSlotEnchantment(this, this.e, 0, 25, 47)));
 
         int l;
 
@@ -39,61 +39,62 @@ public class OContainerEnchantment extends OContainer {
 
     public void a(OICrafting oicrafting) {
         super.a(oicrafting);
-        oicrafting.a(this, 0, this.c[0]);
-        oicrafting.a(this, 1, this.c[1]);
-        oicrafting.a(this, 2, this.c[2]);
+        oicrafting.a(this, 0, this.g[0]);
+        oicrafting.a(this, 1, this.g[1]);
+        oicrafting.a(this, 2, this.g[2]);
     }
 
-    public void a() {
-        super.a();
+    public void b() {
+        super.b();
+        Iterator iterator = this.d.iterator();
 
-        for (int i = 0; i < this.g.size(); ++i) {
-            OICrafting oicrafting = (OICrafting) this.g.get(i);
+        while (iterator.hasNext()) {
+            OICrafting oicrafting = (OICrafting) iterator.next();
 
-            oicrafting.a(this, 0, this.c[0]);
-            oicrafting.a(this, 1, this.c[1]);
-            oicrafting.a(this, 2, this.c[2]);
+            oicrafting.a(this, 0, this.g[0]);
+            oicrafting.a(this, 1, this.g[1]);
+            oicrafting.a(this, 2, this.g[2]);
         }
 
     }
 
     public void a(OIInventory oiinventory) {
-        if (oiinventory == this.a) {
-            OItemStack oitemstack = oiinventory.g_(0);
+        if (oiinventory == this.e) {
+            OItemStack oitemstack = oiinventory.a(0);
             int i;
 
-            if (oitemstack != null && oitemstack.q()) {
-                this.b = this.l.nextLong();
-                if (!this.h.F) {
+            if (oitemstack != null && oitemstack.v()) {
+                this.f = this.l.nextLong();
+                if (!this.h.J) {
                     i = 0;
 
                     int j;
 
                     for (j = -1; j <= 1; ++j) {
                         for (int k = -1; k <= 1; ++k) {
-                            if ((j != 0 || k != 0) && this.h.g(this.i + k, this.j, this.k + j) && this.h.g(this.i + k, this.j + 1, this.k + j)) {
-                                if (this.h.a(this.i + k * 2, this.j, this.k + j * 2) == OBlock.an.bO) {
+                            if ((j != 0 || k != 0) && this.h.c(this.i + k, this.j, this.k + j) && this.h.c(this.i + k, this.j + 1, this.k + j)) {
+                                if (this.h.a(this.i + k * 2, this.j, this.k + j * 2) == OBlock.aq.cm) {
                                     ++i;
                                 }
 
-                                if (this.h.a(this.i + k * 2, this.j + 1, this.k + j * 2) == OBlock.an.bO) {
+                                if (this.h.a(this.i + k * 2, this.j + 1, this.k + j * 2) == OBlock.aq.cm) {
                                     ++i;
                                 }
 
                                 if (k != 0 && j != 0) {
-                                    if (this.h.a(this.i + k * 2, this.j, this.k + j) == OBlock.an.bO) {
+                                    if (this.h.a(this.i + k * 2, this.j, this.k + j) == OBlock.aq.cm) {
                                         ++i;
                                     }
 
-                                    if (this.h.a(this.i + k * 2, this.j + 1, this.k + j) == OBlock.an.bO) {
+                                    if (this.h.a(this.i + k * 2, this.j + 1, this.k + j) == OBlock.aq.cm) {
                                         ++i;
                                     }
 
-                                    if (this.h.a(this.i + k, this.j, this.k + j * 2) == OBlock.an.bO) {
+                                    if (this.h.a(this.i + k, this.j, this.k + j * 2) == OBlock.aq.cm) {
                                         ++i;
                                     }
 
-                                    if (this.h.a(this.i + k, this.j + 1, this.k + j * 2) == OBlock.an.bO) {
+                                    if (this.h.a(this.i + k, this.j + 1, this.k + j * 2) == OBlock.aq.cm) {
                                         ++i;
                                     }
                                 }
@@ -102,14 +103,14 @@ public class OContainerEnchantment extends OContainer {
                     }
 
                     for (j = 0; j < 3; ++j) {
-                        this.c[j] = OEnchantmentHelper.a(this.l, j, i, oitemstack);
+                        this.g[j] = OEnchantmentHelper.a(this.l, j, i, oitemstack);
                     }
 
-                    this.a();
+                    this.b();
                 }
             } else {
                 for (i = 0; i < 3; ++i) {
-                    this.c[i] = 0;
+                    this.g[i] = 0;
                 }
             }
         }
@@ -117,13 +118,25 @@ public class OContainerEnchantment extends OContainer {
     }
 
     public boolean a(OEntityPlayer oentityplayer, int i) {
-        OItemStack oitemstack = this.a.g_(0);
+        OItemStack oitemstack = this.e.a(0);
 
-        if (this.c[i] > 0 && oitemstack != null && (oentityplayer.M >= this.c[i] || oentityplayer.L.d)) {
-            if (!this.h.F) {
-                List list = OEnchantmentHelper.b(this.l, oitemstack, this.c[i]);
+        if (this.g[i] > 0 && oitemstack != null && (oentityplayer.cg >= this.g[i] || oentityplayer.cf.d)) {
+            if (!this.h.J) {
+                List list = OEnchantmentHelper.b(this.l, oitemstack, this.g[i]);
 
                 if (list != null) {
+<<<<<<<
+|||||||
+                    oentityplayer.a(this.g[i]);
+                    Iterator iterator = list.iterator();
+
+                    while (iterator.hasNext()) {
+=======
+                    oentityplayer.a(-this.g[i]);
+                    Iterator iterator = list.iterator();
+
+                    while (iterator.hasNext()) {
+>>>>>>>
                     // CanaryMod hook: onEnchant
                     HookParametersEnchant enchantParameters = (HookParametersEnchant) etc.getLoader().callHook(PluginLoader.Hook.ENCHANT, new HookParametersEnchant(((OEntityPlayerMP) oentityplayer).getPlayer(), oitemstack.c, list));
 
@@ -134,17 +147,17 @@ public class OContainerEnchantment extends OContainer {
                         for (Enchantment enchantment : enchantments) {
                             list.add(new OEnchantmentData(enchantment.getEnchantment(), enchantment.getLevel()));
                         }
-						
-                        oentityplayer.e_(this.c[i]);
+
+                        oentityplayer.a(this.g[i]);
                         Iterator iterator = list.iterator();
 
                         while (iterator.hasNext()) {
                             OEnchantmentData oenchantmentdata = (OEnchantmentData) iterator.next();
 	
-                            oitemstack.a(oenchantmentdata.a, oenchantmentdata.b);
+                        oitemstack.a(oenchantmentdata.b, oenchantmentdata.c);
                         }
 						
-                        this.a(this.a);
+                    this.a(this.e);
                     }
                 }
             }
@@ -157,47 +170,57 @@ public class OContainerEnchantment extends OContainer {
 
     public void a(OEntityPlayer oentityplayer) {
         super.a(oentityplayer);
-        if (!this.h.F) {
-            OItemStack oitemstack = this.a.b(0);
+        if (!this.h.J) {
+            OItemStack oitemstack = this.e.a_(0);
 
             if (oitemstack != null) {
-                oentityplayer.b(oitemstack);
+                oentityplayer.c(oitemstack);
             }
 
         }
     }
 
-    public boolean b(OEntityPlayer oentityplayer) {
-        return this.h.a(this.i, this.j, this.k) != OBlock.bE.bO ? false : oentityplayer.e((double) this.i + 0.5D, (double) this.j + 0.5D, (double) this.k + 0.5D) <= 64.0D;
+    public boolean c(OEntityPlayer oentityplayer) {
+        return this.h.a(this.i, this.j, this.k) != OBlock.bH.cm ? false : oentityplayer.e((double) this.i + 0.5D, (double) this.j + 0.5D, (double) this.k + 0.5D) <= 64.0D;
     }
 
-    public OItemStack a(int i) {
+    public OItemStack b(OEntityPlayer oentityplayer, int i) {
         OItemStack oitemstack = null;
-        OSlot oslot = (OSlot) this.e.get(i);
+        OSlot oslot = (OSlot) this.b.get(i);
 
-        if (oslot != null && oslot.c()) {
-            OItemStack oitemstack1 = oslot.b();
+        if (oslot != null && oslot.d()) {
+            OItemStack oitemstack1 = oslot.c();
 
-            oitemstack = oitemstack1.j();
-            if (i != 0) {
-                return null;
-            }
+            oitemstack = oitemstack1.l();
+            if (i == 0) {
+                if (!this.a(oitemstack1, 1, 37, true)) {
+                    return null;
+                }
+            } else {
+                if (((OSlot) this.b.get(0)).d() || !((OSlot) this.b.get(0)).a(oitemstack1)) {
+                    return null;
+                }
 
-            if (!this.a(oitemstack1, 1, 37, true)) {
-                return null;
+                if (oitemstack1.o() && oitemstack1.a == 1) {
+                    ((OSlot) this.b.get(0)).c(oitemstack1.l());
+                    oitemstack1.a = 0;
+                } else if (oitemstack1.a >= 1) {
+                    ((OSlot) this.b.get(0)).c(new OItemStack(oitemstack1.c, 1, oitemstack1.j()));
+                    --oitemstack1.a;
+                }
             }
 
             if (oitemstack1.a == 0) {
-                oslot.d((OItemStack) null);
+                oslot.c((OItemStack) null);
             } else {
-                oslot.d();
+                oslot.e();
             }
 
             if (oitemstack1.a == oitemstack.a) {
                 return null;
             }
 
-            oslot.c(oitemstack1);
+            oslot.a(oentityplayer, oitemstack1);
         }
 
         return oitemstack;

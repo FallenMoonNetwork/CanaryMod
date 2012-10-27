@@ -33,11 +33,11 @@ public class OFoodStats {
     }
 
     public void a(OItemFood oitemfood) {
-        this.a(oitemfood.o(), oitemfood.p());
+        this.a(oitemfood.g(), oitemfood.h());
     }
 
     public void a(OEntityPlayer oentityplayer) {
-        int i = oentityplayer.bi.q;
+        int i = oentityplayer.p.t;
 
         this.e = this.a;
         if (this.c > 4.0F) {
@@ -61,19 +61,25 @@ public class OFoodStats {
             }
         }
 
-        if (this.a >= 18 && oentityplayer.ag()) {
+        if (this.a >= 18 && oentityplayer.ca()) {
             ++this.d;
             if (this.d >= 80) {
-                oentityplayer.d(1);
+                oentityplayer.i(1);
                 this.d = 0;
             }
         } else if (this.a <= 0) {
             ++this.d;
             if (this.d >= 80) {
-                if (oentityplayer.aD() > 10 || i >= 3 || oentityplayer.aD() > 1 && i >= 2) {
+<<<<<<<
+                if (oentityplayer.aN() > 10 || i >= 3 || oentityplayer.aN() > 1 && i >= 2) {
                     // CanaryMod: DAMAGE From starvation
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.STARVATION, null, ((OEntityPlayerMP) oentityplayer).getPlayer(), 1)) {
-                        oentityplayer.a(ODamageSource.g, 1);
+|||||||
+                if (oentityplayer.aN() > 10 || i >= 3 || oentityplayer.aN() > 1 && i >= 2) {
+=======
+                if (oentityplayer.aT() > 10 || i >= 3 || oentityplayer.aT() > 1 && i >= 2) {
+>>>>>>>
+                        oentityplayer.a(ODamageSource.f, 1);
                     }
                 }
 
@@ -86,11 +92,11 @@ public class OFoodStats {
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
-        if (onbttagcompound.c("foodLevel")) {
-            this.a = onbttagcompound.f("foodLevel");
-            this.d = onbttagcompound.f("foodTickTimer");
-            this.b = onbttagcompound.h("foodSaturationLevel");
-            this.c = onbttagcompound.h("foodExhaustionLevel");
+        if (onbttagcompound.b("foodLevel")) {
+            this.a = onbttagcompound.e("foodLevel");
+            this.d = onbttagcompound.e("foodTickTimer");
+            this.b = onbttagcompound.g("foodSaturationLevel");
+            this.c = onbttagcompound.g("foodExhaustionLevel");
         }
 
     }
@@ -106,7 +112,7 @@ public class OFoodStats {
         return this.a;
     }
 
-    public boolean b() {
+    public boolean c() {
         return this.a < 20;
     }
 
@@ -114,7 +120,7 @@ public class OFoodStats {
         this.c = Math.min(this.c + f, 40.0F);
     }
 
-    public float c() {
+    public float e() {
         return this.b;
     }
 }

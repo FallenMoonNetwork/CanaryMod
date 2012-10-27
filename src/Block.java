@@ -136,7 +136,19 @@ public class Block {
         EndStone(121), //
         EnderDragonEgg(122), //
         RedstoneLampOff(123), //
-        RedstoneLampOn(124); //
+        RedstoneLampOn(124), //
+        WoodDoubleStep(125), //
+        WoodStep(126), //
+        CocoaPlant(127), //
+        SandstoneStairs(128), //
+        EmeraldOre(129), //
+        EnderChest(130), //
+        TripwireHook(131), //
+        Tripwire(132), //
+        Emerald(133), //
+        SpruceWoodStairs(134), //
+        BirchWoodStairs(135), //
+        JungleWoodStairs(136);
 
         private int                       id;
         private static Map<Integer, Type> map;
@@ -407,13 +419,10 @@ public class Block {
     }
 
     /**
-     * Creates a block of specified type, location and data
+     * Creates a block at the specified location.
      * 
-     * @param type
-     *            Type of block
      * @param location
      *            Location in the world
-     * @param data
      */
     public Block(Location location) {
         this(location.getWorld(), 0, (int) location.x, (int) location.y, (int) location.z, 0);
@@ -425,7 +434,7 @@ public class Block {
      * @return type
      */
     public int getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -434,7 +443,7 @@ public class Block {
      * @param type
      */
     public void setType(int type) {
-        blockType = Type.fromId(type);
+        this.blockType = Type.fromId(type);
         this.type = type;
     }
 
@@ -444,7 +453,7 @@ public class Block {
      * @return x
      */
     public int getX() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -462,7 +471,7 @@ public class Block {
      * @return y
      */
     public int getY() {
-        return y;
+        return this.y;
     }
 
     /**
@@ -480,7 +489,7 @@ public class Block {
      * @return z
      */
     public int getZ() {
-        return z;
+        return this.z;
     }
 
     /**
@@ -498,7 +507,7 @@ public class Block {
      * @return location
      */
     public Location getLocation() {
-        return new Location(world, x, y, z);
+        return new Location(this.world, this.x, this.y, this.z);
     }
 
     /**
@@ -543,7 +552,7 @@ public class Block {
      * @see PluginListener#onIgnite(Block, Player)
      */
     public int getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
@@ -562,7 +571,7 @@ public class Block {
      * @return
      */
     public int getData() {
-        return data;
+        return this.data;
     }
 
     /**
@@ -579,7 +588,7 @@ public class Block {
      * @return world
      */
     public World getWorld() {
-        return world;
+        return this.world;
     }
 
     /**
@@ -594,7 +603,7 @@ public class Block {
      * Updates this block to the server.
      */
     public void update() {
-        world.setBlock(this);
+        this.world.setBlock(this);
     }
 
     /**
@@ -637,9 +646,9 @@ public class Block {
      * refreshing the data with the current actual values
      */
     public void refresh() {
-        type = world.getBlockIdAt(x, y, z);
-        data = world.getBlockData(x, y, z);
-        status = 0;
+        this.type = world.getBlockIdAt(x, y, z);
+        this.data = world.getBlockData(x, y, z);
+        this.status = 0;
     }
 
     /**
@@ -655,7 +664,7 @@ public class Block {
      * @return Block at the requested location
      */
     public Block getRelative(int x, int y, int z) {
-        return world.getBlockAt(getX() + x, getY() + y, getZ() + z);
+        return this.world.getBlockAt(getX() + x, getY() + y, getZ() + z);
     }
 
     /**
@@ -664,7 +673,7 @@ public class Block {
      * @return true if the block is being powered
      */
     public boolean isPowered() {
-        return world.isBlockPowered(this);
+        return this.world.isBlockPowered(this);
     }
 
     /**
@@ -673,7 +682,7 @@ public class Block {
      * @return true if the block is being indirectly powered
      */
     public boolean isIndirectlyPowered() {
-        return world.isBlockIndirectlyPowered(this);
+        return this.world.isBlockIndirectlyPowered(this);
     }
 
     /**
@@ -683,7 +692,7 @@ public class Block {
      */
     @Override
     public String toString() {
-        return String.format("Block[x=%d, y=%d, z=%d, type=%d]", x, y, z, type);
+        return String.format("Block[type=%d, x=%d, y=%d, z=%d, world=%s, dim=%d]", this.type, this.x, this.y, this.z, this.world.getName(), this.world.getType().getId());
     }
 
     /**
@@ -703,16 +712,16 @@ public class Block {
         }
         final Block other = (Block) obj;
 
-        if (x != other.x) {
+        if (this.x != other.x) {
             return false;
         }
-        if (y != other.y) {
+        if (this.y != other.y) {
             return false;
         }
-        if (z != other.z) {
+        if (this.z != other.z) {
             return false;
         }
-        if (!world.equals(other.world)) {
+        if (!this.world.equals(other.world)) {
             return false;
         }
         return true;
@@ -727,9 +736,9 @@ public class Block {
     public int hashCode() {
         int hash = 7;
 
-        hash = 97 * hash + x;
-        hash = 97 * hash + y;
-        hash = 97 * hash + z;
+        hash = 97 * hash + this.x;
+        hash = 97 * hash + this.y;
+        hash = 97 * hash + this.z;
         return hash;
     }
 
@@ -739,7 +748,7 @@ public class Block {
      * @return true if this block us cloth
      */
     public boolean isCloth() {
-        return blockType == Type.Cloth;
+        return this.blockType == Type.Cloth;
     }
 
     /**
@@ -751,7 +760,7 @@ public class Block {
         if (!isCloth()) {
             return null;
         } else {
-            return Cloth.Color.getColor(data);
+            return Cloth.Color.getColor(this.data);
         }
     }
 

@@ -6,34 +6,36 @@ public final class OItemStack {
     public int c;
     public ONBTTagCompound d;
     private int e;
+    private OEntityItemFrame f;
 
     public OItemStack(OBlock oblock) {
         this(oblock, 1);
     }
 
     public OItemStack(OBlock oblock, int i) {
-        this(oblock.bO, i, 0);
+        this(oblock.cm, i, 0);
     }
 
     public OItemStack(OBlock oblock, int i, int j) {
-        this(oblock.bO, i, j);
+        this(oblock.cm, i, j);
     }
 
     public OItemStack(OItem oitem) {
-        this(oitem.bP, 1, 0);
+        this(oitem.cf, 1, 0);
     }
 
     public OItemStack(OItem oitem, int i) {
-        this(oitem.bP, i, 0);
+        this(oitem.cf, i, 0);
     }
 
     public OItemStack(OItem oitem, int i, int j) {
-        this(oitem.bP, i, j);
+        this(oitem.cf, i, j);
     }
 
     public OItemStack(int i, int j, int k) {
         super();
         this.a = 0;
+        this.f = null;
         this.c = i;
         this.a = j;
         this.e = k;
@@ -43,12 +45,13 @@ public final class OItemStack {
         OItemStack oitemstack = new OItemStack();
 
         oitemstack.c(onbttagcompound);
-        return oitemstack.a() != null ? oitemstack : null;
+        return oitemstack.b() != null ? oitemstack : null;
     }
 
     private OItemStack() {
         super();
         this.a = 0;
+        this.f = null;
     }
 
     public OItemStack a(int i) {
@@ -62,12 +65,12 @@ public final class OItemStack {
         return oitemstack;
     }
 
-    public OItem a() {
-        return OItem.d[this.c];
+    public OItem b() {
+        return OItem.e[this.c];
     }
 
-    public boolean a(OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l) {
-        boolean flag = this.a().a(this, oentityplayer, oworld, i, j, k, l);
+    public boolean a(OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l, float f, float f1, float f2) {
+        boolean flag = this.b().a(this, oentityplayer, oworld, i, j, k, l, f, f1, f2);
 
         if (flag) {
             oentityplayer.a(OStatList.E[this.c], 1);
@@ -77,15 +80,15 @@ public final class OItemStack {
     }
 
     public float a(OBlock oblock) {
-        return this.a().a(this, oblock);
+        return this.b().a(this, oblock);
     }
 
     public OItemStack a(OWorld oworld, OEntityPlayer oentityplayer) {
-        return this.a().a(this, oworld, oentityplayer);
+        return this.b().a(this, oworld, oentityplayer);
     }
 
     public OItemStack b(OWorld oworld, OEntityPlayer oentityplayer) {
-        return this.a().b(this, oworld, oentityplayer);
+        return this.b().b(this, oworld, oentityplayer);
     }
 
     public ONBTTagCompound b(ONBTTagCompound onbttagcompound) {
@@ -100,40 +103,40 @@ public final class OItemStack {
     }
 
     public void c(ONBTTagCompound onbttagcompound) {
-        this.c = onbttagcompound.e("id"); // CanaryMod: fix jarjar
-        this.a = onbttagcompound.d("Count");
-        this.e = onbttagcompound.e("Damage");
-        if (onbttagcompound.c("tag")) {
-            this.d = onbttagcompound.m("tag");
+        this.c = onbttagcompound.d("id"); // CanaryMod: fix jarjar
+        this.a = onbttagcompound.c("Count");
+        this.e = onbttagcompound.d("Damage");
+        if (onbttagcompound.b("tag")) {
+            this.d = onbttagcompound.l("tag");
         }
 
     }
 
-    public int b() {
-        return this.a().d();
-    }
-
-    public boolean c() {
-        return this.b() > 1 && (!this.d() || !this.f());
-    }
-
-    public boolean d() {
-        return OItem.d[this.c].f() > 0;
+    public int d() {
+        return this.b().k();
     }
 
     public boolean e() {
-        return OItem.d[this.c].e();
+        return this.d() > 1 && (!this.f() || !this.h());
     }
 
     public boolean f() {
-        return this.d() && this.e > 0;
+        return OItem.e[this.c].m() > 0;
     }
 
-    public int g() {
+    public boolean g() {
+        return OItem.e[this.c].l();
+    }
+
+    public boolean h() {
+        return this.f() && this.e > 0;
+    }
+
+    public int i() {
         return this.e;
     }
 
-    public int h() {
+    public int j() {
         return this.e;
     }
 
@@ -141,23 +144,26 @@ public final class OItemStack {
         this.e = i;
     }
 
-    public int i() {
-        return OItem.d[this.c].f();
+    public int k() {
+        return OItem.e[this.c].m();
     }
 
     public void a(int i, OEntityLiving oentityliving) {
-        if (this.d()) {
+        if (this.f()) {
             if (i > 0 && oentityliving instanceof OEntityPlayer) {
-                int j = OEnchantmentHelper.c(((OEntityPlayer) oentityliving).k);
+                int j = OEnchantmentHelper.c(oentityliving);
 
-                if (j > 0 && oentityliving.bi.r.nextInt(j + 1) > 0) {
+                if (j > 0 && oentityliving.p.u.nextInt(j + 1) > 0) {
                     return;
                 }
             }
 
-            this.e += i;
-            if (this.e > this.i()) {
-                oentityliving.c(this);
+            if (!(oentityliving instanceof OEntityPlayer) || !((OEntityPlayer) oentityliving).cf.d) {
+                this.e += i;
+            }
+
+            if (this.e > this.k()) {
+                oentityliving.a(this);
                 if (oentityliving instanceof OEntityPlayer) {
                     ((OEntityPlayer) oentityliving).a(OStatList.F[this.c], 1);
                 }
@@ -174,7 +180,7 @@ public final class OItemStack {
     }
 
     public void a(OEntityLiving oentityliving, OEntityPlayer oentityplayer) {
-        boolean flag = OItem.d[this.c].a(this, oentityliving, (OEntityLiving) oentityplayer);
+        boolean flag = OItem.e[this.c].a(this, oentityliving, (OEntityLiving) oentityplayer);
 
         if (flag) {
             oentityplayer.a(OStatList.E[this.c], 1);
@@ -182,8 +188,8 @@ public final class OItemStack {
 
     }
 
-    public void a(int i, int j, int k, int l, OEntityPlayer oentityplayer) {
-        boolean flag = OItem.d[this.c].a(this, i, j, k, l, oentityplayer);
+    public void a(OWorld oworld, int i, int j, int k, int l, OEntityPlayer oentityplayer) {
+        boolean flag = OItem.e[this.c].a(this, oworld, i, j, k, l, oentityplayer);
 
         if (flag) {
             oentityplayer.a(OStatList.E[this.c], 1);
@@ -192,27 +198,22 @@ public final class OItemStack {
     }
 
     public int a(OEntity oentity) {
-        return OItem.d[this.c].a(oentity);
+        return OItem.e[this.c].a(oentity);
     }
 
     public boolean b(OBlock oblock) {
-        return OItem.d[this.c].a(oblock);
+        return OItem.e[this.c].a(oblock);
     }
 
-    public void a(OEntityPlayer oentityplayer) {}
-
-    public void a(OEntityLiving oentityliving) {
-        OItem.d[this.c].a(this, oentityliving);
+    public boolean a(OEntityLiving oentityliving) {
+        return OItem.e[this.c].a(this, oentityliving);
     }
 
-    public OItemStack j() {
+    public OItemStack l() {
         OItemStack oitemstack = new OItemStack(this.c, this.a, this.e);
 
         if (this.d != null) {
             oitemstack.d = (ONBTTagCompound) this.d.b();
-            if (!oitemstack.d.equals(this.d)) {
-                return oitemstack;
-            }
         }
 
         return oitemstack;
@@ -234,16 +235,16 @@ public final class OItemStack {
         return this.c == oitemstack.c && this.e == oitemstack.e;
     }
 
-    public String k() {
-        return OItem.d[this.c].a(this);
+    public String a() {
+        return OItem.e[this.c].c_(this);
     }
 
     public static OItemStack b(OItemStack oitemstack) {
-        return oitemstack == null ? null : oitemstack.j();
+        return oitemstack == null ? null : oitemstack.l();
     }
 
     public String toString() {
-        return this.a + "x" + OItem.d[this.c].b() + "@" + this.e; // CanaryMod: fix jarjar
+        return this.a + "x" + OItem.e[this.c].a() + "@" + this.e;
     }
 
     public void a(OWorld oworld, OEntity oentity, int i, boolean flag) {
@@ -251,48 +252,74 @@ public final class OItemStack {
             --this.b;
         }
 
-        OItem.d[this.c].a(this, oworld, oentity, i, flag);
+        OItem.e[this.c].a(this, oworld, oentity, i, flag);
     }
 
     public void a(OWorld oworld, OEntityPlayer oentityplayer, int i) {
         oentityplayer.a(OStatList.D[this.c], i);
-        OItem.d[this.c].d(this, oworld, oentityplayer);
+        OItem.e[this.c].d(this, oworld, oentityplayer);
     }
 
-    public boolean c(OItemStack oitemstack) {
-        return this.c == oitemstack.c && this.a == oitemstack.a && this.e == oitemstack.e;
+    public int m() {
+        return this.b().a(this);
     }
 
-    public int l() {
-        return this.a().c(this);
-    }
-
-    public OEnumAction m() {
-        return this.a().d(this);
+    public OEnumAction n() {
+        return this.b().d_(this);
     }
 
     public void b(OWorld oworld, OEntityPlayer oentityplayer, int i) {
-        this.a().a(this, oworld, oentityplayer, i);
+        this.b().a(this, oworld, oentityplayer, i);
     }
 
-    public boolean n() {
+    public boolean o() {
         return this.d != null;
     }
 
-    public ONBTTagCompound o() {
+    public ONBTTagCompound p() {
         return this.d;
     }
 
-    public ONBTTagList p() {
-        return this.d == null ? null : (ONBTTagList) this.d.b("ench");
+    public ONBTTagList q() {
+        return this.d == null ? null : (ONBTTagList) this.d.a("ench");
     }
 
     public void d(ONBTTagCompound onbttagcompound) {
         this.d = onbttagcompound;
     }
 
-    public boolean q() {
-        return !this.a().f(this) ? false : !this.r();
+    public String r() {
+        String s = this.b().j(this);
+
+        if (this.d != null && this.d.b("display")) {
+            ONBTTagCompound onbttagcompound = this.d.l("display");
+
+            if (onbttagcompound.b("Name")) {
+                s = onbttagcompound.i("Name");
+            }
+        }
+
+        return s;
+    }
+
+    public void c(String s) {
+        if (this.d == null) {
+            this.d = new ONBTTagCompound();
+        }
+
+        if (!this.d.b("display")) {
+            this.d.a("display", new ONBTTagCompound());
+        }
+
+        this.d.l("display").a("Name", s);
+    }
+
+    public boolean s() {
+        return this.d == null ? false : (!this.d.b("display") ? false : this.d.l("display").b("Name"));
+    }
+
+    public boolean v() {
+        return !this.b().k(this) ? false : !this.w();
     }
 
     public void a(OEnchantment oenchantment, int i) {
@@ -300,19 +327,55 @@ public final class OItemStack {
             this.d(new ONBTTagCompound());
         }
 
-        if (!this.d.c("ench")) {
+        if (!this.d.b("ench")) {
             this.d.a("ench", (ONBTBase) (new ONBTTagList("ench")));
         }
 
-        ONBTTagList onbttaglist = (ONBTTagList) this.d.b("ench");
+        ONBTTagList onbttaglist = (ONBTTagList) this.d.a("ench");
         ONBTTagCompound onbttagcompound = new ONBTTagCompound();
 
-        onbttagcompound.a("id", (short) oenchantment.x); // CanaryMod: fix jarjar
+        onbttagcompound.a("id", (short) oenchantment.x);
         onbttagcompound.a("lvl", (short) ((byte) i));
         onbttaglist.a((ONBTBase) onbttagcompound);
     }
 
-    public boolean r() {
-        return this.d != null && this.d.c("ench");
+    public boolean w() {
+        return this.d != null && this.d.b("ench");
+    }
+
+    public void a(String s, ONBTBase onbtbase) {
+        if (this.d == null) {
+            this.d(new ONBTTagCompound());
+        }
+
+        this.d.a(s, onbtbase);
+    }
+
+    public boolean x() {
+        return this.b().x();
+    }
+
+    public boolean y() {
+        return this.f != null;
+    }
+
+    public void a(OEntityItemFrame oentityitemframe) {
+        this.f = oentityitemframe;
+    }
+
+    public OEntityItemFrame z() {
+        return this.f;
+    }
+
+    public int A() {
+        return this.o() && this.d.b("RepairCost") ? this.d.e("RepairCost") : 0;
+    }
+
+    public void c(int i) {
+        if (!this.o()) {
+            this.d = new ONBTTagCompound();
+        }
+
+        this.d.a("RepairCost", i);
     }
 }

@@ -10,10 +10,6 @@ public class OConsoleLogManager {
 
     public static Logger a = Logger.getLogger("Minecraft");
 
-    public OConsoleLogManager() {
-        super();
-    }
-
     public static void a() {
         OConsoleLogFormatter oconsolelogformatter = new OConsoleLogFormatter();
 

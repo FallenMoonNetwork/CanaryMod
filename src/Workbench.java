@@ -2,7 +2,7 @@ public class Workbench extends ItemArray<OInventoryCraftResult> implements Inven
     private final OContainerWorkbench workbench;
 
     public Workbench(OContainerWorkbench block) {
-        super((OInventoryCraftResult) block.b);
+        super((OInventoryCraftResult) block.f);
         workbench = block;
     }
 

@@ -27,7 +27,7 @@ public class BaseEntity {
      * @return id
      */
     public int getId() {
-        return entity.bd;
+        return this.entity.k;
     }
 
     /**
@@ -40,7 +40,7 @@ public class BaseEntity {
      * @param pitch
      */
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        entity.b(x, y, z, rotation, pitch);
+        this.entity.b(x, y, z, rotation, pitch);
     }
 
     /**
@@ -50,7 +50,7 @@ public class BaseEntity {
      *            entity to teleport to
      */
     public void teleportTo(BaseEntity ent) {
-        teleportTo(ent.getX(), ent.getY(), ent.getZ(), ent.getRotation(), ent.getPitch());
+        this.teleportTo(ent.getX(), ent.getY(), ent.getZ(), ent.getRotation(), ent.getPitch());
     }
 
     /**
@@ -60,7 +60,7 @@ public class BaseEntity {
      *            location to teleport to
      */
     public void teleportTo(Location location) {
-        teleportTo(location.x, location.y, location.z, location.rotX, location.rotY);
+        this.teleportTo(location.x, location.y, location.z, location.rotX, location.rotY);
     }
 
     /**
@@ -69,7 +69,7 @@ public class BaseEntity {
      * @return x
      */
     public double getX() {
-        return entity.bm;
+        return this.entity.t;
     }
 
     /**
@@ -79,7 +79,7 @@ public class BaseEntity {
      *            x to set
      */
     public void setX(double x) {
-        teleportTo(x, getY(), getZ(), getRotation(), getPitch());
+        this.teleportTo(x, this.getY(), this.getZ(), this.getRotation(), this.getPitch());
     }
 
     /**
@@ -88,7 +88,7 @@ public class BaseEntity {
      * @return y
      */
     public double getY() {
-        return entity.bn;
+        return this.entity.u;
     }
 
     /**
@@ -98,7 +98,7 @@ public class BaseEntity {
      *            y to set
      */
     public void setY(double y) {
-        teleportTo(getX(), y, getZ(), getRotation(), getPitch());
+        this.teleportTo(this.getX(), y, this.getZ(), this.getRotation(), this.getPitch());
     }
 
     /**
@@ -107,7 +107,7 @@ public class BaseEntity {
      * @return z
      */
     public double getZ() {
-        return entity.bo;
+        return this.entity.v;
     }
 
     /**
@@ -117,7 +117,7 @@ public class BaseEntity {
      *            z to set
      */
     public void setZ(double z) {
-        teleportTo(getX(), getY(), z, getRotation(), getPitch());
+        this.teleportTo(this.getX(), this.getY(), z, this.getRotation(), this.getPitch());
     }
 
     /**
@@ -126,7 +126,7 @@ public class BaseEntity {
      * @return pitch
      */
     public float getPitch() {
-        return entity.bt;
+        return this.entity.A;
     }
 
     /**
@@ -136,7 +136,7 @@ public class BaseEntity {
      *            pitch to set
      */
     public void setPitch(float pitch) {
-        teleportTo(getX(), getY(), getZ(), getRotation(), pitch);
+        this.teleportTo(this.getX(), this.getY(), this.getZ(), this.getRotation(), pitch);
     }
 
     /**
@@ -145,7 +145,7 @@ public class BaseEntity {
      * @return rotation
      */
     public float getRotation() {
-        return entity.bs;
+        return this.entity.z;
     }
 
     /**
@@ -155,7 +155,7 @@ public class BaseEntity {
      *            rotation to set
      */
     public void setRotation(float rotation) {
-        teleportTo(getX(), getY(), getZ(), rotation, getPitch());
+        this.teleportTo(this.getX(), this.getY(), this.getZ(), rotation, this.getPitch());
     }
 
     /**
@@ -164,7 +164,7 @@ public class BaseEntity {
      * @return
      */
     public OEntity getEntity() {
-        return entity;
+        return this.entity;
     }
 
     /**
@@ -173,7 +173,7 @@ public class BaseEntity {
      * @return true if mob
      */
     public boolean isMob() {
-        return entity instanceof OIMob;
+        return this.entity instanceof OIMob;
     }
 
     public static boolean isMob(OEntity entity) {
@@ -186,7 +186,7 @@ public class BaseEntity {
      * @return true if animal
      */
     public boolean isAnimal() {
-        return entity instanceof OIAnimals;
+        return this.entity instanceof OIAnimals;
     }
 
     public static boolean isAnimal(OEntity entity) {
@@ -199,7 +199,7 @@ public class BaseEntity {
      * @return true if player
      */
     public boolean isPlayer() {
-        return entity instanceof OEntityPlayerMP;
+        return this.entity instanceof OEntityPlayerMP;
     }
 
     public static boolean isPlayer(OEntity entity) {
@@ -212,7 +212,7 @@ public class BaseEntity {
      * @return true if living entity
      */
     public boolean isLiving() {
-        return entity instanceof OEntityLiving;
+        return this.entity instanceof OEntityLiving;
     }
 
     public static boolean isLiving(OEntity entity) {
@@ -225,7 +225,7 @@ public class BaseEntity {
      * @return true if item entity
      */
     public boolean isItem() {
-        return entity instanceof OEntityItem;
+        return this.entity instanceof OEntityItem;
     }
 
     public static boolean isItem(OEntity entity) {
@@ -238,11 +238,11 @@ public class BaseEntity {
      * @return player
      */
     public Player getPlayer() {
-        if (!isPlayer()) {
+        if (!this.isPlayer()) {
             return null;
         }
 
-        OEntityPlayerMP p = (OEntityPlayerMP) entity;
+        OEntityPlayerMP p = (OEntityPlayerMP) this.entity;
 
         return p.getPlayer();
     }
@@ -280,7 +280,7 @@ public class BaseEntity {
      * @return
      */
     public int getNoDamageTicks() {
-        return getEntity().bW;
+        return this.getEntity().ad;
     }
 
     /**
@@ -293,7 +293,7 @@ public class BaseEntity {
      * @param ticks
      */
     public void setNoDamageTicks(int ticks) {
-        getEntity().bW = ticks;
+        this.getEntity().ad = ticks;
     }
 
     /**
@@ -305,7 +305,7 @@ public class BaseEntity {
      * @return
      */
     public int getAirTicks() {
-        return getEntity().ba();
+        return this.getEntity().ai();
     }
 
     /**
@@ -317,7 +317,7 @@ public class BaseEntity {
      * @param ticks the number of ticks you have air
      */
     public void setAirTicks(int ticks) {
-        getEntity().k(ticks);
+        this.getEntity().g(ticks);
     }
 
     /**
@@ -329,7 +329,7 @@ public class BaseEntity {
      * @return
      */
     public int getFireTicks() {
-        return getEntity().c;
+        return this.getEntity().c;
     }
 
     /**
@@ -341,7 +341,7 @@ public class BaseEntity {
      * @param ticks the amount of fire ticks
      */
     public void setFireTicks(int ticks) {
-        getEntity().c = ticks;
+        this.getEntity().c = ticks;
     }
 
     /**
@@ -349,7 +349,7 @@ public class BaseEntity {
      * @return the World this entity is in
      */
     public World getWorld() {
-        return getEntity().bi.world;
+        return this.getEntity().p.world;
     }
 
     /**
@@ -358,7 +358,7 @@ public class BaseEntity {
      * @return x-motion
      */
     public double getMotionX() {
-        return entity.bp;
+        return this.entity.w;
     }
 
     /**
@@ -367,7 +367,7 @@ public class BaseEntity {
      * @return y-motion
      */
     public double getMotionY() {
-        return entity.bq;
+        return this.entity.x;
     }
 
     /**
@@ -376,7 +376,7 @@ public class BaseEntity {
      * @return z-motion
      */
     public double getMotionZ() {
-        return entity.br;
+        return this.entity.y;
     }
 
     /**
@@ -387,9 +387,9 @@ public class BaseEntity {
      * @param motionZ
      */
     public void setMotion(double motionX, double motionY, double motionZ) {
-        setMotionX(motionX);
-        setMotionY(motionY);
-        setMotionZ(motionZ);
+        this.setMotionX(motionX);
+        this.setMotionY(motionY);
+        this.setMotionZ(motionZ);
     }
 
     /**
@@ -399,8 +399,8 @@ public class BaseEntity {
      * motion to set
      */
     public void setMotionX(double motion) {
-        entity.bp = motion;
-        entity.bA = true;
+        this.entity.w = motion;
+        this.entity.I = true;
     }
 
     /**
@@ -410,8 +410,8 @@ public class BaseEntity {
      * motion to set
      */
     public void setMotionY(double motion) {
-        entity.bq = motion;
-        entity.bA = true;
+        this.entity.x = motion;
+        this.entity.I = true;
     }
 
     /**
@@ -421,15 +421,15 @@ public class BaseEntity {
      * motion to set
      */
     public void setMotionZ(double motion) {
-        entity.br = motion;
-        entity.bA = true;
+        this.entity.y = motion;
+        this.entity.I = true;
     }
 
     /**
      * Destroys this entity
      */
     public void destroy() {
-        entity.X();
+        this.entity.y();
     }
 
     /**
@@ -438,7 +438,7 @@ public class BaseEntity {
      * @return name
      */
     public String getName() {
-        return OEntityList.b(entity);
+        return OEntityList.b(this.entity);
     }
 
     /**
@@ -446,7 +446,7 @@ public class BaseEntity {
      * @return the sprinting state
      */
     public boolean getSprinting() {
-        return entity.aY();
+        return this.entity.ag();
     }
 
     /**
@@ -455,7 +455,7 @@ public class BaseEntity {
      * @param sprinting 
      */
     public void setSprinting(boolean sprinting) {
-        entity.g(sprinting);
+        this.entity.b(sprinting);
     }
 
 }
