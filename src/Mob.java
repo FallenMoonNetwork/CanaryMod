@@ -106,7 +106,7 @@ public class Mob extends LivingEntity {
 
             return ghast.getTarget();
         }
-        return ((OEntityCreature) getEntity()).a;
+        return ((OEntityCreature) getEntity()).a_;
     }
 
     /**
@@ -121,7 +121,7 @@ public class Mob extends LivingEntity {
             ghast.setTarget(target);
             return;
         }
-        ((OEntityCreature) getEntity()).a = target;
+        ((OEntityCreature) getEntity()).a_ = target;
     }
 
     @Override
@@ -175,7 +175,7 @@ public class Mob extends LivingEntity {
 
     public boolean isInLove(){
     	if (getEntity() instanceof OEntityAnimal){
-    		return ((OEntityAnimal) getEntity()).s();
+    		return ((OEntityAnimal) getEntity()).L();
     	}
     	return false;
     }

@@ -101,7 +101,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public int getLastDamage() {
-        return getEntity().bp;
+        return getEntity().bp;          
     }
 
     /**
@@ -111,7 +111,7 @@ public class LivingEntity extends BaseEntity {
      * @param amount
      */
     public void setLastDamage(int amount) {
-        getEntity().bp = amount;
+        getEntity().bp = amount;               
     }
     
     /**
