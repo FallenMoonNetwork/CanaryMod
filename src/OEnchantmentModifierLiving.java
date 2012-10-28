@@ -12,7 +12,6 @@ final class OEnchantmentModifierLiving implements OIEnchantmentModifier {
         this.a += oenchantment.a(i, this.b);
     }
 
-    // $FF: synthetic method
     OEnchantmentModifierLiving(OEmpty3 oempty3) {
         this();
     }

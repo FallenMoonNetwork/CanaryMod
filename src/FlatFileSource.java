@@ -131,7 +131,7 @@ public class FlatFileSource extends DataSource {
                         continue;
                     }
 
-                    String[] split = etc.realSplit(line, ":");
+                    String[] split = line.split(":", -1);
 
                     if (split.length < 3) {
                         log.log(Level.SEVERE, String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
@@ -212,7 +212,7 @@ public class FlatFileSource extends DataSource {
                     if (line.startsWith("#") || line.equals("")) {
                         continue;
                     }
-                    String[] split = etc.realSplit(line, ":");
+                    String[] split = line.split(":", -1);
 
                     if (split.length < 4) {
                         log.log(Level.SEVERE, String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
@@ -285,7 +285,7 @@ public class FlatFileSource extends DataSource {
                         if (line.startsWith("#") || line.equals("")) {
                             continue;
                         }
-                        String[] split = etc.realSplit(line, ":");
+                        String[] split = line.split(":", -1);
 
                         if (split.length < 4) {
                             continue;
@@ -312,7 +312,8 @@ public class FlatFileSource extends DataSource {
                             home.Location.world = split[8];
                             home.Location.dimension = Integer.parseInt(split[7]);
                         } else {
-                            home.Location.world = etc.getServer().getDefaultWorld().getName();
+                            // Don't use Server.getDefaultWorld().getName() here as the worlds may not yet be loaded.
+                            home.Location.world = etc.getMCServer().J();
                         }
                         homes.add(home);
                     }
@@ -374,11 +375,12 @@ public class FlatFileSource extends DataSource {
                             warp.Group = "";
                         }
                         posShift++;
-                        
+
                         if (split.length >= 7 + posShift) {
                             warp.Location.world = split[6 + posShift];
                         } else {
-                            warp.Location.world = etc.getServer().getDefaultWorld().getName();
+                            // Don't use Server.getDefaultWorld().getName() here as the worlds may not yet be loaded.
+                            warp.Location.world = etc.getMCServer().J();
                         }
 
                         warps.add(warp);
@@ -507,7 +509,7 @@ public class FlatFileSource extends DataSource {
                 writer.write("pumpkin:86" + LINE_SEP);
                 writer.write("netherstone:87" + LINE_SEP);
                 writer.write("slowsand:88" + LINE_SEP);
-                writer.write("lightstone:89" + LINE_SEP);
+                writer.write("glowstone:89" + LINE_SEP);
                 writer.write("portal:90" + LINE_SEP);
                 writer.write("jackolantern:91" + LINE_SEP);
                 writer.write("jacko:91" + LINE_SEP);
@@ -730,7 +732,7 @@ public class FlatFileSource extends DataSource {
                     if (line.equals("")) {
                         continue;
                     }
-                    String[] split = etc.realSplit(line, ":");
+                    String[] split = line.split(":", -1);
 
                     if (split.length < 2) {
                         log.log(Level.SEVERE, String.format("Problem while reading %s (Line %d violates the syntax)", location, linenum));
@@ -757,7 +759,7 @@ public class FlatFileSource extends DataSource {
     @Override
     public void loadBanList() {
         String location = etc.getInstance().getBanListLoc();
-        
+
         if (!new File(location).exists()) {
             FileWriter writer = null;
 
@@ -796,7 +798,7 @@ public class FlatFileSource extends DataSource {
                     if (line.startsWith("#") || line.equals("")) {
                         continue;
                     }
-                    String[] split = etc.realSplit(line, ":");
+                    String[] split = line.split(":", -1);
                     Ban ban = new Ban();
 
 
@@ -805,12 +807,12 @@ public class FlatFileSource extends DataSource {
                     else if(split[0].length() == 32) { // IPv6
                     	// Convert the expanded address to the compressed version
                     	// The string also has the : removed, so we add those first
-                    	
+
                     	StringBuilder sb = new StringBuilder();
-                    	
+
                     	for(int i = 0; i < 8; i++) {
                     		String piece = split[0].substring(i*4, i*4+4);
-                    		
+
                     		if(piece == "0000")
                     			sb.append("0");
                     		else {
@@ -821,7 +823,7 @@ public class FlatFileSource extends DataSource {
                     			sb.append(":");
                     	}
                     	String longAddr = sb.toString();
-                    	
+
                     	ban.setIp(longAddr);
                     }
                     else
@@ -834,7 +836,7 @@ public class FlatFileSource extends DataSource {
                             ban.setReason(line.substring(line.indexOf(':') + 1));
                     } else
                         ban.setReason(etc.getInstance().getDefaultBanMessage());
-                    
+
                     bans.add(ban);
                 }
                 scanner.close();
@@ -1021,15 +1023,7 @@ public class FlatFileSource extends DataSource {
             builder.append(":");
             builder.append(etc.combineSplit(0, player.getGroups(), ","));
             builder.append(":");
-            if (player.getAdmin()) {
-                builder.append("2");
-            } else if (player.ignoreRestrictions()) {
-                builder.append("1");
-            } else if (!player.canModifyWorld()) {
-                builder.append("-1");
-            } else {
-                builder.append("0");
-            }
+            builder.append(player.getRestrictions());
             builder.append(":");
             builder.append(player.getPrefix());
             builder.append(":");
@@ -1064,15 +1058,7 @@ public class FlatFileSource extends DataSource {
                     builder.append(":");
                     builder.append(etc.combineSplit(0, player.getGroups(), ","));
                     builder.append(":");
-                    if (player.getAdmin()) {
-                        builder.append("2");
-                    } else if (player.ignoreRestrictions()) {
-                        builder.append("1");
-                    } else if (!player.canModifyWorld()) {
-                        builder.append("-1");
-                    } else {
-                        builder.append("0");
-                    }
+                    builder.append(player.getRestrictions());
                     builder.append(":");
                     builder.append(player.getPrefix());
                     builder.append(":");
@@ -1106,7 +1092,7 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith(" ")) {
                     continue;
                 }
-                String[] split = etc.realSplit(line, ":");
+                String[] split = line.split(":", -1);
 
                 if (!split[0].equalsIgnoreCase(player)) {
                     continue;
@@ -1136,7 +1122,7 @@ public class FlatFileSource extends DataSource {
                 if (line.startsWith("#") || line.equals("") || line.startsWith(" ")) {
                     continue;
                 }
-                String[] split = etc.realSplit(line, ":");
+                String[] split = line.split(":", -1);
 
                 if (!split[0].equalsIgnoreCase(name)) {
                     continue;
@@ -1149,12 +1135,25 @@ public class FlatFileSource extends DataSource {
                 player.setGroups(split[1].split(","));
 
                 if (split.length >= 3) {
-                    if (split[2].equals("1")) {
-                        player.setIgnoreRestrictions(true);
-                    } else if (split[2].equals("2")) {
-                        player.setAdmin(true);
-                    } else if (split[2].equals("-1")) {
-                        player.setCanModifyWorld(false);
+                	try {
+                		player.setRestrictions(Integer.parseInt(split[2]));
+                	} catch (NumberFormatException e) {
+                		log.log(Level.SEVERE, "The value 'ADMIN/UNRESTRICTED' for player '" + name + "' in " + location + " is not a number.");
+                	}
+                } else {
+                	for (String str : player.getGroups()) {
+                        Group group = etc.getDataSource().getGroup(str);
+
+                        if (group != null) {
+                            if (group.Administrator) {
+                                player.setRestrictions(2);
+                                break;
+                            } else if (group.IgnoreRestrictions) {
+                            	player.setRestrictions(1);
+                            } else if (!group.CanModifyWorld && !player.canIgnoreRestrictions()) {
+                            	player.setRestrictions(-1);
+                            }
+                        }
                     }
                 }
 
@@ -1551,8 +1550,8 @@ public class FlatFileSource extends DataSource {
         String loc = etc.getInstance().getBanListLoc();
         boolean byIp = !ban.getIp().isEmpty();
         String value = byIp ? ban.getIp() : ban.getName();
-        
-        // Transform Ipv6 addresses 
+
+        // Transform Ipv6 addresses
         if(byIp && value.indexOf(":") != -1) {
         	String[] lst = value.split(":");
         	StringBuilder sb = new StringBuilder();
@@ -1563,7 +1562,7 @@ public class FlatFileSource extends DataSource {
         	}
         	value = sb.toString();
         }
-        
+
         try {
             // Now to save...
             BufferedReader reader = new BufferedReader(new FileReader(new File(loc)));
@@ -1573,7 +1572,7 @@ public class FlatFileSource extends DataSource {
             while ((line = reader.readLine()) != null) {
                 toWrite.append(line).append(LINE_SEP);
             }
-            
+
             reader.close();
 
             toWrite.append(value)
@@ -1766,14 +1765,14 @@ public class FlatFileSource extends DataSource {
                 }
         }
         String loc = etc.getInstance().getBanListLoc();
-        
+
         try {
             // Now to save...
             BufferedReader reader = new BufferedReader(new FileReader(new File(loc)));
             StringBuilder toWrite = new StringBuilder();
             String line;
             String user = ban.getIp().isEmpty() ? ban.getName() : ban.getIp();
-        
+
             while ((line = reader.readLine()) != null) {
                 if (!line.split(":")[0].equalsIgnoreCase(user)) {
                     toWrite.append(line).append(LINE_SEP);

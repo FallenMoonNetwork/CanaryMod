@@ -16,7 +16,7 @@ public class PlayerManager {
      * @param player
      */
     public void updateMountedMovingPlayer(OEntityPlayerMP player) {
-        pm.c(player);
+        pm.d(player);
     }
     
     /**
@@ -24,7 +24,7 @@ public class PlayerManager {
      * @param player
      */
     public void updateMountedMovingPlayer(Player player) {
-        pm.c(player.getEntity());
+        this.updateMountedMovingPlayer(player.getEntity());
     }
     
     /**
@@ -32,7 +32,7 @@ public class PlayerManager {
      * @param player
      */
     public void addPlayer(OEntityPlayerMP player) {
-        pm.a(player);
+        pm.b(player);
     }
     
     /**
@@ -40,7 +40,7 @@ public class PlayerManager {
      * @param player
      */
     public void removePlayer(OEntityPlayerMP player) {
-        pm.b(player);
+        pm.c(player);
     }
     
     public void markBlockNeedsUpdate(int x, int y, int z) {

@@ -19,11 +19,11 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         super();
     }
 
-    public int c() {
+    public int k_() {
         return 27;
     }
 
-    public OItemStack g_(int i) {
+    public OItemStack a(int i) {
         return this.i[i];
     }
 
@@ -34,7 +34,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
             if (this.i[i].a <= j) {
                 oitemstack = this.i[i];
                 this.i[i] = null;
-                this.G_();
+                this.d();
                 return oitemstack;
             } else {
                 oitemstack = this.i[i].a(j);
@@ -42,7 +42,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
                     this.i[i] = null;
                 }
 
-                this.G_();
+                this.d();
                 return oitemstack;
             }
         } else {
@@ -50,7 +50,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.i[i] != null) {
             OItemStack oitemstack = this.i[i];
 
@@ -63,26 +63,26 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
 
     public void a(int i, OItemStack oitemstack) {
         this.i[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.a()) {
-            oitemstack.a = this.a();
+        if (oitemstack != null && oitemstack.a > this.c()) {
+            oitemstack.a = this.c();
         }
 
-        this.G_();
+        this.d();
     }
 
-    public String e() {
+    public String b() {
         return name;
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        ONBTTagList onbttaglist = onbttagcompound.n("Items");
+        ONBTTagList onbttaglist = onbttagcompound.m("Items");
 
-        this.i = new OItemStack[this.c()];
+        this.i = new OItemStack[this.k_()];
 
-        for (int i = 0; i < onbttaglist.d(); ++i) {
-            ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.a(i);
-            int j = onbttagcompound1.d("Slot") & 255;
+        for (int i = 0; i < onbttaglist.c(); ++i) {
+            ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.b(i);
+            int j = onbttagcompound1.c("Slot") & 255;
 
             if (j >= 0 && j < this.i.length) {
                 this.i[j] = OItemStack.a(onbttagcompound1);
@@ -108,12 +108,12 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         onbttagcompound.a("Items", (ONBTBase) onbttaglist);
     }
 
-    public int a() {
+    public int c() {
         return 64;
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
-        return this.k.b(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
+        return this.k.p(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
     }
 
     public void h() {
@@ -128,20 +128,20 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
             this.c = null;
             this.d = null;
             this.e = null;
-            if (this.k.a(this.l - 1, this.m, this.n) == OBlock.au.bO) {
-                this.d = (OTileEntityChest) this.k.b(this.l - 1, this.m, this.n);
+            if (this.k.a(this.l - 1, this.m, this.n) == OBlock.ax.cm) {
+                this.d = (OTileEntityChest) this.k.p(this.l - 1, this.m, this.n);
             }
 
-            if (this.k.a(this.l + 1, this.m, this.n) == OBlock.au.bO) {
-                this.c = (OTileEntityChest) this.k.b(this.l + 1, this.m, this.n);
+            if (this.k.a(this.l + 1, this.m, this.n) == OBlock.ax.cm) {
+                this.c = (OTileEntityChest) this.k.p(this.l + 1, this.m, this.n);
             }
 
-            if (this.k.a(this.l, this.m, this.n - 1) == OBlock.au.bO) {
-                this.b = (OTileEntityChest) this.k.b(this.l, this.m, this.n - 1);
+            if (this.k.a(this.l, this.m, this.n - 1) == OBlock.ax.cm) {
+                this.b = (OTileEntityChest) this.k.p(this.l, this.m, this.n - 1);
             }
 
-            if (this.k.a(this.l, this.m, this.n + 1) == OBlock.au.bO) {
-                this.e = (OTileEntityChest) this.k.b(this.l, this.m, this.n + 1);
+            if (this.k.a(this.l, this.m, this.n + 1) == OBlock.ax.cm) {
+                this.e = (OTileEntityChest) this.k.p(this.l, this.m, this.n + 1);
             }
 
             if (this.b != null) {
@@ -163,11 +163,11 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         }
     }
 
-    public void q_() {
-        super.q_();
+    public void g() {
+        super.g();
         this.i();
         if (++this.j % 20 * 4 == 0) {
-            this.k.e(this.l, this.m, this.n, 1, this.h);
+            ;
         }
 
         this.g = this.f;
@@ -186,7 +186,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
                 d1 += 0.5D;
             }
 
-            this.k.a(d1, (double) this.m + 0.5D, d0, "random.chestopen", 0.5F, this.k.r.nextFloat() * 0.1F + 0.9F);
+            this.k.a(d1, (double) this.m + 0.5D, d0, "random.chestopen", 0.5F, this.k.u.nextFloat() * 0.1F + 0.9F);
         }
 
         if (this.h == 0 && this.f > 0.0F || this.h > 0 && this.f < 1.0F) {
@@ -216,7 +216,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
                     d0 += 0.5D;
                 }
 
-                this.k.a(d0, (double) this.m + 0.5D, d2, "random.chestclosed", 0.5F, this.k.r.nextFloat() * 0.1F + 0.9F);
+                this.k.a(d0, (double) this.m + 0.5D, d2, "random.chestclosed", 0.5F, this.k.u.nextFloat() * 0.1F + 0.9F);
             }
 
             if (this.f < 0.0F) {
@@ -233,54 +233,54 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
 
     }
 
-    public void f() {
+    public void l_() {
         ++this.h;
-        this.k.e(this.l, this.m, this.n, 1, this.h);
+        this.k.c(this.l, this.m, this.n, OBlock.ax.cm, 1, this.h);
     }
 
-    public void g() {
+    public void f() {
         --this.h;
-        this.k.e(this.l, this.m, this.n, 1, this.h);
+        this.k.c(this.l, this.m, this.n, OBlock.ax.cm, 1, this.h);
     }
 
-    public void j() {
+    public void w_() {
         this.h();
         this.i();
-        super.j();
+        super.w_();
     }
-   
+
     @Override
     public OItemStack[] getContents() {
-        return Arrays.copyOf(i, getContentsSize());
+        return Arrays.copyOf(this.i, this.getContentsSize());
     }
 
     @Override
     public void setContents(OItemStack[] aoitemstack) {
-        i = Arrays.copyOf(aoitemstack, getContentsSize());
+        this.i = Arrays.copyOf(aoitemstack, this.getContentsSize());
     }
 
     @Override
     public OItemStack getContentsAt(int i) {
-        return g_(i);
+        return this.a(i);
     }
 
     @Override
     public void setContentsAt(int i, OItemStack oitemstack) {
-        a(i, oitemstack);
+        this.a(i, oitemstack);
     }
 
     @Override
     public int getContentsSize() {
-        return c();
+        return this.k_();
     }
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
     public void setName(String s) {
-        name = s;
+        this.name = s;
     }
 }

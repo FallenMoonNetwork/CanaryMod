@@ -5,14 +5,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,9 +13,10 @@ import java.util.logging.Logger;
 /**
  * etc.java - My catch-all class for a bunch of shit. If there's something you
  * need it's probably in here.
- * 
+ *
  * @author James
  */
+@SuppressWarnings("LoggerStringConcat")
 public class etc {
     private static final Logger           log = Logger.getLogger("Minecraft");
     private static final etc              instance = new etc();
@@ -62,7 +56,8 @@ public class etc {
     private PluginLoader                  loader;
     private boolean                       logging = false;
     private boolean                       enableHealth = true;
-    private boolean                       enableExperience = false;
+    private boolean                       enableExperience = true;
+    private boolean                       oldExperience = true;
     //private boolean                       enableAntiXRay = false;
     //private boolean                       enableAntiXRayLighting = false;
     //private int[]                         opaqueAntiXRayBlocks = new int[] { 1, 2, 3, 4, 5, 7, 12, 13, 14, 15, 16, 17, 19, 21, 22, 23, 24, 25, 29, 33, 35, 36, 41, 42, 43, 45, 46, 47, 48, 49, 54, 56, 57, 58, 60, 61, 62, 73, 74, 80, 82, 84, 86, 87, 88, 89, 91, 95, 97, 98, 99, 100, 103, 110, 112, 120, 121};
@@ -77,6 +72,7 @@ public class etc {
     private String[]                      animals = new String[] {};
     private String[]                      monsters = new String[] {};
     private String[]                      waterAnimals = new String[] {};
+    private String[]                      ambientAnimals = new String[] {};
     private int                           mobSpawnRate = 100;
     public boolean                        deathMessages = true;
     private boolean                       AltLocLoginAllowed     = true;
@@ -85,13 +81,13 @@ public class etc {
     //CanaryMod: Allow End
     private boolean                       allowEnd = true;
     // Playerlist options (tab)
-    private boolean                       playerList_autoupdate = false;
-    private int                           playerList_ticks = 500;
+    private boolean                       playerList_autoupdate = true;
+    private int                           playerList_ticks = 600;
     private boolean                       playerList_colors = true;
     private boolean                       playerList_enabled = true;
-    
+
     public boolean	                      allowEnchantableItemStacking = false;
-    
+
     //Connection Manager
     private ConnectionService cs;
 
@@ -134,8 +130,8 @@ public class etc {
             loadIds(allowedItems, properties.getString("alloweditems", ""));
             loadIds(disallowedItems, properties.getString("disalloweditems", ""));
             loadIds(itemSpawnBlacklist, properties.getString("itemspawnblacklist", ""));
-            playerList_autoupdate = properties.getBoolean("playerlist-autoupdate", false);
-            playerList_ticks = properties.getInt("playerlist-ticks", 500);
+            playerList_autoupdate = properties.getBoolean("playerlist-autoupdate", true);
+            playerList_ticks = properties.getInt("playerlist-ticks", 600);
             playerList_colors = properties.getBoolean("playerlist-usecolors", true);
             playerList_enabled = properties.getBoolean("playerlist-enabled", true);
             motd = properties.getString("motd", "My Canary Server.");
@@ -159,6 +155,7 @@ public class etc {
                 groupLoc = properties.getString("group-txt-location", "config/groups.txt");
                 whitelistLoc = properties.getString("whitelist-txt-location", "config/whitelist.txt");
                 reservelistLoc = properties.getString("reservelist-txt-location", "config/reservelist.txt");
+                enderBlocksLoc = properties.getString("endermanblocks-txt-location", "config/endermanblocks.txt");
                 //antiXRayBlocksLoc = properties.getString("antixray-txt-location", "config/antixray.txt");
                 muteListLoc = properties.getString("muted-players-location", "config/muted-players.txt");
                 banListLoc = properties.getString("banned-players-location", "config/bans.txt");
@@ -167,7 +164,7 @@ public class etc {
                 //into ConnectionService.getInstance().
                 //This is to, hopefully, avoid the problem with connection guards
                 //beeing scheduled all over the place
-                
+
                 //Those values are left for the legacy mysql connection singleton
                 cs = ConnectionService.getInstance();
                 username = cs.getConnectionCredentialsUser();
@@ -180,6 +177,7 @@ public class etc {
             allowEnd = properties.getBoolean("allow-end", true);
             enableHealth = properties.getBoolean("enable-health", true);
             enableExperience = properties.getBoolean("enable-experience", true);
+            oldExperience = properties.getBoolean("old-experience", false);
             //enableAntiXRay = properties.getBoolean("enable-antixray", false);
             //enableAntiXRayLighting = properties.getBoolean("enable-antixray-lighting", false);
             deathMessages = properties.getBoolean("death-message", true);
@@ -203,6 +201,12 @@ public class etc {
             }
             validateMobGroup(waterAnimals, "natural-wateranimals", new String[] { "Squid" });
 
+            ambientAnimals = properties.getString("natural-ambientanimals", "Bat").split(",");
+            if (ambientAnimals.length == 1 && (ambientAnimals[0].equals(" ") || ambientAnimals[0].equals(""))) {
+                ambientAnimals = new String[] {};
+            }
+            validateMobGroup(ambientAnimals, "natural-ambientanimals", new String[] { "Bat" });
+
             mobSpawnRate = properties.getInt("natural-spawn-rate", mobSpawnRate);
 
             String autoHealString = properties.getString("auto-heal", "default");
@@ -212,7 +216,7 @@ public class etc {
             } else if (autoHealString.matches("(?i:false|off)")) {
                 autoHeal = PluginLoader.HookResult.PREVENT_ACTION;
             }
-            
+
             String protectSpamString = properties.getString("protect-spam", "default");
             if (protectSpamString.matches("(?i:true|on|always)")) {
                 protectFromSpam = PluginLoader.HookResult.ALLOW_ACTION;
@@ -221,7 +225,7 @@ public class etc {
             }
 
             allowEnchantableItemStacking = properties.getBoolean("allow-enchantable-item-stacking", false);
-            
+
             showUnknownCommand = properties.getBoolean("show-unknown-command", true);
             File file = new File("version.txt");
 
@@ -264,7 +268,7 @@ public class etc {
     }
 
     /**
-     * 
+     *
      * @return true if we want the playerlist update automaticaly
      */
     public boolean isPlayerList_autoupdate() {
@@ -272,7 +276,7 @@ public class etc {
     }
 
     /**
-     *  
+     *
      * @return the interval between playerlist autoupdates
      */
     public int getPlayerList_ticks() {
@@ -280,8 +284,8 @@ public class etc {
     }
 
     /**
-     *  
-     * 
+     *
+     *
      * @return true if we want player colors on playerlist
      */
     public boolean isPlayerList_colors() {
@@ -316,7 +320,7 @@ public class etc {
 
     /**
      * Returns the instance
-     * 
+     *
      * @return
      */
     public static etc getInstance() {
@@ -325,7 +329,7 @@ public class etc {
 
     /**
      * Sets the server to be used.
-     * 
+     *
      * @param s
      */
     public static void setServer(OMinecraftServer s) {
@@ -334,7 +338,7 @@ public class etc {
 
     /**
      * Returns the minecraft server
-     * 
+     *
      * @return
      */
     public static OMinecraftServer getMCServer() {
@@ -343,7 +347,7 @@ public class etc {
 
     /**
      * Returns the data source
-     * 
+     *
      * @return
      */
     public static DataSource getDataSource() {
@@ -352,7 +356,7 @@ public class etc {
 
     /**
      * Returns the minecraft server interface
-     * 
+     *
      * @return
      */
     public static Server getServer() {
@@ -361,7 +365,7 @@ public class etc {
 
     /**
      * Returns the plugin loader
-     * 
+     *
      * @return
      */
     public static PluginLoader getLoader() {
@@ -374,7 +378,7 @@ public class etc {
 
     /**
      * Returns the default group
-     * 
+     *
      * @return default group
      */
     public Group getDefaultGroup() {
@@ -388,7 +392,7 @@ public class etc {
 
     /**
      * Adds or modifies the home.
-     * 
+     *
      * @param home
      */
     public void changeHome(Warp home) {
@@ -401,7 +405,7 @@ public class etc {
 
     /**
      * Adds or modifies the warp
-     * 
+     *
      * @param warp
      */
     public void setWarp(Warp warp) {
@@ -414,7 +418,7 @@ public class etc {
 
     /**
      * Returns true if the item is on the blacklist
-     * 
+     *
      * @param id
      * @return
      */
@@ -424,7 +428,7 @@ public class etc {
 
     /**
      * Returns the data source
-     * 
+     *
      * @return
      */
     public DataSource getSource() {
@@ -433,7 +437,7 @@ public class etc {
 
     /**
      * Returns true if we're logging commands and such
-     * 
+     *
      * @return
      */
     public boolean isLogging() {
@@ -442,44 +446,44 @@ public class etc {
 
     /**
      * Returns true if we want health to be enabled.
-     * 
+     *
      * @return
      */
     public boolean isHealthEnabled() {
         return enableHealth;
     }
-    
+
     /**
      * Returns true if we want experience to be enabled.
-     * 
+     *
      * @return
      */
     public boolean isExpEnabled() {
         return enableExperience;
     }
-    
+
     /**
      * Returns true if anti-xray mechanism is working
-     * 
+     *
      * @return
      */
     public boolean isAntiXRayEnabled() {
         return false;//enableAntiXRay;
     }
-    
+
     /**
      * Returns true if anti-xray lighting mechanism is working
-     * 
+     *
      * @return
      */
     public boolean isAntiXRayLightingEnabled() {
         return false;//enableAntiXRayLighting;
     }
-    
+
     /**
      * Returns true if an anti xray block is opaque.
      * @param id - The id of the block to check.
-     * 
+     *
      * @return
      */
     public boolean isOpaqueAntiXRayBlock(int id) {
@@ -492,8 +496,18 @@ public class etc {
     }
 
     /**
+     * Returns true if using the older experience system
+     *
+     * @return
+     */
+
+    public boolean isOldExperience() {
+    	return oldExperience;
+    }
+
+    /**
      * Returns the status of auto-heal.
-     * 
+     *
      * @return
      */
     public PluginLoader.HookResult autoHeal() {
@@ -502,7 +516,7 @@ public class etc {
 
     /**
      * Adds command to the /help list
-     * 
+     *
      * @param command
      * @param description
      */
@@ -512,7 +526,7 @@ public class etc {
 
     /**
      * Removes command from /help list
-     * 
+     *
      * @param command
      */
     public void removeCommand(String command) {
@@ -521,7 +535,7 @@ public class etc {
 
     /**
      * Toggles the whitelist (doesn't persist)
-     * 
+     *
      * @return
      */
     public boolean toggleWhitelist() {
@@ -551,7 +565,7 @@ public class etc {
 
     /**
      * Parses a console command
-     * 
+     *
      * @param command
      * @param server
      * @return
@@ -600,7 +614,7 @@ public class etc {
 
     /**
      * Returns compass direction according to your rotation
-     * 
+     *
      * @param degrees
      * @return
      */
@@ -631,7 +645,7 @@ public class etc {
     /**
      * Combines the string array into a string at the specified start with the
      * separator separating each string.
-     * 
+     *
      * @param startIndex
      * @param string
      * @param seperator
@@ -647,32 +661,10 @@ public class etc {
         }
         return builder.toString();
     }
-    
-    /**
-     * Splits a string into an array at the given separator, without removing empty ones like .split() does.
-     * @author Jos Kuijpers
-     * @param in The string to split
-     * @param seperator The string to split at
-     * @return an array containing all components
-     */
-    public static String[] realSplit(String in, String seperator) {
-        String[] res = {};
-        ArrayList<String> items = new ArrayList<String>();
-        
-        int pos = 0;
-        int last = 0;
-        while((pos = in.indexOf(seperator, last)) != -1) {
-            items.add(in.substring(last, pos));
-            last = pos+seperator.length();
-        }
-        items.add(in.substring(last));
-        
-        return items.toArray(res);
-    }
 
     /**
      * Returns a list of allowed items for /item
-     * 
+     *
      * @return list of allowed items
      */
     public Set<Integer> getAllowedItems() {
@@ -681,7 +673,7 @@ public class etc {
 
     /**
      * Returns the list of commands
-     * 
+     *
      * @return
      */
     public LinkedHashMap<String, String> getCommands() {
@@ -690,7 +682,7 @@ public class etc {
 
     /**
      * Returns a list of disallowed items for /item
-     * 
+     *
      * @return
      */
     public Set<Integer> getDisallowedItems() {
@@ -699,7 +691,7 @@ public class etc {
 
     /**
      * Returns the location of groups.txt
-     * 
+     *
      * @return
      */
     public String getGroupLocation() {
@@ -708,7 +700,7 @@ public class etc {
 
     /**
      * Returns the location of homes.txt
-     * 
+     *
      * @return
      */
     public String getHomeLocation() {
@@ -717,7 +709,7 @@ public class etc {
 
     /**
      * Returns the location of items.txt
-     * 
+     *
      * @return
      */
     public String getItemLocation() {
@@ -726,7 +718,7 @@ public class etc {
 
     /**
      * Returns list of banned blocks
-     * 
+     *
      * @return
      */
     public Set<Integer> getItemSpawnBlacklist() {
@@ -735,16 +727,16 @@ public class etc {
 
     /**
      * Returns the location of kits.txt
-     * 
+     *
      * @return
      */
     public String getKitsLocation() {
         return kitsLoc;
     }
-    
+
     /**
      * Returns the location of endermanblocks.txt
-     * 
+     *
      * @return
      */
     public String getEnderBlocksLocation() {
@@ -753,17 +745,17 @@ public class etc {
 
     /**
      * Returns the MOTD.
-     * 
-     * @param caller 
+     *
+     * @param caller
      * @return
      */
     public String getMotd(MessageReceiver caller) {
         return Motd.getMotd(caller);
     }
-    
+
     /**
      * Returns the player limit
-     * 
+     *
      * @return
      */
     public int getPlayerLimit() {
@@ -772,7 +764,7 @@ public class etc {
 
     /**
      * Return reservelist enabled.
-     * 
+     *
      * @return true if enabled.
      */
     public boolean isReservelistEnabled() {
@@ -781,25 +773,25 @@ public class etc {
 
     /**
      * Returns the location of reservelist.txt
-     * 
+     *
      * @return
      */
     public String getReservelistLocation() {
         return reservelistLoc;
     }
-    
+
     /**
      * Returns the location of antixray.txt
-     * 
+     *
      * @return
      */
     public String getAntiXRayBlocksLocation() {
         return "";//antiXRayBlocksLoc;
     }
-    
+
     /**
      * Returns the location of muted-players.txt
-     * 
+     *
      * @return
      */
     public String getMuteListLocation() {
@@ -808,7 +800,7 @@ public class etc {
 
     /**
      * Returns the location of bans.txt
-     * 
+     *
      * @return
      */
     public String getBanListLoc() {
@@ -817,7 +809,7 @@ public class etc {
 
     /**
      * Returns true if the server is saving homes
-     * 
+     *
      * @return true if server can save homes
      */
     public boolean canSaveHomes() {
@@ -829,24 +821,24 @@ public class etc {
      *
      * @return true
      */
-     
+
     public boolean getHideSeed() {
         return hideSeed;
     }
-    
+
     /**
      * If true, the server will hide the seed from other players
      *
      * @param hideSeed
      */
-     
+
     public void setHideSeed(boolean hideSeed) {
         this.hideSeed = hideSeed;
     }
-     
+
     /**
      * Returns the spawn protection size
-     * 
+     *
      * @return
      */
     public int getSpawnProtectionSize() {
@@ -855,7 +847,7 @@ public class etc {
 
     /**
      * Returns the location of users.txt
-     * 
+     *
      * @return
      */
     public String getUsersLocation() {
@@ -864,7 +856,7 @@ public class etc {
 
     /**
      * Returns the location of warps.txt
-     * 
+     *
      * @return
      */
     public String getWarpLocation() {
@@ -873,20 +865,20 @@ public class etc {
 
     /**
      * Returns true if the whitelist is enabled
-     * 
+     *
      * @return
      */
     public boolean isWhitelistEnabled() {
         return whitelistEnabled;
     }
-    
+
 //    public boolean isPlayerOnMuteList(String player) {
 //    	if(this.getDataSource().get)
 //    }
 
     /**
      * Returns the location of whitelist.txt
-     * 
+     *
      * @return
      */
     public String getWhitelistLocation() {
@@ -895,7 +887,7 @@ public class etc {
 
     /**
      * Returns the message the kick will show if a player isn't on the whitelist
-     * 
+     *
      * @return
      */
     public String getWhitelistMessage() {
@@ -912,7 +904,7 @@ public class etc {
 
     /**
      * Sets the list of allowed items
-     * 
+     *
      * @param allowedItems
      */
     public void setAllowedItems(int[] allowedItems) {
@@ -926,7 +918,7 @@ public class etc {
 
     /**
      * Sets the list of disallowed items
-     * 
+     *
      * @param disallowedItems
      */
     public void setDisallowedItems(int[] disallowedItems) {
@@ -940,7 +932,7 @@ public class etc {
 
     /**
      * Sets the location of groups.txt
-     * 
+     *
      * @param groupLoc
      */
     public void setGroupLocation(String groupLoc) {
@@ -949,7 +941,7 @@ public class etc {
 
     /**
      * Sets the location of homes.txt
-     * 
+     *
      * @param homeLoc
      */
     public void setHomeLocation(String homeLoc) {
@@ -958,7 +950,7 @@ public class etc {
 
     /**
      * Sets the location of items.txt
-     * 
+     *
      * @param itemLoc
      */
     public void setItemLocation(String itemLoc) {
@@ -967,7 +959,7 @@ public class etc {
 
     /**
      * Sets the item spawn blacklist
-     * 
+     *
      * @param itemSpawnBlacklist
      */
     public void setItemSpawnBlacklist(int[] itemSpawnBlacklist) {
@@ -981,7 +973,7 @@ public class etc {
 
     /**
      * Sets the location of kits.txt
-     * 
+     *
      * @param kitsLoc
      */
     public void setKitsLocation(String kitsLoc) {
@@ -990,7 +982,7 @@ public class etc {
 
     /**
      * If set to true the server will log all commands used.
-     * 
+     *
      * @param logging
      */
     public void setLogging(boolean logging) {
@@ -999,7 +991,7 @@ public class etc {
 
     /**
      * Set the MOTD
-     * 
+     *
      * @param motd
      */
     public void setMotd(String motd) {
@@ -1008,7 +1000,7 @@ public class etc {
 
     /**
      * Set the player limit
-     * 
+     *
      * @param playerLimit
      */
     public void setPlayerLimit(int playerLimit) {
@@ -1017,16 +1009,16 @@ public class etc {
 
     /**
      * Set the location of reservelist.txt
-     * 
+     *
      * @param reservelistLoc
      */
     public void setReservelistLocation(String reservelistLoc) {
         this.reservelistLoc = reservelistLoc;
     }
-    
+
     /**
      * Set the location of antixray.txt
-     * 
+     *
      * @param antiXRayLoc
      */
     public void setAntiXRayLocation(String antiXRayLoc) {
@@ -1036,7 +1028,7 @@ public class etc {
     /**
      * If true the server will save homes. If false homes won't be saved and
      * will be wiped the next server restart.
-     * 
+     *
      * @param saveHomes
      */
     public void setSaveHomes(boolean saveHomes) {
@@ -1045,7 +1037,7 @@ public class etc {
 
     /**
      * Set the spawn protection size (def: 16)
-     * 
+     *
      * @param spawnProtectionSize
      */
     public void setSpawnProtectionSize(int spawnProtectionSize) {
@@ -1054,7 +1046,7 @@ public class etc {
 
     /**
      * Sets the location of users.txt
-     * 
+     *
      * @param usersLoc
      */
     public void setUsersLocation(String usersLoc) {
@@ -1063,7 +1055,7 @@ public class etc {
 
     /**
      * Sets the location of warps.txt
-     * 
+     *
      * @param warpLoc
      */
     public void setWarpLocation(String warpLoc) {
@@ -1072,7 +1064,7 @@ public class etc {
 
     /**
      * If true the whitelist is enabled
-     * 
+     *
      * @param whitelistEnabled
      */
     public void setWhitelistEnabled(boolean whitelistEnabled) {
@@ -1081,7 +1073,7 @@ public class etc {
 
     /**
      * Sets the location of whitelist.txt
-     * 
+     *
      * @param whitelistLoc
      */
     public void setWhitelistLocation(String whitelistLoc) {
@@ -1090,7 +1082,7 @@ public class etc {
 
     /**
      * Sets the whitelist message to show when it kicks someone
-     * 
+     *
      * @param whitelistMessage
      */
     public void setWhitelistMessage(String whitelistMessage) {
@@ -1100,7 +1092,7 @@ public class etc {
     /**
      * Returns true if "Unknown command" is shown to a player when they enter an
      * unknown command (For wrappers and such)
-     * 
+     *
      * @return show unknown command
      */
     public boolean showUnknownCommand() {
@@ -1109,7 +1101,7 @@ public class etc {
 
     /**
      * Sets whether or not to show "Unknown command" to players.
-     * 
+     *
      * @param showUnknownCommand
      *            whether or not to show it
      */
@@ -1119,7 +1111,7 @@ public class etc {
 
     /**
      * Return the current build of the mod
-     * 
+     *
      * @return build/version
      */
     public int getVersion() {
@@ -1128,7 +1120,7 @@ public class etc {
 
     /**
      * Return whether this build is "tainted"
-     * 
+     *
      * @return tainted
      */
     public boolean getTainted() {
@@ -1137,7 +1129,7 @@ public class etc {
 
     /**
      * Return the specified string version of the build
-     * 
+     *
      * @return build/version
      */
     public String getVersionStr() {
@@ -1146,7 +1138,7 @@ public class etc {
 
     /**
      * Returns a list of animals that are allowed to spawn naturally
-     * 
+     *
      * @return a list of animals
      */
     public String[] getAnimals() {
@@ -1155,7 +1147,7 @@ public class etc {
 
     /**
      * Sets a list of animals that are allowed to spawn naturally
-     * 
+     *
      * @param animals
      *            a list of animals
      */
@@ -1165,7 +1157,7 @@ public class etc {
 
     /**
      * Returns a list of animals that are allowed to spawn naturally
-     * 
+     *
      * @return a list of animals
      */
     public String[] getWaterAnimals() {
@@ -1174,7 +1166,7 @@ public class etc {
 
     /**
      * Sets a list of animals that are allowed to spawn naturally
-     * 
+     *
      * @param animals
      *            a list of animals
      */
@@ -1182,9 +1174,23 @@ public class etc {
         waterAnimals = animals;
     }
 
+    public String[] getAmbientAnimals(){
+        return ambientAnimals;
+    }
+
+    /**
+     * Sets a list of ambient animals that are allowed to spawn naturally
+     *
+     * @param ambientAnimals
+     *            a list of ambient animals
+     */
+    public void setAmbientAnimals(String[] ambientAnimals){
+        this.ambientAnimals = ambientAnimals;
+    }
+
     /**
      * Returns a list of mobs that are allowed to spawn naturally
-     * 
+     *
      * @return a list of mobs
      */
     public String[] getMonsters() {
@@ -1194,51 +1200,66 @@ public class etc {
     public List getMonstersClass(OBiomeGenBase biomeGen) {
         List<OSpawnListEntry> toRet = biomeGen.J;
         List<String> allowed = Arrays.asList(getMonsters());
-        
+
         Iterator<OSpawnListEntry> it = toRet.iterator();
         if (!it.hasNext())
             return toRet;
         for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
-            if (!allowed.contains(OEntityList.getName(en.a)))
+            if (!allowed.contains(OEntityList.getName(en.b)))
                 it.remove();
         }
-        
+
         return toRet;
     }
 
     public List getAnimalsClass(OBiomeGenBase biomeGen) {
         List<OSpawnListEntry> toRet = biomeGen.K;
         List<String> allowed = Arrays.asList(getAnimals());
-        
+
         Iterator<OSpawnListEntry> it = toRet.iterator();
         if (!it.hasNext())
             return toRet;
         for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
-            if (!allowed.contains(OEntityList.getName(en.a)))
+            if (!allowed.contains(OEntityList.getName(en.b)))
                 it.remove();
         }
-        
+
+        return toRet;
+    }
+
+    public List getAmbientAnimalsClass(OBiomeGenBase biomeGen) {
+        List<OSpawnListEntry> toRet = biomeGen.M;
+        List<String> allowed = Arrays.asList(getAnimals());
+
+        Iterator<OSpawnListEntry> it = toRet.iterator();
+        if (!it.hasNext())
+            return toRet;
+        for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
+            if (!allowed.contains(OEntityList.getName(en.b)))
+                it.remove();
+        }
+
         return toRet;
     }
 
     public List getWaterAnimalsClass(OBiomeGenBase biomeGen) {
         List<OSpawnListEntry> toRet = biomeGen.L;
         List<String> allowed = Arrays.asList(getWaterAnimals());
-        
+
         Iterator<OSpawnListEntry> it = toRet.iterator();
         if (!it.hasNext())
             return toRet;
         for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
-            if (!allowed.contains(OEntityList.getName(en.a)))
+            if (!allowed.contains(OEntityList.getName(en.b)))
                 it.remove();
         }
-        
+
         return toRet;
     }
 
     /**
      * Sets a list of mobs that are allowed to spawn naturally
-     * 
+     *
      * @param monsters
      *            a list of mobs
      */
@@ -1248,7 +1269,7 @@ public class etc {
 
     /**
      * Returns the % from 0 to 100 that a mob or animal will spawn
-     * 
+     *
      * @return a percentage from 0 to 100
      */
     public int getMobSpawnRate() {
@@ -1257,7 +1278,7 @@ public class etc {
 
     /**
      * Sets the % from 0 to 100 that a mob or animal will spawn
-     * 
+     *
      * @param rate
      *            a percentage from 0 to 100
      */
@@ -1274,14 +1295,14 @@ public class etc {
         }
         return null;
     }
-    
+
     private CanaryConnection _getConnection() throws SQLException {
         return ConnectionService.getInstance().getConnection();
     }
 
     /**
      * Returns a SQL connection
-     * 
+     *
      * @return sql connection
      * @deprecated Use {@link #getConnection() } instead.
      */
@@ -1289,7 +1310,7 @@ public class etc {
     public static Connection getSQLConnection() {
         return getInstance()._getSQLConnection();
     }
-    
+
     /**
      * Return a connection from the connection pool
      * @return A {@link CanaryConnection}
@@ -1342,7 +1363,7 @@ public class etc {
     public String getConfigFolder() {
         return configDir;
     }
-    
+
     /**
      * Returns if current build is a crow build
      *
@@ -1351,7 +1372,7 @@ public class etc {
     public boolean isCrow() {
         return crow;
     }
-    
+
     /**
      * Returns if nether is enabled
      *
@@ -1360,16 +1381,16 @@ public class etc {
     public boolean isNetherEnabled() {
         return allowNether;
     }
-    
+
     /**
      * Returns if the end is enabled
-     * 
+     *
      * @return
      */
      public boolean isEndEnabled() {
          return allowEnd;
      }
-    
+
     /**
      * Returns the location of motd.txt
      *
@@ -1378,7 +1399,7 @@ public class etc {
     public String getMotdLocation() {
         return motdLoc;
     }
-        
+
     /**
      * Returns the server message
      *
@@ -1414,7 +1435,7 @@ public class etc {
 
     /**
      * Returns if Alternate Location Login is alowed
-     * 
+     *
      * @return boolean
      */
     public boolean isAltLocLoginAllowed() {

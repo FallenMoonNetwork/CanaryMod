@@ -16,7 +16,7 @@ public class EntityTracker {
      * @param player
      */
     public void trackPlayer(Player player) {
-        tracker.a(player.getEntity());
+        this.trackEntity(player.getEntity());
     }
     
     /**
@@ -32,7 +32,7 @@ public class EntityTracker {
      * @param player
      */
     public void untrackPlayer(Player player) {
-        tracker.b((OEntity)player.getEntity());
+        this.untrackEntity(player.getEntity());
     }
     
     public void untrackEntity(OEntity entity) {

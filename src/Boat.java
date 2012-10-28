@@ -37,7 +37,7 @@ public class Boat extends BaseVehicle {
      */
     public Boat(World world, double x, double y, double z) {
         super(new OEntityBoat(world.getWorld(), x, y, z));
-        world.getWorld().b(entity);
+        world.getWorld().d(this.entity);
     }
 
     /**
@@ -47,6 +47,6 @@ public class Boat extends BaseVehicle {
      */
     @Override
     public OEntityBoat getEntity() {
-        return (OEntityBoat) entity;
+        return (OEntityBoat) this.entity;
     }
 }

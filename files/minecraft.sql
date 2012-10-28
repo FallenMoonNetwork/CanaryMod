@@ -1,4 +1,4 @@
-﻿-- MySQL dump 10.13  Distrib 5.1.32, for Win32 (ia32)
+-- MySQL dump 10.13  Distrib 5.1.32, for Win32 (ia32)
 --
 -- Host: localhost    Database: minecraft
 -- ------------------------------------------------------
@@ -118,7 +118,7 @@ INSERT INTO `items` VALUES
 ('redstonetorchoff',75),('redstonetorchon',76),('button',77),('snow',78),
 ('ice',79),('snowblock',80),('cactus',81),('clayblock',82),
 ('reedblock',83),('jukebox',84),('fence',85),('pumpkin',86),
-('netherstone',87),('slowsand',88),('lightstone',89),('portal',90),
+('netherstone',87),('slowsand',88),('glowstone',89),('portal',90),
 ('jackolantern',91),('jacko',91),('lockedchest',95),('trapdoor',96),
 ('silverblock',97),('stonebrick',98),('hugebrownmushroom',99),
 ('hugeredmushroom',100),('ironbars',101),('glasspane',102),('melonblock',103),
@@ -127,6 +127,8 @@ INSERT INTO `items` VALUES
 ('netherbrick',112),('netherbrickfence',113),('netherbrickstairs',114),('netherwartblock',115),
 ('enchantmenttable',116),('brewingstandblock',117),('cauldron',118),('endportal',119),
 ('endportalframe',120),('endstone',121),('dragonegg',122),('redstonelampoff',123),('redstonelampon',124),
+('woodendoubleslab',125),('woodenslab',126),('cocoaplant',127),('sandstonetairs',128),
+('emeraldore',129),('enderchest',130),('tripwirehook',131),('emeraldblock',133),
 ('ironshovel',256),('ironspade',256),('ironpickaxe',257),('ironpick',257),('ironaxe',258),
 ('flintandsteel',259),('lighter',259),('apple',260),('bow',261),
 ('arrow',262),('coal',263),('diamond',264),('ironbar',265),
@@ -163,7 +165,8 @@ INSERT INTO `items` VALUES
 ('goltnugget',371),('netherwart',372),('potion',373),('glassbottle',374),
 ('spidereye',375),('fermentedspidereye',376),('blazepowder',377),('magmacream',378),
 ('brewingstand',379),('eyeofender',381),('glisteringmelon',382),('spawnegg',383),
-('bottleoenchanting',384),('firecharge',385),
+('bottleoenchanting',384),('firecharge',385),('bookandquill',386),('writtenbook',387),
+('emerald', 388),
 ('goldrecord',2256),('greenrecord',2257),('blocksrecord',2258),
 ('chirprecord',2259),('farrecord',2260),('mallrecord',2261),('mellohirecord',2262),
 ('stalrecord',2263),('stradrecord',2264),('wardrecord',2265),('11record',2266);
@@ -203,9 +206,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `groups` varchar(64) NOT NULL,
   `prefix` varchar(10) NOT NULL DEFAULT '',
   `commands` LONGTEXT DEFAULT '',
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
-  `canmodifyworld` tinyint(1) NOT NULL DEFAULT '1',
-  `ignoresrestrictions` tinyint(1) NOT NULL DEFAULT '0',
+  `admin/unrestricted` tinyint(1) DEFAULT NULL,
   `ip` VARCHAR(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;

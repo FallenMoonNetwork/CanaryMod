@@ -21,7 +21,7 @@ public class Ocelot extends TamableEntity{
      * Any other value defaults to normal.
      */
     public void setSkin(int skin){
-        getEntity().bY.b(18, Byte.valueOf((byte)skin));
+        getEntity().b(skin);
     }
 
     /**
@@ -30,7 +30,8 @@ public class Ocelot extends TamableEntity{
      * @return 0, 1, 2 or 3. See {@link Ocelot#setSkin(int)} for skin ids.
      */
     public int getSkin(){
-        return getEntity().bY.a(18);
+    	
+        return getEntity().t();
     }
 
     public OEntityOcelot getEntity(){

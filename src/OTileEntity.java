@@ -6,7 +6,7 @@ public class OTileEntity {
 
     private static Map a = new HashMap();
     private static Map b = new HashMap();
-    public OWorld k;
+    protected OWorld k;
     public int l;
     public int m;
     public int n;
@@ -19,7 +19,7 @@ public class OTileEntity {
     }
 
     private static void a(Class oclass, String s) {
-        if (b.containsKey(s)) {
+        if (a.containsKey(s)) {
             throw new IllegalArgumentException("Duplicate id: " + s);
         } else {
             a.put(s, oclass);
@@ -27,10 +27,18 @@ public class OTileEntity {
         }
     }
 
+    public void b(OWorld oworld) {
+        this.k = oworld;
+    }
+
+    public boolean o() {
+        return this.k != null;
+    }
+
     public void a(ONBTTagCompound onbttagcompound) {
-        this.l = onbttagcompound.f("x");
-        this.m = onbttagcompound.f("y");
-        this.n = onbttagcompound.f("z");
+        this.l = onbttagcompound.e("x");
+        this.m = onbttagcompound.e("y");
+        this.n = onbttagcompound.e("z");
     }
 
     public void b(ONBTTagCompound onbttagcompound) {
@@ -46,13 +54,13 @@ public class OTileEntity {
         }
     }
 
-    public void q_() {}
+    public void g() {}
 
     public static OTileEntity c(ONBTTagCompound onbttagcompound) {
         OTileEntity otileentity = null;
 
         try {
-            Class oclass = (Class) a.get(onbttagcompound.j("id"));
+            Class oclass = (Class) a.get(onbttagcompound.i("id"));
 
             if (oclass != null) {
                 otileentity = (OTileEntity) oclass.newInstance();
@@ -64,41 +72,49 @@ public class OTileEntity {
         if (otileentity != null) {
             otileentity.a(onbttagcompound);
         } else {
-            System.out.println("Skipping TileEntity with id " + onbttagcompound.j("id"));
+            System.out.println("Skipping TileEntity with id " + onbttagcompound.i("id"));
         }
 
         return otileentity;
     }
 
-    public int k() {
+    public int p() {
         if (this.p == -1) {
-            this.p = this.k.c(this.l, this.m, this.n);
+            this.p = this.k.g(this.l, this.m, this.n);
         }
 
         return this.p;
     }
 
-    public void G_() {
+    public void d() {
         if (this.k != null) {
-            this.p = this.k.c(this.l, this.m, this.n);
+            this.p = this.k.g(this.l, this.m, this.n);
             this.k.b(this.l, this.m, this.n, this);
         }
 
     }
 
-    public OPacket d() {
+    public OBlock q() {
+        if (this.q == null) {
+            this.q = OBlock.p[this.k.a(this.l, this.m, this.n)];
+        }
+
+        return this.q;
+    }
+
+    public OPacket l() {
         return null;
     }
 
-    public boolean l() {
+    public boolean r() {
         return this.o;
     }
 
-    public void j() {
+    public void w_() {
         this.o = true;
     }
 
-    public void m() {
+    public void s() {
         this.o = false;
     }
 
@@ -112,6 +128,7 @@ public class OTileEntity {
     static {
         a(OTileEntityFurnace.class, "Furnace");
         a(OTileEntityChest.class, "Chest");
+        a(OTileEntityEnderChest.class, "EnderChest");
         a(OTileEntityRecordPlayer.class, "RecordPlayer");
         a(OTileEntityDispenser.class, "Trap");
         a(OTileEntitySign.class, "Sign");
@@ -121,5 +138,8 @@ public class OTileEntity {
         a(OTileEntityBrewingStand.class, "Cauldron");
         a(OTileEntityEnchantmentTable.class, "EnchantTable");
         a(OTileEntityEndPortal.class, "Airportal");
+        a(OTileEntityCommandBlock.class, "Control");
+        a(OTileEntityBeacon.class, "Beacon");
+        a(OTileEntitySkull.class, "Skull");
     }
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * Item.java - Item stuff.
- * 
+ *
  * @author James
  */
 public class Item {
@@ -139,6 +139,18 @@ public class Item {
         EnderDragonEgg(122), //
         RedstoneLampOff(123), //
         RedstoneLampOn(124), //
+        WoodDoubleStep(125), //
+        WoodStep(126), //
+        CocoaPlant(127), //
+        SandstoneStairs(128), //
+        EmeraldOre(129), //
+        EnderChest(130), //
+        TripwireHook(131), //
+        Tripwire(132), //
+        EmeraldBlock(133), //
+        SpruceWoodStairs(134), //
+        BirchWoodStairs(135), //
+        JungleWoodStairs(136), //
         IronSpade(256), //
         IronPickaxe(257), //
         IronAxe(258), //
@@ -269,6 +281,9 @@ public class Item {
         SpawnEgg(383), //
         BottleOEnchanting(384), //
         FireCharge(385), //
+        BookAndQuill(386), //
+        WrittenBook(387), //
+        Emerald(388), //
         GoldRecord(2256), //
         GreenRecord(2257), //
         BlocksRecord(2258), //
@@ -318,7 +333,7 @@ public class Item {
 
     /**
      * Create a new item.
-     * 
+     *
      * @param itemType
      *            type of item.
      */
@@ -340,7 +355,7 @@ public class Item {
 
     /**
      * Creates an item with specified id and amount
-     * 
+     *
      * @param itemId
      * @param amount
      */
@@ -354,7 +369,7 @@ public class Item {
 
     /**
      * Creates an item with specified id, amount and slot
-     * 
+     *
      * @param itemId
      * @param amount
      * @param slot
@@ -369,11 +384,11 @@ public class Item {
 
     /**
      * Creates an item with specified id, amount and slot
-     * 
+     *
      * @param itemId
      * @param amount
      * @param slot
-     * @param damage 
+     * @param damage
      */
     public Item(int itemId, int amount, int slot, int damage) {
         this.itemId = itemId;
@@ -386,20 +401,20 @@ public class Item {
 
     /**
      * Creates an item from the actual item class
-     * 
+     *
      * @param itemStack
      */
     public Item(OItemStack itemStack) {
         itemId = itemStack.c;
         amount = itemStack.a;
-        damage = itemStack.h();
+        damage = itemStack.j();
         itemType = Type.fromId(itemId);
         this.itemStack = itemStack;
     }
 
     /**
      * Creates an item from the actual item class at the given slot
-     * 
+     *
      * @param itemStack
      * @param slot
      */
@@ -418,7 +433,7 @@ public class Item {
 
     /**
      * Returns the item id
-     * 
+     *
      * @return item id
      */
     public int getItemId() {
@@ -427,7 +442,7 @@ public class Item {
 
     /**
      * Sets item id to specified id
-     * 
+     *
      * @param itemId
      */
     public void setItemId(int itemId) {
@@ -438,7 +453,7 @@ public class Item {
 
     /**
      * Returns the amount
-     * 
+     *
      * @return amount
      */
     public int getAmount() {
@@ -447,7 +462,7 @@ public class Item {
 
     /**
      * Sets the amount
-     * 
+     *
      * @param amount
      */
     public void setAmount(int amount) {
@@ -457,38 +472,38 @@ public class Item {
 
     /**
      * Returns the max amount (stack size)
-     * 
+     *
      * @return amount
      */
     public int getMaxAmount() {
-    	return this.itemStack.a().d();
+    	return this.itemStack.d();
     }
-   
+
     /**
      * Sets the max amount (stack size)
-     * 
+     *
      * @param amount
      */
     public void setMaxAmount(int amount) {
-    	this.itemStack.a().e(amount);
+    	this.itemStack.b().e(amount);
     }
-    
+
     /**
      * Returns true if specified item id is a valid item id.
-     * 
+     *
      * @param itemId
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < OItem.d.length) {
-            return OItem.d[itemId] != null;
+        if (itemId < OItem.e.length) {
+            return OItem.e[itemId] != null;
         }
         return false;
     }
 
     /**
      * Returns this item's current slot. -1 if no slot is specified
-     * 
+     *
      * @return slot
      */
     public int getSlot() {
@@ -497,7 +512,7 @@ public class Item {
 
     /**
      * Sets this item's slot
-     * 
+     *
      * @param slot
      */
     public void setSlot(int slot) {
@@ -506,7 +521,7 @@ public class Item {
 
     /**
      * Returns this item's current damage. 0 if no damage is specified
-     * 
+     *
      * @return damage
      */
     public int getDamage() {
@@ -515,7 +530,7 @@ public class Item {
 
     /**
      * Sets this item's damage
-     * 
+     *
      * @param damage
      */
     public void setDamage(int damage) {
@@ -525,7 +540,7 @@ public class Item {
 
     /**
      * Returns a String value representing this object
-     * 
+     *
      * @return String representation of this object
      */
     @Override
@@ -535,7 +550,7 @@ public class Item {
 
     /**
      * Tests the given object to see if it equals this object
-     * 
+     *
      * @param obj
      *            the object to test
      * @return true if the two objects match
@@ -564,7 +579,7 @@ public class Item {
 
     /**
      * Returns a semi-unique hashcode for this object
-     * 
+     *
      * @return hashcode
      */
     @Override
@@ -579,7 +594,7 @@ public class Item {
 
     /**
      * Returns this item type
-     * 
+     *
      * @return the item type
      */
     public Type getType() {
@@ -588,7 +603,7 @@ public class Item {
 
     /**
      * Set the item type
-     * 
+     *
      * @param itemType
      *            the item type
      */
@@ -620,7 +635,7 @@ public class Item {
 
     /**
      * Sets an enchantment on the item
-     * 
+     *
      * @param id
      * @param lvl
      */
@@ -633,7 +648,7 @@ public class Item {
 
     /**
      * Sets an enchantment on the item
-     * 
+     *
      * @param type
      *            the enchantment type
      * @param level
@@ -647,7 +662,7 @@ public class Item {
 
     /**
      * Sets an enchantment on the item
-     * 
+     *
      * @param enchantment
      */
     public void addEnchantment(Enchantment enchantment) {
@@ -667,17 +682,17 @@ public class Item {
 
     /**
      * Gets a list of enchantments
-     * 
+     *
      * @return Enchantment[]
      */
     public Enchantment[] getEnchantments() {
         Enchantment[] enchantments = null;
-        if (itemStack != null && itemStack.r()) {
-            int size = itemStack.p().d();
+        if (itemStack != null && itemStack.v()) {
+            int size = itemStack.q().c();
             enchantments = new Enchantment[size];
             for (int i = 0; i < size; i++) {
-                ONBTTagCompound tag = (ONBTTagCompound) itemStack.p().a(i);
-                enchantments[i] = new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+                ONBTTagCompound tag = (ONBTTagCompound) itemStack.q().b(i);
+                enchantments[i] = new Enchantment(Enchantment.Type.fromId(tag.d("id")), tag.d("lvl"));
             }
         }
         return enchantments;
@@ -685,31 +700,31 @@ public class Item {
 
     /**
      * Gets the items enchantment at specified index
-     * 
+     *
      * @param index
      * @return enchantment
      */
     public Enchantment getEnchantment(int index) {
-        if (itemStack != null && itemStack.r()) {
-            int size = itemStack.p().d();
+        if (itemStack != null && itemStack.v()) {
+            int size = itemStack.q().c();
             if (index >= size) {
                 index = 0;
             }
-            ONBTTagCompound tag = (ONBTTagCompound) itemStack.p().a(index);
-            return new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+            ONBTTagCompound tag = (ONBTTagCompound) itemStack.q().b(index);
+            return new Enchantment(Enchantment.Type.fromId(tag.d("id")), tag.d("lvl"));
         }
         return null;
     }
 
     /**
      * Gets the items first enchantment
-     * 
+     *
      * @return enchantment
      */
     public Enchantment getEnchantment() {
-        if (itemStack != null && itemStack.r()) {
-            ONBTTagCompound tag = (ONBTTagCompound) itemStack.p().a(0);
-            return new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+        if (itemStack != null && itemStack.v()) {
+            ONBTTagCompound tag = (ONBTTagCompound) itemStack.q().b(0);
+            return new Enchantment(Enchantment.Type.fromId(tag.d("id")), tag.d("lvl"));
         }
         return null;
     }

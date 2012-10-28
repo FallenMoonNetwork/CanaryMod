@@ -159,150 +159,150 @@ public class Enchantment {
     }
     
     /**
-     * Gets the weight of the enchantment or null if the enchantment is invalid.
+     * Gets the weight of the enchantment or -1 if the enchantment is invalid.
      * @return
      */
-    public Integer getWeight()
-    {
-        OEnchantment enchantment = getEnchantment();
-        if (enchantment != null)
-        {
-            return enchantment.b();
-        }
-        return null;
-    }
-    
-    /**
-     * Gets the weight of an enchantment given its type or null if the enchantment is invalid.
-     * @return
-     */
-    public static Integer getWeight(Type type)
-    {
-        OEnchantment enchantment = getEnchantment(type);
-        if (enchantment != null)
-        {
-            return enchantment.b();
-        }
-        return null;
-    }
-    
-    /**
-     * Gets the minimum level of the enchantment or null if the enchantment is invalid.
-     * @return
-     */
-    public Integer getMinLevel()
+    public int getWeight()
     {
         OEnchantment enchantment = getEnchantment();
         if (enchantment != null)
         {
             return enchantment.c();
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the minimum level of an enchantment given its type or null if the enchantment is invalid.
+     * Gets the weight of an enchantment given its type or -1 if the enchantment is invalid.
      * @return
      */
-    public static Integer getMinLevel(Type type)
+    public static int getWeight(Type type)
     {
         OEnchantment enchantment = getEnchantment(type);
         if (enchantment != null)
         {
             return enchantment.c();
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the maximum level of the enchantment or null if the enchantment is invalid.
+     * Gets the minimum level of the enchantment or -1 if the enchantment is invalid.
      * @return
      */
-    public Integer getMaxLevel()
+    public int getMinLevel()
     {
         OEnchantment enchantment = getEnchantment();
         if (enchantment != null)
         {
-            return enchantment.a();
+            return enchantment.d();
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the maximum level of an enchantment given its type or null if the enchantment is invalid.
+     * Gets the minimum level of an enchantment given its type or -1 if the enchantment is invalid.
      * @return
      */
-    public static Integer getMaxLevel(Type type)
+    public static int getMinLevel(Type type)
     {
         OEnchantment enchantment = getEnchantment(type);
         if (enchantment != null)
         {
-            return enchantment.a();
+            return enchantment.d();
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the minimum enchantability strength needed for the enchantment or null if the enchantment is invalid.
+     * Gets the maximum level of the enchantment or -1 if the enchantment is invalid.
      * @return
      */
-    public Integer getMinEnchantability()
+    public int getMaxLevel()
+    {
+        OEnchantment enchantment = getEnchantment();
+        if (enchantment != null)
+        {
+            return enchantment.b();
+        }
+        return -1;
+    }
+    
+    /**
+     * Gets the maximum level of an enchantment given its type or -1 if the enchantment is invalid.
+     * @return
+     */
+    public static int getMaxLevel(Type type)
+    {
+        OEnchantment enchantment = getEnchantment(type);
+        if (enchantment != null)
+        {
+            return enchantment.b();
+        }
+        return -1;
+    }
+    
+    /**
+     * Gets the minimum enchantability strength needed for the enchantment or -1 if the enchantment is invalid.
+     * @return
+     */
+    public int getMinEnchantability()
     {
         OEnchantment enchantment = getEnchantment();
         if (enchantment != null)
         {
             return enchantment.a(this.level);
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the minimum enchantability strength needed for the enchantment given its type or null if the enchantment is invalid.
+     * Gets the minimum enchantability strength needed for the enchantment given its type or -1 if the enchantment is invalid.
      * @return
      */
-    public static Integer getMinEnchantability(Type type, int level)
+    public static int getMinEnchantability(Type type, int level)
     {
         OEnchantment enchantment = getEnchantment(type);
         if (enchantment != null)
         {
             return enchantment.a(level);
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the maximum enchantability strength needed for the enchantment or null if the enchantment is invalid.
+     * Gets the maximum enchantability strength needed for the enchantment or -1 if the enchantment is invalid.
      * @return
      */
-    public Integer getMaxEnchantability()
+    public int getMaxEnchantability()
     {
         OEnchantment enchantment = getEnchantment();
         if (enchantment != null)
         {
             return enchantment.b(this.level);
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the maximum enchantability strength needed for the enchantment given its type or null if the enchantment is invalid.
+     * Gets the maximum enchantability strength needed for the enchantment given its type or -1 if the enchantment is invalid.
      * @return
      */
-    public static Integer getMaxEnchantability(Type type, int level)
+    public static int getMaxEnchantability(Type type, int level)
     {
         OEnchantment enchantment = getEnchantment(type);
         if (enchantment != null)
         {
             return enchantment.b(level);
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the modified damage for the enchantment for a given damage source or null if the enchantment or damage source is invalid.
+     * Gets the modified damage for the enchantment for a given damage source or -1 if the enchantment or damage source is invalid.
      * @return
      */
-    public Integer getDamage(ODamageSource damageSource)
+    public int getDamage(ODamageSource damageSource)
     {
         if (damageSource != null)
         {
@@ -312,14 +312,14 @@ public class Enchantment {
                 return enchantment.a(this.level, damageSource);
             }
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the modified damage for an enchantment for a given damage source or null if the enchantment or damage source is invalid.
+     * Gets the modified damage for an enchantment for a given damage source or -1 if the enchantment or damage source is invalid.
      * @return
      */
-    public static Integer getDamage(Type type, int level, ODamageSource damageSource)
+    public static int getDamage(Type type, int level, ODamageSource damageSource)
     {
         if (damageSource != null)
         {
@@ -329,14 +329,14 @@ public class Enchantment {
                 return enchantment.a(level, damageSource);
             }
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the modified living for the enchantment for a given living entity or null if the enchantment or entity is invalid.
+     * Gets the modified living for the enchantment for a given living entity or -1 if the enchantment or entity is invalid.
      * @return
      */
-    public Integer getLiving(OEntityLiving entity)
+    public int getLiving(OEntityLiving entity)
     {
         if (entity != null)
         {
@@ -346,14 +346,14 @@ public class Enchantment {
                 return enchantment.a(this.level, entity);
             }
         }
-        return null;
+        return -1;
     }
     
     /**
-     * Gets the modified living for an enchantment for a given living entity or null if the enchantment or entity is invalid.
+     * Gets the modified living for an enchantment for a given living entity or -1 if the enchantment or entity is invalid.
      * @return
      */
-    public static Integer getLiving(Type type, int level, OEntityLiving entity)
+    public static int getLiving(Type type, int level, OEntityLiving entity)
     {
         if (entity != null)
         {
@@ -363,7 +363,7 @@ public class Enchantment {
                 return enchantment.a(level, entity);
             }
         }
-        return null;
+        return -1;
     }
     
     /**

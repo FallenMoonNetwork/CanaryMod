@@ -1,25 +1,25 @@
 
 public class OContainerChest extends OContainer {
 
-    private OIInventory a;
-    private int b;
+    private OIInventory e;
+    private int f;
     // CanaryMod: silenced - Used to determine wether the chest should be opened or closed stealthily
     private boolean silenced;
 
     public OContainerChest(OIInventory oiinventory, OIInventory oiinventory1, boolean flag) {
-        super();
-        this.a = oiinventory1;
-        this.b = oiinventory1.c() / 9;
+        this.e = oiinventory1;
+        this.f = oiinventory1.k_() / 9;
         this.silenced = flag;
         if (!this.silenced) {
-            oiinventory1.f();
+            oiinventory1.l_();
         }
-        int i = (this.b - 4) * 18;
+        
+        int i = (this.f - 4) * 18;
 
         int j;
         int k;
 
-        for (j = 0; j < this.b; ++j) {
+        for (j = 0; j < this.f; ++j) {
             for (k = 0; k < 9; ++k) {
                 this.a(new OSlot(oiinventory1, k + j * 9, 8 + k * 18, 18 + j * 18));
             }
@@ -37,30 +37,30 @@ public class OContainerChest extends OContainer {
 
     }
 
-    public boolean b(OEntityPlayer oentityplayer) {
-        return this.a.a(oentityplayer);
+    public boolean c(OEntityPlayer oentityplayer) {
+        return this.e.a(oentityplayer);
     }
 
-    public OItemStack a(int i) {
+    public OItemStack b(OEntityPlayer oentityplayer, int i) {
         OItemStack oitemstack = null;
-        OSlot oslot = (OSlot) this.e.get(i);
+        OSlot oslot = (OSlot) this.b.get(i);
 
-        if (oslot != null && oslot.c()) {
-            OItemStack oitemstack1 = oslot.b();
+        if (oslot != null && oslot.d()) {
+            OItemStack oitemstack1 = oslot.c();
 
-            oitemstack = oitemstack1.j();
-            if (i < this.b * 9) {
-                if (!this.a(oitemstack1, this.b * 9, this.e.size(), true)) {
+            oitemstack = oitemstack1.l();
+            if (i < this.f * 9) {
+                if (!this.a(oitemstack1, this.f * 9, this.b.size(), true)) {
                     return null;
                 }
-            } else if (!this.a(oitemstack1, 0, this.b * 9, false)) {
+            } else if (!this.a(oitemstack1, 0, this.f * 9, false)) {
                 return null;
             }
 
             if (oitemstack1.a == 0) {
-                oslot.d((OItemStack) null);
+                oslot.c((OItemStack) null);
             } else {
-                oslot.d();
+                oslot.e();
             }
         }
 
@@ -70,7 +70,7 @@ public class OContainerChest extends OContainer {
     public void a(OEntityPlayer oentityplayer) {
         super.a(oentityplayer);
         if (!this.silenced) {
-            this.a.g();
+            this.e.f();
         }
     }
 }

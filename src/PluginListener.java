@@ -413,6 +413,8 @@ public class PluginListener {
      * 
      * @param blocksaffected
      *            The blocks affected by the explosion in a list.
+     *            Removing the blocks from the list marks them as unaffected,
+     *            thus not being destroyed.
      * 
      * @return true if you don't want the explosion to occur.
      */

@@ -2,31 +2,28 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+class ODedicatedServerCommandThread extends Thread {
 
-public class OThreadCommandReader extends Thread {
+    final ODedicatedServer a;
 
-    // $FF: synthetic field
-    final OMinecraftServer a;
-
-    public OThreadCommandReader(OMinecraftServer ominecraftserver) {
-        super();
-        this.a = ominecraftserver;
+    ODedicatedServerCommandThread(ODedicatedServer odedicatedserver) {
+        this.a = odedicatedserver;
     }
 
     public void run() {
         BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(System.in));
-        String s = null;
+
+        String s;
 
         try {
-            while (!this.a.i && (s = bufferedreader.readLine()) != null) {
+            while (!this.a.ac() && this.a.m() && (s = bufferedreader.readLine()) != null) {
                 // CanaryMod: run through our parser first.
                 if (!etc.getInstance().parseConsoleCommand(s, a)) {
-                    this.a.a(s, this.a);
+                    this.a.a(s, (OICommandSender) this.a);
                 }
             }
         } catch (IOException ioexception) {
             ioexception.printStackTrace();
         }
-
     }
 }

@@ -2,33 +2,33 @@
 
 /**
  * Mob.java - Interface for mobs
- * 
+ *
  * @author James
  */
 public class Mob extends LivingEntity {
 
     /**
      * Creates a mob interface
-     * 
+     *
      * @param locallb
      *            name of mob
      */
     public Mob(OEntityLiving locallb) {
         super(locallb);
-        
+
     }
 
     /**
      * Creates a mob interface
-     * 
+     *
      * @param mob
      *            name of mob
      * @deprecated Use {@link #Mob(java.lang.String, World)} instead.
      */
     public Mob(String mob) {
-        this((OEntityLiving) OEntityList.a(mob, etc.getMCServer().a(0)));
+        this((OEntityLiving) OEntityList.a(mob, etc.getServer().getDefaultWorld().getWorld()));
     }
-    
+
     /**
      * Creates a mob interface
      * @param mob name of the mob
@@ -40,14 +40,14 @@ public class Mob extends LivingEntity {
 
     /**
      * Creates a mob interface
-     * 
+     *
      * @param mobName
      *            name of mob
      * @param location
      *            location of mob
      */
     public Mob(String mobName, Location location) {
-        this(mobName,  location.getWorld());
+        this(mobName, location.getWorld());
         teleportTo(location);
     }
 
@@ -60,24 +60,24 @@ public class Mob extends LivingEntity {
 
     /**
      * Spawns this mob with a rider
-     * 
+     *
      * @param rider
      */
     public void spawn(LivingEntity rider) {
-        OWorld world = entity.bi; //etc.getMCServer().a(0);
+        OWorld world = entity.p;
 
-        entity.c(getX() + 0.5d, getY(), getZ() + 0.5d, getRotation(), 0f);
-        world.b(entity);
+        entity.b(getX() + 0.5d, getY(), getZ() + 0.5d, getRotation(), 0f);
+        world.d(entity);
 
         if (rider != null) {
             OEntityLiving mob2 = rider.getEntity();
 
-            mob2.c(getX(), getY(), getZ(), getRotation(), 0f);
-            world.b(mob2);
-            mob2.b(entity);
+            mob2.b(getX(), getY(), getZ(), getRotation(), 0f);
+            world.d(mob2);
+            mob2.a(entity);
         }
     }
-    
+
     /**
      * Backwards compat.
      */
@@ -87,7 +87,7 @@ public class Mob extends LivingEntity {
 
     /**
      * Returns this mob's name
-     * 
+     *
      * @return name
      */
     @Override
@@ -97,31 +97,31 @@ public class Mob extends LivingEntity {
 
     /**
      * Returns the current target of the mob
-     * 
+     *
      * @return OEntity
      */
     public OEntity getTarget() {
         if (getEntity() instanceof OEntityGhast) {
-            OEntityGhast var1 = (OEntityGhast) getEntity();
+            OEntityGhast ghast = (OEntityGhast) getEntity();
 
-            return var1.getTarget();
+            return ghast.getTarget();
         }
-        return ((OEntityCreature) getEntity()).d;
+        return ((OEntityCreature) getEntity()).a_;
     }
-    
+
     /**
      * Sets the mobs target
-     * 
+     *
      * @param target the entity to target
      */
     public void setTarget(OEntity target) {
         if (getEntity() instanceof OEntityGhast) {
-            OEntityGhast var1 = (OEntityGhast) getEntity();
+            OEntityGhast ghast = (OEntityGhast) getEntity();
 
-            var1.setTarget(target);
+            ghast.setTarget(target);
             return;
         }
-        ((OEntityCreature) getEntity()).d = target; 
+        ((OEntityCreature) getEntity()).a_ = target;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class Mob extends LivingEntity {
 
     /**
      * Returns the actual mob
-     * 
+     *
      * @return
      */
     public OEntityLiving getMob() {
@@ -143,7 +143,7 @@ public class Mob extends LivingEntity {
 
     /**
      * Checks to see if the mob is a valid mob
-     * 
+     *
      * @param mob
      *            the mob to check
      * @return true of mob is valid
@@ -152,11 +152,11 @@ public class Mob extends LivingEntity {
         if (mob == null) {
             return false;
         }
-        OEntity c = OEntityList.a(mob, etc.getServer().getWorld(0).getWorld());
+        OEntity c = OEntityList.a(mob, etc.getServer().getDefaultWorld().getWorld());
 
         return c instanceof OIMob || c instanceof OIAnimals;
     }
-	
+
     /**
      * Returns Mob location
      * @return this mob's location
@@ -172,10 +172,10 @@ public class Mob extends LivingEntity {
         loc.dimension = getWorld().getType().getId();
         return loc;
     }
-    
+
     public boolean isInLove(){
     	if (getEntity() instanceof OEntityAnimal){
-    		return ((OEntityAnimal) getEntity()).r_();
+    		return ((OEntityAnimal) getEntity()).L();
     	}
     	return false;
     }

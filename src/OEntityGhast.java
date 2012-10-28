@@ -1,152 +1,153 @@
 
 public class OEntityGhast extends OEntityFlying implements OIMob {
 
-    public int a = 0;
-    public double b;
+    public int b = 0;
     public double c;
     public double d;
-    private OEntity g = null;
-    private int h = 0;
-    public int e = 0;
+    public double e;
+    private OEntity h = null;
+    private int i = 0;
     public int f = 0;
+    public int g = 0;
 
     public OEntityGhast(OWorld oworld) {
         super(oworld);
-        this.ae = "/mob/ghast.png";
-        this.b(4.0F, 4.0F);
-        this.bX = true;
-        this.aA = 5;
+        this.aF = "/mob/ghast.png";
+        this.a(4.0F, 4.0F);
+        this.af = true;
+        this.bc = 5;
     }
 
     public boolean a(ODamageSource odamagesource, int i) {
-        if ("fireball".equals(odamagesource.l()) && odamagesource.a() instanceof OEntityPlayer) {
+        if ("fireball".equals(odamagesource.l()) && odamagesource.g() instanceof OEntityPlayer) {
             super.a(odamagesource, 1000);
-            ((OEntityPlayer) odamagesource.a()).a((OStatBase) OAchievementList.y);
+            ((OEntityPlayer) odamagesource.g()).a((OStatBase) OAchievementList.y);
             return true;
         } else {
             return super.a(odamagesource, i);
         }
     }
 
-    protected void b() {
-        super.b();
-        this.bY.a(16, Byte.valueOf((byte) 0));
+    protected void a() {
+        super.a();
+        this.ag.a(16, Byte.valueOf((byte) 0));
     }
 
-    public int d() {
+    public int aS() {
         return 10;
     }
 
-    public void F_() {
-        super.F_();
-        byte b0 = this.bY.a(16);
+    public void j_() {
+        super.j_();
+        byte b0 = this.ag.a(16);
 
-        this.ae = b0 == 1 ? "/mob/ghast_fire.png" : "/mob/ghast.png";
+        this.aF = b0 == 1 ? "/mob/ghast_fire.png" : "/mob/ghast.png";
     }
 
-    protected void d_() {
-        if (!this.bi.F && this.bi.q == 0) {
-            this.X();
+    protected void bk() {
+        if (!this.p.J && this.p.t == 0) {
+            this.x();
         }
 
-        this.aG();
-        this.e = this.f;
-        double d0 = this.b - this.bm;
-        double d1 = this.c - this.bn;
-        double d2 = this.d - this.bo;
-        double d3 = (double) OMathHelper.a(d0 * d0 + d1 * d1 + d2 * d2);
+        this.bh();
+        this.f = this.g;
+        double d0 = this.c - this.t;
+        double d1 = this.d - this.u;
+        double d2 = this.e - this.v;
+        double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
-        if (d3 < 1.0D || d3 > 60.0D) {
-            this.b = this.bm + (double) ((this.bS.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            this.c = this.bn + (double) ((this.bS.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            this.d = this.bo + (double) ((this.bS.nextFloat() * 2.0F - 1.0F) * 16.0F);
+        if (d3 < 1.0D || d3 > 3600.0D) {
+            this.c = this.t + (double) ((this.aa.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.d = this.u + (double) ((this.aa.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.e = this.v + (double) ((this.aa.nextFloat() * 2.0F - 1.0F) * 16.0F);
         }
 
-        if (this.a-- <= 0) {
-            this.a += this.bS.nextInt(5) + 2;
-            if (this.a(this.b, this.c, this.d, d3)) {
-                this.bp += d0 / d3 * 0.1D;
-                this.bq += d1 / d3 * 0.1D;
-                this.br += d2 / d3 * 0.1D;
+        if (this.b-- <= 0) {
+            this.b += this.aa.nextInt(5) + 2;
+            d3 = (double) OMathHelper.a(d3);
+            if (this.a(this.c, this.d, this.e, d3)) {
+                this.w += d0 / d3 * 0.1D;
+                this.x += d1 / d3 * 0.1D;
+                this.y += d2 / d3 * 0.1D;
             } else {
-                this.b = this.bm;
-                this.c = this.bn;
-                this.d = this.bo;
+                this.c = this.t;
+                this.d = this.u;
+                this.e = this.v;
             }
         }
 
-        if (this.g != null && this.g.bE) {
-            this.g = null;
+        if (this.h != null && this.h.L) {
+            this.h = null;
         }
 
-        if (this.g == null || this.h-- <= 0) {
-            OEntityPlayer oentityplayer = this.bi.b(this, 100.0D);
-            
+        if (this.h == null || this.i-- <= 0) {
+            OEntityPlayer oentityplayer = this.p.b(this, 100.0D);
+
             // CanaryMod: MOB_TARGET Hook for ghasts.
-            if (oentityplayer != null && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, (Player) oentityplayer.entity.getPlayer(), entity)) {
-                this.g = oentityplayer;
+            if (oentityplayer != null && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, oentityplayer.entity.getPlayer(), this.entity)) {
+                this.h = oentityplayer;
             }
-            if (this.g != null) {
-                this.h = 20;
+            if (this.h != null) {
+                this.i = 20;
             }
         }
 
         double d4 = 64.0D;
 
-        if (this.g != null && this.g.j(this) < d4 * d4) {
-            double d5 = this.g.bm - this.bm;
-            double d6 = this.g.bw.b + (double) (this.g.bH / 2.0F) - (this.bn + (double) (this.bH / 2.0F));
-            double d7 = this.g.bo - this.bo;
+        if (this.h != null && this.h.e((OEntity) this) < d4 * d4) {
+            double d5 = this.h.t - this.t;
+            double d6 = this.h.D.b + (double) (this.h.O / 2.0F) - (this.u + (double) (this.O / 2.0F));
+            double d7 = this.h.v - this.v;
 
-            this.V = this.bs = -((float) Math.atan2(d5, d7)) * 180.0F / 3.1415927F;
-            if (this.h(this.g)) {
-                if (this.f == 10) {
-                    this.bi.a((OEntityPlayer) null, 1007, (int) this.bm, (int) this.bn, (int) this.bo, 0);
+            this.aw = this.z = -((float) Math.atan2(d5, d7)) * 180.0F / 3.1415927F;
+            if (this.m(this.h)) {
+                if (this.g == 10) {
+                    this.p.a((OEntityPlayer) null, 1007, (int) this.t, (int) this.u, (int) this.v, 0);
                 }
 
-                ++this.f;
-                if (this.f == 20) {
-                    this.bi.a((OEntityPlayer) null, 1008, (int) this.bm, (int) this.bn, (int) this.bo, 0);
-                    OEntityFireball oentityfireball = new OEntityFireball(this.bi, this, d5, d6, d7);
+                ++this.g;
+                if (this.g == 20) {
+                    this.p.a((OEntityPlayer) null, 1008, (int) this.t, (int) this.u, (int) this.v, 0);
+                    OEntityLargeFireball oentitylargefireball = new OEntityLargeFireball(this.p, this, d5, d6, d7);
                     double d8 = 4.0D;
-                    OVec3D ovec3d = this.f(1.0F);
+                    OVec3 ovec3 = this.i(1.0F);
 
-                    oentityfireball.bm = this.bm + ovec3d.a * d8;
-                    oentityfireball.bn = this.bn + (double) (this.bH / 2.0F) + 0.5D;
-                    oentityfireball.bo = this.bo + ovec3d.c * d8;
-                    this.bi.b((OEntity) oentityfireball);
-                    this.f = -40;
+                    oentitylargefireball.t = this.t + ovec3.c * d8;
+                    oentitylargefireball.u = this.u + (double) (this.O / 2.0F) + 0.5D;
+                    oentitylargefireball.v = this.v + ovec3.e * d8;
+                    this.p.d((OEntity) oentitylargefireball);
+                    this.g = -40;
                 }
-            } else if (this.f > 0) {
-                --this.f;
+            } else if (this.g > 0) {
+                --this.g;
             }
         } else {
-            this.V = this.bs = -((float) Math.atan2(this.bp, this.br)) * 180.0F / 3.1415927F;
-            if (this.f > 0) {
-                --this.f;
+            this.aw = this.z = -((float) Math.atan2(this.w, this.y)) * 180.0F / 3.1415927F;
+            if (this.g > 0) {
+                --this.g;
             }
         }
 
-        if (!this.bi.F) {
-            byte b0 = this.bY.a(16);
-            byte b1 = (byte) (this.f > 10 ? 1 : 0);
+        if (!this.p.J) {
+            byte b0 = this.ag.a(16);
+            byte b1 = (byte) (this.g > 10 ? 1 : 0);
 
             if (b0 != b1) {
-                this.bY.b(16, Byte.valueOf(b1));
+                this.ag.b(16, Byte.valueOf(b1));
             }
         }
 
     }
 
     private boolean a(double d0, double d1, double d2, double d3) {
-        double d4 = (this.b - this.bm) / d3;
-        double d5 = (this.c - this.bn) / d3;
-        double d6 = (this.d - this.bo) / d3;
-        OAxisAlignedBB oaxisalignedbb = this.bw.b();
+        double d4 = (this.c - this.t) / d3;
+        double d5 = (this.d - this.u) / d3;
+        double d6 = (this.e - this.v) / d3;
+        OAxisAlignedBB oaxisalignedbb = this.D.c();
 
         for (int i = 1; (double) i < d3; ++i) {
             oaxisalignedbb.d(d4, d5, d6);
-            if (this.bi.a((OEntity) this, oaxisalignedbb).size() > 0) {
+            if (!this.p.a((OEntity) this, oaxisalignedbb).isEmpty()) {
                 return false;
             }
         }
@@ -154,56 +155,56 @@ public class OEntityGhast extends OEntityFlying implements OIMob {
         return true;
     }
 
-    protected String i() {
+    protected String aW() {
         return "mob.ghast.moan";
     }
 
-    protected String j() {
+    protected String aX() {
         return "mob.ghast.scream";
     }
 
-    protected String k() {
+    protected String aY() {
         return "mob.ghast.death";
     }
 
-    protected int f() {
-        return OItem.L.bP;
+    protected int aZ() {
+        return OItem.M.cf;
     }
 
     protected void a(boolean flag, int i) {
-        int j = this.bS.nextInt(2) + this.bS.nextInt(1 + i);
+        int j = this.aa.nextInt(2) + this.aa.nextInt(1 + i);
 
         int k;
 
         for (k = 0; k < j; ++k) {
-            this.b(OItem.bo.bP, 1);
+            this.b(OItem.bp.cf, 1);
         }
 
-        j = this.bS.nextInt(3) + this.bS.nextInt(1 + i);
+        j = this.aa.nextInt(3) + this.aa.nextInt(1 + i);
 
         for (k = 0; k < j; ++k) {
-            this.b(OItem.L.bP, 1);
+            this.b(OItem.M.cf, 1);
         }
 
     }
 
-    protected float p() {
+    protected float aV() {
         return 10.0F;
     }
 
-    public boolean l() {
-        return this.bS.nextInt(20) == 0 && super.l() && this.bi.q > 0;
+    public boolean bp() {
+        return this.aa.nextInt(20) == 0 && super.bp() && this.p.t > 0;
     }
 
-    public int q() {
+    public int bs() {
         return 1;
     }
-    
+
     public void setTarget(OEntity oentity) {
-        this.g = oentity;
+        this.h = oentity;
     }
-    
+
     public OEntity getTarget() {
-        return this.g;
+        return this.h;
     }
 }

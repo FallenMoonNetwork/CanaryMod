@@ -7,14 +7,14 @@ public class BrewingStand extends BaseContainerBlock<OTileEntityBrewingStand> im
     public BrewingStand(OTileEntityBrewingStand brewingStand) {
         super(brewingStand, "Brewing Stand");
     }
-    
+
     /**
      * Returns the time left to brew for.
      * Range is from 0 to 400.
      * @return this stand's brew time
      */
     public int getBrewTime() {
-        return container.i();
+        return container.x_();
     }
-    
+
 }

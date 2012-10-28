@@ -9,34 +9,34 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
         super();
     }
 
-    public int c() {
+    public int k_() {
         return 1;
     }
 
-    public OItemStack g_(int i) {
-        return this.a[i];
+    public OItemStack a(int i) {
+        return this.a[0];
     }
 
-    public String e() {
+    public String b() {
         return name;
     }
 
     public OItemStack a(int i, int j) {
-        if (this.a[i] != null) {
-            OItemStack oitemstack = this.a[i];
+        if (this.a[0] != null) {
+            OItemStack oitemstack = this.a[0];
 
-            this.a[i] = null;
+            this.a[0] = null;
             return oitemstack;
         } else {
             return null;
         }
     }
 
-    public OItemStack b(int i) {
-        if (this.a[i] != null) {
-            OItemStack oitemstack = this.a[i];
+    public OItemStack a_(int i) {
+        if (this.a[0] != null) {
+            OItemStack oitemstack = this.a[0];
 
-            this.a[i] = null;
+            this.a[0] = null;
             return oitemstack;
         } else {
             return null;
@@ -44,22 +44,22 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
     }
 
     public void a(int i, OItemStack oitemstack) {
-        this.a[i] = oitemstack;
+        this.a[0] = oitemstack;
     }
 
-    public int a() {
+    public int c() {
         return 64;
     }
 
-    public void G_() {}
+    public void d() {}
 
     public boolean a(OEntityPlayer oentityplayer) {
         return true;
     }
 
-    public void f() {}
+    public void l_() {}
 
-    public void g() {}
+    public void f() {}
     
     @Override
     public OItemStack[] getContents() {
@@ -83,7 +83,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
 
     @Override
     public OItemStack getContentsAt(int i) {
-        return this.g_(i);
+        return this.a(i);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
 
     @Override
     public int getContentsSize() {
-        return this.c();
+        return this.k_();
     }
 
     @Override

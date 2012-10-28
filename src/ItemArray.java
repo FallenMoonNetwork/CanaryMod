@@ -9,8 +9,8 @@ public abstract class ItemArray<C extends Container<OItemStack>> {
     protected C container;
 
     @SuppressWarnings("unchecked")
-    public ItemArray(Object i) {
-        this.container = (C) i;
+    public ItemArray(C container) {
+        this.container = container;
     }
 
     public int getContentsSize() {

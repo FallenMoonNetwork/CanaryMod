@@ -2,12 +2,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +12,7 @@ import java.util.logging.Logger;
  * 
  * @author James
  */
+@SuppressWarnings("LoggerStringConcat")
 public class PluginLoader {
 
     /**
@@ -106,7 +102,9 @@ public class PluginLoader {
         FLOW, //
         /**
          * Calls {@link PluginListener#onExplode(Block, OEntity, HashSet) }
+         * @deprecated Use {@link #EXPLOSION} instead.
          */
+        @Deprecated
         EXPLODE, //
         /**
          * Calls {@link PluginListener#onExplosion(Block, BaseEntity, List) }
@@ -432,7 +430,11 @@ public class PluginLoader {
         /**
          * Damage caused by poison (1) (Potions, Poison)
          */
-         POTION;
+         POTION, //
+         /**
+          * Damage caused by the "Wither" effect (1)
+          */
+         WITHER;
          
          public static DamageType fromDamageSource(ODamageSource source) {
              if (source == ODamageSource.b)
@@ -576,7 +578,6 @@ public class PluginLoader {
                 }
             }
         }
-        toNull = null;
 
         return load(fileName);
     }
@@ -589,7 +590,7 @@ public class PluginLoader {
                 log.log(Level.SEVERE, "Failed to find plugin file: plugins/" + fileName + ".jar. Please ensure the file exists");
                 return false;
             }
-            URLClassLoader child = null;
+            URLClassLoader child;
 
             try {
                 child = new MyClassLoader(new URL[] { file.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
@@ -1150,15 +1151,15 @@ public class PluginLoader {
                             break;
 
                         case FOODLEVEL_CHANGE:
-                            toRet = (Integer) listener.onFoodLevelChange((Player) parameters[0], (Integer) parameters[1], (Integer) parameters[2]);
+                            toRet = listener.onFoodLevelChange((Player) parameters[0], (Integer) parameters[1], (Integer) parameters[2]);
                             break;
 
                         case FOODEXHAUSTION_CHANGE:
-                            toRet = (Float) listener.onFoodExhaustionChange((Player) parameters[0], (Float) parameters[1], (Float) parameters[2]);
+                            toRet = listener.onFoodExhaustionChange((Player) parameters[0], (Float) parameters[1], (Float) parameters[2]);
                             break;
 
                         case FOODSATURATION_CHANGE:
-                            toRet = (Float) listener.onFoodSaturationChange((Player) parameters[0], (Float) parameters[1], (Float) parameters[2]);
+                            toRet = listener.onFoodSaturationChange((Player) parameters[0], (Float) parameters[1], (Float) parameters[2]);
                             break;
 
                         case POTION_EFFECT:
