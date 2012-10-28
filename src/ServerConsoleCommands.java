@@ -364,9 +364,9 @@ public class ServerConsoleCommands {
             }
 
             if (!ips) {
-                caller.notify(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().ab().getBans());
+                caller.notify(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().ad().getBans());
             } else {
-                caller.notify(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().ab().getIpBans());
+                caller.notify(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().ad().getIpBans());
             }
         }
     };
@@ -458,7 +458,7 @@ public class ServerConsoleCommands {
             caller.notify("This command is going to be phased out.");
             caller.notify("For new bans, you can just use /unban to unban IPs.");
             etc.getDataSource().expireBan(new Ban(parameters[1]));
-            etc.getMCServer().ab().f().b(parameters[1]);
+            //etc.getMCServer().ab().f().b(parameters[1]);
             caller.notify("Unbanned " + parameters[1]);
         }
     };

@@ -159,7 +159,7 @@ public class Chunk {
      * resends chunk data to clients
      */
     public void update() {
-        etc.getMCServer().ab().a(new OPacket51MapChunk(chunk, true, 0));
+        etc.getMCServer().ad().a(new OPacket51MapChunk(chunk, true, 0));
     }
 
     /**

@@ -31,7 +31,7 @@ public class Server {
      * @param msg Message text to send
      */
     public void messageAll(String msg) {
-        server.ab().a(new OPacket3Chat(msg));
+        server.ad().a(new OPacket3Chat(msg));
     }
 
     /**
@@ -52,7 +52,7 @@ public class Server {
      *
      */
     public void unban(String player) {
-        server.ab().e().b(player);
+        server.ad().e().b(player);
         etc.getDataSource().expireBan(new Ban(player));
     }
 
@@ -141,8 +141,8 @@ public class Server {
 
         name = name.toLowerCase();
 
-        for (OEntityPlayerMP player : (List<OEntityPlayerMP>) server.ab().b) {
-            String playerName = player.bJ;
+        for (OEntityPlayerMP player : (List<OEntityPlayerMP>) server.ad().b) {
+            String playerName = player.an();
 
             if (playerName.toLowerCase().equals(name)) {
                 // Perfect match found
@@ -169,7 +169,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        OEntityPlayerMP user = server.ab().f(name);
+        OEntityPlayerMP user = server.ad().f(name);
 
         return user == null ? null : user.getPlayer();
     }
@@ -182,7 +182,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
 
-        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.ab().b) {
+        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.ad().b) {
             toRet.add(oepmp.getPlayer());
         }
         return toRet;
@@ -194,7 +194,7 @@ public class Server {
      * @return list of player names
      */
     public String getPlayerNames() {
-        return server.ab().c();
+        return server.ad().c();
     }
 
     /**
@@ -553,7 +553,7 @@ public class Server {
      * Saves all player inventories to file
      */
     public void saveInventories() {
-        server.ab().g();
+        server.ad().g();
     }
 
     /**
@@ -770,7 +770,7 @@ public class Server {
      * @return the default dimension
      */
     public World getDefaultWorld() {
-        return server.getWorld(server.I(), 0).world;
+        return server.getWorld(server.J(), 0).world;
     }
 
     /**
@@ -787,7 +787,7 @@ public class Server {
      * </code></blockquote>
      */
     public World getWorld(int dimension) {
-        return server.getWorld(server.I(), dimension).world;
+        return server.getWorld(server.J(), dimension).world;
     }
 
     /**
@@ -820,7 +820,7 @@ public class Server {
     public void addShapelessRecipe(Item item, Object... recipe) {
         for (int i = 0; i < recipe.length; i++) {
             if (recipe[i] instanceof Block.Type) {
-                recipe[i] = OBlock.m[((Block.Type) recipe[i]).getType()];
+                recipe[i] = OBlock.m[((Block.Type) recipe[i]).getType()]; 
             } else if (recipe[i] instanceof Item.Type) {
                 recipe[i] = OItem.e[((Item.Type) recipe[i]).getId()];
             }
