@@ -1548,4 +1548,14 @@ public class Player extends HumanEntity implements MessageReceiver {
     public void playSound(double x, double y, double z, Sound sound, float volume, float pitch){
         getEntity().a.b(new OPacket62LevelSound(sound.getSoundString(), x, y, z, volume, pitch));
     }
+    
+    public Item getInventoryCursorItem() {
+        return inventory.getCursorItem();
+    }
+    
+    public void setInventoryCursorItem(Item item) {
+        inventory.setCursorItem(item);
+        // Update client
+        getEntity().a.b(new OPacket103SetSlot(-1, -1, item.getBaseItem()));
+    }
 }

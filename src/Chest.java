@@ -6,7 +6,10 @@
 public class Chest extends BaseContainerBlock<OTileEntityChest> implements ComplexBlock {
 
     public Chest(OTileEntityChest chest) {
-        super(chest, "Chest");
+        this(null, chest);
+    }
+    public Chest(OContainer oContainer, OTileEntityChest chest) {
+        super(oContainer, chest, "Chest");
     }
 
     public DoubleChest findAttachedChest() {
@@ -46,7 +49,7 @@ public class Chest extends BaseContainerBlock<OTileEntityChest> implements Compl
             if ((cblock != null) && (cblock instanceof Chest)) {
                 Chest chest = (Chest) cblock;
 
-                return new DoubleChest(new OInventoryLargeChest(getName(), container, chest.container));
+                return new DoubleChest(getOContainer(), new OInventoryLargeChest(getName(), container, chest.container));
             }
         }
 

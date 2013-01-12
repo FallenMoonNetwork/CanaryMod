@@ -527,6 +527,8 @@ public class World {
                 return new Skull((OTileEntitySkull) localav);
             } else if (localav instanceof OTileEntityCommandBlock) {
                 return new CommandBlock((OTileEntityCommandBlock) localav);
+            } else if (localav instanceof OTileEntityBeacon) {
+                return new Beacon((OTileEntityBeacon) localav);
             }
         }
         return null;

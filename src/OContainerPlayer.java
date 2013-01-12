@@ -124,4 +124,15 @@ public class OContainerPlayer extends OContainer {
 
         return oitemstack;
     }
+    
+    // CanaryMod
+    @Override
+    public InventoryCrafting getInventory() {
+        if(super.getInventory() instanceof InventoryCrafting)
+            return (InventoryCrafting)super.getInventory();
+        
+        InventoryCrafting inv = new InventoryCrafting(this, this.a, this.f);
+        setInventory(inv);
+        return inv;
+    }
 }

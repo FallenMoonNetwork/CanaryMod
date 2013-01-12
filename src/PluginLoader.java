@@ -374,6 +374,10 @@ public class PluginLoader {
          */
         FIREWORK_EXPLODE, //
         /**
+         * Calls{@link PluginListener#onSlotClick(HookParametersSlotClick) }
+         */
+        SLOT_CLICK, //
+        /**
          * For internal use only.
          */
         NUM_HOOKS;
@@ -833,6 +837,7 @@ public class PluginLoader {
         case CHAT:
         case LOGINCHECK:
         case ANVIL_USE:
+        case SLOT_CLICK:
             toRet = parameters[0];
             break;
 
@@ -1316,6 +1321,10 @@ public class PluginLoader {
                         case FIREWORK_EXPLODE:
                         	toRet = listener.onFireworkExplode((Firework) parameters[0]);
                         	break;
+
+                        case SLOT_CLICK:
+                            toRet = listener.onSlotClick((HookParametersSlotClick) parameters[0]);
+                            break;
                         	
                         }
                        } catch (UnsupportedOperationException ex) {}

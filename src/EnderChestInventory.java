@@ -8,7 +8,10 @@ public class EnderChestInventory extends ItemArray<OInventoryEnderChest> {
     private final Player owner;
 
     public EnderChestInventory(OInventoryEnderChest container, Player owner) {
-        super(container);
+        this(null, container, owner);
+    }
+    public EnderChestInventory(OContainer oContainer, OInventoryEnderChest container, Player owner) {
+        super(oContainer, container);
         this.owner = owner;
     }
 

@@ -3,7 +3,10 @@ public class DoubleChest extends ItemArray<OInventoryLargeChest> implements Comp
     private String      name = "Large Chest";
 
     public DoubleChest(OInventoryLargeChest chest) {
-        super(chest);
+        this(null, chest);
+    }
+    public DoubleChest(OContainer oContainer, OInventoryLargeChest chest) {
+        super(oContainer, chest);
         block = chest.getChestBlock();
     }
 

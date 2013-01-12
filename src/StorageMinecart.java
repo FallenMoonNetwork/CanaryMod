@@ -11,7 +11,10 @@ public class StorageMinecart extends ItemArray<OEntityMinecart> {
      * @param cart
      */
     public StorageMinecart(OEntityMinecart cart) {
-        super(cart);
+        this(null, cart);
+    }
+    public StorageMinecart(OContainer oContainer, OEntityMinecart cart) {
+        super(oContainer, cart);
     }
 
     @Override

@@ -357,4 +357,57 @@ public abstract class OContainer {
     public Inventory getInventory() {
         return this.inventory;
     }
+    
+    /**
+     * Mostly a copy of updateCraftingResults()
+     * The only change is to bypass a check that prevents crafting-result slot updates.
+     */
+    public void updateChangedSlots() {
+        for (int i = 0; i < this.c.size(); ++i) {
+            OItemStack oitemstack = ((OSlot) this.c.get(i)).c();
+            OItemStack oitemstack1 = (OItemStack) this.b.get(i);
+
+            if (!OItemStack.b(oitemstack1, oitemstack)) {
+                oitemstack1 = oitemstack == null ? null : oitemstack.l();
+                this.b.set(i, oitemstack1);
+
+                /* Change from updateCraftingResults() here.
+                 * Originally (or similar format depending on Notchian updates):
+                 * for (int j = 0; j < this.e.size(); ++j) {
+                 *     ((OICrafting) this.e.get(j)).a(this, i, oitemstack1);
+                 * }
+                 * 
+                 * Now:
+                 */
+                sendUpdateToCrafters(i, oitemstack);
+                // End change.
+            }
+        }
+    }
+    
+    private void sendUpdateToCrafters(int slotIndex, OItemStack oitemstack) {
+        for (int j = 0; j < this.e.size(); ++j) {
+            if(this.e.get(j) instanceof OEntityPlayerMP) {
+                ((OEntityPlayerMP) this.e.get(j)).updateSlot(this.d, slotIndex, oitemstack);
+            }
+        }
+    }
+    
+    public void updateSlot(int index) {
+        OSlot slot = getSlot(index);
+        if(slot == null)
+            return;
+        
+        OItemStack oitemstack = slot.c();
+        if(oitemstack != null)
+            oitemstack = oitemstack.l();
+        
+        sendUpdateToCrafters(index, oitemstack);
+    }
+    
+    public OSlot getSlot(int index) {
+        if(index < 0 || index >= this.c.size())
+            return null;
+        return this.a(index);
+    }
 }

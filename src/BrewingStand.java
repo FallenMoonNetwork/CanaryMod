@@ -5,7 +5,10 @@
 public class BrewingStand extends BaseContainerBlock<OTileEntityBrewingStand> implements ComplexBlock {
 
     public BrewingStand(OTileEntityBrewingStand brewingStand) {
-        super(brewingStand, "Brewing Stand");
+        this(null, brewingStand);
+    }
+    public BrewingStand(OContainer oContainer, OTileEntityBrewingStand brewingStand) {
+        super(oContainer, brewingStand, "Brewing Stand");
     }
 
     /**

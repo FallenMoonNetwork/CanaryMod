@@ -5,7 +5,10 @@
 public class Dispenser extends BaseContainerBlock<OTileEntityDispenser> implements ComplexBlock {
 
     public Dispenser(OTileEntityDispenser disp) {
-        super(disp, "Trap");
+        this(null, disp);
+    }
+    public Dispenser(OContainer oContainer, OTileEntityDispenser disp) {
+        super(oContainer, disp, "Trap");
     }
 
     public void fire() {

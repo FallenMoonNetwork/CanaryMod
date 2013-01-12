@@ -6,7 +6,10 @@
 public class Furnace extends BaseContainerBlock<OTileEntityFurnace> implements ComplexBlock {
 
     public Furnace(OTileEntityFurnace furnace) {
-        super(furnace, "Furnace");
+        this(null, furnace);
+    }
+    public Furnace(OContainer oContainer, OTileEntityFurnace furnace) {
+        super(oContainer, furnace, "Furnace");
     }
 
     /**

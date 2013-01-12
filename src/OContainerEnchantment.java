@@ -216,4 +216,15 @@ public class OContainerEnchantment extends OContainer {
 
         return oitemstack;
     }
+    
+    // CanaryMod
+    @Override
+    public EnchantmentTable getInventory() {
+        if(super.getInventory() instanceof EnchantmentTable)
+            return (EnchantmentTable)super.getInventory();
+        
+        EnchantmentTable inv = new EnchantmentTable(this);
+        setInventory(inv);
+        return inv;
+    }
 }

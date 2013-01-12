@@ -756,6 +756,30 @@ public class ONetServerHandler extends ONetHandler {
 
     public void a(OPacket102WindowClick opacket102windowclick) {
         if (this.d.bL.d == opacket102windowclick.a && this.d.bL.c(this.d)) {
+            
+            // CanaryMod: onSlotClick
+            HookParametersSlotClick hookParametersSlotClick = new HookParametersSlotClick(this.d.bL, opacket102windowclick.b, opacket102windowclick.c, opacket102windowclick.f, this.d);
+            hookParametersSlotClick = (HookParametersSlotClick)etc.getLoader().callHook(PluginLoader.Hook.SLOT_CLICK, new Object[]{hookParametersSlotClick});
+            if(hookParametersSlotClick.allowClick != HookParametersSlotClick.AllowClick.ALLOW) {
+                if(hookParametersSlotClick.allowClick == HookParametersSlotClick.AllowClick.CANCEL) {
+                    //update client to let it know the slot wasn't changed
+                    if(opacket102windowclick.f == 0) {
+                        this.d.bL.updateSlot(opacket102windowclick.b);
+                        this.d.updateSlot(-1, -1, this.d.bJ.n());
+                    } else {
+                        ArrayList arraylist = new ArrayList();
+
+                        for (int i = 0; i < this.d.bL.c.size(); ++i) {
+                            arraylist.add(((OSlot) this.d.bL.c.get(i)).c());
+                        }
+
+                        this.d.a(this.d.bL, arraylist);
+                    }
+                }
+                return;
+            }
+            // end CanaryMod
+            
             OItemStack oitemstack = this.d.bL.a(opacket102windowclick.b, opacket102windowclick.c, opacket102windowclick.f, this.d);
 
             if (OItemStack.b(opacket102windowclick.e, oitemstack)) {

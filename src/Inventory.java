@@ -272,4 +272,45 @@ public interface Inventory {
      *          false when items are left over. item is updated to the leftover-amount.
      */
     public boolean insertItem(Item item);
+    
+    /**
+     * Checks to see if OContainer is defined, which 
+     * may be null due to legacy
+     * 
+     * @return
+     */
+    public boolean hasOContainer();
+    
+    /**
+     * Basic get for the stored OContainer
+     * 
+     * @return
+     */
+    public OContainer getOContainer();
+    
+    /**
+     * Basic set for the stored OContainer
+     * 
+     * @param oContainer
+     */
+    public void setOContainer(OContainer oContainer);
+    
+    /**
+     * Attempts to send slot change updates to clients.
+     * This has the same goal as update(), but works
+     * differently. The separation is to keep the original
+     * process, while also adding this new one.
+     * 
+     * @return false if something is preventing it from 
+     *          attempting to send updates.
+     */
+    public boolean updateChangedSlots();
+    
+    /**
+     * Attempts to send slot update to clients.
+     * 
+     * @return false if something is preventing it from 
+     *          attempting to send updates.
+     */
+    public boolean updateSlot(int index);
 }

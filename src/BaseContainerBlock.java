@@ -18,7 +18,10 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
      *            Shows in toString().
      */
     public BaseContainerBlock(C block, String reference) {
-        super(block);
+        this(null, block, reference);
+    }
+    public BaseContainerBlock(OContainer oContainer, C block, String reference) {
+        super(oContainer, block);
         this.name = reference;
     }
 

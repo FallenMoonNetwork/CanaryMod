@@ -381,7 +381,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     public void d(int i, int j, int k) {
         // CanaryMod: Check if we can open this
         OContainerRepair container = new OContainerRepair(this.bJ, this.p, i, j, k, this);
-        Inventory inv = new Anvil(container);
+        Inventory inv = container.getInventory();
 
         container.setInventory(inv);
         String name = "Repairing";
@@ -420,6 +420,18 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, openInventoryParameters)) {
                 return;
             }
+        } else if (oiinventory instanceof OInventoryEnderChest) {
+            inv = new EnderChestInventory((OInventoryEnderChest) oiinventory, getPlayer());
+            openInventoryParameters = new HookParametersOpenInventory(getPlayer(), inv, false);
+            if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, openInventoryParameters)) {
+                return;
+            }
+        } else if (oiinventory instanceof OEntityMinecart) {
+            inv = new StorageMinecart((OEntityMinecart) oiinventory);
+            openInventoryParameters = new HookParametersOpenInventory(getPlayer(), inv, false);
+            if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, openInventoryParameters)) {
+                return;
+            }
         }
 
         if (inv != null) {
@@ -435,6 +447,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         // CanaryMod: Check if openend the chest in silence mode.
         this.bL = new OContainerChest(this.bJ, oiinventory, (openInventoryParameters == null) ? false : openInventoryParameters.isSilenced());
         this.bL.setInventory(inv);
+        if(inv != null)
+            inv.setOContainer(this.bL);
         // CanaryMod end
         this.bL.d = this.ct;
         this.bL.a((OICrafting) this);
@@ -457,6 +471,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         this.a.b(new OPacket100OpenWindow(this.ct, 2, name, otileentityfurnace.k_()));
         this.bL = new OContainerFurnace(this.bJ, otileentityfurnace);
         this.bL.setInventory(inv); // CanaryMod: Set the inventory for the GUI
+        if(inv != null)
+            inv.setOContainer(this.bL); // CanaryMod: Set the OContainer for the Furnace Inventory
         this.bL.d = this.ct;
         this.bL.a((OICrafting) this);
     }
@@ -478,6 +494,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         this.a.b(new OPacket100OpenWindow(this.ct, 3, name, otileentitydispenser.k_()));
         this.bL = new OContainerDispenser(this.bJ, otileentitydispenser);
         this.bL.setInventory(inv); // CanaryMod: set inventory for the GUI
+        if(inv != null)
+            inv.setOContainer(this.bL); // CanaryMod: set OContainer for the inventory
         this.bL.d = this.ct;
         this.bL.a((OICrafting) this);
     }
@@ -499,15 +517,31 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         this.a.b(new OPacket100OpenWindow(this.ct, 5, name, otileentitybrewingstand.k_()));
         this.bL = new OContainerBrewingStand(this.bJ, otileentitybrewingstand);
         this.bL.setInventory(inv); // CanaryMod: set inventory for the GUI
+        if(inv != null)
+            inv.setOContainer(this.bL); // CanaryMod: set OContainer for the inventory
         this.bL.d = this.ct;
         this.bL.a((OICrafting) this);
     }
 
     public void a(OTileEntityBeacon otileentitybeacon) {
-        // TODO add this stuff to Canary
+        // CanaryMod: Check if we can open this
+        Inventory inv = new Beacon(otileentitybeacon);
+        String name = otileentitybeacon.getName();
+        
+        if ((Boolean) manager.callHook(PluginLoader.Hook.OPEN_INVENTORY, new HookParametersOpenInventory(getPlayer(), inv, false))) {
+            return;
+        }
+
+        if (inv != null) {
+            name = inv.getName();
+        }
+        
         this.cg();
-        this.a.b(new OPacket100OpenWindow(this.ct, 7, otileentitybeacon.b(), otileentitybeacon.k_()));
+        this.a.b(new OPacket100OpenWindow(this.ct, 7, name, otileentitybeacon.k_()));
         this.bL = new OContainerBeacon(this.bJ, otileentitybeacon);
+        this.bL.setInventory(inv); // CanaryMod: set inventory for the GUI
+        if(inv != null)
+            inv.setOContainer(this.bL); // CanaryMod: set OContainer for the inventory
         this.bL.d = this.ct;
         this.bL.a((OICrafting) this);
     }
@@ -764,6 +798,10 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     			p.getEntity().a.b(pkt);
     		}
     	}
+    }
+    
+    public void updateSlot(int windowId, int slotIndex, OItemStack item) {
+        this.a.b(new OPacket103SetSlot(windowId, slotIndex, item));
     }
     // CanaryMod end
 }

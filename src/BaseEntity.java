@@ -569,6 +569,8 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public BaseEntity getRiddenByEntity() {
+        if(this.entity.n == null)
+            return null;
         return this.entity.n.entity;
     }
     
@@ -586,7 +588,28 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public BaseEntity getRidingEntity() {
+        if(this.entity.o == null)
+            return null;
         return this.entity.o.entity;
+    }
+    
+    /**
+     * Sets the entity's "vehicle".
+     * Can also be used to dismount vehicle.
+     * @param entity
+     */
+    public void setRidingEntity(BaseEntity entity) {
+        if(entity == null)
+            this.entity.a((OEntity)null);
+        else
+            this.entity.a(entity.entity);
+    }
+    
+    /**
+     * Dismounts entity from vehicle
+     */
+    public void dismount() {
+        setRidingEntity(null);
     }
     
     /**

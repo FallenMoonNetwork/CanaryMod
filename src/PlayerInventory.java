@@ -2,7 +2,10 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> {
     private final OEntityPlayerMP user;
 
     public PlayerInventory(Player player) {
-        super(player.getUser().bJ);
+        this(null, player);
+    }
+    public PlayerInventory(OContainer oContainer, Player player) {
+        super(oContainer, player.getUser().bJ);
         user = player.getUser();
     }
 
@@ -54,5 +57,19 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> {
     @Override
     public void setName(String value) {
         container.setName(value);
+    }
+    
+    /**
+     * Returns Item held in player's mouse cursor. Ex: When moving items within an inventory.
+     * 
+     * @return Item
+     */
+    public Item getCursorItem() {
+        OItemStack itemstack = container.n();
+        return itemstack == null ? null : new Item(itemstack);
+    }
+    
+    public void setCursorItem(Item item) {
+        container.b(item.getBaseItem());
     }
 }

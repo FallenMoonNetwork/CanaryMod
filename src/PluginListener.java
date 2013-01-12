@@ -1340,4 +1340,14 @@ public class PluginListener {
     public boolean onFireworkExplode(Firework firework) {
     	return false;
     }
+    
+    /**
+     * Called when an inventory slot is clicked by a player.
+     * 
+     * @param hookParametersSlotClick Object containing information about this hook
+     * @return modified HookParametersSlotClick
+     */
+    public HookParametersSlotClick onSlotClick(HookParametersSlotClick hookParametersSlotClick) {
+        return hookParametersSlotClick;
+    }
 }

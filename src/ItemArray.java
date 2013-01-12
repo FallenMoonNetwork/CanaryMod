@@ -9,9 +9,15 @@ import java.util.Arrays;
  */
 public abstract class ItemArray<C extends Container<OItemStack>> implements Inventory {
     protected C container;
+    private OContainer oContainer;
 
     public ItemArray(C container) {
+        this(null, container);
+    }
+    
+    public ItemArray(OContainer oContainer, C container) {
         this.container = container;
+        this.oContainer = oContainer;
     }
 
     @Override
@@ -347,5 +353,36 @@ public abstract class ItemArray<C extends Container<OItemStack>> implements Inve
     @Override
     public String toString() {
         return String.format("ItemArray[size=%d, contents=%s]", getContentsSize(), Arrays.toString(getContents()));
+    }
+    
+    @Override
+    public boolean hasOContainer() {
+        return oContainer != null;
+    }
+    
+    @Override
+    public OContainer getOContainer() {
+        return oContainer;
+    }
+    
+    @Override
+    public void setOContainer(OContainer oContainer) {
+        this.oContainer  = oContainer;
+    }
+    
+    @Override
+    public boolean updateChangedSlots() {
+        if(oContainer == null)
+            return false;
+        oContainer.updateChangedSlots();
+        return true;
+    }
+    
+    @Override
+    public boolean updateSlot(int index) {
+        if(oContainer == null)
+            return false;
+        oContainer.updateSlot(index);
+        return true;
     }
 }
