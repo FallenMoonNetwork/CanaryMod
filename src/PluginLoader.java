@@ -1149,7 +1149,7 @@ public class PluginLoader {
                             break;
 
                         case PORTAL_USE:
-                            if (listener.onPortalUse((Player) parameters[0], (World) parameters[1])) {
+                            if (listener.onPortalUse((Player) parameters[0], (Location) parameters[1])) {
                                 toRet = true;
                             }
                             break;

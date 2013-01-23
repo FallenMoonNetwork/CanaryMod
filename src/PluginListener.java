@@ -860,9 +860,24 @@ public class PluginListener {
      * @param from
      *            The world the player wants to leave
      * @return true to prevent the player from using the portal
+     * @deprecated use onPortalUse(Player, Location) instead
      */
+    @Deprecated
     public boolean onPortalUse(Player player, World from) {
         return false;
+    }
+    
+    /**
+     * Called when a player uses a portal
+     * 
+     * @param player
+     *            the player using the portal
+     * @param to
+     *            The location to where the player is going
+     * @return true to prevent the player from using the portal
+     */
+    public boolean onPortalUse(Player player, Location to) {
+        return onPortalUse(player, player.getWorld());
     }
 
     /**
