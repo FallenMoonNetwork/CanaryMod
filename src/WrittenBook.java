@@ -38,11 +38,17 @@ public class WrittenBook {
      * item is not a book)
      */
     public String getTitle() {
-        return nbtTag.getString("title");
+        if(nbtTag.getString("title") == null) {
+            return null;
+        } else {
+            return nbtTag.getString("title");
+        }
     }
 
     public void setTitle(String title) {
-        nbtTag.removeTag("title");
+        if(nbtTag.getString("title") != null) {
+            nbtTag.removeTag("title");
+        }
         nbtTag.add("title", title);
     }
 
@@ -53,7 +59,11 @@ public class WrittenBook {
      * item is not a book)
      */
     public String getAuthor() {
-        return nbtTag.getString("author");
+        if(nbtTag.getString("author") == null) {
+            return null;
+        } else {
+            return nbtTag.getString("author");
+        }
     }
 
     /**
@@ -61,7 +71,9 @@ public class WrittenBook {
      * @param author The new author
      */
     public void setAuthor(String author) {
-        nbtTag.removeTag("author");
+        if(nbtTag.getString("author") != null) {
+            nbtTag.removeTag("author");
+        }
         nbtTag.add("author", author);
     }
 
@@ -71,6 +83,9 @@ public class WrittenBook {
      * item.
      */
     public List<String> getPages() {
+        if(nbtTag.getNBTTagList("pages") == null) {
+            return null;
+        }
         List<String> pages = new ArrayList<String>();
         NBTTagList nbtPages = nbtTag.getNBTTagList("pages");
         for (int i = 0; i < nbtPages.size(); i++) {
@@ -92,7 +107,9 @@ public class WrittenBook {
         for (String page : pages) {
             nbtPages.add(new NBTTagString("", page));
         }
-        nbtTag.removeTag("pages");
+        if(nbtTag.getNBTTagList("pages") != null) {
+            nbtTag.removeTag("pages");
+        }
         nbtTag.add("pages", nbtPages);
     }
 
