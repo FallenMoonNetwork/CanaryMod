@@ -20,7 +20,7 @@ public class OEntityEnderPearl extends OEntityThrowable {
                 p = new Player((OEntityPlayerMP) this.h());
             }
             if ((p != null) && !(etc.getServer().getPlayerList().contains(p))) {
-                this.x(); // kill this entity
+                this.w(); // kill this entity
                 return;
             }
             // CanaryMod end
@@ -36,13 +36,13 @@ public class OEntityEnderPearl extends OEntityThrowable {
                 if (!oentityplayermp.a.b && oentityplayermp.q == this.q) {
                     this.h().a(this.u, this.v, this.w);
                     this.h().T = 0.0F;
-                    if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENDERPEARL, new BaseEntity(this), ((OEntityPlayerMP) h()).getPlayer(), 5)) {
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(new BaseEntity(this), ((OEntityPlayerMP) h()).getPlayer(), DamageType.ENDERPEARL.getDamageSource(), 5));
+                    if (!ev.isCanceled()) {
 
-                            this.h().a(ODamageSource.h, 5);
+                            this.h().a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
                         } //
                     }
                 }
-
                 this.w();
             }
         }

@@ -274,8 +274,9 @@ public abstract class OEntity {
             } else {
                 if (this.d % 20 == 0) {
                     // CanaryMod Damage hook: Periodic burn damage
-                    if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE_TICK, null, entity, 1)) {
-                        this.a(ODamageSource.b, 1);
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, entity, DamageType.FIRE_TICK.getDamageSource(), 1));
+                    if (!ev.isCanceled()) {
+                        this.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
                     }
                 }
 
@@ -308,13 +309,23 @@ public abstract class OEntity {
     protected void z() {
         if (!this.ag) {
             // CanaryMod Damage hook: Lava
+            HookParametersDamage ev = null;
             if (this instanceof OEntityLiving) {
-                if ((Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.LAVA, null, entity, 4)) {
+                ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, entity, DamageType.LAVA.getDamageSource(), 4));
+                if (ev.isCanceled()) {
                     return;
                 }
             }
-            this.a(ODamageSource.c, 4);
-            this.d(15);
+            if(ev == null) {
+                //No hook has been fired, continue the standard procedure
+                this.a(ODamageSource.c, 4);
+                this.d(15);
+            }
+            else {
+                //Hook was fired, apply its data
+                this.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
+                this.d(15);
+            }
         }
     }
 
@@ -674,8 +685,9 @@ public abstract class OEntity {
     protected void e(int i) {
         if (!this.ag) {
             // CanaryMod Damage Hook: Fire
-            if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FIRE, null, entity, i)) {
-                this.a(ODamageSource.a, i);
+            HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, entity, DamageType.FIRE.getDamageSource(), i));
+            if (!ev.isCanceled()) {
+                this.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
             }//
         }
     }
@@ -1339,10 +1351,12 @@ public abstract class OEntity {
 
     public void a(OEntityLightningBolt oentitylightningbolt) {
         //CanaryMod Damage Hook: Lightning
-        if ((Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.LIGHTNING, null, entity, 5)) {
+        HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, entity, DamageType.LIGHTNING.getDamageSource(), 5));
+        if (ev.isCanceled()) {
             return;
         }
-        this.e(5);
+        //TODO: Apply a changed DamageSource here?
+        this.e(ev.getDamageAmount());
         ++this.d;
         if (this.d == 0) {
             this.d(8);

@@ -459,10 +459,20 @@ public class PluginListener {
      * @param amount
      *            amount of damage dealt.
      *
-     * @return
+     * @return true to prevent damage
+     * @deprecated use onDamage(HookParametersDamage) instead
      */
+    @Deprecated
     public boolean onDamage(PluginLoader.DamageType type, BaseEntity attacker, BaseEntity defender, int amount) {
         return false;
+    }
+    
+    public HookParametersDamage onDamage(HookParametersDamage hpDamage) {
+        //TODO: Remove this with next release (or the one after the next ...)
+        if(onDamage(PluginLoader.DamageType.fromDamageSource(hpDamage.getDamageSource().getDamageSource()), hpDamage.getAttacker(), hpDamage.getDefender(), hpDamage.getDamageAmount())) {
+            hpDamage.setCanceled();
+        }
+        return hpDamage;
     }
 
     /**

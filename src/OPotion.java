@@ -71,22 +71,25 @@ public class OPotion {
         } else if (this.H == u.H) {
             if (oentityliving.aX() > 1) {
                 // Canarymod: DAMAGE From Poison
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.POTION, null, oentityliving.entity, 1)) {
-                    oentityliving.a(ODamageSource.k, 1);
+                HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentityliving.entity, DamageType.POTION.getDamageSource(), 1));
+                if (!ev.isCanceled()) {
+                    oentityliving.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
                 } //
             }
         } else if (this.H == v.H) {
             // CanaryMod: Wither effect damage
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.WITHER, null, oentityliving.entity, 1)) {
-                oentityliving.a(ODamageSource.l, 1);
+            HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentityliving.entity, DamageType.WITHER.getDamageSource(), 1));
+            if (!ev.isCanceled()) {
+                oentityliving.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
             } //
         } else if (this.H == s.H && oentityliving instanceof OEntityPlayer) {
             ((OEntityPlayer) oentityliving).j(0.025F * (float) (i + 1));
         } else if ((this.H != h.H || oentityliving.bD()) && (this.H != this.i.H || !oentityliving.bD())) {
             if (this.H == this.i.H && !oentityliving.bD() || this.H == h.H && oentityliving.bD()) {
                 // Canarymod: harm/heal potion
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.POTION, null, oentityliving.entity, 4 << i)) {
-                    oentityliving.a(ODamageSource.k, 6 << i);
+                HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentityliving.entity, DamageType.POTION.getDamageSource(), 6 << i));
+                if (!ev.isCanceled()) {
+                    oentityliving.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
                 } //
             }
         } else {

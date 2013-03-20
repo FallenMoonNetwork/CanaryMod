@@ -319,8 +319,9 @@ public abstract class OEntityLiving extends OEntity {
 
         if (this.R() && this.S()) {
             // CanaryMod Damage hook: Suffocation
-            if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.SUFFOCATION, null, this.entity, 1)) {
-                this.a(ODamageSource.d, 1);
+            HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, this.entity, DamageType.SUFFOCATION.getDamageSource(), 1));
+            if (!ev.isCanceled()) {
+                this.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
             }
         }
 
@@ -336,7 +337,8 @@ public abstract class OEntityLiving extends OEntity {
                 this.g(0);
 
                 // CanaryMod Damage hook: Drowning
-                if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.WATER, null, entity, 2)) {
+                HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, this.entity, DamageType.WATER.getDamageSource(), 2));
+                if (!ev.isCanceled()) {
                     for (int i = 0; i < 8; ++i) {
                     float f = this.ab.nextFloat() - this.ab.nextFloat();
                     float f1 = this.ab.nextFloat() - this.ab.nextFloat();
@@ -345,7 +347,7 @@ public abstract class OEntityLiving extends OEntity {
                     this.q.a("bubble", this.u + (double) f, this.v + (double) f1, this.w + (double) f2, this.x, this.y, this.z);
                     }
 
-                    this.a(ODamageSource.e, 2);
+                    this.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
                 }
             }
 
@@ -655,21 +657,23 @@ public abstract class OEntityLiving extends OEntity {
                         return false;
                     }
 
-                    if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, this.entity, i - this.bB)) {
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(attacker, this.entity, odamagesource.getDamageSource(), i - this.bB));
+                    if (attacker != null && ev.isCanceled()) {
                         return false;
                     }
-                    this.d(odamagesource, i - this.bB);
+                    this.d(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
                     this.bB = i;
 
                     flag = false;
                 } else {
-                    if (attacker != null && (Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.ENTITY, attacker, this.entity, i)) {
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(attacker, this.entity, odamagesource.getDamageSource(), i));
+                    if (attacker != null && ev.isCanceled()) {
                         return false;
                     }
                     this.bB = i;
                     this.aT = this.aS;
                     this.af = this.av;
-                    this.d(odamagesource, i);
+                    this.d(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
                     this.aW = this.aX = 10;
                 }
 
@@ -910,14 +914,15 @@ public abstract class OEntityLiving extends OEntity {
 
         if (i > 0) {
             // CanaryMod Damage hook: Falling
-            if (!(Boolean) manager.callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.FALL, null, entity, i)) {
+            HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, this.entity, DamageType.FALL.getDamageSource(), i));
+            if (!ev.isCanceled()) {
                 if (i > 4) {
                     this.a("damage.fallbig", 1.0F, 1.0F);
                 } else {
                     this.a("damage.fallsmall", 1.0F, 1.0F);
                 }
 
-                this.a(ODamageSource.h, i);
+                this.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
             }
             int j = this.q.a(OMathHelper.c(this.u), OMathHelper.c(this.v - 0.20000000298023224D - (double) this.N), OMathHelper.c(this.w));
 

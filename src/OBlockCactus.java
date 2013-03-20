@@ -76,9 +76,10 @@ public class OBlockCactus extends OBlock {
 
     public void a(OWorld oworld, int i, int j, int k, OEntity oentity) {
         // CanaryMod Damage hook: Cactus
-        if (oentity instanceof OEntityLiving && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.CACTUS, null, new LivingEntity((OEntityLiving) oentity), 1)) {
+        HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, new LivingEntity((OEntityLiving) oentity), DamageType.CACTUS.getDamageSource(), 1));
+        if (oentity instanceof OEntityLiving && ev.isCanceled()) {
             return;
         }
-        oentity.a(ODamageSource.g, 1);
+        oentity.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
     }
 }

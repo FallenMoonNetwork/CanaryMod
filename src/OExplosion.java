@@ -150,10 +150,12 @@ public class OExplosion {
 
                     // CanaryMod Damage hook: Explosions
                     int damage = (int) ((d10 * d10 + d10) / 2.0D * 8.0D * (double) this.g + 1.0D);
-                    PluginLoader.DamageType dmgType = (this.f instanceof OEntityCreeper) ? PluginLoader.DamageType.CREEPER_EXPLOSION : PluginLoader.DamageType.EXPLOSION;
+                    DamageType dmgType = (this.f instanceof OEntityCreeper) ? DamageType.CREEPER_EXPLOSION : DamageType.EXPLOSION;
 
-                    if (!cancel && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, dmgType, (this.f != null ? this.f.entity : null), oentity.entity, damage)) {
-                        oentity.a(ODamageSource.a(this), (int) ((d10 * d10 + d10) / 2.0D * 8.0D * (double) this.g + 1.0D));
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage((this.f != null ? this.f.entity : null), oentity.entity, dmgType.getDamageSource(), damage));
+                    if (!cancel && !ev.isCanceled()) {
+                        //Cannot add a random damage source here, only damage applies
+                        oentity.a(ODamageSource.a(this), ev.getDamageAmount());
                     }
                     double d11 = OEnchantmentProtection.a(oentity, d10);
 
