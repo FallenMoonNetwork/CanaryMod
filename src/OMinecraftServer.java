@@ -63,6 +63,10 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     public Map<String, OWorldServer[]> worlds = new HashMap<String, OWorldServer[]>(1);
     public Map<String, long[][]> worldTickNanos = new HashMap<String, long[][]>(1);
     // CanaryMod end
+    
+    // CanaryMod start: Stop Message
+    private String stopMsg;
+    // CanaryMod end
 
     public OMinecraftServer(File file1) {
         k = this;
@@ -228,7 +232,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             if (this.s != null) {
                 this.al().a("Saving players");
                 this.s.g();
-                this.s.r();
+                this.s.r(stopMsg); // CanaryMod: custom stop message added
             }
 
             this.al().a("Saving worlds");
@@ -259,7 +263,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         return this.t;
     }
 
-    public void n() {
+    public void n() { //STOP
         this.t = false;
     }
 
@@ -995,4 +999,11 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     public static OServerConfigurationManager a(OMinecraftServer ominecraftserver) {
         return ominecraftserver.s;
     }
+    
+    // CanaryMod start: Custom Stop Message
+    public void stopServer(String stopMsg){
+    	this.stopMsg = stopMsg;
+    	this.n();
+    }
+    // CanaryMod end
 }

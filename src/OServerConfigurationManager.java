@@ -846,9 +846,10 @@ public abstract class OServerConfigurationManager {
         oentityplayermp.c.b(oworld.L().r());
     }
 
-    public void r() {
+    // CanaryMod: change signature to include String stopMsg for custom stop messages.
+    public void r(String stopMsg) {
         while (!this.a.isEmpty()) {
-            ((OEntityPlayerMP) this.a.get(0)).a.c("Server closed");
+            ((OEntityPlayerMP) this.a.get(0)).a.c(stopMsg != null ? stopMsg : "Server closed");
         }
     }
 
