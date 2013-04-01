@@ -817,6 +817,10 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     public boolean a(int i, String s) {
+        if (s.isEmpty()) { // Purely checking for permission level
+            return i < 2 || i <3 && player.canIgnoreRestrictions() || player.isAdmin();
+        }
+
         // CanaryMod: use our own permission system
         if (s.isEmpty()) {
             return false;
