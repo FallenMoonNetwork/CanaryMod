@@ -152,7 +152,7 @@ public class OExplosion {
                     int damage = (int) ((d10 * d10 + d10) / 2.0D * 8.0D * (double) this.g + 1.0D);
                     DamageSource damageSource = ODamageSource.a(this).damageSource;
 
-                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(damageSource.getDamageSourceEntity(), oentity.getEntity(), damageSource, damage));
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(damageSource.getSourceEntity(), oentity.getEntity(), damageSource, damage));
                     if (!cancel && !ev.isCanceled()) {
                         //Cannot add a random damage source here, only damage applies
                         oentity.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());

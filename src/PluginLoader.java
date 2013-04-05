@@ -390,7 +390,7 @@ public class PluginLoader {
          */
         ENTITY_DESTROYED, //
         /**
-         * Calls {@link PluginListener#onHangingEntityDestroyed(HangingEntity) }
+         * Calls {@link PluginListener#onHangingEntityDestroyed(HangingEntity, DamageSource) }
          */
         HANGING_ENTITY_DESTROYED, //
         /**
@@ -1384,7 +1384,7 @@ public class PluginLoader {
                                 break;
 
                             case HANGING_ENTITY_DESTROYED:
-                                toRet = listener.onHangingEntityDestroyed((HangingEntity) parameters[0]);
+                                toRet = listener.onHangingEntityDestroyed((HangingEntity) parameters[0], (DamageSource) parameters[1]);
                                 break;
 
                             case HOPPER_TRANSFER:

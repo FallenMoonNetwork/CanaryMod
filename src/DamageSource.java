@@ -35,15 +35,26 @@ public class DamageSource {
     }
 
     /**
-     * Get the Entity that is causing the damage.
+     * Get the <tt>BaseEntity</tt> that is the root of the damage.
+     * For example, if a player shoots an arrow, this returns the player.
      * This may return null if the the damage was not caused by an entity.
-     * @return
+     * @return the source entity
      */
-    public BaseEntity getDamageSourceEntity() {
+    public BaseEntity getSourceEntity() {
         if(osource.i() != null) {
             return osource.i().getEntity();
         }
         return null;
+    }
+
+    /**
+     * Get the <tt>BaseEntity</tt> that is causing the damage.
+     * For example, if a player shoots an arrow, this returns the arrow.
+     * This may return null if the the damage was not caused by an entity.
+     * @return the damaging entity
+     */
+    public BaseEntity getDamagingEntity() {
+        return osource.h() != null ? osource.h().getEntity() : null;
     }
 
     /**

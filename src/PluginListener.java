@@ -1415,9 +1415,12 @@ public class PluginListener {
     /**
      * Called when any hanging entity is destroyed.
      * @param entity The entity destroyed.
+     * @param damageSource The {@link DamageSource} that destroyed the hanging
+     *                     entity, or <tt>null</tt> if it wasn't destroyed by a
+     *                     <tt>DamageSource</tt>
      * @return true - entity is not destroyed<br>false - entity is destroyed
      */
-    public boolean onHangingEntityDestroyed(HangingEntity baseEntity) {
+    public boolean onHangingEntityDestroyed(HangingEntity entity, DamageSource damageSource) {
         return false;
     }
 

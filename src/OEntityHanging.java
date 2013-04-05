@@ -100,7 +100,7 @@ public abstract class OEntityHanging extends OEntity {
             this.e = 0;
             if (!this.M && !this.c()) {
                 // CanaryMod: onHangingEntityDestroyed
-                if((Boolean)etc.getLoader().callHook(PluginLoader.Hook.HANGING_ENTITY_DESTROYED, this.getEntity())){
+                if((Boolean)etc.getLoader().callHook(PluginLoader.Hook.HANGING_ENTITY_DESTROYED, this.getEntity(), null)){
                     return;
                 }//
                 this.w();
@@ -184,7 +184,7 @@ public abstract class OEntityHanging extends OEntity {
         } else {
             if (!this.M && !this.q.I) {
                 // CanaryMod: onHangingEntityDestroyed
-                if((Boolean)etc.getLoader().callHook(PluginLoader.Hook.HANGING_ENTITY_DESTROYED, this.getEntity())){
+                if((Boolean)etc.getLoader().callHook(PluginLoader.Hook.HANGING_ENTITY_DESTROYED, this.getEntity(), odamagesource.damageSource)){
                     return false;
                 }//
                 this.w();
@@ -287,7 +287,7 @@ public abstract class OEntityHanging extends OEntity {
     
     //CanaryMod: our methods go here :3
     @Override
-    public BaseEntity getEntity(){
+    public HangingEntity getEntity(){
         return this.hangingEntity;
     }
     
