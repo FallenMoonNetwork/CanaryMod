@@ -1,9 +1,9 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 
 public class OChunkProviderServer implements OIChunkProvider {
 
@@ -11,16 +11,14 @@ public class OChunkProviderServer implements OIChunkProvider {
     private OChunk c;
     private OIChunkProvider d;
     private OIChunkLoader e;
-    public boolean a = false;
+    public boolean a = true;
     private OLongHashMap f = new OLongHashMap();
-    private List g = new ArrayList();
+    List g = new ArrayList(); // CanaryMod: private -> package-private
     private OWorldServer h;
     // CanaryMod: load status
-    boolean loaded = false;
     boolean loadedpreload = false;
 
     public OChunkProviderServer(OWorldServer oworldserver, OIChunkLoader oichunkloader, OIChunkProvider oichunkprovider) {
-        super();
         this.c = new OEmptyChunk(oworldserver, 0, 0);
         this.h = oworldserver;
         this.e = oichunkloader;
@@ -31,9 +29,9 @@ public class OChunkProviderServer implements OIChunkProvider {
         return this.f.b(OChunkCoordIntPair.a(i, j));
     }
 
-    public void d(int i, int j) {
-        if (this.h.t.c()) {
-            OChunkCoordinates ochunkcoordinates = this.h.p();
+    public void b(int i, int j) {
+        if (this.h.t.e()) {
+            OChunkCoordinates ochunkcoordinates = this.h.I();
             int k = i * 16 + 8 - ochunkcoordinates.a;
             int l = j * 16 + 8 - ochunkcoordinates.c;
             short short1 = 128;
@@ -44,18 +42,16 @@ public class OChunkProviderServer implements OIChunkProvider {
         } else {
             this.b.add(Long.valueOf(OChunkCoordIntPair.a(i, j)));
         }
-
     }
 
-    public void c() {
+    public void a() {
         Iterator iterator = this.g.iterator();
 
         while (iterator.hasNext()) {
             OChunk ochunk = (OChunk) iterator.next();
 
-            this.d(ochunk.g, ochunk.h);
+            this.b(ochunk.g, ochunk.h);
         }
-
     }
 
     public OChunk c(int i, int j) {
@@ -70,7 +66,7 @@ public class OChunkProviderServer implements OIChunkProvider {
                 etc.getLoader().loadPreloadPlugins();
                 loadedpreload = true;
             }
-            ochunk = this.e(i, j);
+            ochunk = this.f(i, j);
             if (ochunk == null) {
                 // Canary onChunkCreate hook
                 byte[] blocks = (byte[]) etc.getLoader().callHook(PluginLoader.Hook.CHUNK_CREATE, i, j, h.world);
@@ -78,11 +74,21 @@ public class OChunkProviderServer implements OIChunkProvider {
                 if (blocks != null) {
                     ochunk = Chunk.getNewChunk(h, blocks, i, j).chunk;
                     ochunk.k = true; // is populated = true
-                    ochunk.b(); // lightning update
+                    ochunk.b(); // lighting update
                 } else if (this.d == null) {
                     ochunk = this.c;
                 } else {
-                    ochunk = this.d.b(i, j);
+                    try {
+                        ochunk = this.d.d(i, j);
+                    } catch (Throwable throwable) {
+                        OCrashReport ocrashreport = OCrashReport.a(throwable, "Exception generating new chunk");
+                        OCrashReportCategory ocrashreportcategory = ocrashreport.a("Chunk to be generated");
+
+                        ocrashreportcategory.a("Location", String.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j)}));
+                        ocrashreportcategory.a("Position hash", Long.valueOf(k));
+                        ocrashreportcategory.a("Generator", this.d.d());
+                        throw new OReportedException(ocrashreport);
+                    }
                 }
 
                 etc.getLoader().callHook(PluginLoader.Hook.CHUNK_CREATED, ochunk.chunk);
@@ -91,7 +97,6 @@ public class OChunkProviderServer implements OIChunkProvider {
             this.f.a(k, ochunk);
             this.g.add(ochunk);
             if (ochunk != null) {
-                ochunk.b();
                 ochunk.c();
                 // Canary onChunkLoaded hook
                 etc.getLoader().callHook(PluginLoader.Hook.CHUNK_LOADED, ochunk.chunk);
@@ -99,7 +104,7 @@ public class OChunkProviderServer implements OIChunkProvider {
                     this.a(this, i, j);
                 }
             }// To prevent NullPointerExceptions
-            if (this.a(i - 1, j) && !this.b(i - 1, j).k && this.a(i - 1, j + 1) && this.a(i, j + 1) && this.a(i - 1, j)) {
+            if (this.a(i - 1, j) && !this.d(i - 1, j).k && this.a(i - 1, j + 1) && this.a(i, j + 1) && this.a(i - 1, j)) {
                 this.a(this, i - 1, j);
             }
 
@@ -109,13 +114,13 @@ public class OChunkProviderServer implements OIChunkProvider {
         return ochunk;
     }
 
-    public OChunk b(int i, int j) {
+    public OChunk d(int i, int j) {
         OChunk ochunk = (OChunk) this.f.a(OChunkCoordIntPair.a(i, j));
 
         return ochunk == null ? (!this.h.y && !this.a ? this.c : this.c(i, j)) : ochunk;
     }
 
-    private OChunk e(int i, int j) {
+    private OChunk f(int i, int j) {
         if (this.e == null) {
             return null;
         } else {
@@ -123,7 +128,10 @@ public class OChunkProviderServer implements OIChunkProvider {
                 OChunk ochunk = this.e.a(this.h, i, j);
 
                 if (ochunk != null) {
-                    ochunk.n = this.h.o();
+                    ochunk.n = this.h.G();
+                    if (this.d != null) {
+                        this.d.e(i, j);
+                    }
                 }
 
                 return ochunk;
@@ -141,19 +149,24 @@ public class OChunkProviderServer implements OIChunkProvider {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-
         }
     }
 
     private void b(OChunk ochunk) {
         if (this.e != null) {
-            ochunk.n = this.h.o();
-            this.e.a(this.h, ochunk);
+            try {
+                ochunk.n = this.h.G();
+                this.e.a(this.h, ochunk);
+            } catch (IOException ioexception) {
+                ioexception.printStackTrace();
+            } catch (OMinecraftException ominecraftexception) {
+                ominecraftexception.printStackTrace();
+            }
         }
     }
 
     public void a(OIChunkProvider oichunkprovider, int i, int j) {
-        OChunk ochunk = this.b(i, j);
+        OChunk ochunk = this.d(i, j);
 
         if (!ochunk.k) {
             ochunk.k = true;
@@ -162,16 +175,9 @@ public class OChunkProviderServer implements OIChunkProvider {
                 ochunk.e();
             }
         }
-
     }
 
     public boolean a(boolean flag, OIProgressUpdate oiprogressupdate) {
-        // CanaryMod: load once!
-        if (!loaded) {
-            etc.getLoader().loadPlugins();
-            loaded = true;
-        }
-		
         int i = 0;
 
         for (int j = 0; j < this.g.size(); ++j) {
@@ -202,8 +208,8 @@ public class OChunkProviderServer implements OIChunkProvider {
         return true;
     }
 
-    public boolean a() {
-        if (!this.h.I) {
+    public boolean b() {
+        if (!this.h.c) {
             for (int i = 0; i < 100; ++i) {
                 if (!this.b.isEmpty()) {
                     Long olong = (Long) this.b.iterator().next();
@@ -225,48 +231,48 @@ public class OChunkProviderServer implements OIChunkProvider {
             }
         }
 
-        return this.d.a();
+        return this.d.b();
     }
-	
+
     public OChunk regenerateChunk(int i, int j) {
         Long chunkCoordIntPair = OChunkCoordIntPair.a(i, j);
-        
+
         // Unloading the chunk
         OChunk unloadedChunk = (OChunk) f.a(chunkCoordIntPair.longValue());
 
         if (unloadedChunk != null) {
-            unloadedChunk.e();
-            b(unloadedChunk);
-            a(unloadedChunk);
-            b.remove(chunkCoordIntPair);
-            f.d(chunkCoordIntPair.longValue());
-            g.remove(unloadedChunk);
+            unloadedChunk.e(); // setChunkModified
+            b(unloadedChunk); // saveChunkData
+            a(unloadedChunk); // saveChunkExtraData
+            b.remove(chunkCoordIntPair); // droppedChunksSet
+            f.d(chunkCoordIntPair.longValue()); // id2ChunkMap.remove
+            g.remove(unloadedChunk); // loadedChunks
         }
-        
+
         // Generating the new chunk
-        OChunk newChunk = d.b(i, j);
+        OChunk newChunk = d.d(i, j);
 
         f.a(chunkCoordIntPair, newChunk);
         g.add(newChunk);
         if (newChunk != null) {
-            newChunk.c();
-            newChunk.d();
+            newChunk.c(); // onChunkLoad
+            newChunk.d(); // onChunkUnload
         }
-        newChunk.a(this, this, i, j);
-        
+        newChunk.a(this, this, i, j); //populateChunk
+
         // Save the new chunk, overriding the old one
         a(newChunk);
         b(newChunk);
         newChunk.k = false;
         if (e != null) {
-            e.b();
+            e.b(); // saveExtraData
         }
-        
+
         return newChunk;
     }
 
-    public boolean b() {
-        return !this.h.I;
+    public boolean c() {
+        return !this.h.c;
     }
 
     public String d() {
@@ -280,4 +286,10 @@ public class OChunkProviderServer implements OIChunkProvider {
     public OChunkPosition a(OWorld oworld, String s, int i, int j, int k) {
         return this.d.a(oworld, s, i, j, k);
     }
+
+    public int e() {
+        return this.f.a();
+    }
+
+    public void e(int i, int j) {}
 }

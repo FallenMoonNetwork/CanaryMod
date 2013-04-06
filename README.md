@@ -1,6 +1,6 @@
 CanaryMod
 ====================
-CanaryMod is a server mod for the Minecraft Beta server software that uses the code from hMod and some from bukkit. This is only the source code, if you don't know how to use this you won't find it useful.
+CanaryMod is a server mod for the Minecraft server software that uses the code from hMod. This is only the source code, if you don't know how to use this you won't find it useful.
 
 Compiling
 ---------

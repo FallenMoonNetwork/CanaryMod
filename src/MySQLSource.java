@@ -10,7 +10,7 @@ import java.util.logging.Level;
 
 /**
  * MySQLSource.java - Used for accessing users and such from a mysql database
- * 
+ *
  * @author James
  */
 public class MySQLSource extends DataSource {
@@ -291,7 +291,7 @@ public class MySQLSource extends DataSource {
             }
         }
     }
-    
+
     @Override
     public void loadEnderBlocks() {
         synchronized (enderBlocksLock) {
@@ -331,7 +331,7 @@ public class MySQLSource extends DataSource {
             }
         }
     }
-    
+
     @Override
     public void loadAntiXRayBlocks() {
         synchronized (antiXRayBlocksLock) {
@@ -375,15 +375,13 @@ public class MySQLSource extends DataSource {
 
         try {
             conn = etc.getConnection();
-            ps = conn.prepareStatement("INSERT INTO " + table_users + " (name, groups, prefix, commands, admin, canmodifyworld, ignoresrestrictions, ip) VALUES (?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO " + table_users + " (name, groups, prefix, commands, `admin/unrestricted`, ip) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, player.getName());
             ps.setString(2, etc.combineSplit(0, player.getGroups(), ","));
             ps.setString(3, player.getPrefix());
             ps.setString(4, etc.combineSplit(0, player.getCommands(), ","));
-            ps.setBoolean(5, player.getAdmin());
-            ps.setBoolean(6, player.canModifyWorld());
-            ps.setBoolean(7, player.ignoreRestrictions());
-            ps.setString(8, player.getIps() != null ? etc.combineSplit(0, player.getIps(), ",") : "");
+            ps.setInt(5, player.getRestrictions());
+            ps.setString(6, player.getIps() != null ? etc.combineSplit(0, player.getIps(), ",") : "");
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
@@ -415,15 +413,13 @@ public class MySQLSource extends DataSource {
 
         try {
             conn = etc.getConnection();
-            ps = conn.prepareStatement("UPDATE " + table_users + " SET groups = ?, prefix = ?, commands = ?, admin = ?, canmodifyworld = ?, ignoresrestrictions = ?, ip = ? WHERE id = ?");
+            ps = conn.prepareStatement("UPDATE " + table_users + " SET groups = ?, prefix = ?, commands = ?, `admin/unrestricted` = ?, ip = ? WHERE id = ?");
             ps.setString(1, etc.combineSplit(0, player.getGroups(), ","));
             ps.setString(2, player.getPrefix());
             ps.setString(3, etc.combineSplit(0, player.getCommands(), ","));
-            ps.setBoolean(4, player.getAdmin());
-            ps.setBoolean(5, player.canModifyWorld());
-            ps.setBoolean(6, player.ignoreRestrictions());
-            ps.setString(7, player.getIps() != null ? etc.combineSplit(0, player.getIps(), ",") : "");
-            ps.setInt(8, player.getSqlId());
+            ps.setInt(4, player.getRestrictions());
+            ps.setString(5, player.getIps() != null ? etc.combineSplit(0, player.getIps(), ",") : "");
+            ps.setInt(6, player.getSqlId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             log.log(Level.SEVERE, "Unable to update user in users table", ex);
@@ -515,7 +511,7 @@ public class MySQLSource extends DataSource {
             ps.setString(7, home.Group);
             ps.setString(8, home.Location.world);
             ps.setInt(9, home.Location.dimension);
-            
+
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
@@ -784,11 +780,28 @@ public class MySQLSource extends DataSource {
             if (rs.next()) {
                 player.setSqlId(rs.getInt("id"));
                 player.setGroups(rs.getString("groups").split(","));
+                if(player.getGroups().length == 0){
+                    player.setGroups(new String[] {etc.getDataSource().getDefaultGroup().Name});
+                }
                 player.setCommands(rs.getString("commands").split(","));
                 player.setPrefix(rs.getString("prefix"));
-                player.setAdmin(rs.getBoolean("admin"));
-                player.setCanModifyWorld(rs.getBoolean("canmodifyworld"));
-                player.setIgnoreRestrictions(rs.getBoolean("ignoresrestrictions"));
+                player.setRestrictions(rs.getInt("admin/unrestricted"));
+                if(rs.wasNull()) {
+                    for (String str : player.getGroups()) {
+                        Group group = etc.getDataSource().getGroup(str);
+
+                        if (group != null) {
+                            if (group.Administrator) {
+                                player.setRestrictions(2);
+                                break;
+                            } else if (group.IgnoreRestrictions) {
+                                player.setRestrictions(1);
+                            } else if (!group.CanModifyWorld && !player.canIgnoreRestrictions()) {
+                                player.setRestrictions(-1);
+                            }
+                        }
+                    }
+                }
                 StringBuilder ips = new StringBuilder();
                 for (String ip : rs.getString("ip").split(",")) {
                     if (ip.isEmpty() || ip.equals(" ") || !ip.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")) {
@@ -800,6 +813,17 @@ public class MySQLSource extends DataSource {
                     player.setIps(ips.toString().split(","));
                 }
                 player.setIps(null);
+            }
+            else{
+                Group group = etc.getDataSource().getDefaultGroup();
+                player.setGroups(new String[] {group.Name});
+                if (group.Administrator) {
+                    player.setRestrictions(2);
+                } else if (group.IgnoreRestrictions) {
+                    player.setRestrictions(1);
+                } else if (!group.CanModifyWorld && !player.canIgnoreRestrictions()) {
+                    player.setRestrictions(-1);
+            }
             }
         } catch (SQLException ex) {
             log.log(Level.SEVERE, "Unable to retreive users from user table", ex);
@@ -834,19 +858,19 @@ public class MySQLSource extends DataSource {
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     Ban ban = new Ban();
-                    
+
                     ban.setId(rs.getInt("id"));
-                    
+
                     String nameOrIp = rs.getString("user");
                     if (nameOrIp.contains("."))
                         ban.setIp(nameOrIp);
                     else
                         ban.setName(nameOrIp);
-                    
+
                     String reason = rs.getString("reason");
                     if (!reason.matches("\\s*"))
                         ban.setReason(reason);
-                        
+
                     ban.setTimestamp(rs.getInt("timestamp"));
                     bans.add(ban);
                 }
@@ -909,7 +933,7 @@ public class MySQLSource extends DataSource {
         CanaryConnection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = etc.getConnection();
             ps = conn.prepareStatement("INSERT INTO " + table_bans + " (user, reason, timestamp) VALUES (?, ?, ?)");
@@ -917,7 +941,7 @@ public class MySQLSource extends DataSource {
             ps.setString(2, ban.getReason());
             ps.setInt(3, ban.getTimestamp());
             ps.executeUpdate();
-            
+
             rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 ban.setId(rs.getInt(1));
@@ -1042,12 +1066,6 @@ public class MySQLSource extends DataSource {
             } catch (SQLException ex) {}
         }
     }
-    
-    //Grouplist
-    @Override
-    public List getGroupList(){
-        return this.groups;
-    }
 
     @Override
     public void loadMutedPlayers() {
@@ -1135,7 +1153,7 @@ public class MySQLSource extends DataSource {
     @Override
     public void expireBan(Ban ban) {
         int now = (int) (System.currentTimeMillis() / 1000);
-        
+
         boolean found = false;
         synchronized (banLock) {
             for (Ban b: bans)
@@ -1145,13 +1163,13 @@ public class MySQLSource extends DataSource {
                     ban = b;
                 }
         }
-        
+
         if (!found)
             return;
-        
+
         CanaryConnection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = etc.getConnection();
             ps = conn.prepareStatement("UPDATE " + table_bans + " SET timestamp=? WHERE id=?");

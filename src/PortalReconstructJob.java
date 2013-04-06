@@ -33,6 +33,7 @@ public class PortalReconstructJob implements Runnable {
         portalBlocks.add(new Integer[] { portalX + portalXOffset, portalY - 3, portalZ + portalZOffset, obsidianId});
     }
 
+    @Override
     public void run() {
         ArrayList<Player> updatedPlayers = new ArrayList<Player>();
 
@@ -42,7 +43,7 @@ public class PortalReconstructJob implements Runnable {
             }
         }
         for (Integer[] frameCoord : portalBlocks) {
-            world.getWorld().c(frameCoord[0] >> 4, frameCoord[2] >> 4).a(frameCoord[0] & 15, frameCoord[1], frameCoord[2] & 15, frameCoord[3]);
+            world.getChunk(frameCoord[0] >> 4, frameCoord[2] >> 4).setBlockIdAt(frameCoord[0] & 15, frameCoord[1], frameCoord[2] & 15, frameCoord[3]);
             for (Player player : updatedPlayers) {
                 player.getUser().a.b(new OPacket53BlockChange(frameCoord[0], frameCoord[1], frameCoord[2], world.getWorld()));
             }

@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -11,19 +11,18 @@ import java.util.logging.Logger;
 /**
  * Motd - Class for handling of the MOTD
  * extracted from etc
- * 
+ *
  * @author Talmor
  */
 public class Motd {
     private static final Logger           log = Logger.getLogger("Minecraft");
-    
+
     public static String getMotd(MessageReceiver caller) {
         try {
             FileInputStream fis = new FileInputStream(etc.getInstance().getConfigFolder() + "motd.txt");
             Scanner scanner = new Scanner(fis, "UTF-8");
 
-            scanner.useDelimiter("\r\n");
-            while (scanner.hasNext()) {
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
 
                 if (line.startsWith("#")) {
@@ -31,7 +30,7 @@ public class Motd {
                 }
                 String msg = replace(line, ((Player) caller));
 
-                ((Player) caller).getEntity().a.b(new OPacket3Chat(msg));
+                ((Player) caller).sendMessage(msg);
             }
             scanner.close();
             fis.close();
@@ -44,44 +43,31 @@ public class Motd {
         }
         return null;
     }
-    
+
     public static void makeMotd() {
         new File(etc.getInstance().getConfigFolder()).mkdirs();
-        File motdfile = new File(etc.getInstance().getConfigFolder() + "motd.txt");
+        File motdfile = new File(etc.getInstance().getConfigFolder(), "motd.txt");
 
         if (!motdfile.exists()) {
-            FileWriter writer = null;
+            PrintWriter writer = null;
 
             try {
-                writer = new FileWriter(motdfile);
-                writer.write("#For a list of colors, go here: http://wiki.canarymod.net/Colors\r\n");
-                writer.write("#To use linebreaks, just press enter or return. For color, use &\r\n");
-                writer.write("Welcome to my server! Please type /help for commands.");
+                writer = new PrintWriter(motdfile);
+                writer.println("#For a list of colors, go here: http://wiki.canarymod.net/Colors");
+                writer.println("#To use linebreaks, just press enter or return. For color, use &");
+                writer.println("Welcome to my server! Please type /help for commands.");
             } catch (Exception e) {
                 log.log(Level.SEVERE, "Exception while creating motd.txt");
-                try {
-                    if (writer != null) {
-                        writer.close();
-                    }
-                } catch (IOException e1) {
-                    log.log(Level.SEVERE, "Exception while closing writer for motd.txt", e1);
-                }
             } finally {
-                try {
-                    if (writer != null) {
-                        writer.close();
-                    }
-                } catch (IOException e) {
-                    log.log(Level.SEVERE, "Exception while closing writer for motd.txt", e);
+                if (writer != null) {
+                    writer.close();
                 }
             }
         }
     }
-    
+
     public static String replace(String text, Player p) {
-        if (text.contains("&")) {
-            text = text.replace("&", Colors.Marker);
-        }
+        text = text.replaceAll("&(?!=&)", Colors.Marker);
         if (text.contains("&&")) {
             text = text.replaceAll("&&", "&");
         }

@@ -1,57 +1,18 @@
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-public class PlayerCommands {
+@SuppressWarnings("LoggerStringConcat")
+public class PlayerCommands extends CommandHandler {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private static PlayerCommands instance;
-    private final LinkedHashMap<String, BaseCommand> commands = new LinkedHashMap<String, BaseCommand>();
 
     public PlayerCommands() {
-        for (Field field : getClass().getDeclaredFields()) {
-            if (field.isAnnotationPresent(Command.class)) {
-                for (String command : field.getAnnotation(Command.class).value()) {
-                    try {
-                        add(command.equals("") ? field.getName() : command, (BaseCommand) field.get(null));
-                    } catch (IllegalAccessException e) {
-                    }
-                }
-            }
-        } // impossible
-    }
-
-    /**
-     * Add a command to the player list.
-     *
-     * @param name
-     * @param cmd
-     */
-    public void add(String name, BaseCommand cmd) {
-        if (name != null && cmd != null) {
-            if (!commands.containsValue(cmd)) {
-                etc.getInstance().addCommand("/" + name, cmd.tooltip);
-            }
-            commands.put(name, cmd);
-        }
-    }
-
-    /**
-     * Remove a command from the player list.
-     *
-     * @param name
-     */
-    public void remove(String name) {
-        if (name != null) {
-            etc.getInstance().removeCommand("/" + name);
-            commands.remove(name);
-        }
+        this.addAll(this.getClass());
     }
 
     /**
@@ -65,10 +26,6 @@ public class PlayerCommands {
      * @return true if {@code command} was found, false otherwise
      */
     public static boolean parsePlayerCommand(MessageReceiver caller, String command, String[] args) {
-        if (instance == null) {
-            instance = new PlayerCommands();
-        }
-
         BaseCommand cmd = instance.getCommand(command);
 
         if (cmd != null) {
@@ -80,25 +37,23 @@ public class PlayerCommands {
     }
 
     /**
-     * Searches for and returns {@code command} if found, {@code null}
-     * otherwise.
-     *
-     * @param command The command to search for
-     * @return {@code command} if found, {@code null} otherwise
+     * Returns the <tt>PlayerCommands</tt> instance.
+     * @return the <tt>PlayerCommands</tt> as used by the server.
      */
-    public BaseCommand getCommand(String command) {
-        return commands.get(command);
+    public static PlayerCommands getInstance() {
+        return instance;
     }
+
     @Command
     public static final BaseCommand help = new BaseCommand("<Page|Pattern> - Shows a list of commands. 7 per page.") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             // Meh, not the greatest way, but not the worst either.
             List<String> availableCommands = new ArrayList<String>();
 
             for (Entry<String, String> entry : etc.getInstance().getCommands().entrySet()) {
-                if ((caller instanceof Player) && ((Player) caller).canUseCommand(entry.getKey())) {
+                if (!(caller instanceof Player) || ((Player) caller).canUseCommand(entry.getKey())) {
                     if (entry.getKey().equals("/kit") && !etc.getDataSource().hasKits()) {
                         continue;
                     }
@@ -110,7 +65,7 @@ public class PlayerCommands {
                 }
             }
 
-            caller.notify(Colors.Blue + "Available commands (" + (args.length > 1 ? (args[1].matches("\\d+") ? "Page " + args[1] + " of " + (int) ((double) availableCommands.size() / (double) 7 + 1) : "Matching " + etc.combineSplit(1, args, " ")) : "Page 1 of " + (int) ((double) availableCommands.size() / (double) 7 + 1)) + ") <> = required [] = optional:");
+            caller.notify(Colors.Blue + "Available commands (" + (args.length > 1 ? (args[1].matches("\\d+") ? "Page " + args[1] + " of " + (availableCommands.size() - 1) / 7 : "Matching " + etc.combineSplit(1, args, " ")) : "Page 1 of " + ((availableCommands.size() - 1) / 7)) + ") <> = required [] = optional:");
             if (args.length > 1) {
                 if (args[1].matches("\\d+")) {
                     try {
@@ -159,12 +114,17 @@ public class PlayerCommands {
                 }
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            return null;
+        }
     };
     @Command
     public static final BaseCommand mute = new BaseCommand("<Player> - Mutes the player", "Correct usage is: /mute <player>", 2, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player player = etc.getServer().matchPlayer(args[1]);
 
             if (player != null) {
@@ -183,12 +143,22 @@ public class PlayerCommands {
                 caller.notify("Can't find player "+Colors.Yellow+args[1]);
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+            if (split.length != 2) {
+                return null;
+            }
+
+            return etc.autoCompleteNames(split[1]);
+        }
     };
     @Command({"tell", "msg", "m"})
     public static final BaseCommand tell = new BaseCommand("<Player> <Message> - Sends a message to player", "Correct usage is: /msg <player> <message>", 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if ((caller instanceof Player) && ((Player) caller).isMuted()) {
                 caller.notify("You are currently muted.");
                 return;
@@ -213,14 +183,15 @@ public class PlayerCommands {
     public static final BaseCommand kit = new BaseCommand("<Kit> - Gives a kit. To get a list of kits type /kit", "Available kits (overridden)", 2, 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
             Player toGive = (Player) caller;
+            Player player = toGive;
 
             if (args.length > 2) {
-                if (caller instanceof Player && !((Player) caller).canIgnoreRestrictions()) {
+                if (!player.canIgnoreRestrictions()) {
                     onBadSyntax(caller, args);
                 } else {
                     toGive = etc.getServer().matchPlayer(args[2]);
@@ -231,39 +202,37 @@ public class PlayerCommands {
 
             if (toGive != null) {
                 if (kit != null) {
-                    if (!((Player) caller).isInGroup(kit.Group) && !kit.Group.equals("")) {
+                    if (!player.isInGroup(kit.Group) && !kit.Group.equals("")) {
                         caller.notify("That kit does not exist.");
-                    } else if (((Player) caller).getOnlyOneUseKits().contains(kit.Name)) {
+                    } else if (player.getOnlyOneUseKits().contains(kit.Name)) {
                         caller.notify("You can only get this kit once per login.");
-                    } else if (OMinecraftServer.b.containsKey(caller.getName() + " " + kit.Name)) {
+                    } else if (!player.canUseCooldownKit(kit)) {
                         caller.notify("You can't get this kit again for a while.");
                     } else {
-                        {
-                            if (!((Player) caller).canIgnoreRestrictions()) {
-                                if (kit.Delay >= 0) {
-                                    OMinecraftServer.b.put(caller.getName() + " " + kit.Name, kit.Delay);
-                                } else {
-                                    ((Player) caller).getOnlyOneUseKits().add(kit.Name);
-                                }
+                        if (!((Player) caller).canIgnoreRestrictions()) {
+                            if (kit.Delay >= 0) {
+                                player.addCooldownKit(kit, kit.Delay);
+                            } else {
+                                player.getOnlyOneUseKits().add(kit.Name);
                             }
+                        }
 
-                            log.info(caller.getName() + " got a kit!");
-                            toGive.notify("Enjoy this kit!");
-                            for (Entry<String, Integer> entry : kit.IDs.entrySet()) {
+                        log.info(caller.getName() + " got a kit!");
+                        toGive.notify("Enjoy this kit!");
+                        for (Entry<String, Integer> entry : kit.IDs.entrySet()) {
+                            try {
+                                int itemId;
+
                                 try {
-                                    int itemId = 0;
-
-                                    try {
-                                        itemId = Integer.parseInt(entry.getKey());
-                                    } catch (NumberFormatException n) {
-                                        itemId = etc.getDataSource().getItem(entry.getKey());
-                                    }
-
-                                    toGive.giveItem(itemId, kit.IDs.get(entry.getKey()));
-                                } catch (Exception e1) {
-                                    log.info("Got an exception while giving out a kit (Kit name \"" + kit.Name + "\"). Are you sure all the Ids are numbers?");
-                                    caller.notify("The server encountered a problem while giving the kit :(");
+                                    itemId = Integer.parseInt(entry.getKey());
+                                } catch (NumberFormatException n) {
+                                    itemId = etc.getDataSource().getItem(entry.getKey());
                                 }
+
+                                toGive.giveItem(itemId, entry.getValue());
+                            } catch (Exception e1) {
+                                log.info("Got an exception while giving out a kit (Kit name \"" + kit.Name + "\"). Are you sure all the Ids are numbers?");
+                                caller.notify("The server encountered a problem while giving the kit :(");
                             }
                         }
                     }
@@ -281,12 +250,23 @@ public class PlayerCommands {
                 caller.notify("Available kits" + Colors.White + ": " + etc.getDataSource().getKitNames((Player) caller));
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (!(caller instanceof Player)) {
+                return null;
+            }
+            if (currentText.split(" ", -1).length == 2) {
+                return etc.autoComplete(currentText, etc.getDataSource().getKitNames((Player) caller));
+            }
+            return super.autoComplete(caller, currentText);
+        }
     };
     @Command
     public static final BaseCommand tp = new BaseCommand("<Player> - Teleports to player.", "Correct usage is: /tp <player>", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -297,7 +277,7 @@ public class PlayerCommands {
                 caller.notify("Can't find user " + args[1] + ".");
                 return;
             }
-            if (player.getWorld().getType() != ((Player) caller).getWorld().getType() && !((Player) caller).canIgnoreRestrictions()) {
+            if (!player.getWorld().equals(((Player) caller).getWorld()) && !((Player) caller).canIgnoreRestrictions()) {
                 caller.notify("That player is in another world.");
                 return;
             }
@@ -309,12 +289,22 @@ public class PlayerCommands {
             log.info(caller.getName() + " teleported to " + player.getName());
             ((Player) caller).teleportTo(player);
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+            if (split.length != 2) {
+                return null;
+            }
+
+            return etc.autoCompleteNames(split[1]);
+        }
     };
     @Command({"tphere", "s"})
     public static final BaseCommand tphere = new BaseCommand("<Player> - Teleports the player to you", "Correct usage is: /tphere <player>", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -326,7 +316,7 @@ public class PlayerCommands {
                 return;
             }
 
-            if (player.getWorld().getType() != ((Player) caller).getWorld().getType() && !((Player) caller).canIgnoreRestrictions()) {
+            if (!player.getWorld().equals(((Player) caller).getWorld()) && !((Player) caller).canIgnoreRestrictions()) {
                 caller.notify("That player is in another world.");
                 return;
             }
@@ -337,20 +327,35 @@ public class PlayerCommands {
             log.info(caller.getName() + " teleported " + player.getName() + " to their self.");
             player.teleportTo((Player) caller);
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+            if (split.length != 2) {
+                return null;
+            }
+
+            return etc.autoCompleteNames(split[1]);
+        }
     };
     @Command({"playerlist", "who"})
     public static final BaseCommand playerlist = new BaseCommand("- Shows a list of players") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             caller.notify("Player list (" + etc.getServer().getPlayerList().size() + "/" + etc.getInstance().getPlayerLimit() + "): " + Colors.White + etc.getServer().getPlayerNames());
+        }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            return null;
         }
     };
     @Command({"item", "i", "give"})
     public static final BaseCommand item = new BaseCommand("<ID> [Amount] [Damage] [Player] - Gives items", "Correct usage is: /item <itemid> [amount] [damage] [player]", 2, 5) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -385,17 +390,8 @@ public class PlayerCommands {
                     } else if (player.canIgnoreRestrictions()) {
                         toGive = etc.getServer().matchPlayer(args[3]);
                     }
-                    if ( (damage < 0 || damage > 200) && itemId != 373) {
-                        damage = 0;
-                    }
                 } else if (args.length == 5) {
                     damage = Integer.parseInt(args[3]);
-                    if (itemId == 383) {
-                        System.out.println("ItemID: " + itemId);
-                    }
-                    if ( (damage < 0 || damage > 200) && itemId != 373) {
-                        damage = 0;
-                    }
                     if (player.canIgnoreRestrictions()) {
                         toGive = etc.getServer().matchPlayer(args[4]);
                     }
@@ -416,60 +412,61 @@ public class PlayerCommands {
 
                 if (Item.isValidItem(itemId)) {
                     if (allowedItem || player.canIgnoreRestrictions()) {
-                    	// This is a bit of a hack, this whole function should
-                    	// probably be rewritten to use .giveItem()
-                    	if (!toGive.isAdmin() &&
-                    		!etc.getInstance().allowEnchantableItemStacking &&
-                    		((itemId >= 256 && itemId <= 258) || 
-                             (itemId >= 267 && itemId <= 279) || 
+                        // This is a bit of a hack, this whole function should
+                        // probably be rewritten to use .giveItem()
+                        if (!toGive.isAdmin() &&
+                            !etc.getInstance().allowEnchantableItemStacking &&
+                            ((itemId >= 256 && itemId <= 258) ||
+                             (itemId >= 267 && itemId <= 279) ||
                              (itemId >= 283 && itemId <= 286) ||
                              (itemId >= 298 && itemId <= 317) ||
                              (itemId == 261))) {
-                    		toGive.giveItem(itemId, amount);
-                    	} else {
-	                    	Item i = new Item(itemId, amount, -1, damage);
-	
-	                        log.info("Giving " + toGive.getName() + " some " + i.toString());
-	                        // toGive.giveItem(itemId, amount);
-	                        Inventory inv = toGive.getInventory();
-	                        ArrayList<Item> list = new ArrayList<Item>();
-	
-	                        for (Item it : inv.getContents()) {
-	                            if (it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage()) {
-	                                list.add(it);
-	                            }
-	                        }
-	
-	                        for (Item it : list) {
-	                            if (it.getAmount() < 64) {
-	                                if (amount >= 64 - it.getAmount()) {
-	                                    amount -= 64 - it.getAmount();
-	                                    it.setAmount(64);
-	                                    toGive.giveItem(it);
-	                                } else {
-	                                    it.setAmount(it.getAmount() + amount);
-	                                    amount = 0;
-	                                    toGive.giveItem(it);
-	                                }
-	                            }
-	                        }
-	                        if (amount != 0) {
-	                            i.setAmount(64);
-	                            while (amount > 64) {
-	                                amount -= 64;
-	                                toGive.giveItem(i);
-	                                i.setSlot(-1);
-	                            }
-	                            i.setAmount(amount);
-	                            toGive.giveItem(i);
-	                        }
-	                        if (toGive.getName().equalsIgnoreCase(caller.getName())) {
-	                            caller.notify("There you go " + caller.getName() + ".");
-	                        } else {
-	                            caller.notify("Gift given! :D");
-	                            toGive.notify("Enjoy your gift! :D");
-	                        }
-                    	}
+                            toGive.giveItem(itemId, amount);
+                        } else {
+                            Item i = new Item(itemId, amount, -1, damage);
+
+                            log.info("Giving " + toGive.getName() + " some " + i.toString());
+                            // toGive.giveItem(itemId, amount);
+                            Inventory inv = toGive.getInventory();
+                            inv.insertItem(i);
+//                            ArrayList<Item> list = new ArrayList<Item>();
+
+//                            for (Item it : inv.getContents()) {
+//                                if (it != null && it.getItemId() == i.getItemId() && it.getDamage() == i.getDamage()) {
+//                                    list.add(it);
+//                                }
+//                            }
+//
+//                            for (Item it : list) {
+//                                if (it.getAmount() < 64) {
+//                                    if (amount >= 64 - it.getAmount()) {
+//                                        amount -= 64 - it.getAmount();
+//                                        it.setAmount(64);
+//                                        toGive.giveItem(it);
+//                                    } else {
+//                                        it.setAmount(it.getAmount() + amount);
+//                                        amount = 0;
+//                                        toGive.giveItem(it);
+//                                    }
+//                                }
+//                            }
+//                            if (amount != 0) {
+//                                i.setAmount(64);
+//                                while (amount > 64) {
+//                                    amount -= 64;
+//                                    toGive.giveItem(i);
+//                                    i.setSlot(-1);
+//                                }
+//                                i.setAmount(amount);
+//                                toGive.giveItem(i);
+//                            }
+                            if (toGive.getName().equalsIgnoreCase(caller.getName())) {
+                                caller.notify("There you go " + caller.getName() + ".");
+                            } else {
+                                caller.notify("Gift given! :D");
+                                toGive.notify("Enjoy your gift! :D");
+                            }
+                        }
                     } else if (!allowedItem && !player.canIgnoreRestrictions()) {
                         caller.notify("You are not allowed to spawn that item.");
                     }
@@ -481,12 +478,31 @@ public class PlayerCommands {
                 caller.notify("Can't find user " + args[3]);
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+
+            if (split.length == 2) {
+                return etc.autoComplete(split[1], etc.getDataSource().getItems().keySet().toArray(new String[0]));
+            }
+            
+            if (split.length == 4 && !(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) {
+                return etc.autoCompleteNames(split[3]);
+            }
+            
+            if (split.length == 5 && !(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) {
+                return etc.autoCompleteNames(split[4]);
+            }
+
+            return null;
+        }
     };
     @Command({"cloth", "dye"})
     public static final BaseCommand clothdye = new BaseCommand("<Color> [Amount] - Gives you the specified dye/cloth", "Overridden", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             try {
                 String color = args[1];
 
@@ -597,12 +613,46 @@ public class PlayerCommands {
                 caller.notify("Correct usage is: " + args[0] + " <color> [amount] [player]");
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+
+            if (split.length == 2) {
+                Cloth.Color[] colors = Cloth.Color.values();
+                String[] colorNames = new String[colors.length];
+                for (int i = 0; i < colors.length; i++) {
+                    colorNames[i] = colors[i].getName().replaceAll("\\s+", "");
+                }
+
+                return etc.autoComplete(split[1], colorNames);
+            }
+
+            if (split.length == 3) {
+                if (split[1].equalsIgnoreCase("light")) {
+                    return etc.autoComplete(split[2], "blue", "green", "gray");
+                } else if (split[1].equalsIgnoreCase("dark")) {
+                    return Arrays.asList("green");
+                }
+            }
+
+            if (!(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) {
+                if ((split[1].equalsIgnoreCase("light") || split[1].equalsIgnoreCase("dark"))
+                        && split.length == 5) {
+                    return etc.autoCompleteNames(split[4]);
+                } else if (split.length == 4) {
+                    return etc.autoCompleteNames(split[3]);
+                }
+            }
+
+            return null;
+        }
     };
     @Command({"me", "emote"})
     public static final BaseCommand me = new BaseCommand("<Message> - * hey0 says hi!") {
 
         @Override
-        void execute(MessageReceiver caller, String[] split) {
+        protected void execute(MessageReceiver caller, String[] split) {
             if (caller instanceof Player && ((Player) caller).isMuted()) {
                 caller.notify("You are currently muted.");
                 return;
@@ -620,14 +670,15 @@ public class PlayerCommands {
     public static final BaseCommand sethome = new BaseCommand("- Sets your home") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
-            if (!(caller instanceof Player) && args.length < 2) {
+        protected void execute(MessageReceiver caller, String[] args) {
+            boolean callerIsPlayer = caller instanceof Player;
+            if (!callerIsPlayer && args.length < 2) {
                 return;
             }
 
             Player player;
 
-            if (args.length == 2 && (!(caller instanceof Player) || ((Player) caller).isAdmin())) {
+            if (args.length == 2 && (!callerIsPlayer || ((Player) caller).isAdmin())) {
                 player = etc.getServer().matchPlayer(args[1]);
             } else {
                 player = (Player) caller;
@@ -637,28 +688,20 @@ public class PlayerCommands {
                 caller.notify("Could not find player.");
                 return;
             }
-//            World.Dimension worldType = player.getWorld().getType();
-//            if (worldType != World.Dimension.NORMAL) {
-//                if (player.canIgnoreRestrictions()) {
-//                    player.switchWorlds(World.Dimension.NORMAL.getId());
-//                } else {
-//                    player.notify("You cannot set a home in the " + worldType + ", mortal.");
-//                    return;
-//                }
-//            }
             World world = player.getWorld();
             if (world.getType() != World.Dimension.NORMAL) {
-                if (player.canIgnoreRestrictions()) {
-                    player.switchWorlds(world);
-                } else {
-                    player.notify("You cannot set a home in the " + world.getType().name() + ", mortal.");
+                if (callerIsPlayer && !((Player) caller).canIgnoreRestrictions()) {
+                    caller.notify("You cannot set a home in the " + world.getType().name() + ", mortal.");
                     return;
                 }
             }
 
             Warp home = new Warp();
 
-            home.Location = player.getLocation();
+
+
+            home.Location = callerIsPlayer ? ((Player) caller).getLocation()
+                                           : player.getLocation();
             home.Group = ""; // no group neccessary, lol.
             home.Name = player.getName();
             etc.getInstance().changeHome(home);
@@ -669,12 +712,20 @@ public class PlayerCommands {
                 caller.notify(player.getName() + "'s home has been set.");
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (!(caller instanceof Player) || ((Player) caller).isAdmin()) {
+                return super.autoComplete(caller, currentText);
+            }
+            return null;
+        }
     };
     @Command
     public static final BaseCommand spawn = new BaseCommand("- Teleports you to spawn") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player) && args.length < 2) {
                 return;
             }
@@ -692,9 +743,10 @@ public class PlayerCommands {
                 return;
             }
             World world = toMove.getWorld();
-            if (world.getType() != World.Dimension.NORMAL) {
+            World overWorld = etc.getMCServer().getWorld(world.getName(), 0).world;
+            if (!world.equals(overWorld)) {
                 if (toMove != caller || toMove.canIgnoreRestrictions()) {
-                    toMove.switchWorlds(world);
+                    toMove.switchWorlds(overWorld);
                 } else {
                     toMove.sendMessage(Colors.Red + "The veil between the worlds keeps you bound to the " + world.getType().name() + "...");
                     return;
@@ -704,12 +756,20 @@ public class PlayerCommands {
             toMove.teleportTo(toMove.getWorld().getSpawnLocation());
 
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (!(caller instanceof Player) || ((Player) caller).isAdmin()) {
+                return super.autoComplete(caller, currentText);
+            }
+            return null;
+        }
     };
     @Command
     public static final BaseCommand setspawn = new BaseCommand("- Sets the spawn point to your position.") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player) && args.length < 2) {
                 return;
             }
@@ -732,8 +792,8 @@ public class PlayerCommands {
                 return;
             }
 
-            for (World w : etc.getServer().getWorld(player.getWorld().getName())) {
-                w.getWorld().s().a((int) player.getX(), (int) player.getY(), (int) player.getZ());
+            for (World world : etc.getServer().getWorld(player.getWorld().getName())) {
+                world.setSpawnLocation(player.getLocation());
             }
 
             log.info("Spawn position changed.");
@@ -743,12 +803,20 @@ public class PlayerCommands {
                 caller.notify("You have set the spawn to" + player.getName() + "'s current position.");
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (!(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) {
+                return super.autoComplete(caller, currentText);
+            }
+            return null;
+        }
     };
     @Command
     public static final BaseCommand home = new BaseCommand("- Teleports you home") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -762,17 +830,17 @@ public class PlayerCommands {
                 home = etc.getDataSource().getHome(caller.getName());
             }
 
-            World world = player.getWorld();
-            if (world.getType() != World.Dimension.NORMAL) {
-                if (player != caller || player.canIgnoreRestrictions()) {
-                    player.switchWorlds(world);
-                } else {
-                    player.sendMessage(Colors.Red + "The veil between the worlds keeps you bound to the " + world.getType().name() + "...");
-                    return;
-                }
-            }
 
             if (home != null) {
+                if (!player.getWorld().equals(home.Location.getWorld())) {
+                    if (player != caller || player.canIgnoreRestrictions()) {
+                        player.switchWorlds(home.Location.getWorld());
+                    } else {
+                        player.sendMessage(Colors.Red + "The veil between the worlds keeps you bound to the " + player.getWorld().getType().name() + "...");
+                        return;
+                    }
+                }
+
                 player.teleportTo(home.Location);
             } else if (args.length > 1 && player.isAdmin()) {
                 caller.notify("That player home does not exist");
@@ -781,12 +849,26 @@ public class PlayerCommands {
             }
 
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (!(caller instanceof Player) || ((Player) caller).isAdmin()) {
+                List<Warp> homes = etc.getDataSource().homes;
+                String[] names = new String[homes.size()];
+                for (int i = 0; i < names.length; i++) {
+                    names[i] = homes.get(i).Name;
+                }
+
+                return etc.autoComplete(currentText.substring(currentText.lastIndexOf(' ') + 1), names);
+            }
+            return null;
+        }
     };
     @Command
     public static final BaseCommand warp = new BaseCommand("<Warp> - Warps to the specified warp.", "Correct usage is: /warp <warpname>", 2, 3) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player toWarp;
             Warp warp = etc.getDataSource().getWarp(args[1]);
 
@@ -828,7 +910,7 @@ public class PlayerCommands {
                                 return;
                             }
                         }
-                        
+
 
                         toWarp.teleportTo(warp.Location);
                         toWarp.sendMessage(Colors.Rose + "Woosh!");
@@ -840,12 +922,39 @@ public class PlayerCommands {
                 caller.notify("Player not found.");
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+            boolean callerIsPlayer = caller instanceof Player;
+
+            if (split.length == 2) {
+                if (callerIsPlayer && ((Player) caller).canUseCommand("/listwarps")) {
+                    return etc.autoComplete(split[1],
+                        etc.getDataSource().getWarpNames((Player) caller).split(" "));
+                } else if (!callerIsPlayer) {
+                    List<Warp> warps = etc.getDataSource().warps;
+                    String[] names = new String[warps.size()];
+                    for (int i = 0; i < names.length; i++) {
+                        names[i] = warps.get(i).Name;
+                    }
+
+                    return etc.autoComplete(split[1], names);
+                }
+            }
+
+            if (split.length == 3 && (!callerIsPlayer || ((Player) caller).canIgnoreRestrictions())) {
+                return super.autoComplete(caller, currentText);
+            }
+
+            return null;
+        }
     };
     @Command
     public static final BaseCommand listwarps = new BaseCommand("- Gives a list of available warps") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -860,12 +969,17 @@ public class PlayerCommands {
             }
 
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            return null;
+        }
     };
     @Command
     public static final BaseCommand setwarp = new BaseCommand("<Warp> - Sets the warp to your current position.", "Overridden", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -885,18 +999,37 @@ public class PlayerCommands {
 
         @Override
         public void onBadSyntax(MessageReceiver caller, String[] args) {
-            if (caller instanceof Player && ((Player) caller).canIgnoreRestrictions()) {
+            if (!(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) {
                 caller.notify("Correct usage is: /setwarp <warpname> [group]");
             } else {
                 caller.notify("Correct usage is: /setwarp <warpname>");
             }
+        }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (!(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) {
+                String[] split = currentText.split(" ", -1);
+                if (split.length == 3) {
+                    List<Group> groupList = etc.getDataSource().getGroupList();
+                    String[] groups = new String[groupList.size()];
+
+                    for (int i = 0; i < groups.length; i++) {
+                        groups[i] = groupList.get(i).Name;
+                    }
+
+                    return etc.autoComplete(split[2], groups);
+                }
+            }
+
+            return null;
         }
     };
     @Command
     public static final BaseCommand removewarp = new BaseCommand("<Warp> - Removes the specified warp.", "Correct usage is: /removewarp <warpname>", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Warp warp = etc.getDataSource().getWarp(args[1]);
 
             if (warp != null) {
@@ -906,12 +1039,36 @@ public class PlayerCommands {
                 caller.notify("That warp does not exist");
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            boolean callerIsPlayer = caller instanceof Player;
+            String[] split = currentText.split("", -1);
+
+            if (split.length == 2) {
+                if (callerIsPlayer && ((Player) caller).canUseCommand("/listwarps")) {
+                    return etc.autoComplete(split[1],
+                            etc.getDataSource().getWarpNames((Player) caller).split(" "));
+                } else if (!callerIsPlayer) {
+                    List<Warp> warpList = etc.getDataSource().warps;
+                    String[] warps = new String[warpList.size()];
+
+                    for (int i = 0; i < warps.length; i++) {
+                        warps[i] = warpList.get(i).Name;
+                    }
+
+                    return etc.autoComplete(split[1], warps);
+                }
+            }
+
+            return null;
+        }
     };
     @Command
     public static final BaseCommand mode = new BaseCommand("- Changes your gamemode") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (args.length == 3 && (!(caller instanceof Player) || ((Player) caller).isAdmin())) {
                 Player player = etc.getServer().matchPlayer(args[2]);
 
@@ -921,7 +1078,7 @@ public class PlayerCommands {
                     try {
                         int mode = Integer.parseInt(args[1]);
 
-                        mode = OWorldSettings.a(mode);
+                        mode = OEnumGameType.a(mode).e;
                         if (player.getCreativeMode() != mode) {
                             caller.notify(Colors.Yellow + "Setting " + player.getName() + " to game mode " + mode);
                             player.setCreativeMode(mode);
@@ -938,7 +1095,7 @@ public class PlayerCommands {
                         Player player = ((Player) caller);
                         int mode = Integer.parseInt(args[1]);
 
-                        mode = OWorldSettings.a(mode);
+                        mode = OEnumGameType.a(mode).e;
                         if (player.getCreativeMode() != mode) {
                             player.notify(Colors.Yellow + "Setting your game mode to " + mode);
                             player.setCreativeMode(mode);
@@ -963,12 +1120,21 @@ public class PlayerCommands {
                 caller.notify("Usage: mode [newmode] <player>");
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+            if (split.length == 3 && (!(caller instanceof Player) || ((Player) caller).isAdmin())) {
+                return super.autoComplete(caller, currentText);
+            }
+            return null;
+        }
     };
     @Command
     public static final BaseCommand getpos = new BaseCommand("- Displays your current position.") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -984,12 +1150,17 @@ public class PlayerCommands {
             }
             p.sendMessage("Compass: " + etc.getCompassPointForDirection(degreeRotation) + " (" + (Math.round(degreeRotation * 10) / 10.0) + ")");
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            return null;
+        }
     };
     @Command
     public static final BaseCommand compass = new BaseCommand("- Gives you a compass reading.") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -1002,20 +1173,30 @@ public class PlayerCommands {
 
             caller.notify("Compass: " + etc.getCompassPointForDirection(degreeRotation));
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            return null;
+        }
     };
     @Command
     public static final BaseCommand motd = new BaseCommand("- Displays the MOTD") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             etc.getInstance().getMotd(caller);
+        }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            return null;
         }
     };
     @Command
     public static final BaseCommand spawnmob = new BaseCommand("<Name> [Amount] - Spawns a mob at the looked-at position", "Correct usage is: /spawnmob <name> [amount]", 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -1070,7 +1251,7 @@ public class PlayerCommands {
                         for (int i = 0; i < mobnumber; i++) {
                             Mob mob = new Mob(args[1], loc);
 
-                            mob.spawn(new Mob(args[2]));
+                            mob.spawn(new Mob(args[2], mob.getWorld()));
                         }
                     }
                 } catch (NumberFormatException nfe) {
@@ -1078,12 +1259,31 @@ public class PlayerCommands {
                 }
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ");
+            if (split.length <= 3) {
+                List<String> mobNames = new ArrayList<String>();
+                // Ugly hack, but it works;
+                // Monsters start at 50, Animals are in the range 90-99
+                for (int i = 50; i < 100; i++) {
+                    Class mobClass = OEntityList.a(i);
+                    if (OIMob.class.isAssignableFrom(mobClass) || OIAnimals.class.isAssignableFrom(mobClass)) {
+                        mobNames.add(OEntityList.b(i));
+                    }
+                }
+
+                return etc.autoComplete(split[split.length - 1], mobNames.toArray(new String[mobNames.size()]));
+            }
+            return null;
+        }
     };
     @Command
     public static final BaseCommand clearinventory = new BaseCommand("- Clears your inventory") {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
 
             Player target;
 
@@ -1106,11 +1306,21 @@ public class PlayerCommands {
                 }
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (currentText.indexOf(' ') != currentText.lastIndexOf(' ')
+                    || caller instanceof Player && !((Player) caller).isAdmin()) {
+                return null;
+            }
+            return super.autoComplete(caller, currentText);
+        }
     };
     @Command
     public static final BaseCommand mspawn = new BaseCommand("<Mob> - Change the looked at mob spawner's mob", "Correct usage is: /mspawn <name>.", 1, 2) {
 
-        void execute(MessageReceiver caller, String[] args) {
+        @Override
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -1119,7 +1329,7 @@ public class PlayerCommands {
             Block block = hb.getTargetBlock();
 
             if (block != null && block.getType() == 52) { // mob spawner
-                MobSpawner ms = (MobSpawner) ((Player) caller).getWorld().getComplexBlock(block.getX(), block.getY(), block.getZ());
+                MobSpawnerLogic ms = (MobSpawnerLogic) ((Player) caller).getWorld().getComplexBlock(block.getX(), block.getY(), block.getZ());
 
                 if (ms != null) {
                     if (args.length == 1) {
@@ -1127,7 +1337,6 @@ public class PlayerCommands {
                     } else {
                         if (!Mob.isValid(args[1])) {
                             caller.notify(String.format("%s is not a valid mob name.", args[1]));
-                            return;
                         } else {
                             ms.setSpawn(args[1]);
                             caller.notify("Mob spawner set to " + args[1]);
@@ -1139,12 +1348,20 @@ public class PlayerCommands {
                 caller.notify("You are not targeting a mob spawner.");
             }
         }
-    };
-    @Command
-    public static final BaseCommand xp = new BaseCommand("<level|total|add|remove> [Player] [value] - XP status", "Usage: /xp <level|total|add|remove> [Player] <value>", 2, 4) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (currentText.indexOf(' ') == currentText.lastIndexOf(' ')) {
+                return spawnmob.autoComplete(caller, currentText);
+            }
+            return null;
+        }
+    };
+    @Command
+    public static final BaseCommand xp = new BaseCommand("<level|total|add|remove> [Player] [value] - XP status", "Usage: /xp <level|total|add|remove> [Player] <value>", 1, 4) {
+
+        @Override
+        protected void execute(MessageReceiver caller, String[] args) {
             if (!(caller instanceof Player)) {
                 return;
             }
@@ -1152,12 +1369,11 @@ public class PlayerCommands {
             Player player = (Player) caller;
 
             if (args.length == 3) {
-                if (!args[1].toLowerCase().matches("add|remove")) {
+                if (!args[1].toLowerCase().matches("(?i)add|remove")) {
                     Player p = etc.getServer().matchPlayer(args[2]);
 
                     if (p == null) {
                         player.notify(args[2] + " does not exist!");
-                        return;
                     } else {
                         if (args[1].equalsIgnoreCase("level")) {
                             player.sendMessage(p.getName() + " is level " + Colors.Yellow + p.getLevel());
@@ -1185,7 +1401,6 @@ public class PlayerCommands {
 
                 if (p == null) {
                     player.notify(args[2] + " does not exist!");
-                    return;
                 } else {
                     try {
                         int xp = Integer.parseInt(args[3]);
@@ -1206,14 +1421,39 @@ public class PlayerCommands {
                 } else if (args[1].equalsIgnoreCase("total")) {
                     player.sendMessage("You have " + Colors.Yellow + player.getXP() + Colors.White + " Total EXP");
                 }
+            } else {
+                OEntityPlayerMP ent = player.getEntity();
+
+                player.sendMessage("User: " + Colors.Yellow + player.getName() + Colors.White);
+                player.sendMessage("Lvl: " + Colors.Yellow + player.getLevel() + Colors.White);
+                player.sendMessage(String.format("Exp:%s %.0f %s/%s %d %s(%s%.2f%%%s)", // Exp: xx / yy (zz.zz%)
+                        Colors.Yellow, ent.ch * ent.ck(), Colors.White,
+                        Colors.Yellow, ent.ck(), Colors.White,
+                        Colors.Yellow, ent.ch, Colors.White));
+
+                if(player.isAdmin()) {
+                    player.sendMessage(Colors.Yellow + (etc.getInstance().isOldExperience() ? "Pre-":"Post ") + "1.3.2 Experience System" + Colors.White);
+                }
             }
+        }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+            if (split.length == 2) {
+                return etc.autoComplete(split[1], "level", "total", "add", "remove");
+            } else if (split.length == 3) {
+                return super.autoComplete(caller, currentText);
+            }
+
+            return null;
         }
     };
     @Command
     public static final BaseCommand foodlevel = new BaseCommand("<add|remove|set> [Player] [value] - Sets player food level", "Correct usage is: /foodlevel <add|remove|set> [player] <value>", 2, 4) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player subject = (Player) caller;
             String command = "add";
             int foodLevel = 20;
@@ -1249,12 +1489,23 @@ public class PlayerCommands {
                 caller.notify("Can't find player " + args[1]);
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            String[] split = currentText.split(" ", -1);
+            if (split.length == 2) {
+                return etc.autoComplete(tooltip, "add", "remove", "set");
+            } else if (split.length == 3) {
+                return super.autoComplete(caller, currentText);
+            }
+            return null;
+        }
     };
     @Command
     public static final BaseCommand god = new BaseCommand("<Player> - Makes player invulnerable", "Correct usage is: /god <player>", 1, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player subject = (Player) caller;
             String info = Colors.Yellow + "You are";
 
@@ -1263,7 +1514,7 @@ public class PlayerCommands {
                 info = String.format("%s%s is", Colors.Yellow, subject.getName());
             }
             if (subject != null) {
-                if (subject.getMode()) {
+                if (subject.isCreativeMode()) {
                     caller.notify("Can't apply /god to players in creative mode");
                     return;
                 }
@@ -1277,12 +1528,20 @@ public class PlayerCommands {
                 caller.notify("Can't find player " + args[1]);
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            if (currentText.indexOf(' ') == currentText.lastIndexOf(' ')) {
+                return super.autoComplete(caller, currentText);
+            }
+            return null;
+        }
     };
     @Command
     public static final BaseCommand kill = new BaseCommand("<Player> - Kill the specified player", "Correct usage is: /kill <player>", 1, 2) {
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player killer = (Player) caller;
             if (args.length == 2) {
                 Player victim = etc.getServer().matchPlayer(args[1]);
@@ -1305,6 +1564,11 @@ public class PlayerCommands {
             }
 
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            return god.autoComplete(caller, currentText);
+        }
     };
     @Command
     public static final BaseCommand playerinfo = new BaseCommand("<Player> Shows player data", "Correct usage is: /playerinfo <player>", 1, 2) {
@@ -1318,7 +1582,7 @@ public class PlayerCommands {
         }
 
         @Override
-        void execute(MessageReceiver caller, String[] args) {
+        protected void execute(MessageReceiver caller, String[] args) {
             Player subject = null;
             if (args.length == 2) {
                 subject = etc.getServer().matchPlayer(args[1]);
@@ -1339,7 +1603,7 @@ public class PlayerCommands {
                 sendData(caller, "Food Saturation: ", String.format("%.2f", subject.getFoodSaturationLevel()));
                 sendData(caller, "Experience: ", subject.getXP());
                 sendData(caller, "Level: ", subject.getLevel());
-                sendData(caller, "Mode: ", subject.getEntity().c.a());
+                sendData(caller, "Mode: ", OEnumGameType.a(subject.getCreativeMode()).b());
                 Location l = subject.getLocation();
 
                 sendData(caller, "Position: ", String.format("X: %.2f Y: %.2f Z: %.2f Pitch: %.2f Yawn: %.2f", l.x, l.y, l.z, l.rotX, l.rotY));
@@ -1356,5 +1620,15 @@ public class PlayerCommands {
                 caller.notify(Colors.Yellow + "Can't find player " + args[1]);
             }
         }
+
+        @Override
+        public List<String> autoComplete(MessageReceiver caller, String currentText) {
+            return god.autoComplete(caller, currentText);
+        }
     };
+
+    static {
+        // CanaryMod: Initialize *after* all the commands
+        instance = new PlayerCommands();
+    }
 }

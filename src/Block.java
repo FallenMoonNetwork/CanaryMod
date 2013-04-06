@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * Block.java - Provides some way of making/editing blocks
- * 
+ *
  * @author James
  */
 public class Block {
@@ -136,7 +136,40 @@ public class Block {
         EndStone(121), //
         EnderDragonEgg(122), //
         RedstoneLampOff(123), //
-        RedstoneLampOn(124); //
+        RedstoneLampOn(124), //
+        WoodDoubleStep(125), //
+        WoodStep(126), //
+        CocoaPlant(127), //
+        SandstoneStairs(128), //
+        EmeraldOre(129), //
+        EnderChest(130), //
+        TripwireHook(131), //
+        Tripwire(132), //
+        Emerald(133), //
+        SpruceWoodStairs(134), //
+        BirchWoodStairs(135), //
+        JungleWoodStairs(136), //
+        CommandBlock(137), //
+        Beacon(138), //
+        CobblestoneWall(139), //
+        FlowerPot(140), //
+        Carrots(141), //
+        Potatoes(142), //
+        WoodenButton(143), //
+        Head(144), //
+        Anvil(145),//
+        TrappedChest(146),//
+        WeightedPressurePlateLight(147),//
+        WeightedPressurePlateHeavy(148),//
+        DaylightSensor(151),//
+        RedstoneBlock(152),//
+        NetherQuartzOre(153),//
+        Hopper(154),//
+        QuartzBlock(155),//
+        QuartzStairs(156),//
+        ActivatorRail(157),//
+        Dropper(158), //
+        MinecartHopper(408);
 
         private int                       id;
         private static Map<Integer, Type> map;
@@ -201,7 +234,7 @@ public class Block {
 
         /**
          * Returns a Face according to the specified ID
-         * 
+         *
          * @param id
          *            id of face
          * @return face
@@ -229,7 +262,7 @@ public class Block {
 
     /**
      * Creates a block of specified type
-     * 
+     *
      * @param type
      */
     public Block(int type) {
@@ -238,7 +271,7 @@ public class Block {
 
     /**
      * Creates a block of specified type, x, y and z
-     * 
+     *
      * @param type
      *            Type of block
      * @param x
@@ -251,7 +284,7 @@ public class Block {
 
     /**
      * Creates a block of specified world, type, x, y and z
-     * 
+     *
      * @param world
      *            The world the block is in.
      * @param type
@@ -266,7 +299,7 @@ public class Block {
 
     /**
      * Creates a block of specified type, x, y, z and data
-     * 
+     *
      * @param type
      *            Type of block
      * @param x
@@ -280,7 +313,7 @@ public class Block {
 
     /**
      * Creates a block of specified world, type, x, y, z and data
-     * 
+     *
      * @param type
      *            Type of block
      * @param x
@@ -301,7 +334,7 @@ public class Block {
 
     /**
      * Creates a block of specified world, type x, y, z and data
-     * 
+     *
      * @param world
      *            The world the block is in.
      * @param type
@@ -323,7 +356,7 @@ public class Block {
 
     /**
      * Creates a block of specified type, x, y, z and data
-     * 
+     *
      * @param type
      *            Type of block
      * @param x
@@ -337,7 +370,7 @@ public class Block {
 
     /**
      * Creates a block of specified type and data
-     * 
+     *
      * @param type
      *            Type of block
      * @param data
@@ -348,7 +381,7 @@ public class Block {
 
     /**
      * Creates a block of specified type
-     * 
+     *
      * @param type
      *            Type of block
      */
@@ -358,7 +391,7 @@ public class Block {
 
     /**
      * Creates a block of specified type and location
-     * 
+     *
      * @param type
      *            Type of block
      * @param location
@@ -370,7 +403,7 @@ public class Block {
 
     /**
      * Creates a block of specified type, location and data
-     * 
+     *
      * @param type
      *            Type of block
      * @param location
@@ -383,7 +416,7 @@ public class Block {
 
     /**
      * Creates a block of specified type, location and data
-     * 
+     *
      * @param type
      *            Type of block
      * @param location
@@ -396,7 +429,7 @@ public class Block {
 
     /**
      * Creates a block of specified type, location and data
-     * 
+     *
      * @param type
      *            Type of block
      * @param location
@@ -407,13 +440,10 @@ public class Block {
     }
 
     /**
-     * Creates a block of specified type, location and data
-     * 
-     * @param type
-     *            Type of block
+     * Creates a block at the specified location.
+     *
      * @param location
      *            Location in the world
-     * @param data
      */
     public Block(Location location) {
         this(location.getWorld(), 0, (int) location.x, (int) location.y, (int) location.z, 0);
@@ -421,35 +451,35 @@ public class Block {
 
     /**
      * Type of block
-     * 
+     *
      * @return type
      */
     public int getType() {
-        return type;
+        return this.type;
     }
 
     /**
      * Set type of block
-     * 
+     *
      * @param type
      */
     public void setType(int type) {
-        blockType = Type.fromId(type);
+        this.blockType = Type.fromId(type);
         this.type = type;
     }
 
     /**
      * Gets X location
-     * 
+     *
      * @return x
      */
     public int getX() {
-        return x;
+        return this.x;
     }
 
     /**
      * Sets X location
-     * 
+     *
      * @param x
      */
     public void setX(int x) {
@@ -458,16 +488,16 @@ public class Block {
 
     /**
      * Gets Y location
-     * 
+     *
      * @return y
      */
     public int getY() {
-        return y;
+        return this.y;
     }
 
     /**
      * Sets Y location
-     * 
+     *
      * @param y
      */
     public void setY(int y) {
@@ -476,16 +506,16 @@ public class Block {
 
     /**
      * Gets Z location
-     * 
+     *
      * @return z
      */
     public int getZ() {
-        return z;
+        return this.z;
     }
 
     /**
      * Sets Z location
-     * 
+     *
      * @param z
      */
     public void setZ(int z) {
@@ -494,16 +524,16 @@ public class Block {
 
     /**
      * Gets Location
-     * 
+     *
      * @return location
      */
     public Location getLocation() {
-        return new Location(world, x, y, z);
+        return new Location(this.world, this.x, this.y, this.z);
     }
 
     /**
      * Sets Location
-     * 
+     *
      * @param location
      */
     public void setLocation(Location location) {
@@ -515,7 +545,7 @@ public class Block {
 
     /**
      * If this block was clicked, this will return the face that was clicked.
-     * 
+     *
      * @return face clicked
      */
     public Face getFaceClicked() {
@@ -524,7 +554,7 @@ public class Block {
 
     /**
      * Sets the face that was clicked
-     * 
+     *
      * @param faceClicked
      *            face clicked
      */
@@ -534,7 +564,7 @@ public class Block {
 
     /**
      * Returns the status of this block.
-     * 
+     *
      * @return The current status of the block, value depends on what hook you
      * called.
      *
@@ -543,13 +573,13 @@ public class Block {
      * @see PluginListener#onIgnite(Block, Player)
      */
     public int getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
      * Sets the current destruction status of this block.
      * For CanaryMod internal use only!
-     * 
+     *
      * @param status
      */
     public void setStatus(int status) {
@@ -558,16 +588,16 @@ public class Block {
 
     /**
      * Returns this block's data
-     * 
+     *
      * @return
      */
     public int getData() {
-        return data;
+        return this.data;
     }
 
     /**
      * Sets this block's data
-     * 
+     *
      * @param data
      */
     public void setData(int data) {
@@ -579,7 +609,7 @@ public class Block {
      * @return world
      */
     public World getWorld() {
-        return world;
+        return this.world;
     }
 
     /**
@@ -594,12 +624,12 @@ public class Block {
      * Updates this block to the server.
      */
     public void update() {
-        world.setBlock(this);
+        this.world.setBlock(this);
     }
 
     /**
      * Returns the block at the given Face
-     * 
+     *
      * @param face
      *            the block face of which to return
      * @return Block at the specified Face
@@ -637,58 +667,58 @@ public class Block {
      * refreshing the data with the current actual values
      */
     public void refresh() {
-        type = world.getBlockIdAt(x, y, z);
-        data = world.getBlockData(x, y, z);
-        status = 0;
+        this.type = world.getBlockIdAt(x, y, z);
+        this.data = world.getBlockData(x, y, z);
+        this.status = 0;
     }
 
     /**
      * Finds a Block relative to this Block
-     * 
+     *
      * @param x
      *            amount to shift the x coordinate
      * @param y
      *            amount to shift the y coordinate
      * @param z
      *            amount to shift the z coordinate
-     * 
+     *
      * @return Block at the requested location
      */
     public Block getRelative(int x, int y, int z) {
-        return world.getBlockAt(getX() + x, getY() + y, getZ() + z);
+        return this.world.getBlockAt(getX() + x, getY() + y, getZ() + z);
     }
 
     /**
      * Checks if this block is being powered through redstone
-     * 
+     *
      * @return true if the block is being powered
      */
     public boolean isPowered() {
-        return world.isBlockPowered(this);
+        return this.world.isBlockPowered(this);
     }
 
     /**
      * Checks if this block is being indirectly powered through redstone
-     * 
+     *
      * @return true if the block is being indirectly powered
      */
     public boolean isIndirectlyPowered() {
-        return world.isBlockIndirectlyPowered(this);
+        return this.world.isBlockIndirectlyPowered(this);
     }
 
     /**
      * Returns a String value representing this Block
-     * 
+     *
      * @return String representation of this block
      */
     @Override
     public String toString() {
-        return String.format("Block[x=%d, y=%d, z=%d, type=%d]", x, y, z, type);
+        return String.format("Block[type=%d, x=%d, y=%d, z=%d, world=%s, dim=%d]", this.type, this.x, this.y, this.z, this.world.getName(), this.world.getType().getId());
     }
 
     /**
      * Tests the given object to see if it equals this object
-     * 
+     *
      * @param obj
      *            the object to test
      * @return true if the two objects match
@@ -703,16 +733,16 @@ public class Block {
         }
         final Block other = (Block) obj;
 
-        if (x != other.x) {
+        if (this.x != other.x) {
             return false;
         }
-        if (y != other.y) {
+        if (this.y != other.y) {
             return false;
         }
-        if (z != other.z) {
+        if (this.z != other.z) {
             return false;
         }
-        if (!world.equals(other.world)) {
+        if (!this.world.equals(other.world)) {
             return false;
         }
         return true;
@@ -720,16 +750,16 @@ public class Block {
 
     /**
      * Returns a semi-unique hashcode for this block
-     * 
+     *
      * @return hashcode
      */
     @Override
     public int hashCode() {
         int hash = 7;
 
-        hash = 97 * hash + x;
-        hash = 97 * hash + y;
-        hash = 97 * hash + z;
+        hash = 97 * hash + this.x;
+        hash = 97 * hash + this.y;
+        hash = 97 * hash + this.z;
         return hash;
     }
 
@@ -739,20 +769,67 @@ public class Block {
      * @return true if this block us cloth
      */
     public boolean isCloth() {
-        return blockType == Type.Cloth;
+        return this.blockType == Type.Cloth;
     }
 
     /**
      * Get this block's {@link Cloth.Color Color} (if it is cloth)
-     * 
+     *
      * @return the {@link Cloth.Color Color}
      */
     public Cloth.Color getColor() {
         if (!isCloth()) {
             return null;
         } else {
-            return Cloth.Color.getColor(data);
+            return Cloth.Color.getColor(this.data);
         }
     }
 
+    /**
+     * Returns this block as a complex block. null if this is not a complex block.
+     *
+     * @return
+     */
+    public ComplexBlock getComplex() {
+        return getWorld().getComplexBlock(this);
+    }
+
+    /**
+     * Simulate a right click on the block.
+     * Toggles levers, pushes buttons, opens doors, etc.
+     *
+     * @param clicker The player that clicked the block (can be null for things like levers, buttons, etc, but should be set for things like chests.
+     * @return Whether or not the block responded.
+     */
+    public boolean rightClick(Player clicker) {
+        return OBlock.r[getType()].a(getWorld().getWorld(), getX(), getY(), getZ(), clicker != null ? clicker.getEntity() : null, 0, 0, 0, 0); // last four parameters aren't even used by lever or button
+    }
+
+    /**
+     * Gets the block that this block is attached to.
+     * Useful for levers, buttons, torches, etc.
+     * Can have unexpected results on blocks that don't attach to other blocks (eg. dirt, stone).
+     *
+     * @return Block
+     */
+    public Block getAttachedBlock() {
+        switch(data % 8) {
+            case 0: // usually above
+            case 7:
+                return getRelative(0, 1, 0);
+            case 1: // west
+                return getRelative(-1, 0, 0);
+            case 2: // east
+                return getRelative(1, 0, 0);
+            case 3: // north
+                return getRelative(0, 0, -1);
+            case 4: // south
+                return getRelative(0, 0, 1);
+            case 5: // usually below
+            case 6:
+                return getRelative(0, -1, 0);
+            default: // should never occur
+                return null;
+        }
+    }
 }

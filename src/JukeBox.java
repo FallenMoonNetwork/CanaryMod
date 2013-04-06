@@ -1,67 +1,81 @@
 /**
  * JukeBox/RecordPlayer interface
- * 
+ *
  * @author Drathus42
  */
 public class JukeBox implements ComplexBlock {
-	OTileEntityRecordPlayer oRP;
-	
-	public JukeBox(OTileEntityRecordPlayer oRP) {
+    OTileEntityRecordPlayer jukebox;
 
-		this.oRP = oRP;
-	}
+    public JukeBox(OTileEntityRecordPlayer jukebox) {
+        this.jukebox = jukebox;
+    }
 
-	@Override
-	public int getX() {
+    @Override
+    public int getX() {
+        return jukebox.l;
+    }
 
-		return oRP.l;
-	}
+    @Override
+    public int getY() {
+        return jukebox.m;
+    }
 
-	@Override
-	public int getY() {
+    @Override
+    public int getZ() {
+        return jukebox.n;
+    }
 
-		return oRP.m;
-	}
+    @Override
+    public void update() {
+        jukebox.k_();
+    }
 
-	@Override
-	public int getZ() {
+    @Override
+    public Block getBlock() {
+        return getWorld().getBlockAt(getX(), getY(), getZ());
+    }
 
-		return oRP.n;
-	}
+    @Override
+    public World getWorld() {
+        return jukebox.k.world;
+    }
 
-	@Override
-	public void update() {
+    /**
+     * Check if a record is present in the JukeBox
+     * @return true if record present, false if no record present
+     */
+    public boolean hasRecord() {
+        return (jukebox.p == 1 ? true : false);
+    }
 
-		oRP.q_();
-	}
+    /**
+     * Get the ID of the record in the JukeBox (if any)
+     * @return Item ID number of record or -1 if no record present
+     */
+    public int getDiscID() {
+        return (hasRecord() ? jukebox.a().j() : -1);
+    }
 
-	@Override
-	public Block getBlock() {
-		
-		return getWorld().getBlockAt(getX(), getY(), getZ());
-	}
+    /**
+     * Get the item currently in the jukebox (if any)
+     * @return The record <tt>Item</tt> or null if no record present
+     */
+    public Item getDisc() {
+        return hasRecord() ? new Item(jukebox.a()) : null;
+    }
 
-	@Override
-	public World getWorld() {
+    @Override
+    public NBTTagCompound getMetaTag() {
+        return jukebox.metadata;
+    }
 
-		return oRP.k.world;
-	}
-	
-	/**
-	 * Check if a record is present in the JukeBox
-	 * @return true if record present, false if no record present
-	 */
-	public boolean hasRecord() {
-		
-		return (oRP.p == 1 ? true : false);
-	}
-	
-	/**
-	 * Get the ID of the record in the JukeBox (if any)
-	 * @return Item ID number of record or -1 if no record present
-	 */
-	public int getDiscID() {
-		
-		return (hasRecord() ? oRP.a : -1);
-	}
+    @Override
+    public void writeToTag(NBTTagCompound tag) {
+        jukebox.b(tag.getBaseTag());
+    }
+
+    @Override
+    public void readFromTag(NBTTagCompound tag) {
+        jukebox.a(tag.getBaseTag());
+    }
 }

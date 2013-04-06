@@ -1,31 +1,32 @@
-
 public class OInventoryCraftResult implements OIInventory, Container<OItemStack> {
 
-    private OItemStack[] a = new OItemStack[1];
+    protected OItemStack[] a = new OItemStack[1]; //CanaryMod: private -> protected
     // CanaryMod
     private String name = "Result";
 
-    public OInventoryCraftResult() {
-        super();
-    }
+    public OInventoryCraftResult() {}
 
-    public int c() {
+    public int j_() {
         return 1;
     }
 
-    public OItemStack g_(int i) {
-        return this.a[i];
+    public OItemStack a(int i) {
+        return this.a[0];
     }
 
-    public String e() {
+    public String b() {
         return name;
     }
 
-    public OItemStack a(int i, int j) {
-        if (this.a[i] != null) {
-            OItemStack oitemstack = this.a[i];
+    public boolean c() {
+        return false;
+    }
 
-            this.a[i] = null;
+    public OItemStack a(int i, int j) {
+        if (this.a[0] != null) {
+            OItemStack oitemstack = this.a[0];
+
+            this.a[0] = null;
             return oitemstack;
         } else {
             return null;
@@ -33,10 +34,10 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
     }
 
     public OItemStack b(int i) {
-        if (this.a[i] != null) {
-            OItemStack oitemstack = this.a[i];
+        if (this.a[0] != null) {
+            OItemStack oitemstack = this.a[0];
 
-            this.a[i] = null;
+            this.a[0] = null;
             return oitemstack;
         } else {
             return null;
@@ -44,14 +45,14 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
     }
 
     public void a(int i, OItemStack oitemstack) {
-        this.a[i] = oitemstack;
+        this.a[0] = oitemstack;
     }
 
-    public int a() {
+    public int d() {
         return 64;
     }
 
-    public void G_() {}
+    public void k_() {}
 
     public boolean a(OEntityPlayer oentityplayer) {
         return true;
@@ -60,7 +61,11 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
     public void f() {}
 
     public void g() {}
-    
+
+    public boolean b(int i, OItemStack oitemstack) {
+        return true;
+    }
+
     @Override
     public OItemStack[] getContents() {
         int size = getContentsSize();
@@ -83,7 +88,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
 
     @Override
     public OItemStack getContentsAt(int i) {
-        return this.g_(i);
+        return this.a(i);
     }
 
     @Override
@@ -93,7 +98,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
 
     @Override
     public int getContentsSize() {
-        return this.c();
+        return this.j_();
     }
 
     @Override

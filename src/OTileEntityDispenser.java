@@ -1,41 +1,40 @@
 import java.util.Arrays;
 import java.util.Random;
 
-
 public class OTileEntityDispenser extends OTileEntity implements OIInventory, Container<OItemStack> {
 
-    private OItemStack[] a = new OItemStack[9];
-    private Random b = new Random();
-    private String name = "container.dispenser";
+    private OItemStack[] b = new OItemStack[9];
+    private Random c = new Random();
+    protected String a;
 
-    public OTileEntityDispenser() {
-        super();
-    }
+    private final Dispenser dispenser = new Dispenser(this); // CanaryMod
 
-    public int c() {
+    public OTileEntityDispenser() {}
+
+    public int j_() {
         return 9;
     }
 
-    public OItemStack g_(int i) {
-        return this.a[i];
+    public OItemStack a(int i) {
+        return this.b[i];
     }
 
     public OItemStack a(int i, int j) {
-        if (this.a[i] != null) {
+        if (this.b[i] != null) {
             OItemStack oitemstack;
 
-            if (this.a[i].a <= j) {
-                oitemstack = this.a[i];
-                this.a[i] = null;
-                this.G_();
+            if (this.b[i].a <= j) {
+                oitemstack = this.b[i];
+                this.b[i] = null;
+                this.k_();
                 return oitemstack;
             } else {
-                oitemstack = this.a[i].a(j);
-                if (this.a[i].a == 0) {
-                    this.a[i] = null;
+                oitemstack = this.b[i].a(j);
+                if (this.b[i].a == 0) {
+                    this.b[i] = null;
                 }
 
-                this.G_();
+                this.k_();
                 return oitemstack;
             }
         } else {
@@ -44,125 +43,155 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
     }
 
     public OItemStack b(int i) {
-        if (this.a[i] != null) {
-            OItemStack oitemstack = this.a[i];
+        if (this.b[i] != null) {
+            OItemStack oitemstack = this.b[i];
 
-            this.a[i] = null;
+            this.b[i] = null;
             return oitemstack;
         } else {
             return null;
         }
     }
 
-    public OItemStack p_() {
+    public int j() {
         int i = -1;
         int j = 1;
 
-        for (int k = 0; k < this.a.length; ++k) {
-            if (this.a[k] != null && this.b.nextInt(j++) == 0) {
+        for (int k = 0; k < this.b.length; ++k) {
+            if (this.b[k] != null && this.c.nextInt(j++) == 0) {
                 i = k;
             }
         }
 
-        if (i >= 0) {
-            return this.a(i, 1);
-        } else {
-            return null;
-        }
+        return i;
     }
 
     public void a(int i, OItemStack oitemstack) {
-        this.a[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.a()) {
-            oitemstack.a = this.a();
+        this.b[i] = oitemstack;
+        if (oitemstack != null && oitemstack.a > this.d()) {
+            oitemstack.a = this.d();
         }
 
-        this.G_();
+        this.k_();
     }
 
-    public String e() {
-        return "Trap";
+    public int a(OItemStack oitemstack) {
+        for (int i = 0; i < this.b.length; ++i) {
+            if (this.b[i] == null || this.b[i].c == 0) {
+                this.a(i, oitemstack);
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public String b() {
+        return this.c() ? this.a : "container.dispenser";
+    }
+
+    public void a(String s) {
+        this.a = s;
+    }
+
+    public boolean c() {
+        return this.a != null;
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        ONBTTagList onbttaglist = onbttagcompound.n("Items");
+        ONBTTagList onbttaglist = onbttagcompound.m("Items");
 
-        this.a = new OItemStack[this.c()];
+        this.b = new OItemStack[this.j_()];
 
-        for (int i = 0; i < onbttaglist.d(); ++i) {
-            ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.a(i);
-            int j = onbttagcompound1.d("Slot") & 255;
+        for (int i = 0; i < onbttaglist.c(); ++i) {
+            ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.b(i);
+            int j = onbttagcompound1.c("Slot") & 255;
 
-            if (j >= 0 && j < this.a.length) {
-                this.a[j] = OItemStack.a(onbttagcompound1);
+            if (j >= 0 && j < this.b.length) {
+                this.b[j] = OItemStack.a(onbttagcompound1);
             }
         }
 
+        if (onbttagcompound.b("CustomName")) {
+            this.a = onbttagcompound.i("CustomName");
+        }
     }
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
         ONBTTagList onbttaglist = new ONBTTagList();
 
-        for (int i = 0; i < this.a.length; ++i) {
-            if (this.a[i] != null) {
+        for (int i = 0; i < this.b.length; ++i) {
+            if (this.b[i] != null) {
                 ONBTTagCompound onbttagcompound1 = new ONBTTagCompound();
 
                 onbttagcompound1.a("Slot", (byte) i);
-                this.a[i].b(onbttagcompound1);
+                this.b[i].b(onbttagcompound1);
                 onbttaglist.a((ONBTBase) onbttagcompound1);
             }
         }
 
         onbttagcompound.a("Items", (ONBTBase) onbttaglist);
+        if (this.c()) {
+            onbttagcompound.a("CustomName", this.a);
+        }
     }
 
-    public int a() {
+    public int d() {
         return 64;
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
-        return this.k.b(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
+        return this.k.r(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
     }
 
     public void f() {}
 
     public void g() {}
-   
+
+    public boolean b(int i, OItemStack oitemstack) {
+        return true;
+    }
+
     @Override
     public OItemStack[] getContents() {
-        return Arrays.copyOf(a, getContentsSize());
+        return Arrays.copyOf(this.b, this.getContentsSize());
     }
 
     @Override
     public void setContents(OItemStack[] aoitemstack) {
-        a = Arrays.copyOf(aoitemstack, getContentsSize());
+        this.b = Arrays.copyOf(aoitemstack, this.getContentsSize());
     }
 
     @Override
     public OItemStack getContentsAt(int i) {
-        return g_(i);
+        return this.a(i);
     }
 
     @Override
     public void setContentsAt(int i, OItemStack oitemstack) {
-        a(i, oitemstack);
+        this.a(i, oitemstack);
     }
 
     @Override
     public int getContentsSize() {
-        return c();
+        return this.j_();
     }
 
     @Override
     public String getName() {
-        return name;
+        return this.b();
     }
 
     @Override
     public void setName(String s) {
-        name = s;
+        this.a(s);
+    }
+
+    @Override
+    public Dispenser getComplexBlock() {
+        return dispenser;
     }
 
 }

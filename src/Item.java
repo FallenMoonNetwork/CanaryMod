@@ -1,14 +1,14 @@
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 
 /**
  * Item.java - Item stuff.
- * 
+ *
  * @author James
  */
-public class Item {
+public class Item implements Cloneable, Metadatable {
 
     /**
      * Type - Used to identify items
@@ -139,6 +139,38 @@ public class Item {
         EnderDragonEgg(122), //
         RedstoneLampOff(123), //
         RedstoneLampOn(124), //
+        WoodDoubleStep(125), //
+        WoodStep(126), //
+        CocoaPlant(127), //
+        SandstoneStairs(128), //
+        EmeraldOre(129), //
+        EnderChest(130), //
+        TripwireHook(131), //
+        Tripwire(132), //
+        EmeraldBlock(133), //
+        SpruceWoodStairs(134), //
+        BirchWoodStairs(135), //
+        JungleWoodStairs(136), //
+        CommandBlock(137), //
+        Beacon(138), //
+        CobblestoneWall(139), //
+        FlowerPotBlock(140), //
+        CarrotBlock(141), //
+        PotatoBlock(142), //
+        WoodenButton(143), //
+        SkullBlock(144), //
+        Anvil(145), //
+        TrappedChest(146),//
+        WeightedPressurePlateLight(147),//
+        WeightedPressurePlateHeavy(148),//
+        DaylightSensor(151),//
+        RedstoneBlock(152),//
+        NetherQuartzOre(153),//
+        Hopper(154),//
+        QuartzBlock(155),//
+        QuartzStairs(156),//
+        ActivatorRail(157),//
+        Dropper(158),//
         IronSpade(256), //
         IronPickaxe(257), //
         IronAxe(258), //
@@ -269,6 +301,29 @@ public class Item {
         SpawnEgg(383), //
         BottleOEnchanting(384), //
         FireCharge(385), //
+        BookAndQuill(386), //
+        WrittenBook(387), //
+        Emerald(388), //
+        ItemFrame(389), //
+        FlowerPot(390), //
+        Carrot(391), //
+        Potato(392), //
+        BakedPotato(393), //
+        PoisonousPotato(394), //
+        EmptyMap(395), //
+        GoldenCarrot(396), //
+        Skull(397), //
+        CarrotOnAStick(398), //
+        NetherStar(399), //
+        PumpkinPie(400), //
+        FireworkRocket(401), //
+        FireworkStar(402), //
+        EnchantedBook(403), //
+        RedstoneComparator(404),//
+        NetherBricks(405),//
+        NetherQuartz(406),//
+        MinecartTNT(407),//
+        MinecartHopper(408),//
         GoldRecord(2256), //
         GreenRecord(2257), //
         BlocksRecord(2258), //
@@ -279,7 +334,8 @@ public class Item {
         StalRecord(2263), //
         StradRecord(2264), //
         WardRecord(2265), //
-        ElevenRecord(2266); //
+        ElevenRecord(2266), //
+        WaitRecord(2267);
 
         private int id;
         private static Map<Integer, Type> map;
@@ -312,13 +368,21 @@ public class Item {
     public Type itemType = Type.fromId(itemId);
 
     /**
-     * Create an item with an id of 1 and amount of 1
+     * Create an item with an id of 1 and amount of 1.
      */
     public Item() {}
 
     /**
+     * Clone an existing <tt>Item</tt>
+     * @param toClone the <tt>Item</tt> to clone
+     */
+    public Item(Item toClone) {
+        this(toClone.itemStack.m());
+    }
+
+    /**
      * Create a new item.
-     * 
+     *
      * @param itemType
      *            type of item.
      */
@@ -340,7 +404,7 @@ public class Item {
 
     /**
      * Creates an item with specified id and amount
-     * 
+     *
      * @param itemId
      * @param amount
      */
@@ -354,7 +418,7 @@ public class Item {
 
     /**
      * Creates an item with specified id, amount and slot
-     * 
+     *
      * @param itemId
      * @param amount
      * @param slot
@@ -369,11 +433,11 @@ public class Item {
 
     /**
      * Creates an item with specified id, amount and slot
-     * 
+     *
      * @param itemId
      * @param amount
      * @param slot
-     * @param damage 
+     * @param damage
      */
     public Item(int itemId, int amount, int slot, int damage) {
         this.itemId = itemId;
@@ -386,20 +450,20 @@ public class Item {
 
     /**
      * Creates an item from the actual item class
-     * 
+     *
      * @param itemStack
      */
     public Item(OItemStack itemStack) {
         itemId = itemStack.c;
         amount = itemStack.a;
-        damage = itemStack.h();
+        damage = itemStack.j();
         itemType = Type.fromId(itemId);
         this.itemStack = itemStack;
     }
 
     /**
      * Creates an item from the actual item class at the given slot
-     * 
+     *
      * @param itemStack
      * @param slot
      */
@@ -408,6 +472,9 @@ public class Item {
         this.slot = slot;
     }
 
+    /**
+     * Updates the native item stack with this wrapper's current values.
+     */
     public void update() {
         if (this.itemStack != null) {
             this.itemStack.c = itemId;
@@ -418,7 +485,7 @@ public class Item {
 
     /**
      * Returns the item id
-     * 
+     *
      * @return item id
      */
     public int getItemId() {
@@ -427,7 +494,7 @@ public class Item {
 
     /**
      * Sets item id to specified id
-     * 
+     *
      * @param itemId
      */
     public void setItemId(int itemId) {
@@ -438,7 +505,7 @@ public class Item {
 
     /**
      * Returns the amount
-     * 
+     *
      * @return amount
      */
     public int getAmount() {
@@ -447,7 +514,7 @@ public class Item {
 
     /**
      * Sets the amount
-     * 
+     *
      * @param amount
      */
     public void setAmount(int amount) {
@@ -457,38 +524,38 @@ public class Item {
 
     /**
      * Returns the max amount (stack size)
-     * 
+     *
      * @return amount
      */
     public int getMaxAmount() {
-    	return this.itemStack.a().d();
+        return this.itemStack.e();
     }
-   
+
     /**
      * Sets the max amount (stack size)
-     * 
+     *
      * @param amount
      */
     public void setMaxAmount(int amount) {
-    	this.itemStack.a().e(amount);
+        this.itemStack.b().e(amount);
     }
-    
+
     /**
      * Returns true if specified item id is a valid item id.
-     * 
+     *
      * @param itemId
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < OItem.d.length) {
-            return OItem.d[itemId] != null;
+        if (itemId < OItem.f.length) {
+            return OItem.f[itemId] != null;
         }
         return false;
     }
 
     /**
      * Returns this item's current slot. -1 if no slot is specified
-     * 
+     *
      * @return slot
      */
     public int getSlot() {
@@ -497,7 +564,7 @@ public class Item {
 
     /**
      * Sets this item's slot
-     * 
+     *
      * @param slot
      */
     public void setSlot(int slot) {
@@ -506,7 +573,7 @@ public class Item {
 
     /**
      * Returns this item's current damage. 0 if no damage is specified
-     * 
+     *
      * @return damage
      */
     public int getDamage() {
@@ -515,7 +582,7 @@ public class Item {
 
     /**
      * Sets this item's damage
-     * 
+     *
      * @param damage
      */
     public void setDamage(int damage) {
@@ -525,7 +592,7 @@ public class Item {
 
     /**
      * Returns a String value representing this object
-     * 
+     *
      * @return String representation of this object
      */
     @Override
@@ -535,36 +602,44 @@ public class Item {
 
     /**
      * Tests the given object to see if it equals this object
-     * 
+     *
      * @param obj
      *            the object to test
      * @return true if the two objects match
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+        if(obj instanceof OItemStack) {
+            return OItemStack.b(itemStack, (OItemStack) obj);
+        } else if(obj instanceof Item) {
+            return OItemStack.b(itemStack, ((Item) obj).getBaseItem());
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Item other = (Item) obj;
+        return false;
+    }
 
-        if (itemId != other.itemId) {
-            return false;
-        }
-        if (amount != other.amount) {
-            return false;
-        }
-        if (slot != other.slot) {
-            return false;
-        }
-        return true;
+    /**
+     * Like equals() but doesn't check slot or amount
+     *
+     * @param item The item to check equality with
+     * @return
+     */
+    public boolean equalsIgnoreSlotAndAmount(Item item) {
+        return item != null && item.getItemId() == getItemId() && item.getDamage() == getDamage() && Arrays.equals(item.getEnchantments(), getEnchantments()) && (getDataTag() == null ? item.getDataTag() == null : getDataTag().equals(item.getDataTag()));
+    }
+
+    /**
+     * Like equals() but doesn't check slot
+     *
+     * @param item The item to check equality with
+     * @return
+     */
+    public boolean equalsIgnoreSlot(Item item) {
+        return equalsIgnoreSlotAndAmount(item) && item.getAmount() == getAmount();
     }
 
     /**
      * Returns a semi-unique hashcode for this object
-     * 
+     *
      * @return hashcode
      */
     @Override
@@ -579,7 +654,7 @@ public class Item {
 
     /**
      * Returns this item type
-     * 
+     *
      * @return the item type
      */
     public Type getType() {
@@ -588,7 +663,7 @@ public class Item {
 
     /**
      * Set the item type
-     * 
+     *
      * @param itemType
      *            the item type
      */
@@ -620,9 +695,9 @@ public class Item {
 
     /**
      * Sets an enchantment on the item
-     * 
+     *
      * @param id
-     * @param lvl
+     * @param level
      */
     public void addEnchantment(int id, int level) {
         Enchantment enchantment = new Enchantment(Enchantment.Type.fromId(id), level);
@@ -633,7 +708,7 @@ public class Item {
 
     /**
      * Sets an enchantment on the item
-     * 
+     *
      * @param type
      *            the enchantment type
      * @param level
@@ -647,7 +722,7 @@ public class Item {
 
     /**
      * Sets an enchantment on the item
-     * 
+     *
      * @param enchantment
      */
     public void addEnchantment(Enchantment enchantment) {
@@ -667,17 +742,18 @@ public class Item {
 
     /**
      * Gets a list of enchantments
-     * 
+     *
      * @return Enchantment[]
      */
     public Enchantment[] getEnchantments() {
         Enchantment[] enchantments = null;
-        if (itemStack != null && itemStack.r()) {
-            int size = itemStack.p().d();
+        if (itemStack != null && itemStack.x()) {
+            int size = itemStack.r().c();
             enchantments = new Enchantment[size];
+            NBTTagList nbtTagList = new NBTTagList(itemStack.r());
             for (int i = 0; i < size; i++) {
-                ONBTTagCompound tag = (ONBTTagCompound) itemStack.p().a(i);
-                enchantments[i] = new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+                NBTTagCompound tag = (NBTTagCompound) nbtTagList.get(i);
+                enchantments[i] = new Enchantment(Enchantment.Type.fromId(tag.getShort("id")), tag.getShort("lvl"));
             }
         }
         return enchantments;
@@ -685,32 +761,231 @@ public class Item {
 
     /**
      * Gets the items enchantment at specified index
-     * 
+     *
      * @param index
      * @return enchantment
      */
     public Enchantment getEnchantment(int index) {
-        if (itemStack != null && itemStack.r()) {
-            int size = itemStack.p().d();
+        if (itemStack != null && itemStack.x()) {
+            int size = itemStack.r().c();
             if (index >= size) {
                 index = 0;
             }
-            ONBTTagCompound tag = (ONBTTagCompound) itemStack.p().a(index);
-            return new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+            NBTTagCompound tag = (NBTTagCompound) new NBTTagList(itemStack.r()).get(index);
+            return new Enchantment(Enchantment.Type.fromId(tag.getShort("id")), tag.getShort("lvl"));
         }
         return null;
     }
 
     /**
      * Gets the items first enchantment
-     * 
+     *
      * @return enchantment
      */
     public Enchantment getEnchantment() {
-        if (itemStack != null && itemStack.r()) {
-            ONBTTagCompound tag = (ONBTTagCompound) itemStack.p().a(0);
-            return new Enchantment(Enchantment.Type.fromId(tag.e("id")), tag.e("lvl"));
+        return getEnchantment(0);
+    }
+
+    /**
+     * Gets the visible name of this item.
+     * Names can be set using an anvil or {@link #setName(java.lang.String)}.
+     * @return The item name
+     */
+    public String getName() {
+        return itemStack.s();
+    }
+
+    /**
+     * Sets the visible name of this item.
+     * Equivalent to renaming this item using an anvil.
+     * @param name The item's new name
+     */
+    public void setName(String name) {
+        itemStack.c(name);
+    }
+
+    /**
+     * Returns the potion effects associated with this item.
+     * Returns null if item is not a potion or has no potion effects.
+     *
+     * @return
+     */
+    public PotionEffect[] getPotionEffects() {
+        if(getType() != Item.Type.Potion) {
+            return null;
         }
-        return null;
+
+        OItemStack base = getBaseItem();
+
+        if(!base.p()) {
+            return null;
+        }
+
+        NBTTagCompound tag = new NBTTagCompound(base.q());
+        if(!tag.hasTag("CustomPotionEffects")) {
+            return null;
+        }
+
+        NBTTagList potionEffects = tag.getNBTTagList("CustomPotionEffects");
+        PotionEffect[] rt = new PotionEffect[potionEffects.size()];
+        if(rt.length <= 0) {return null;}
+        for(int i=0; i<rt.length; i++) {
+            rt[i] = new PotionEffect(OPotionEffect.b((ONBTTagCompound) potionEffects.get(i).getBaseTag()));
+        }
+
+        return rt;
+    }
+
+    /**
+     * Adds a potion effect to this item. Only works on potions.
+     *
+     * @param effect The potion effect to add
+     */
+    public void addPotionEffect(PotionEffect effect) {
+        addPotionEffects(new PotionEffect[] {effect});
+    }
+
+    /**
+     * Adds an array of potion effects to this item. Only works on potions.
+     *
+     * @param effects The potion effects to add
+     */
+    public void addPotionEffects(PotionEffect[] effects) {
+        if(getType() != Item.Type.Potion) {
+            return;
+        }
+
+        OItemStack base = getBaseItem();
+
+        NBTTagList potionEffects = null;
+        if(base.p()) {
+            NBTTagCompound tag = new NBTTagCompound(base.q());
+            if(tag.hasTag("CustomPotionEffects")) {
+                potionEffects = tag.getNBTTagList("CustomPotionEffects");
+            } else {
+                potionEffects = new NBTTagList();
+                tag.add("CustomPotionEffects", potionEffects);
+            }
+        } else {
+            potionEffects = new NBTTagList();
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.add("CustomPotionEffects", potionEffects);
+            base.d(tag.getBaseTag());
+        }
+
+        NBTTagCompound[] e = new NBTTagCompound[effects.length];
+        for(int i = 0; i < e.length; i++) {
+            e[i] = new NBTTagCompound();
+            effects[i].potionEffect.a(e[i].getBaseTag());
+            potionEffects.add(e[i]);
+        }
+    }
+
+    /**
+     * Create a completely independent clone of this <tt>Item</tt>.
+     * The <tt>OItemStack</tt> (if it is set) is cloned using its own (native)
+     * method.
+     *
+     * @return a clone of this <tt>Item</tt> instance
+     */
+    @Override
+    public Item clone() {
+        try {
+            Item clone = (Item) super.clone();
+            clone.itemStack = itemStack == null ? null : itemStack.m();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(); // We are Cloneable!?
+        }
+    }
+
+    /**
+     * Returns the text that shows up under this item's name in the player's inventory.
+     * Returns null if the lore is not set.
+     *
+     * @return The lore, each string in the array is a new line
+     */
+    public String[] getLore() { // WWOL: I don't think we need this now with the new NBT API do we?
+        NBTTagCompound tag = getDataTag();
+        if(tag == null) {return null;}
+        if(!tag.hasTag("display")) {return null;}
+        NBTTagCompound display = tag.getNBTTagCompound("display");
+        if(!display.hasTag("Lore")) {return null;}
+        NBTTagList lore = display.getNBTTagList("Lore");
+        String[] rt = new String[lore.size()];
+        for(int i=0; i<rt.length; i++) {
+            rt[i] = lore.get(i).toPlainString();
+        }
+        return rt;
+    }
+
+    /**
+     * Sets the text that shows up under the item's name in the player's inventory
+     *
+     * @param lore The lore to set, each line should be in a separate string in the array
+     */
+    public void setLore(String... lore) {
+        NBTTagCompound tag = getDataTag();
+        if(tag == null) {
+            tag = new NBTTagCompound("tag");
+            setDataTag(tag);
+        }
+        if(!tag.hasTag("display")) {
+            tag.add("display", new NBTTagCompound());
+        }
+        NBTTagList list = new NBTTagList();
+        for(String line : lore) {
+            list.add(new NBTTagString("", line));
+        }
+        tag.getNBTTagCompound("display").add("Lore", list);
+    }
+
+    /**
+     * Returns the tag containing data for this item.
+     * Null if this item has no data tag.
+     *
+     * @return
+     */
+    public NBTTagCompound getDataTag() {
+        return itemStack.p() ? new NBTTagCompound(itemStack.q()) : null;
+    }
+
+    /**
+     * Sets the tag containing data for this item.
+     * Should be named 'tag'.
+     * Setting this to null removes name and lore data.
+     *
+     * @param tag the data tag
+     */
+    public void setDataTag(NBTTagCompound tag) {
+        itemStack.d = tag == null ? null : tag.getBaseTag();
+    }
+
+    @Override
+    public NBTTagCompound getMetaTag() {
+        NBTTagCompound dataTag = getDataTag();
+        if(!dataTag.hasTag("Canary")) {
+            dataTag.add("Canary", new NBTTagCompound("Canary"));
+        }
+        return dataTag.getNBTTagCompound("Canary");
+    }
+
+    /**
+     * Writes this item's data to an NBTTagCompound.
+     *
+     * @param tag The tag to write to
+     * @return NBTTagCompound
+     */
+    public NBTTagCompound writeToTag(NBTTagCompound tag) {
+        return new NBTTagCompound(itemStack.b(tag.getBaseTag()));
+    }
+
+    /**
+     * Sets this item's data to that in an NBTTagCompound.
+     *
+     * @param tag The tag to read from
+     */
+    public void readFromTag(NBTTagCompound tag) {
+        itemStack.c(tag.getBaseTag());
     }
 }

@@ -1,81 +1,89 @@
 import java.util.Arrays;
 import java.util.List;
 
+public class OTileEntityBrewingStand extends OTileEntity implements OISidedInventory, Container<OItemStack> {
 
-public class OTileEntityBrewingStand extends OTileEntity implements OIInventory, Container<OItemStack> {
-
-    private OItemStack[] a = new OItemStack[4];
-    private int b;
-    private int c;
+    private static final int[] a = new int[] { 3};
+    private static final int[] b = new int[] { 0, 1, 2};
+    private OItemStack[] c = new OItemStack[4];
     private int d;
-    
-    private String name = "container.brewing"; // CanaryMod
+    private int e;
+    private int f;
+    private String g;
 
-    public OTileEntityBrewingStand() {
-        super();
+    private final BrewingStand stand = new BrewingStand(this); // CanaryMod
+
+    public OTileEntityBrewingStand() {}
+
+    public String b() {
+        return this.c() ? this.g : "container.brewing";
     }
 
-    public String e() {
-        return name;
+    public boolean c() {
+        return this.g != null && this.g.length() > 0;
     }
 
-    public int c() {
-        return this.a.length;
+    public void a(String s) {
+        this.g = s;
     }
 
-    public void q_() {
-        if (this.b > 0) {
-            --this.b;
-            if (this.b == 0) {
-                this.p();
-                this.G_();
-            } else if (!this.o()) {
-                this.b = 0;
-                this.G_();
-            } else if (this.d != this.a[3].c) {
-                this.b = 0;
-                this.G_();
+    public int j_() {
+        return this.c.length;
+    }
+
+    public void h() {
+        if (this.d > 0) {
+            --this.d;
+            if (this.d == 0) {
+                this.u();
+                this.k_();
+            } else if (!this.l()) {
+                this.d = 0;
+                this.k_();
+            } else if (this.f != this.c[3].c) {
+                this.d = 0;
+                this.k_();
             }
-        } else if (this.o()) {
-            this.b = 400;
-            this.d = this.a[3].c;
+        } else if (this.l()) {
+            this.d = 400;
+            this.f = this.c[3].c;
         }
 
-        int i = this.n();
+        int i = this.j();
 
-        if (i != this.c) {
-            this.c = i;
-            this.k.c(this.l, this.m, this.n, i);
+        if (i != this.e) {
+            this.e = i;
+            this.k.b(this.l, this.m, this.n, i, 2);
         }
 
-        super.q_();
+        super.h();
     }
 
-    public int i() {
-        return this.b;
+    public int x_() {
+        return this.d;
     }
 
-    private boolean o() {
-        if (this.a[3] != null && this.a[3].a > 0) {
-            OItemStack oitemstack = this.a[3];
+    private boolean l() {
+        if (this.c[3] != null && this.c[3].a > 0) {
+            OItemStack oitemstack = this.c[3];
 
-            if (!OItem.d[oitemstack.c].n()) {
+            if (!OItem.f[oitemstack.c].w()) {
                 return false;
             } else {
                 boolean flag = false;
 
                 for (int i = 0; i < 3; ++i) {
-                    if (this.a[i] != null && this.a[i].c == OItem.br.bP) {
-                        int j = this.a[i].h();
-                        int k = this.b(j, oitemstack);
+                    if (this.c[i] != null && this.c[i].c == OItem.bt.cp) {
+                        int j = this.c[i].k();
+                        int k = this.c(j, oitemstack);
 
-                        if (!OItemPotion.c(j) && OItemPotion.c(k)) {
+                        if (!OItemPotion.f(j) && OItemPotion.f(k)) {
                             flag = true;
                             break;
                         }
 
-                        List list = OItem.br.b(j);
-                        List list1 = OItem.br.b(k);
+                        List list = OItem.bt.c(j);
+                        List list1 = OItem.bt.c(k);
 
                         if ((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null) && j != k) {
                             flag = true;
@@ -91,88 +99,93 @@ public class OTileEntityBrewingStand extends OTileEntity implements OIInventory,
         }
     }
 
-    private void p() {
-        if (this.o()) {
-            OItemStack oitemstack = this.a[3];
+    private void u() {
+        if (this.l()) {
+            OItemStack oitemstack = this.c[3];
 
             for (int i = 0; i < 3; ++i) {
-                if (this.a[i] != null && this.a[i].c == OItem.br.bP) {
-                    int j = this.a[i].h();
-                    int k = this.b(j, oitemstack);
-                    List list = OItem.br.b(j);
-                    List list1 = OItem.br.b(k);
+                if (this.c[i] != null && this.c[i].c == OItem.bt.cp) {
+                    int j = this.c[i].k();
+                    int k = this.c(j, oitemstack);
+                    List list = OItem.bt.c(j);
+                    List list1 = OItem.bt.c(k);
 
                     if ((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null)) {
                         if (j != k) {
-                            this.a[i].b(k);
+                            this.c[i].b(k);
                         }
-                    } else if (!OItemPotion.c(j) && OItemPotion.c(k)) {
-                        this.a[i].b(k);
+                    } else if (!OItemPotion.f(j) && OItemPotion.f(k)) {
+                        this.c[i].b(k);
                     }
                 }
             }
 
-            if (OItem.d[oitemstack.c].k()) {
-                this.a[3] = new OItemStack(OItem.d[oitemstack.c].j());
+            if (OItem.f[oitemstack.c].t()) {
+                this.c[3] = new OItemStack(OItem.f[oitemstack.c].s());
             } else {
-                --this.a[3].a;
-                if (this.a[3].a <= 0) {
-                    this.a[3] = null;
+                --this.c[3].a;
+                if (this.c[3].a <= 0) {
+                    this.c[3] = null;
                 }
             }
-
         }
     }
 
-    private int b(int i, OItemStack oitemstack) {
-        return oitemstack == null ? i : (OItem.d[oitemstack.c].n() ? OPotionHelper.a(i, OItem.d[oitemstack.c].m()) : i);
+    private int c(int i, OItemStack oitemstack) {
+        return oitemstack == null ? i : (OItem.f[oitemstack.c].w() ? OPotionHelper.a(i, OItem.f[oitemstack.c].v()) : i);
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        ONBTTagList onbttaglist = onbttagcompound.n("Items");
+        ONBTTagList onbttaglist = onbttagcompound.m("Items");
 
-        this.a = new OItemStack[this.c()];
+        this.c = new OItemStack[this.j_()];
 
-        for (int i = 0; i < onbttaglist.d(); ++i) {
-            ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.a(i);
-            byte b0 = onbttagcompound1.d("Slot");
+        for (int i = 0; i < onbttaglist.c(); ++i) {
+            ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.b(i);
+            byte b0 = onbttagcompound1.c("Slot");
 
-            if (b0 >= 0 && b0 < this.a.length) {
-                this.a[b0] = OItemStack.a(onbttagcompound1);
+            if (b0 >= 0 && b0 < this.c.length) {
+                this.c[b0] = OItemStack.a(onbttagcompound1);
             }
         }
 
-        this.b = onbttagcompound.e("BrewTime");
+        this.d = onbttagcompound.d("BrewTime");
+        if (onbttagcompound.b("CustomName")) {
+            this.g = onbttagcompound.i("CustomName");
+        }
     }
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("BrewTime", (short) this.b);
+        onbttagcompound.a("BrewTime", (short) this.d);
         ONBTTagList onbttaglist = new ONBTTagList();
 
-        for (int i = 0; i < this.a.length; ++i) {
-            if (this.a[i] != null) {
+        for (int i = 0; i < this.c.length; ++i) {
+            if (this.c[i] != null) {
                 ONBTTagCompound onbttagcompound1 = new ONBTTagCompound();
 
                 onbttagcompound1.a("Slot", (byte) i);
-                this.a[i].b(onbttagcompound1);
+                this.c[i].b(onbttagcompound1);
                 onbttaglist.a((ONBTBase) onbttagcompound1);
             }
         }
 
         onbttagcompound.a("Items", (ONBTBase) onbttaglist);
+        if (this.c()) {
+            onbttagcompound.a("CustomName", this.g);
+        }
     }
 
-    public OItemStack g_(int i) {
-        return i >= 0 && i < this.a.length ? this.a[i] : null;
+    public OItemStack a(int i) {
+        return i >= 0 && i < this.c.length ? this.c[i] : null;
     }
 
     public OItemStack a(int i, int j) {
-        if (i >= 0 && i < this.a.length) {
-            OItemStack oitemstack = this.a[i];
+        if (i >= 0 && i < this.c.length) {
+            OItemStack oitemstack = this.c[i];
 
-            this.a[i] = null;
+            this.c[i] = null;
             return oitemstack;
         } else {
             return null;
@@ -180,10 +193,10 @@ public class OTileEntityBrewingStand extends OTileEntity implements OIInventory,
     }
 
     public OItemStack b(int i) {
-        if (i >= 0 && i < this.a.length) {
-            OItemStack oitemstack = this.a[i];
+        if (i >= 0 && i < this.c.length) {
+            OItemStack oitemstack = this.c[i];
 
-            this.a[i] = null;
+            this.c[i] = null;
             return oitemstack;
         } else {
             return null;
@@ -191,29 +204,32 @@ public class OTileEntityBrewingStand extends OTileEntity implements OIInventory,
     }
 
     public void a(int i, OItemStack oitemstack) {
-        if (i >= 0 && i < this.a.length) {
-            this.a[i] = oitemstack;
+        if (i >= 0 && i < this.c.length) {
+            this.c[i] = oitemstack;
         }
-
     }
 
-    public int a() {
-        return 1;
+    public int d() {
+        return 64;
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
-        return this.k.b(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
+        return this.k.r(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
     }
 
     public void f() {}
 
     public void g() {}
 
-    public int n() {
+    public boolean b(int i, OItemStack oitemstack) {
+        return i == 3 ? OItem.f[oitemstack.c].w() : oitemstack.c == OItem.bt.cp || oitemstack.c == OItem.bu.cp;
+    }
+
+    public int j() {
         int i = 0;
 
         for (int j = 0; j < 3; ++j) {
-            if (this.a[j] != null) {
+            if (this.c[j] != null) {
                 i |= 1 << j;
             }
         }
@@ -221,38 +237,55 @@ public class OTileEntityBrewingStand extends OTileEntity implements OIInventory,
         return i;
     }
 
+    public int[] c(int i) {
+        return i == 1 ? a : b;
+    }
+
+    public boolean a(int i, OItemStack oitemstack, int j) {
+        return this.b(i, oitemstack);
+    }
+
+    public boolean b(int i, OItemStack oitemstack, int j) {
+        return true;
+    }
+
     @Override
     public OItemStack[] getContents() {
-        return Arrays.copyOf(a, getContentsSize());
+        return Arrays.copyOf(this.c, this.getContentsSize());
     }
 
     @Override
     public void setContents(OItemStack[] aoitemstack) {
-        a = Arrays.copyOf(aoitemstack, getContentsSize());
+        this.c = Arrays.copyOf(aoitemstack, this.getContentsSize());
     }
 
     @Override
     public OItemStack getContentsAt(int i) {
-        return g_(i);
+        return this.a(i);
     }
 
     @Override
     public void setContentsAt(int i, OItemStack oitemstack) {
-        a(i, oitemstack);
+        this.a(i, oitemstack);
     }
 
     @Override
     public int getContentsSize() {
-        return c();
+        return this.j_();
     }
 
     @Override
     public String getName() {
-        return name;
+        return this.b();
     }
 
     @Override
     public void setName(String s) {
-        name = s;
+        this.a(s);
+    }
+
+    @Override
+    public BrewingStand getComplexBlock() {
+        return stand;
     }
 }

@@ -65,7 +65,7 @@ public class World {
         }
 
         /**
-         * Returns the array index for use with, 
+         * Returns the array index for use with,
          * e.g., {@link Server#getWorld(java.lang.String)}
          * @return The array index for this <tt>Dimension</tt>
          */
@@ -84,7 +84,8 @@ public class World {
 
         DEFAULT(OWorldType.b),
         FLAT(OWorldType.c),
-        DEFAULT_1_1(OWorldType.d);
+        LARGE_BIOMES(OWorldType.d),
+        DEFAULT_1_1(OWorldType.e);
         private OWorldType nativeType;
 
         private Type(OWorldType nativeType) {
@@ -120,7 +121,7 @@ public class World {
      * @return the dimension type
      */
     public Dimension getType() {
-        return Dimension.fromId(world.t.g);
+        return Dimension.fromId(world.t.h);
     }
 
     /**
@@ -129,7 +130,7 @@ public class World {
      * @return time server time
      */
     public long getTime() {
-        return world.o();
+        return world.G();
     }
 
     /**
@@ -138,13 +139,7 @@ public class World {
      * @return time server time
      */
     public long getRelativeTime() {
-        long time = (getTime() % 24000);
-
-        // Java modulus is stupid.
-        if (time < 0) {
-            time += 24000;
-        }
-        return time;
+        return world.H();
     }
 
     /**
@@ -156,7 +151,7 @@ public class World {
         // World info for each world overwrites the other on save,
         // make sure they're the same. (Like you see it in the nether or end)
         for (World w : etc.getServer().getWorld(this.getName()))
-            w.getWorld().a(time);
+            w.getWorld().x.b(time);
     }
 
     /**
@@ -165,13 +160,10 @@ public class World {
      * @param time time (0-24000)
      */
     public void setRelativeTime(long time) {
-        long margin = (time - getTime()) % 24000;
-
-        // Java modulus is stupid.
-        if (margin < 0) {
-            margin += 24000;
-        }
-        setTime(getTime() + margin);
+        // World info for each world overwrites the other on save,
+        // make sure they're the same.
+        for (World w : etc.getServer().getWorld(this.getName()))
+            w.getWorld().x.c(time);
     }
 
     /**
@@ -182,8 +174,8 @@ public class World {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
 
-        for (Object o : world.b) {
-            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityMagmaCube) {
+        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
+            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntitySlime || o instanceof OEntityDragon) {
                 toRet.add(new Mob((OEntityLiving) o));
             }
         }
@@ -198,8 +190,8 @@ public class World {
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
 
-        for (Object o : world.b) {
-            if (o instanceof OEntityAnimal || o instanceof OEntitySquid || o instanceof OEntitySnowman) {
+        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
+            if (o instanceof OEntityAnimal || o instanceof OEntitySquid || o instanceof OEntitySnowman || o instanceof OEntityBat) {
                 toRet.add(new Mob((OEntityLiving) o));
             }
         }
@@ -214,7 +206,7 @@ public class World {
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
 
-        for (Object o : world.b) {
+        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
             if (o instanceof OEntityMinecart) {
                 toRet.add(((OEntityMinecart) o).cart);
             }
@@ -230,7 +222,7 @@ public class World {
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
 
-        for (Object o : world.b) {
+        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
             if (o instanceof OEntityBoat) {
                 toRet.add(((OEntityBoat) o).boat);
             }
@@ -246,7 +238,7 @@ public class World {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
 
-        for (Object o : world.b) {
+        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
             if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityMagmaCube || o instanceof OEntityVillager || o instanceof OEntitySquid || o instanceof OEntitySnowman) {
                 toRet.add(new Mob((OEntityLiving) o));
             } else if (o instanceof OEntityMinecart) {
@@ -257,6 +249,8 @@ public class World {
                 toRet.add(((OEntityPlayerMP) o).getPlayer());
             } else if (o instanceof OEntityItem) {
                 toRet.add(((OEntityItem) o).item);
+            } else {
+                toRet.add(((OEntity) o).getEntity());
             }
         }
         return toRet;
@@ -270,7 +264,7 @@ public class World {
     public List<ItemEntity> getItemList() {
         List<ItemEntity> toRet = new ArrayList<ItemEntity>();
 
-        for (Object o : world.b) {
+        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
             if (o instanceof OEntityItem) {
                 toRet.add(((OEntityItem) o).item);
             }
@@ -287,11 +281,9 @@ public class World {
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
 
-        for (Object o : world.b) {
-            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityMagmaCube || o instanceof OEntityVillager || o instanceof OEntitySquid || o instanceof OEntityGolem) {
-                toRet.add(new Mob((OEntityLiving) o));
-            } else if (o instanceof OEntityPlayerMP) {
-                toRet.add(((OEntityPlayerMP) o).getPlayer());
+        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
+            if (o instanceof OEntityLiving) {
+                toRet.add(((OEntityLiving) o).getEntity());
             }
         }
         return toRet;
@@ -305,7 +297,7 @@ public class World {
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
 
-        for (Object o : world.b) {
+        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
             if (o instanceof OEntityMinecart) {
                 toRet.add(((OEntityMinecart) o).cart);
             } else if (o instanceof OEntityBoat) {
@@ -326,13 +318,36 @@ public class World {
         Location spawn = new Location();
 
         spawn.x = info.c() + 0.5D;
-        spawn.y = world.f(info.c(), info.e()) + 1.5D;
+        spawn.y = info.d();
         spawn.z = info.e() + 0.5D;
+        // set y to first free position above actual spawn.
+        while (!world.c((int) spawn.x, (int) spawn.y, (int) spawn.z)
+                && !world.c((int) spawn.x, (int) spawn.y + 1, (int) spawn.z)) {
+            spawn.y++;
+        }
         spawn.rotX = 0.0F;
         spawn.rotY = 0.0F;
         spawn.dimension = 0;
-        spawn.world = world.name;
+        spawn.world = this.getName();
         return spawn;
+    }
+
+    /**
+     * Sets the spawn location for this level, NOT only this world.
+     * @param x The spawn's new x location
+     * @param y The spawn's new y location
+     * @param z The spawn's new z location
+     */
+    public void setSpawnLocation(int x, int y, int z) {
+        this.getWorld().L().a(x, y, z);
+    }
+
+    /**
+     * Sets the spawn location for this level, NOT only this world.
+     * @param location The new spawn location.
+     */
+    public void setSpawnLocation(Location location) {
+        this.setSpawnLocation(etc.floor(location.x), etc.floor(location.y), etc.floor(location.z));
     }
 
     /**
@@ -366,7 +381,7 @@ public class World {
      * @return block data
      */
     public int getBlockData(int x, int y, int z) {
-        return world.c(x, y, z);
+        return world.h(x, y, z);
     }
 
     /**
@@ -379,15 +394,7 @@ public class World {
      * @return true if it was successful
      */
     public boolean setBlockData(int x, int y, int z, int data) {
-        boolean toRet = world.d(x, y, z, data);
-
-        etc.getMCServer().h.a(new OPacket53BlockChange(x, y, z, world), getType().getId());
-        ComplexBlock block = getComplexBlock(x, y, z);
-
-        if (block != null) {
-            block.update();
-        }
-        return toRet;
+        return world.b(x, y, z, data, 3);
     }
 
     /**
@@ -400,7 +407,7 @@ public class World {
      * @return true if successful
      */
     public boolean setBlockAt(int blockType, int x, int y, int z) {
-        return world.e(x, y, z, blockType);
+        return world.c(x, y, z, blockType);
     }
 
     /**
@@ -411,7 +418,7 @@ public class World {
      * @return highest block altitude
      */
     public int getHighestBlockY(int x, int z) {
-        return world.e(x, z);
+        return world.f(x, z);
     }
 
     /**
@@ -436,6 +443,18 @@ public class World {
      */
     public ComplexBlock getComplexBlock(Block block) {
         return getComplexBlock(block.getX(), block.getY(), block.getZ());
+    }
+
+    /**
+     * Returns the complex block at the specified location. Null if there's no
+     * complex block there. This will also find complex-blocks spanning multiple
+     * spaces, such as double chest.
+     *
+     * @param location The location of the block. Only x/y/z is used.
+     * @return ComplexBlock
+     */
+    public ComplexBlock getComplexBlock(Location location) {
+        return getComplexBlock((int) location.x, (int) location.y, (int) location.z);
     }
 
     /**
@@ -489,27 +508,22 @@ public class World {
      * @return complex block
      */
     public ComplexBlock getOnlyComplexBlock(int x, int y, int z) {
-        OTileEntity localav = world.b(x, y, z);
+        OTileEntity localav = world.r(x, y, z);
 
         if (localav != null) {
-            if (localav instanceof OTileEntityChest) {
-                return new Chest((OTileEntityChest) localav);
-            } else if (localav instanceof OTileEntitySign) {
+            if (localav instanceof OTileEntitySign) {
                 return new Sign((OTileEntitySign) localav);
-            } else if (localav instanceof OTileEntityFurnace) {
-                return new Furnace((OTileEntityFurnace) localav);
-            } else if (localav instanceof OTileEntityMobSpawner) {
-                return new MobSpawner((OTileEntityMobSpawner) localav);
-            } else if (localav instanceof OTileEntityDispenser) {
-                return new Dispenser((OTileEntityDispenser) localav);
             } else if (localav instanceof OTileEntityNote) {
                 return new NoteBlock((OTileEntityNote) localav);
-            } else if (localav instanceof OTileEntityBrewingStand) {
-                return new BrewingStand((OTileEntityBrewingStand) localav);
             } else if (localav instanceof OTileEntityRecordPlayer) {
-            	return new JukeBox((OTileEntityRecordPlayer) localav);
+                return new JukeBox((OTileEntityRecordPlayer) localav);
+            } else if (localav instanceof OTileEntitySkull) {
+                return new Skull((OTileEntitySkull) localav);
+            } else {
+                return localav.getComplexBlock();
             }
         }
+
         return null;
     }
 
@@ -591,7 +605,7 @@ public class World {
      * @param z
      * @param itemId
      * @param quantity
-     * @param damage 
+     * @param damage
      * @return returns the ItemEntity that was dropped
      */
     public ItemEntity dropItem(double x, double y, double z, int itemId, int quantity, int damage) {
@@ -600,10 +614,10 @@ public class World {
 
     /**
      * Drops an item with desired quantity at the specified location
-     * 
+     *
      * @param loc
      * @param item
-     * 
+     *
      * @return returns the ItemEntity that was dropped
      */
     public ItemEntity dropItem(Location loc, Item item) {
@@ -613,7 +627,7 @@ public class World {
     /**
      * Drops an item with desired quantity and damage value at the specified
      * location
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -621,14 +635,14 @@ public class World {
      * @return returns the ItemEntity that was dropped
      */
     public ItemEntity dropItem(double x, double y, double z, Item item) {
-        double d1 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d2 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double d3 = world.r.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d1 = world.s.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d2 = world.s.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        double d3 = world.s.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
         OEntityItem oei = new OEntityItem(world, x + d1, y + d2, z + d3, item.getBaseItem() != null ? item.getBaseItem() : new OItemStack(item.getItemId(), item.getAmount(), item.getDamage()));
 
         oei.c = 10;
-        world.b(oei);
+        world.d(oei);
         return oei.item;
     }
 
@@ -650,7 +664,7 @@ public class World {
      * @param data the new data for the block
      */
     public void updateBlockPhysics(int x, int y, int z, int data) {
-        world.c(x, y, z, data);
+        world.b(x, y, z, data, 3);
     }
 
     /**
@@ -681,12 +695,12 @@ public class World {
      * Checks to see whether or not the chunk containing the given chunk
      * coordinates is loaded into memory.
      *
-     * @param x a block x-coordinate
-     * @param z a block z-coordinate
+     * @param x a chunk x-coordinate
+     * @param z a chunk z-coordinate
      * @return true if the chunk is loaded
      */
     public boolean isChunkLoaded(int x, int z) {
-        return world.G.a(x, z);
+        return world.b.a(x, z);
     }
 
     /**
@@ -722,7 +736,7 @@ public class World {
      * @return chunk
      */
     public Chunk loadChunk(int x, int z) {
-        return world.v.c(x, z).chunk;
+        return world.b.d(x, z).chunk;
     }
 
     /**
@@ -759,7 +773,7 @@ public class World {
      */
     public Chunk getChunk(int x, int z) {
         if (isChunkLoaded(x, z)) {
-            return world.G.b(x, z).chunk;
+            return world.b.d(x, z).chunk;
         } else {
             return null;
         }
@@ -784,7 +798,7 @@ public class World {
      * @return true if the block is being powered
      */
     public boolean isBlockPowered(int x, int y, int z) {
-        return world.w(x, y, z);
+        return world.B(x, y, z) > 0;
     }
 
     /**
@@ -806,7 +820,7 @@ public class World {
      * @return true if the block is being indirectly powered
      */
     public boolean isBlockIndirectlyPowered(int x, int y, int z) {
-        return world.x(x, y, z);
+        return world.C(x, y, z);
     }
 
     /**
@@ -818,13 +832,13 @@ public class World {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.THUNDER_CHANGE, this, thundering)) {
             return;
         }
-        world.x.a(thundering);
+        world.x.a(thundering); //could be wrong, hard to differentiate between booleans
 
         // Thanks to Bukkit for figuring out these numbers
         if (thundering) {
-            setThunderTime(world.r.nextInt(12000) + 3600);
+            setThunderTime(world.s.nextInt(12000) + 3600);
         } else {
-            setThunderTime(world.r.nextInt(168000) + 12000);
+            setThunderTime(world.s.nextInt(168000) + 12000);
         }
     }
 
@@ -834,7 +848,7 @@ public class World {
      * @param ticks ticks of thunder
      */
     public void setThunderTime(int ticks) {
-        world.x.b(ticks);
+        world.x.f(ticks);
     }
 
     /**
@@ -850,9 +864,9 @@ public class World {
 
         // Thanks to Bukkit for figuring out these numbers
         if (raining) {
-            setRainTime(world.r.nextInt(12000) + 3600);
+            setRainTime(world.s.nextInt(12000) + 3600);
         } else {
-            setRainTime(world.r.nextInt(168000) + 12000);
+            setRainTime(world.s.nextInt(168000) + 12000);
         }
     }
 
@@ -862,7 +876,7 @@ public class World {
      * @param ticks ticks of rain
      */
     public void setRainTime(int ticks) {
-        world.x.c(ticks);
+        world.x.g(ticks);
     }
 
     /**
@@ -871,7 +885,7 @@ public class World {
      * @return whether it's thundering
      */
     public boolean isThundering() {
-        return world.x.i();
+        return world.x.n();
     }
 
     /**
@@ -880,7 +894,7 @@ public class World {
      * @return the thunder ticks
      */
     public int getThunderTime() {
-        return world.x.j();
+        return world.x.o();
     }
 
     /**
@@ -889,7 +903,7 @@ public class World {
      * @return whether it's raining
      */
     public boolean isRaining() {
-        return world.x.k();
+        return world.x.p();
     }
 
     /**
@@ -898,7 +912,7 @@ public class World {
      * @return the rain ticks
      */
     public int getRainTime() {
-        return world.x.l();
+        return world.x.q();
     }
 
     @Override
@@ -924,7 +938,36 @@ public class World {
      * @param power The power of the explosion. TNT has a power of 4.
      */
     public void explode(BaseEntity exploder, double x, double y, double z, float power) {
-        world.a(exploder.entity, x, y, z, power);
+        explode(exploder, x, y, z, power, true);
+    }
+
+    /**
+     * Creates an explosion with the specified power at the given location.
+     *
+     * @param exploder The entity causing the explosion.
+     * @param x
+     * @param y
+     * @param z
+     * @param power The power of the explosion. TNT has a power of 4.
+     * @param doesDamage Whether or not this explosion deals damage.
+     */
+    public void explode(BaseEntity exploder, double x, double y, double z, float power, boolean doesDamage) {
+        world.a(exploder.entity, x, y, z, power, doesDamage);
+    }
+
+    /**
+     * Creates an explosion with the specified power at the given location.
+     *
+     * @param exploder The entity causing the explosion.
+     * @param x
+     * @param y
+     * @param z
+     * @param power The power of the explosion. TNT has a power of 4.
+     * @param doesCauseFires Whether or not this explosion causes fires.
+     * @param doesDamage Whether or not this explosion deals damage.
+     */
+    public void explode(BaseEntity exploder, double x, double y, double z, float power, boolean doesCauseFires, boolean doesDamage) {
+        world.a(exploder.entity, x, y, z, power, doesCauseFires, doesDamage);
     }
 
     /**
@@ -933,7 +976,7 @@ public class World {
      * @return seed of the world
      */
     public long getRandomSeed() {
-        return world.n();
+        return world.F();
     }
 
     /**
@@ -945,7 +988,7 @@ public class World {
      * @param newlevel The light level.
      */
     public void setLightLevel(int x, int y, int z, int newlevel) {
-        this.getWorld().a(OEnumSkyBlock.b, x, y, z, newlevel);
+        this.getWorld().b(OEnumSkyBlock.b, x, y, z, newlevel);
     }
 
     /**
@@ -971,30 +1014,149 @@ public class World {
         for (int x2 = x - 2; x2 <= x + 2; x2++) {
             for (int y2 = y - 2; y2 <= y + 2; y2++) {
                 for (int z2 = z - 2; z2 <= z + 2; z2++) {
-                    this.getWorld().b(x2, y2, z2, this.getWorld().a(x2, y2, z2),
-                            this.getWorld().c(x2, y2, z2));
+                    this.getWorld().A(x2, y2, z2);
                 }
             }
         }
     }
-    
+
     public EntityTracker getEntityTracker() {
        return world.getEntityTracker();
     }
-    
+
+    public PlayerManager getPlayerManager() {
+        return world.r().getCanaryPlayerManager();
+    }
+
     public void removePlayerFromWorld(Player player) {
         world.f((OEntity)player.getEntity());
     }
-    
+
     public void addPlayerToWorld(Player player) {
-        world.b((OEntity)player.getEntity());
+        world.d((OEntity)player.getEntity());
     }
-    
+
     /**
      * Gets this world's name.
      * @return This world's name.
      */
     public String getName() {
         return world.name;
+    }
+
+    /**
+     * Get the default game mode for this world.
+     * @return The game mode for this world.
+     */
+    public int getGameMode() {
+        return world.x.r().e;
+    }
+
+    /**
+     * Launch a projectile in this world.
+     *
+     * @param p The projectile to launch.
+     */
+    public void launchProjectile(Projectile p) {
+        getWorld().d(p.getEntity());
+    }
+
+    /**
+     * Have lightning strike a location.
+     *
+     * @param x The x coordinate to strike.
+     * @param y The y coordinate to strike.
+     * @param z The z coordinate to strike.
+     */
+    public void strikeLightning(double x, double y, double z) {
+        getWorld().c(new OEntityLightningBolt(getWorld(), x, y, z));
+    }
+
+    /**
+     * Have lightning strike a location.
+     *
+     * @param location The location to strike.
+     */
+    public void strikeLightning(Location location) {
+        strikeLightning(location.x, location.y, location.z);
+    }
+
+    /**
+     * Play a sound at the given location
+     * @param location location to play the sound
+     * @param sound the sound to play
+     * @param volume the volume to play the sound
+     * @param pitch  the pitch to play the sound at
+     * @see Sound
+     * @See Location
+     */
+    public void playSound(Location location, Sound sound, float volume, float pitch){
+        playSound(location.x, location.y, location.z, sound, volume, pitch);
+    }
+
+    /**
+     * Play a sound at the given location
+     * @param x x value for the location
+     * @param y y value for the location
+     * @param z z value of the location
+     * @param sound the sound to play
+     * @param volume the volume to play the sound
+     * @param pitch  the pitch to play the sound at
+     * @see Sound
+     * @See Location
+     */
+    public void playSound(double x, double y, double z, Sound sound, float volume, float pitch){
+        world.a(x, y, z, sound.getSoundString(), volume, pitch);
+    }
+
+    /**
+     * Plays a note at a given location.
+     *
+     * @param location The location to play the note at.
+     * @param instrument The instrument to play the note with.
+     * @param pitch The pitch of the note (0-24?).
+     */
+    public void playNote(Location location, Sound.Instrument instrument, int pitch) {
+        playNote(location.x, location.y, location.z, instrument, pitch);
+    }
+
+    /**
+     * Plays a note at a given location.
+     *
+     * @param x The x coordinate to play the note at.
+     * @param y The y coordinate to play the note at.
+     * @param z The z coordinate to play the note at.
+     * @param instrument The instrument to play the note with.
+     * @param pitch The pitch of the note (0-24?).
+     */
+    public void playNote(double x, double y, double z, Sound.Instrument instrument, int pitch) {
+        playNote((int) x, (int) y, (int) z, instrument, pitch);
+    }
+
+    /**
+     * Plays a note at a given location.
+     *
+     * @param x The x coordinate to play the note at.
+     * @param y The y coordinate to play the note at.
+     * @param z The z coordinate to play the note at.
+     * @param instrument The instrument to play the note with.
+     * @param pitch The pitch of the note (0-24?).
+     */
+    public void playNote(int x, int y, int z, Sound.Instrument instrument, int pitch) {
+        ((OBlockNote) OBlock.r[25]).b(getWorld(), x, y, z, instrument.ordinal(), pitch);
+    }
+
+    /**
+     * Get the chunks that are currently loaded.
+     *
+     * @return The loaded chunks in Canary format.
+     */
+    public List<Chunk> getLoadedChunks() {
+        List<OChunk> nativeLoadedChunks = this.getWorld().b.g;
+        List<Chunk> loadedChunks = new ArrayList<Chunk>(nativeLoadedChunks.size());
+        for (OChunk ochunk : nativeLoadedChunks) {
+            loadedChunks.add(ochunk.chunk);
+        }
+        return loadedChunks;
     }
 }

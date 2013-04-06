@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * Plugin.java - Extend this to create your own plugins.
- * 
+ *
  * @author James
  */
 public abstract class Plugin {
@@ -24,7 +24,7 @@ public abstract class Plugin {
 
     /**
      * Returns true if this plugin is enabled
-     * 
+     *
      * @return
      */
     public boolean isEnabled() {
@@ -33,7 +33,7 @@ public abstract class Plugin {
 
     /**
      * Toggles whether or not this plugin is enabled
-     * 
+     *
      * @return
      */
     public boolean toggleEnabled() {
@@ -43,7 +43,7 @@ public abstract class Plugin {
 
     /**
      * Sets the name of this plugin
-     * 
+     *
      * @param name
      */
     public void setName(String name) {
@@ -52,7 +52,7 @@ public abstract class Plugin {
 
     /**
      * Returns the name of this plugin
-     * 
+     *
      * @return name
      */
     public String getName() {
@@ -79,7 +79,7 @@ public abstract class Plugin {
 
     /**
      * Returns a PropertiesFile with the specified name for this plugin.
-     * @param filename The filename without the extension ".properties". 
+     * @param filename The filename without the extension ".properties".
      * @return plugins/NAME/FILENAME.properties
      */
     public final PropertiesFile getPropertiesFile(String filename) {
@@ -106,7 +106,7 @@ public abstract class Plugin {
 
     /**
      * Returns a txt file with the specified name for this plugin. The necessary directorys are created.
-     * @param filename The filename without the extension ".txt". 
+     * @param filename The filename without the extension ".txt".
      * @return plugins/NAME/FILENAME.txt
      */
     public final File getTxtFile(String filename) {

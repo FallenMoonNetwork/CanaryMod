@@ -37,7 +37,7 @@ public class Chunk {
     public static Chunk getNewChunk(OWorld world, byte[] blocks, int x, int z) {
         return new OChunk(world, blocks, x, z).chunk;
     }
-    
+
     /**
      * Regenerates the world according to the world seed.
      * @param world
@@ -46,7 +46,7 @@ public class Chunk {
      * @return new chunk
      */
     public static Chunk regenerateChunk(OWorld world, int x, int z) {
-        return ((OWorldServer)world).G.regenerateChunk(x, z).chunk;
+        return ((OWorldServer)world).b.regenerateChunk(x, z).chunk;
     }
 
     /**
@@ -92,9 +92,9 @@ public class Chunk {
     public boolean setBlockIdAt(int x, int y, int z, int id) {
         if (isLoaded()) {
             // handles notification
-            return getWorld().setBlockAt(id, x | (getX() << 4), y, x | (getZ() << 4));
+            return getWorld().setBlockAt(id, (x & 0xF) | (getX() << 4), y, (z & 0xF) | (getZ() << 4));
         } else {
-            return chunk.a(x, y, z, id);
+            return chunk.a(x, y, z, id, 0);
         }
     }
 
@@ -119,7 +119,7 @@ public class Chunk {
     public void setBlockDataAt(int x, int y, int z, int data) {
         if (isLoaded()) {
             // handles notification
-            getWorld().setBlockData(x | (getX() << 4), y, x | (getZ() << 4), data);
+            getWorld().setBlockData((x & 0xF) | (getX() << 4), y, (z & 0xF) | (getZ() << 4), data);
         } else {
             chunk.b(x, y, z, data);
         }
@@ -133,21 +133,21 @@ public class Chunk {
      * @return block data
      */
     public int getBlockDataAt(int x, int y, int z) {
-        return chunk.b(x, y, z);
+        return chunk.c(x, y, z);
     }
 
     /**
      * Gets the chunk's biome data byte array
-     * 
+     *
      * @return biomedata
      */
     public byte[] getBiomeData() {
-        return chunk.l();
+        return chunk.m();
     }
 
     /**
      * Sets the chunk's biome data (needs to be byte[256])
-     * 
+     *
      * @param biomedata
      */
     public void setBiomeData(byte[] biomedata) {
@@ -159,15 +159,29 @@ public class Chunk {
      * resends chunk data to clients
      */
     public void update() {
-        etc.getMCServer().h.a(new OPacket51MapChunk(chunk, true, 0));
+        etc.getMCServer().ad().a(new OPacket51MapChunk(chunk, true, 0));
     }
 
     /**
      * gets the wrapped chunk
-     * 
+     *
      * @return chunk
      */
     public OChunk getChunk() {
         return chunk;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Chunk) {
+            Chunk other = (Chunk) obj;
+            return getX() == other.getX() && getZ() == other.getZ();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Chunk[x=%d, z=%d]", getX(), getZ());
     }
 }

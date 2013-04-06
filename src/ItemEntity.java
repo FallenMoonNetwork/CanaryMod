@@ -8,7 +8,7 @@ public class ItemEntity extends BaseEntity {
 
     /**
      * Constructor
-     * 
+     *
      * @param item
      */
     public ItemEntity(OEntityItem item) {
@@ -17,7 +17,7 @@ public class ItemEntity extends BaseEntity {
 
     /**
      * Returns the entity we're wrapping.
-     * 
+     *
      * @return
      */
     @Override
@@ -26,28 +26,28 @@ public class ItemEntity extends BaseEntity {
     }
 
     public void setAge(int age) {
-        getEntity().b = age;
+        getEntity().a = age;
     }
 
     public int getAge() {
-        return getEntity().b;
+        return getEntity().a;
     }
 
     public void setDelayBeforeCanPickUp(int time) {
-        getEntity().c = time;
+        getEntity().b = time;
     }
 
     public int getDelayBeforeCanPickUp() {
-        return getEntity().c;
+        return getEntity().b;
     }
 
     public Item getItem() {
-        return new Item(getEntity().a);
+        return new Item(getEntity().d());
     }
 
     @Override
     public World getWorld() {
-        return getEntity().bi.world;
+        return getEntity().q.world;
     }
 
 }

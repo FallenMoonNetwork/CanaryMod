@@ -75,7 +75,7 @@ public class CanaryConnection {
     public boolean isClosed() throws SQLException {
         return con.isClosed();
     }
-    
+
     public boolean isDead(int timeout) throws SQLException {
         return con.isValid(timeout);
     }

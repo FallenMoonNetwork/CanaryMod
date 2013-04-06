@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * DelayedTask - Lets you add a task to a j.u.concurrent.DelayQueue
- * 
+ *
  * @author Zeerix
  */
 public class DelayedTask implements Runnable, Delayed {
@@ -14,7 +14,7 @@ public class DelayedTask implements Runnable, Delayed {
 
     /**
      * Wraps a Runnable task so you can put it into a DelayQueue
-     * 
+     *
      * @param task
      *            the task that needs to be run after the delay
      * @param delayMillis
@@ -34,7 +34,7 @@ public class DelayedTask implements Runnable, Delayed {
 
     /**
      * Returns how long this task needs to be delayed
-     * 
+     *
      * @param unit
      *            the TimeUnit of the result
      */
@@ -44,7 +44,7 @@ public class DelayedTask implements Runnable, Delayed {
 
     /**
      * Compares order of two DelayedTasks
-     * 
+     *
      * @param delayed
      *            the other object to compare to
      */

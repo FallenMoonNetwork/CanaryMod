@@ -1,6 +1,6 @@
 /**
  * HookParamtersConnect.java - send/receive parameters from hooks
- * 
+ *
  * @author James
  */
 
@@ -44,11 +44,11 @@ public class HookParametersLogincheck extends HookParameters {
     public void setWorldName(String world) {
         this.world = world;
     }
-    
+
     public void setKickReason(String reason) {
         this.kickReason = reason;
     }
-    
+
     public String getKickReason() {
         return this.kickReason;
     }

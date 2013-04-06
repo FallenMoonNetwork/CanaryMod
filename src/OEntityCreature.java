@@ -1,88 +1,81 @@
-
 public abstract class OEntityCreature extends OEntityLiving {
 
-    private OPathEntity a;
-    protected OEntity d;
-    protected boolean e = false;
-    protected int f = 0;
+    private OPathEntity d;
+    protected OEntity a_;
+    protected boolean b = false;
+    protected int c = 0;
 
     public OEntityCreature(OWorld oworld) {
         super(oworld);
     }
 
-    protected boolean F() {
+    protected boolean h() {
         return false;
     }
 
-    protected void d_() {
-        OProfiler.a("ai"); // CanaryMod jarjar fix
-        if (this.f > 0) {
-            --this.f;
+    protected void bq() {
+        this.q.C.a("ai");
+        if (this.c > 0) {
+            --this.c;
         }
 
-        this.e = this.F();
+        this.b = this.h();
         float f = 16.0F;
 
-        if (this.d == null) {
-            this.d = this.o();
-            if (this.d != null) {
-                this.a = this.bi.a(this, this.d, f, true, false, false, true);
+        if (this.a_ == null) {
+            OEntity target = this.j(); // CanaryMod: invoke once
+            if (target == null || !(Boolean) manager.callHook(PluginLoader.Hook.MOB_TARGET, target.getEntity(), this.getEntity())) { // CanaryMod: call hook
+                this.a_ = target;
+            } //
+            if (this.a_ != null) {
+                this.d = this.q.a(this, this.a_, f, true, false, false, true);
             }
-        } else if (!this.d.aE()) {
-            this.d = null;
+        } else if (this.a_.R()) {
+            float f1 = this.a_.d((OEntity) this);
+
+            if (this.n(this.a_)) {
+                this.a(this.a_, f1);
+            }
         } else {
-            float f1 = this.d.i(this);
-
-            if (this.h(this.d)) {
-                this.a(this.d, f1);
-            } else {
-                this.b(this.d, f1);
-            }
+            this.a_ = null;
         }
 
-        OProfiler.a();
-        if (!this.e && this.d != null && (this.a == null || this.bS.nextInt(20) == 0)) {
-            this.a = this.bi.a(this, this.d, f, true, false, false, true);
-        } else if (!this.e && (this.a == null && this.bS.nextInt(180) == 0 || this.bS.nextInt(120) == 0 || this.f > 0) && this.aV < 100) {
-            this.G();
+        this.q.C.b();
+        if (!this.b && this.a_ != null && (this.d == null || this.ab.nextInt(20) == 0)) {
+            this.d = this.q.a(this, this.a_, f, true, false, false, true);
+        } else if (!this.b && (this.d == null && this.ab.nextInt(180) == 0 || this.ab.nextInt(120) == 0 || this.c > 0) && this.bC < 100) {
+            this.i();
         }
 
-        int i = OMathHelper.b(this.bw.b + 0.5D);
-        boolean flag = this.aU();
-        boolean flag1 = this.aV();
+        int i = OMathHelper.c(this.E.b + 0.5D);
+        boolean flag = this.G();
+        boolean flag1 = this.I();
 
-        this.bt = 0.0F;
-        if (this.a != null && this.bS.nextInt(100) != 0) {
-            OProfiler.a("followpath");
-            OVec3D ovec3d = this.a.a((OEntity) this);
-            double d0 = (double) (this.bG * 2.0F);
+        this.B = 0.0F;
+        if (this.d != null && this.ab.nextInt(100) != 0) {
+            this.q.C.a("followpath");
+            OVec3 ovec3 = this.d.a((OEntity) this);
+            double d0 = (double) (this.O * 2.0F);
 
-            while (ovec3d != null && ovec3d.d(this.bm, ovec3d.b, this.bo) < d0 * d0) {
-                this.a.a();
-                if (this.a.b()) {
-                    ovec3d = null;
-                    this.a = null;
+            while (ovec3 != null && ovec3.d(this.u, ovec3.d, this.w) < d0 * d0) {
+                this.d.a();
+                if (this.d.b()) {
+                    ovec3 = null;
+                    this.d = null;
                 } else {
-                    ovec3d = this.a.a((OEntity) this);
+                    ovec3 = this.d.a((OEntity) this);
                 }
             }
 
-            this.aZ = false;
-            if (ovec3d != null) {
-                double d1 = ovec3d.a - this.bm;
-                double d2 = ovec3d.c - this.bo;
-                double d3 = ovec3d.b - (double) i;
+            this.bG = false;
+            if (ovec3 != null) {
+                double d1 = ovec3.c - this.u;
+                double d2 = ovec3.e - this.w;
+                double d3 = ovec3.d - (double) i;
                 float f2 = (float) (Math.atan2(d2, d1) * 180.0D / 3.1415927410125732D) - 90.0F;
-                float f3 = f2 - this.bs;
+                float f3 = OMathHelper.g(f2 - this.A);
 
-                for (this.aX = this.bb; f3 < -180.0F; f3 += 360.0F) {
-                    ;
-                }
-
-                while (f3 >= 180.0F) {
-                    f3 -= 360.0F;
-                }
-
+                this.bE = this.bI;
                 if (f3 > 30.0F) {
                     f3 = 30.0F;
                 }
@@ -91,44 +84,44 @@ public abstract class OEntityCreature extends OEntityLiving {
                     f3 = -30.0F;
                 }
 
-                this.bs += f3;
-                if (this.e && this.d != null) {
-                    double d4 = this.d.bm - this.bm;
-                    double d5 = this.d.bo - this.bo;
-                    float f4 = this.bs;
+                this.A += f3;
+                if (this.b && this.a_ != null) {
+                    double d4 = this.a_.u - this.u;
+                    double d5 = this.a_.w - this.w;
+                    float f4 = this.A;
 
-                    this.bs = (float) (Math.atan2(d5, d4) * 180.0D / 3.1415927410125732D) - 90.0F;
-                    f3 = (f4 - this.bs + 90.0F) * 3.1415927F / 180.0F;
-                    this.aW = -OMathHelper.a(f3) * this.aX * 1.0F;
-                    this.aX = OMathHelper.b(f3) * this.aX * 1.0F;
+                    this.A = (float) (Math.atan2(d5, d4) * 180.0D / 3.1415927410125732D) - 90.0F;
+                    f3 = (f4 - this.A + 90.0F) * 3.1415927F / 180.0F;
+                    this.bD = -OMathHelper.a(f3) * this.bE * 1.0F;
+                    this.bE = OMathHelper.b(f3) * this.bE * 1.0F;
                 }
 
                 if (d3 > 0.0D) {
-                    this.aZ = true;
+                    this.bG = true;
                 }
             }
 
-            if (this.d != null) {
-                this.a(this.d, 30.0F, 30.0F);
+            if (this.a_ != null) {
+                this.a(this.a_, 30.0F, 30.0F);
             }
 
-            if (this.by && !this.H()) {
-                this.aZ = true;
+            if (this.G && !this.k()) {
+                this.bG = true;
             }
 
-            if (this.bS.nextFloat() < 0.8F && (flag || flag1)) {
-                this.aZ = true;
+            if (this.ab.nextFloat() < 0.8F && (flag || flag1)) {
+                this.bG = true;
             }
 
-            OProfiler.a();
+            this.q.C.b();
         } else {
-            super.d_();
-            this.a = null;
+            super.bq();
+            this.d = null;
         }
     }
 
-    protected void G() {
-        OProfiler.a("stroll");
+    protected void i() {
+        this.q.C.a("stroll");
         boolean flag = false;
         int i = -1;
         int j = -1;
@@ -136,9 +129,9 @@ public abstract class OEntityCreature extends OEntityLiving {
         float f = -99999.0F;
 
         for (int l = 0; l < 10; ++l) {
-            int i1 = OMathHelper.b(this.bm + (double) this.bS.nextInt(13) - 6.0D);
-            int j1 = OMathHelper.b(this.bn + (double) this.bS.nextInt(7) - 3.0D);
-            int k1 = OMathHelper.b(this.bo + (double) this.bS.nextInt(13) - 6.0D);
+            int i1 = OMathHelper.c(this.u + (double) this.ab.nextInt(13) - 6.0D);
+            int j1 = OMathHelper.c(this.v + (double) this.ab.nextInt(7) - 3.0D);
+            int k1 = OMathHelper.c(this.w + (double) this.ab.nextInt(13) - 6.0D);
             float f1 = this.a(i1, j1, k1);
 
             if (f1 > f) {
@@ -151,59 +144,53 @@ public abstract class OEntityCreature extends OEntityLiving {
         }
 
         if (flag) {
-            this.a = this.bi.a(this, i, j, k, 10.0F, true, false, false, true);
+            this.d = this.q.a(this, i, j, k, 10.0F, true, false, false, true);
         }
 
-        OProfiler.a();
+        this.q.C.b();
     }
 
     protected void a(OEntity oentity, float f) {}
-
-    protected void b(OEntity oentity, float f) {}
 
     public float a(int i, int j, int k) {
         return 0.0F;
     }
 
-    protected OEntity o() {
+    protected OEntity j() {
         return null;
     }
 
-    public boolean l() {
-        int i = OMathHelper.b(this.bm);
-        int j = OMathHelper.b(this.bw.b);
-        int k = OMathHelper.b(this.bo);
+    public boolean bv() {
+        int i = OMathHelper.c(this.u);
+        int j = OMathHelper.c(this.E.b);
+        int k = OMathHelper.c(this.w);
 
-        return super.l() && this.a(i, j, k) >= 0.0F;
+        return super.bv() && this.a(i, j, k) >= 0.0F;
     }
 
-    public boolean H() {
-        return this.a != null;
+    public boolean k() {
+        return this.d != null;
     }
 
     public void a(OPathEntity opathentity) {
-        this.a = opathentity;
+        this.d = opathentity;
     }
 
-    public OEntity I() {
-        return this.d;
+    public OEntity l() {
+        return this.a_;
     }
 
-    public void d(OEntity oentity) {
-        this.d = oentity;
+    public void b(OEntity oentity) {
+        this.a_ = oentity;
     }
 
-    protected float J() {
-        if (this.c_()) {
-            return 1.0F;
-        } else {
-            float f = super.J();
+    public float bE() {
+        float f = super.bE();
 
-            if (this.f > 0) {
-                f *= 2.0F;
-            }
-
-            return f;
+        if (this.c > 0 && !this.bh()) {
+            f *= 2.0F;
         }
+
+        return f;
     }
 }

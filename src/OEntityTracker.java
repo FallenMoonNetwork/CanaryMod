@@ -4,44 +4,37 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.DelayQueue;
-import java.util.logging.Level;
-
+import java.util.concurrent.Callable;
 
 public class OEntityTracker {
-    // CanaryMod: New fields to store the runnables in.
-    private static final DelayQueue<DelayedTask> delayQueue = new DelayQueue<DelayedTask>();
 
-    private Set a = new HashSet();
-    private OIntHashMap b = new OIntHashMap();
-    private OMinecraftServer c;
+    private final OWorldServer a;
+    private Set b = new HashSet();
+    private OIntHashMap c = new OIntHashMap();
     private int d;
-    private int e;
-    
-    private String worldName; // CanaryMod: store worldname for multiworld
-    private EntityTracker canaryEntityTracker; // CanaryMod entity Tracker
 
-    public OEntityTracker(OMinecraftServer ominecraftserver, int i, String s) {
-        super();
-        this.c = ominecraftserver;
-        this.e = i;
-        this.d = ominecraftserver.h.getMaxTrackingDistance(s);
-        this.worldName = s; // CanaryMod
-        canaryEntityTracker = new EntityTracker(this);
+    private EntityTracker entityTracker; // CanaryMod: reference to our EntityTracker
+    private static final DelayQueue<DelayedTask> delayQueue = new DelayQueue<DelayedTask>(); // CanaryMod: New fields to store the runnables in.
+
+    public OEntityTracker(OWorldServer oworldserver) {
+        this.a = oworldserver;
+        this.d = oworldserver.o().ad().a();
+        this.entityTracker = new EntityTracker(this);
     }
-    
+
     /**
      * CanaryMod Get the EntityTracker
      * @return
      */
     public EntityTracker getCanaryEntityTracker() {
-        return canaryEntityTracker;
+        return this.entityTracker;
     }
 
     public void a(OEntity oentity) {
         if (oentity instanceof OEntityPlayerMP) {
             this.a(oentity, 512, 2);
             OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) oentity;
-            Iterator iterator = this.a.iterator();
+            Iterator iterator = this.b.iterator();
 
             while (iterator.hasNext()) {
                 OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) iterator.next();
@@ -63,12 +56,14 @@ public class OEntityTracker {
         } else if (oentity instanceof OEntityEnderPearl) {
             this.a(oentity, 64, 10, true);
         } else if (oentity instanceof OEntityEnderEye) {
-            this.a(oentity, 64, 10, true);
+            this.a(oentity, 64, 4, true);
         } else if (oentity instanceof OEntityEgg) {
             this.a(oentity, 64, 10, true);
         } else if (oentity instanceof OEntityPotion) {
             this.a(oentity, 64, 10, true);
         } else if (oentity instanceof OEntityExpBottle) {
+            this.a(oentity, 64, 10, true);
+        } else if (oentity instanceof OEntityFireworkRocket) {
             this.a(oentity, 64, 10, true);
         } else if (oentity instanceof OEntityItem) {
             this.a(oentity, 64, 20, true);
@@ -78,6 +73,10 @@ public class OEntityTracker {
             this.a(oentity, 80, 3, true);
         } else if (oentity instanceof OEntitySquid) {
             this.a(oentity, 64, 3, true);
+        } else if (oentity instanceof OEntityWither) {
+            this.a(oentity, 80, 3, false);
+        } else if (oentity instanceof OEntityBat) {
+            this.a(oentity, 80, 3, false);
         } else if (oentity instanceof OIAnimals) {
             this.a(oentity, 80, 3, true);
         } else if (oentity instanceof OEntityDragon) {
@@ -92,8 +91,9 @@ public class OEntityTracker {
             this.a(oentity, 160, 20, true);
         } else if (oentity instanceof OEntityEnderCrystal) {
             this.a(oentity, 256, Integer.MAX_VALUE, false);
+        } else if (oentity instanceof OEntityItemFrame) {
+            this.a(oentity, 160, Integer.MAX_VALUE, false);
         }
-
     }
 
     public void a(OEntity oentity, int i, int j) {
@@ -105,21 +105,40 @@ public class OEntityTracker {
             i = this.d;
         }
 
-        if (this.b.b(oentity.bd)) {
-            throw new IllegalStateException("Entity is already tracked!");
-        } else {
+        try {
+            if (this.c.b(oentity.k)) {
+                throw new IllegalStateException("Entity is already tracked!");
+            }
+
             OEntityTrackerEntry oentitytrackerentry = new OEntityTrackerEntry(oentity, i, j, flag);
 
-            this.a.add(oentitytrackerentry);
-            this.b.a(oentity.bd, oentitytrackerentry);
-            oentitytrackerentry.b(this.c.getWorld(this.worldName, this.e).d);
+            this.b.add(oentitytrackerentry);
+            this.c.a(oentity.k, oentitytrackerentry);
+            oentitytrackerentry.b(this.a.h);
+        } catch (Throwable throwable) {
+            OCrashReport ocrashreport = OCrashReport.a(throwable, "Adding entity to track");
+            OCrashReportCategory ocrashreportcategory = ocrashreport.a("Entity To Track");
+
+            ocrashreportcategory.a("Tracking range", (i + " blocks"));
+            ocrashreportcategory.a("Update interval", (Callable) (new OCallableEntityTracker(this, j)));
+            oentity.a(ocrashreportcategory);
+            OCrashReportCategory ocrashreportcategory1 = ocrashreport.a("Entity That Is Already Tracked");
+
+            ((OEntityTrackerEntry) this.c.a(oentity.k)).a.a(ocrashreportcategory1);
+
+            try {
+                throw new OReportedException(ocrashreport);
+            } catch (OReportedException oreportedexception) {
+                System.err.println("\"Silently\" catching entity tracking error.");
+                oreportedexception.printStackTrace();
+            }
         }
     }
 
     public void b(OEntity oentity) {
         if (oentity instanceof OEntityPlayerMP) {
             OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) oentity;
-            Iterator iterator = this.a.iterator();
+            Iterator iterator = this.b.iterator();
 
             while (iterator.hasNext()) {
                 OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) iterator.next();
@@ -128,24 +147,23 @@ public class OEntityTracker {
             }
         }
 
-        OEntityTrackerEntry oentitytrackerentry1 = (OEntityTrackerEntry) this.b.d(oentity.bd);
+        OEntityTrackerEntry oentitytrackerentry1 = (OEntityTrackerEntry) this.c.d(oentity.k);
 
         if (oentitytrackerentry1 != null) {
-            this.a.remove(oentitytrackerentry1);
+            this.b.remove(oentitytrackerentry1);
             oentitytrackerentry1.a();
         }
-
     }
 
     public void a() {
         try {
             ArrayList arraylist = new ArrayList();
-            Iterator iterator = this.a.iterator();
+            Iterator iterator = this.b.iterator();
 
             while (iterator.hasNext()) {
                 OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) iterator.next();
 
-                oentitytrackerentry.a(this.c.getWorld(this.worldName, this.e).d);
+            oentitytrackerentry.a(this.a.h);
                 if (oentitytrackerentry.n && oentitytrackerentry.a instanceof OEntityPlayerMP) {
                     arraylist.add((OEntityPlayerMP) oentitytrackerentry.a);
                 }
@@ -153,7 +171,7 @@ public class OEntityTracker {
 
             for (int i = 0; i < arraylist.size(); ++i) {
                 OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) arraylist.get(i);
-                Iterator iterator1 = this.a.iterator();
+                Iterator iterator1 = this.b.iterator();
 
                 while (iterator1.hasNext()) {
                     OEntityTrackerEntry oentitytrackerentry1 = (OEntityTrackerEntry) iterator1.next();
@@ -165,7 +183,7 @@ public class OEntityTracker {
             }
         } catch (ConcurrentModificationException concurrentmodificationexception) {
             // people seem to get this concurrentmodificationexceptionception often, lets just catch so it doesn't crash the server.
-            OMinecraftServer.a.log(Level.WARNING, "CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:", concurrentmodificationexception);   
+            this.a.W().b("CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:", concurrentmodificationexception);
         }
         // CanaryMod: Execute runnables contained in eventQueue.
         for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll()) {
@@ -173,7 +191,7 @@ public class OEntityTracker {
             task.run();
         }
     }
-    
+
     // CanaryMod: Allow adding of tasks to the queue
 
     public static void add(Runnable runnable, long i) {
@@ -188,31 +206,40 @@ public class OEntityTracker {
     }
 
     public void a(OEntity oentity, OPacket opacket) {
-        OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) this.b.a(oentity.bd);
+        OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) this.c.a(oentity.k);
 
         if (oentitytrackerentry != null) {
             oentitytrackerentry.a(opacket);
         }
-
     }
 
     public void b(OEntity oentity, OPacket opacket) {
-        OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) this.b.a(oentity.bd);
+        OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) this.c.a(oentity.k);
 
         if (oentitytrackerentry != null) {
             oentitytrackerentry.b(opacket);
         }
-
     }
 
     public void a(OEntityPlayerMP oentityplayermp) {
-        Iterator iterator = this.a.iterator();
+        Iterator iterator = this.b.iterator();
 
         while (iterator.hasNext()) {
             OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) iterator.next();
 
             oentitytrackerentry.c(oentityplayermp);
         }
+    }
 
+    public void a(OEntityPlayerMP oentityplayermp, OChunk ochunk) {
+        Iterator iterator = this.b.iterator();
+
+        while (iterator.hasNext()) {
+            OEntityTrackerEntry oentitytrackerentry = (OEntityTrackerEntry) iterator.next();
+
+            if (oentitytrackerentry.a != oentityplayermp && oentitytrackerentry.a.aj == ochunk.g && oentitytrackerentry.a.al == ochunk.h) {
+                oentitytrackerentry.b(oentityplayermp);
+            }
+        }
     }
 }

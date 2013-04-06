@@ -2,22 +2,21 @@
  * An interface class to Enchantment Tables.
  * @author willem
  */
-public class EnchantmentTable extends ItemArray<OInventoryBasic> implements Inventory {
+public class EnchantmentTable extends ItemArray<OInventoryBasic> {
     private final OContainerEnchantment enchantTable;
-    
+
     public EnchantmentTable(OContainerEnchantment block) {
-        super(block.a);
+        super(block, (OInventoryBasic) block.a);
         enchantTable = block;
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported. Please use update(Player player)");
-        // Same as workbench: ugly, but we kinda need it. :(
+        enchantTable.b();
     }
-    
+
     public void update(Player player) {
-        enchantTable.a((OEntityPlayer) player.getEntity());
+        this.update(); // Apparently we have an update method now
     }
 
     @Override
@@ -29,7 +28,7 @@ public class EnchantmentTable extends ItemArray<OInventoryBasic> implements Inve
     public void setName(String value) {
         container.setName(value);
     }
-    
+
     /**
      * Enchants the item and subtracts the XP from the player.
      * @param player The {@link Player} to subract XP from
@@ -41,14 +40,14 @@ public class EnchantmentTable extends ItemArray<OInventoryBasic> implements Inve
     public boolean enchantItem(Player player, int slot) {
         return enchantTable.a(player.getUser(), slot);
     }
-    
+
     /**
      * Gets the levels as displayed in the GUI.
      * The upper slot has index 0.
-     * @return an int[3] containing the levels of the slots 
+     * @return an int[3] containing the levels of the slots
      */
     public int[] getEnchantLevels() {
-        return enchantTable.c;
+        return enchantTable.g;
     }
-    
+
 }

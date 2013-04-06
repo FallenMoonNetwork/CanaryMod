@@ -8,25 +8,25 @@ import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.CRC32;
+import java.util.Scanner;
 import java.util.zip.CheckedInputStream;
+import java.util.zip.CRC32;
 
 
 public class Main {
 
-    public static final long   minecraft_server = 0x9b55b90aL;
+    public static final long   minecraft_server = 0x68e18cf4L;
 
-    public static final long   minecraft_servero = 0x8f75a155L;
+    public static final long[] minecraft_servero = {0xb87fd468L, 0x8eafb753L};
 
     public static final long   mysql = 0xb2e59524L;
-    public static final long   jarjar = 0x0de915d3L;
-    public static final long   rules = 0x7bba334dL;
+    public static final long   jarjar = 0x4e724d4dL;
+    public static final long   rules = 0xd809724dL;
 
     public static final Logger log = Logger.getLogger("Minecraft");
-    
+
     private static boolean     newIsCrow = false;
 
     public static void main(String[] args) throws IOException {
@@ -102,6 +102,43 @@ public class Main {
         if (checksum != crc) {
             log("-----------------------------");
             log(fileName + " does not match checksum! Checksum found: " + Long.toHexString(checksum) + ", required checksum: " + Long.toHexString(crc) + ".");
+            log("This means some of your files are either corrupted, outdated or too new. (minecraft got updated?)");
+            log("If you still want to run the server, delete version.txt to run the server in tainted mode.");
+            log("-----------------------------");
+            System.exit(0);
+        }
+    }
+
+    public static void checkCRC32(String fileName, long[] crcs) throws IOException {
+        if (etc.getInstance().getTainted()) {
+            return;
+        }
+
+        long checksum = 0;
+        boolean match = false;
+        for (long crc : crcs) {
+            checksum = getCRC32(fileName);
+            match = checksum == crc;
+            if (match) {
+                break;
+            }
+        }
+
+        if (!match) {
+            // Generate nice string
+            StringBuilder req = new StringBuilder(Long.toHexString(crcs[0]));
+            for (int i = 1; i < crcs.length; i++) {
+                if (i + 1 == crcs.length) {
+                    req.append(" or ");
+                } else {
+                    req.append(", ");
+                }
+
+                req.append(Long.toHexString(crcs[i]));
+            }
+
+            log("-----------------------------");
+            log(fileName + " does not match checksum! Checksum found: " + Long.toHexString(checksum) + ", required checksum: " + req + ".");
             log("This means some of your files are either corrupted, outdated or too new. (minecraft got updated?)");
             log("If you still want to run the server, delete version.txt to run the server in tainted mode.");
             log("-----------------------------");

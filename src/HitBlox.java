@@ -1,6 +1,6 @@
 /**
  * HitBlox.java - Class for getting blocks along line of sight
- * 
+ *
  * NOTES: This class is designed to handle the annoying parts of the seemingly
  * simple task of getting the coordinates of the block a player is currently
  * aimed at. This class abstracts the simpler tasks of finding the current
@@ -8,14 +8,14 @@
  * also provides a public getNextBlock method for processing the entire
  * line-of-sight from the player for more specialized tasks. This method can be
  * used exactly as it is in getTargetBlock, for instance.
- * 
+ *
  * WARNING: Servers with map coordinate bugs may experience a one or more block
  * inaccuracy when in affected parts of the dimension. A good way to test areas for
  * the offset bug is to use Chrisinajar's Magic Carpet plugin.
- * 
+ *
  * Contact: For questions, contact Ho0ber@gmail.com or channel #hey0 on
  * irc.esper.net
- * 
+ *
  * @author Ho0ber
  */
 public class HitBlox {
@@ -30,7 +30,7 @@ public class HitBlox {
 
     /**
      * Constructor requiring player, uses default values
-     * 
+     *
      * @param in_player
      */
     public HitBlox(Player in_player) {
@@ -40,7 +40,7 @@ public class HitBlox {
 
     /**
      * Constructor requiring location, uses default values
-     * 
+     *
      * @param in_location
      */
     public HitBlox(Location in_location) {
@@ -49,7 +49,7 @@ public class HitBlox {
 
     /**
      * Constructor requiring player, max range, and a stepping value
-     * 
+     *
      * @param in_player
      * @param in_range
      * @param in_step
@@ -60,7 +60,7 @@ public class HitBlox {
 
     /**
      * Constructor requiring location, max range, and a stepping value
-     * 
+     *
      * @param in_location
      * @param in_range
      * @param in_step
@@ -71,7 +71,7 @@ public class HitBlox {
 
     /**
      * Initialization method
-     * 
+     *
      * @param in_location
      * @param in_range
      * @param in_step
@@ -96,7 +96,7 @@ public class HitBlox {
 
     /**
      * Returns the block at the cursor, or null if out of range
-     * 
+     *
      * @return Block
      */
     public Block getTargetBlock() {
@@ -107,8 +107,28 @@ public class HitBlox {
     }
 
     /**
+     * Returns the block in the direction of the cursor, ignoring certain block types.
+     * Null if out of range.
+     *
+     * @param blockIds The block ids to ignore.
+     * @return
+     */
+    public Block getTargetBlockIgnoring(int... blockIds){
+        blockLoop:
+        while (getNextBlock() != null) {
+            for (int i : blockIds){
+                if (getCurBlock().getType() == i){
+                    continue blockLoop;
+                }
+            }
+            break;
+        }
+        return getCurBlock();
+    }
+
+    /**
      * Sets the type of the block at the cursor
-     * 
+     *
      * @param type
      */
     public void setTargetBlock(int type) {
@@ -123,7 +143,7 @@ public class HitBlox {
     /**
      * Returns the block attached to the face at the cursor, or null if out of
      * range
-     * 
+     *
      * @return Block
      */
     public Block getFaceBlock() {
@@ -139,7 +159,7 @@ public class HitBlox {
 
     /**
      * Sets the type of the block attached to the face at the cursor
-     * 
+     *
      * @param type
      */
     public void setFaceBlock(int type) {
@@ -153,7 +173,7 @@ public class HitBlox {
 
     /**
      * Returns STEPS forward along line of vision and returns block
-     * 
+     *
      * @return Block
      */
     public Block getNextBlock() {
@@ -184,7 +204,7 @@ public class HitBlox {
 
     /**
      * Returns the current block along the line of vision
-     * 
+     *
      * @return Block
      */
     public Block getCurBlock() {
@@ -197,7 +217,7 @@ public class HitBlox {
 
     /**
      * Sets current block type id
-     * 
+     *
      * @param type
      */
     public void setCurBlock(int type) {
@@ -208,7 +228,7 @@ public class HitBlox {
 
     /**
      * Returns the previous block along the line of vision
-     * 
+     *
      * @return Block
      */
     public Block getLastBlock() {
@@ -217,7 +237,7 @@ public class HitBlox {
 
     /**
      * Sets previous block type id
-     * 
+     *
      * @param type
      */
     public void setLastBlock(int type) {

@@ -1,6 +1,6 @@
 /**
  * HookParamtersDisconnect.java - send/receive parameters from hooks
- * 
+ *
  * @author James
  */
 
@@ -34,5 +34,5 @@ public class HookParametersDisconnect extends HookParameters {
         this.leaveMessage = leaveMessage;
         this.reason = reason;
     }
-    
+
 }

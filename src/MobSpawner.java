@@ -2,79 +2,56 @@
 
 /**
  * MobSpawner.java - Wrapper for mob spawners.
- * 
+ *
  * @author James
  */
-public class MobSpawner implements ComplexBlock {
+public class MobSpawner extends MobSpawnerLogic implements ComplexBlock {
 
-    OTileEntityMobSpawner spawner;
+    private OTileEntityMobSpawner spawner;
 
     /**
      * Creates an interface for the spawner.
-     * 
+     *
      * @param spawner
      */
     public MobSpawner(OTileEntityMobSpawner spawner) {
+        super(spawner.a());
         this.spawner = spawner;
     }
 
     @Override
-    public int getX() {
-        return spawner.l;
-    }
-
-    @Override
-    public int getY() {
-        return spawner.m;
-    }
-
-    @Override
-    public int getZ() {
-        return spawner.n;
-    }
-
-    @Override
     public Block getBlock() {
-        return getWorld().getBlockAt(getX(), getY(), getZ());
+        return this.getWorld().getBlockAt(this.getX(), this.getY(), this.getZ());
+    }
+
+    /**
+     * Reads the data for this spawner from an NBTTagCompound
+     *
+     * @param tag the tag to read from
+     */
+    @Override
+    public void readFromTag(NBTTagCompound tag) {
+        this.spawner.a(tag.getBaseTag());
+    }
+
+    /**
+     * Writes the data for this spawner to an NBTTagCompound
+     *
+     * @param tag the tag to write to
+     */
+    @Override
+    public void writeToTag(NBTTagCompound tag) {
+        this.spawner.b(tag.getBaseTag());
     }
 
     @Override
-    public World getWorld() {
-        return spawner.k.world;
+    public NBTTagCompound getMetaTag() {
+        return this.spawner.metadata;
     }
 
     @Override
     public void update() {
-        etc.getMCServer().h.a(spawner.d());
-    }
-
-    /**
-     * Allows what to spawn to change on-the-fly
-     * 
-     * @param spawn
-     */
-    public void setSpawn(String spawn) {
-        spawner.d = spawn;
-        update();
-    }
-
-    /**
-     * Returns the spawn used.
-     * 
-     * @return
-     */
-    public String getSpawn() {
-        return spawner.d;
-    }
-
-    /**
-     * Allows delay of what to spawn to change on-the-fly.
-     * Modification of this is near-useless as delays get randomized after
-     * spawn.
-     * 
-     * @param delay
-     */
-    public void setDelay(int delay) {
-        spawner.a = delay;
+        super.update();
+        this.spawner.k_();
     }
 }

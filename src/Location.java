@@ -1,13 +1,13 @@
 /**
  * Location.java - Used for passing a location to other functions and such.
- * 
+ *
  * @author James
  * @author Chris
  * @author Willem
  */
 public class Location implements java.io.Serializable {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -511963348775597869L;
 
@@ -40,7 +40,7 @@ public class Location implements java.io.Serializable {
      * Dimension id
      */
     public int dimension;
-    
+
     /**
      * World name
      */
@@ -53,7 +53,7 @@ public class Location implements java.io.Serializable {
 
     /**
      * Creates a location with the specified coordinates in the default world in dimension 0 (NORMAL)
-     * 
+     *
      * @param X
      * @param Y
      * @param Z
@@ -82,7 +82,7 @@ public class Location implements java.io.Serializable {
 
     /**
      * Creates a location with the specified coordinates and rotation
-     * 
+     *
      * @param X
      * @param Y
      * @param Z
@@ -101,8 +101,8 @@ public class Location implements java.io.Serializable {
 
     /**
      * Creates a location in the specified dimension with the specified coordinates and rotation
-     * 
-     * @param world 
+     *
+     * @param world
      * @param X
      * @param Y
      * @param Z
@@ -117,7 +117,7 @@ public class Location implements java.io.Serializable {
 
     /**
      * Returns the dimension of the world for this location
-     * 
+     *
      * @return a <tt>World</tt>-object representing the world at this location's
      *          dimension. May return null if the given world does not exist!
      */
@@ -128,11 +128,11 @@ public class Location implements java.io.Serializable {
         }
         return worlds[World.Dimension.fromId(dimension).toIndex()];
     }
-    
+
     /**
      * Used to get the distance to another location.
      * If other location is in another world, this method returns <tt>-1</tt>.
-     * 
+     *
      * @param other the <tt>Location</tt> to get the distance to.
      * @return the distance to <tt>other</tt> if it is in the same world,
      *         <tt>-1</tt> otherwise.
@@ -165,7 +165,7 @@ public class Location implements java.io.Serializable {
         hash = 19 * hash + this.dimension;
         return hash;
     }
-    
+
     // Used by Java to read this class from serialized state, this makes it read
     // all fields and not error out on extra fields.
     private void readObject(java.io.ObjectInputStream in)
@@ -173,4 +173,8 @@ public class Location implements java.io.Serializable {
         in.defaultReadObject();
     }
 
+    @Override
+    public String toString() {
+        return String.format("Location[x=%f, y=%f, z=%f, rotX=%f, rotY=%f, world=%s, dim=%d]", x, y, z, rotX, rotY, world, dimension);
+    }
 }

@@ -61,7 +61,7 @@ public class ConnectionService {
         ses.scheduleAtFixedRate(new ConnectionGuard(this),
                 timeout / 2, timeout / 2, TimeUnit.MILLISECONDS); //start cleanup thread
     }
-    
+
     public static ConnectionService getInstance() {
         if(instance == null) {
             PropertiesFile sql = new PropertiesFile("mysql.properties");
@@ -128,7 +128,7 @@ public class ConnectionService {
             }
         }
     }
-    
+
     /**
      * Get the username for this connection
      * @return
@@ -136,7 +136,7 @@ public class ConnectionService {
     public String getConnectionCredentialsUser() {
         return user;
     }
-    
+
     /**
      * Get the password for this connection
      * @return
@@ -144,7 +144,7 @@ public class ConnectionService {
     public String getConnectionCredentialsPasswd() {
         return passwd;
     }
-    
+
     /**
      * Get the url for this connection
      * @return

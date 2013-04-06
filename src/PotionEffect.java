@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class PotionEffect {
     public final OPotionEffect potionEffect;
-   
+
     public enum Type {
         MOVE_SPEED(1), //
         SLOW_DOWN(2), //
@@ -28,33 +28,34 @@ public class PotionEffect {
         NIGHTVISION(16), //
         HUNGER(17), //
         WEAKNESS(18), //
-        POISON(19);
-      
-        private int id; 
+        POISON(19),
+        WITHER(20);
+
+        private int id;
         private static Map<Integer, Type> map;
-      
+
         Type(int id) {
             this.id = id;
             add(id, this);
         }
-      
+
         private static void add(int id, Type name) {
             if (map == null) {
                 map = new HashMap<Integer, Type>();
             }
             map.put(id, name);
         }
-      
+
         public int getId() {
             return id;
         }
-      
+
         public static Type fromId(final int id) {
             return map.get(id);
         }
-      
+
     }
- 
+
     /**
      * Instantiated this wrapper around OPotionEffect
      * @param potionEffect the OPotionEffect to wrap
@@ -62,11 +63,11 @@ public class PotionEffect {
     public PotionEffect(OPotionEffect potionEffect) {
         this.potionEffect = potionEffect;
     }
-   
+
     /**
      * Creates a new PotionEffect
-     * 
-     * @param effect 
+     *
+     * @param effect
      * @param amplifier
      * @param duration
      * @return
@@ -74,29 +75,48 @@ public class PotionEffect {
     public static PotionEffect getNewPotionEffect(PotionEffect.Type effect, int amplifier, int duration) {
         return new OPotionEffect(effect.getId(), duration, amplifier).potionEffect;
     }
-   
+
+    /**
+     * Creates a new PotionEffect
+     *
+     * @param tag the tag to get the potion effect's data from
+     * @return
+     */
+    public static PotionEffect getNewPotionEffect(NBTTagCompound tag) {
+        return OPotionEffect.b(tag.getBaseTag()).potionEffect;
+    }
+
     public PotionEffect.Type getType() {
         return PotionEffect.Type.fromId(potionEffect.a());
     }
-   
+
     public int getAmplifier() {
         return potionEffect.c();
     }
-   
+
     public int getDuration() {
         return potionEffect.b();
     }
-   
+
     public void setType(Type effect) {
         potionEffect.a = effect.getId();
     }
-   
+
     public void setDuration(int duration) {
         potionEffect.b = duration;
     }
-   
+
     public void setAmplifier(int amplifier) {
         potionEffect.c = amplifier;
     }
-   
+
+    /**
+     * Writes this potion effect's data to an NBTTagCompound
+     *
+     * @param tag the tag to write to
+     * @return the same tag that was passed in, but rewrapped
+     */
+    public NBTTagCompound writeToTag(NBTTagCompound tag) {
+        return new NBTTagCompound(potionEffect.a(tag.getBaseTag()));
+    }
 }

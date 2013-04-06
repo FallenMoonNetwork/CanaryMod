@@ -3,7 +3,7 @@ import java.util.Map;
 
 
 /**
- * 
+ *
  * @author Meaglin
  */
 public class Cloth {

@@ -1,52 +1,51 @@
-
 public abstract class OEntityMob extends OEntityCreature implements OIMob {
 
-    protected int c = 2;
-    
     // CanaryMod start
-    protected LivingEntity entity = new LivingEntity(this);
+    @SuppressWarnings("FieldNameHidesFieldInSuperclass")
+    protected Mob entity = new Mob(this);
     // CanaryMod end
 
     public OEntityMob(OWorld oworld) {
         super(oworld);
-        this.aA = 5;
+        this.be = 5;
     }
 
-    public void e() {
-        float f = this.b(1.0F);
+    public void c() {
+        this.br();
+        float f = this.c(1.0F);
 
         if (f > 0.5F) {
-            this.aV += 2;
+            this.bC += 2;
         }
 
-        super.e();
+        super.c();
     }
 
-    public void F_() {
-        super.F_();
-        if (!this.bi.F && this.bi.q == 0) {
-            this.X();
+    public void l_() {
+        super.l_();
+        if (!this.q.I && this.q.r == 0) {
+            this.w();
         }
-
     }
 
-    protected OEntity o() {
-        OEntityPlayer oentityplayer = this.bi.b(this, 16.0D);
+    protected OEntity j() {
+        OEntityPlayer oentityplayer = this.q.b(this, 16.0D);
 
-        return (oentityplayer != null && this.h(oentityplayer) && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, (Player) oentityplayer.entity.getPlayer(), entity)) ? oentityplayer : null; // CanaryMod: MOB_TARGET
+        return oentityplayer != null && this.n(oentityplayer) ? oentityplayer : null;
     }
 
     public boolean a(ODamageSource odamagesource, int i) {
-        if (super.a(odamagesource, i)) {
-            OEntity oentity = odamagesource.a();
+        if (this.aq()) {
+            return false;
+        } else if (super.a(odamagesource, i)) {
+            OEntity oentity = odamagesource.i();
 
-            if (this.bg != oentity && this.bh != oentity) {
+            if (this.n != oentity && this.o != oentity) {
                 if (oentity != this) {
                     // CanaryMod start - MOB_TARGET hook
-                    if (oentity instanceof OEntityPlayer && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, (Player) oentity.entity.getPlayer(), entity)) {
-                        this.d = oentity;
-                    }
-                    // CanaryMod end
+                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, oentity.getEntity(), this.getEntity())) {
+                        this.a_ = oentity;
+                    } // CanaryMod end
                 }
 
                 return true;
@@ -58,8 +57,8 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
         }
     }
 
-    public boolean a(OEntity oentity) {
-        int i = this.c;
+    public boolean m(OEntity oentity) {
+        int i = this.c(oentity);
 
         if (this.a(OPotion.g)) {
             i += 3 << this.b(OPotion.g).c();
@@ -69,52 +68,79 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
             i -= 2 << this.b(OPotion.t).c();
         }
 
-        return oentity.a(ODamageSource.a((OEntityLiving) this), i);
+        int j = 0;
+
+        if (oentity instanceof OEntityLiving) {
+            i += OEnchantmentHelper.a((OEntityLiving) this, (OEntityLiving) oentity);
+            j += OEnchantmentHelper.b(this, (OEntityLiving) oentity);
+        }
+
+        boolean flag = oentity.a(ODamageSource.a((OEntityLiving) this), i);
+
+        if (flag) {
+            if (j > 0) {
+                oentity.g((double) (-OMathHelper.a(this.A * 3.1415927F / 180.0F) * (float) j * 0.5F), 0.1D, (double) (OMathHelper.b(this.A * 3.1415927F / 180.0F) * (float) j * 0.5F));
+                this.x *= 0.6D;
+                this.z *= 0.6D;
+            }
+
+            int k = OEnchantmentHelper.a((OEntityLiving) this);
+
+            if (k > 0) {
+                oentity.d(k * 4);
+            }
+
+            if (oentity instanceof OEntityLiving) {
+                OEnchantmentThorns.a(this, (OEntityLiving) oentity, this.ab);
+            }
+        }
+
+        return flag;
     }
 
     protected void a(OEntity oentity, float f) {
-        if (this.aw <= 0 && f < 2.0F && oentity.bw.e > this.bw.b && oentity.bw.b < this.bw.e) {
-            this.aw = 20;
-            this.a(oentity);
+        if (this.ba <= 0 && f < 2.0F && oentity.E.e > this.E.b && oentity.E.b < this.E.e) {
+            this.ba = 20;
+            this.m(oentity);
         }
-
     }
 
     public float a(int i, int j, int k) {
-        return 0.5F - this.bi.p(i, j, k);
+        return 0.5F - this.q.q(i, j, k);
     }
 
-    public void b(ONBTTagCompound onbttagcompound) {
-        super.b(onbttagcompound);
-    }
+    protected boolean i_() {
+        int i = OMathHelper.c(this.u);
+        int j = OMathHelper.c(this.E.b);
+        int k = OMathHelper.c(this.w);
 
-    public void a(ONBTTagCompound onbttagcompound) {
-        super.a(onbttagcompound);
-    }
-
-    protected boolean C() {
-        int i = OMathHelper.b(this.bm);
-        int j = OMathHelper.b(this.bw.b);
-        int k = OMathHelper.b(this.bo);
-
-        if (this.bi.a(OEnumSkyBlock.a, i, j, k) > this.bS.nextInt(32)) {
+        if (this.q.b(OEnumSkyBlock.a, i, j, k) > this.ab.nextInt(32)) {
             return false;
         } else {
-            int l = this.bi.n(i, j, k);
+            int l = this.q.n(i, j, k);
 
-            if (this.bi.w()) {
-                int i1 = this.bi.f;
+            if (this.q.N()) {
+                int i1 = this.q.j;
 
-                this.bi.f = 10;
-                l = this.bi.n(i, j, k);
-                this.bi.f = i1;
+                this.q.j = 10;
+                l = this.q.n(i, j, k);
+                this.q.j = i1;
             }
 
-            return l <= this.bS.nextInt(8);
+            return l <= this.ab.nextInt(8);
         }
     }
 
-    public boolean l() {
-        return this.C() && super.l();
+    public boolean bv() {
+        return this.i_() && super.bv();
     }
+
+    public int c(OEntity oentity) {
+        return 2;
+    }
+
+    @Override
+    public Mob getEntity() {
+        return entity;
+    } //
 }

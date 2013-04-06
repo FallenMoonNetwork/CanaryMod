@@ -1,4 +1,3 @@
-
 public class OItemDoor extends OItem {
 
     private OMaterial a;
@@ -6,10 +5,11 @@ public class OItemDoor extends OItem {
     public OItemDoor(int i, OMaterial omaterial) {
         super(i);
         this.a = omaterial;
-        this.bQ = 1;
+        this.cq = 1;
+        this.a(OCreativeTabs.d);
     }
 
-    public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l) {
+    public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l, float f, float f1, float f2) {
         if (l != 1) {
             return false;
         } else {
@@ -17,31 +17,29 @@ public class OItemDoor extends OItem {
             OBlock oblock;
 
             if (this.a == OMaterial.d) {
-                oblock = OBlock.aE;
+                oblock = OBlock.aI;
             } else {
-                oblock = OBlock.aL;
+                oblock = OBlock.aP;
             }
 
-            if (oentityplayer.d(i, j, k) && oentityplayer.d(i, j + 1, k)) {
+            if (oentityplayer.a(i, j, k, l, oitemstack) && oentityplayer.a(i, j + 1, k, l, oitemstack)) {
                 if (!oblock.c(oworld, i, j, k)) {
                     return false;
                 } else {
                     // CanaryMod hook: onItemUse
-                    Block blockClicked = new Block(oworld.world, oworld.world.getBlockIdAt(i, j, k), i, j, k);
-
-                    blockClicked.setFaceClicked(Block.Face.fromId(l));
-                    Block blockPlaced = new Block(oworld.world, oblock.bO, i, j, k);
+                    Block blockClicked = this.getBlockInfo(oworld, i, j, k, l);
+                    Block blockPlaced = new Block(oworld.world, oblock.cz, i, j, k);
 
                     // Call the hook
                     if (oentityplayer instanceof OEntityPlayerMP) {
                         Player player = ((OEntityPlayerMP) oentityplayer).getPlayer();
 
-                        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, new Item(oitemstack))) {
+                        if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, ((OEntityPlayerMP) oentityplayer).getPlayer().getItemStackInHand())) {
                             return false;
                         }
                     }
-                    
-                    int i1 = OMathHelper.b((double) ((oentityplayer.bs + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
+
+                    int i1 = OMathHelper.c((double) ((oentityplayer.A + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
 
                     a(oworld, i, j, k, i1, oblock);
                     --oitemstack.a;
@@ -73,10 +71,10 @@ public class OItemDoor extends OItem {
             b0 = 1;
         }
 
-        int i1 = (oworld.e(i - b0, j, k - b1) ? 1 : 0) + (oworld.e(i - b0, j + 1, k - b1) ? 1 : 0);
-        int j1 = (oworld.e(i + b0, j, k + b1) ? 1 : 0) + (oworld.e(i + b0, j + 1, k + b1) ? 1 : 0);
-        boolean flag = oworld.a(i - b0, j, k - b1) == oblock.bO || oworld.a(i - b0, j + 1, k - b1) == oblock.bO;
-        boolean flag1 = oworld.a(i + b0, j, k + b1) == oblock.bO || oworld.a(i + b0, j + 1, k + b1) == oblock.bO;
+        int i1 = (oworld.u(i - b0, j, k - b1) ? 1 : 0) + (oworld.u(i - b0, j + 1, k - b1) ? 1 : 0);
+        int j1 = (oworld.u(i + b0, j, k + b1) ? 1 : 0) + (oworld.u(i + b0, j + 1, k + b1) ? 1 : 0);
+        boolean flag = oworld.a(i - b0, j, k - b1) == oblock.cz || oworld.a(i - b0, j + 1, k - b1) == oblock.cz;
+        boolean flag1 = oworld.a(i + b0, j, k + b1) == oblock.cz || oworld.a(i + b0, j + 1, k + b1) == oblock.cz;
         boolean flag2 = false;
 
         if (flag && !flag1) {
@@ -85,11 +83,9 @@ public class OItemDoor extends OItem {
             flag2 = true;
         }
 
-        oworld.o = true;
-        oworld.b(i, j, k, oblock.bO, l);
-        oworld.b(i, j + 1, k, oblock.bO, 8 | (flag2 ? 1 : 0));
-        oworld.o = false;
-        oworld.h(i, j, k, oblock.bO);
-        oworld.h(i, j + 1, k, oblock.bO);
+        oworld.f(i, j, k, oblock.cz, l, 2);
+        oworld.f(i, j + 1, k, oblock.cz, 8 | (flag2 ? 1 : 0), 2);
+        oworld.f(i, j, k, oblock.cz);
+        oworld.f(i, j + 1, k, oblock.cz);
     }
 }

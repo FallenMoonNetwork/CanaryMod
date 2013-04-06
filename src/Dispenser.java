@@ -1,17 +1,20 @@
 /**
- * 
+ *
  * @author Meaglin
  */
-public class Dispenser extends BaseContainerBlock implements ComplexBlock {
+public class Dispenser extends BaseContainerBlock<OTileEntityDispenser> implements ComplexBlock {
 
     public Dispenser(OTileEntityDispenser disp) {
-        super(disp, "Trap");
+        this(null, disp);
     }
-    
+    public Dispenser(OContainer oContainer, OTileEntityDispenser disp) {
+        super(oContainer, disp, "Trap");
+    }
+
     public void fire() {
         OWorld oworld = this.getWorld().getWorld();
-        
-        // OBlock.R = OBlockDispenser, oworld.w = Random
-        OBlock.P.a(oworld, this.getX(), this.getY(), this.getZ(), oworld.r);
+
+        // OBlock.P = OBlockDispenser, n = dispense
+        ((OBlockDispenser) OBlock.T).j_(oworld, this.getX(), this.getY(), this.getZ());
     }
 }

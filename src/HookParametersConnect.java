@@ -1,6 +1,6 @@
 /**
  * HookParamtersConnect.java - send/receive parameters from hooks
- * 
+ *
  * @author James
  */
 
@@ -38,5 +38,5 @@ public class HookParametersConnect extends HookParameters {
         this.joinMessage = joinMessage;
         this.applyPotionsEffects = potionEffects;
     }
-    
+
 }

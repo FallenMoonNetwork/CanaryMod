@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 /**
  * DataSource.java - Abstract class for implementing new data sources.
- * 
+ *
  * @author James
  */
 public abstract class DataSource {
@@ -63,12 +63,12 @@ public abstract class DataSource {
      * Loads the ban list
      */
     abstract public void loadBanList();
-    
+
     /**
      * Loads the list of muted players
      */
     abstract public void loadMutedPlayers();
-    
+
     /**
      * Loads the enderman blocks list
      */
@@ -78,24 +78,24 @@ public abstract class DataSource {
      * Loads the anti xray blocks list
      */
     abstract public void loadAntiXRayBlocks();
-    
+
     /**
      * Adds user to the list
-     * 
+     *
      * @param player
      */
     abstract public void addPlayer(Player player);
 
     /**
      * Modifies the provided user
-     * 
+     *
      * @param player
      */
     abstract public void modifyPlayer(Player player);
 
     /**
      * Checks to see if the specified player exists
-     * 
+     *
      * @param player
      * @return true if player exists
      */
@@ -103,7 +103,7 @@ public abstract class DataSource {
 
     /**
      * Returns specified user
-     * 
+     *
      * @param name
      * @return user
      */
@@ -111,9 +111,9 @@ public abstract class DataSource {
 
     /**
      * Checks to see if the specified group exists
-     * 
+     *
      * @param groupName
-     * @return true if group exists 
+     * @return true if group exists
      */
     public boolean doesGroupExist(String groupName) {
         for (Group group : groups) {
@@ -123,24 +123,24 @@ public abstract class DataSource {
         }
         return false;
     }
-    
+
     /**
      * Adds specified group to the list of groups
-     * 
+     *
      * @param group
      */
     abstract public void addGroup(Group group);
 
     /**
      * Modifies group
-     * 
+     *
      * @param group
      */
     abstract public void modifyGroup(Group group);
 
     /**
      * Returns specified group
-     * 
+     *
      * @param name
      * @return group
      */
@@ -162,7 +162,7 @@ public abstract class DataSource {
 
     /**
      * Returns the default group
-     * 
+     *
      * @return default group
      */
     public Group getDefaultGroup() {
@@ -178,21 +178,21 @@ public abstract class DataSource {
 
     /**
      * Adds kit to list of kits
-     * 
+     *
      * @param kit
      */
     abstract public void addKit(Kit kit);
 
     /**
      * Modifies kit
-     * 
+     *
      * @param kit
      */
     abstract public void modifyKit(Kit kit);
 
     /**
      * Returns specified kit
-     * 
+     *
      * @param name
      * @return kit
      */
@@ -209,7 +209,7 @@ public abstract class DataSource {
 
     /**
      * Returns true if there are any kits
-     * 
+     *
      * @return true if there are kits
      */
     public boolean hasKits() {
@@ -220,7 +220,7 @@ public abstract class DataSource {
 
     /**
      * Returns a list of all kits names separated by commas
-     * 
+     *
      * @param player
      * @return string list of kits
      */
@@ -242,21 +242,21 @@ public abstract class DataSource {
 
     /**
      * Adds home to list of homes
-     * 
+     *
      * @param home
      */
     abstract public void addHome(Warp home);
 
     /**
      * Modifies home
-     * 
+     *
      * @param home
      */
     abstract public void changeHome(Warp home);
 
     /**
      * Returns specified home
-     * 
+     *
      * @param name
      * @return home
      */
@@ -273,28 +273,28 @@ public abstract class DataSource {
 
     /**
      * Adds warp to list of warps
-     * 
+     *
      * @param warp
      */
     abstract public void addWarp(Warp warp);
 
     /**
      * Modifies warp
-     * 
+     *
      * @param warp
      */
     abstract public void changeWarp(Warp warp);
 
     /**
      * Removes warp from list of warps
-     * 
+     *
      * @param warp
      */
     abstract public void removeWarp(Warp warp);
 
     /**
      * Returns specified warp
-     * 
+     *
      * @param name
      * @return warp
      */
@@ -311,7 +311,7 @@ public abstract class DataSource {
 
     /**
      * Returns true if there are any warps
-     * 
+     *
      * @return true if there are warps
      */
     public boolean hasWarps() {
@@ -322,7 +322,7 @@ public abstract class DataSource {
 
     /**
      * Returns a string containing all warp names the player has access to
-     * 
+     *
      * @param player
      * @return string list of warps
      */
@@ -341,15 +341,15 @@ public abstract class DataSource {
 
         return builder.toString();
     }
-    
+
     /**
      * Get a List<String> of muted players
      * @return List<String>
      */
     public List<String> getMutedPlayers() {
-    	return mutedPlayers;
+        return mutedPlayers;
     }
-    
+
     /**
      * Check if a player is on the mute list and will therefore be
      * automatically muted on login
@@ -357,18 +357,18 @@ public abstract class DataSource {
      * @return true if player is on the mute list, false otherwise
      */
     public boolean isPlayerOnMuteList(String name) {
-    	if(mutedPlayers.contains(name)) {
-    		return true;
-    	}
-    	return false;
+        if(mutedPlayers.contains(name)) {
+            return true;
+        }
+        return false;
     }
-    
+
     /**
      * Sets a player on the list of muted people.
      * @param name
      */
     abstract public void setPlayerToMuteList(String name);
-    
+
     /**
      * Removes a player from the list of muted people
      * @param name
@@ -377,7 +377,7 @@ public abstract class DataSource {
 
     /**
      * Returns item id corresponding to item name
-     * 
+     *
      * @param name
      * @return item id
      */
@@ -392,7 +392,7 @@ public abstract class DataSource {
 
     /**
      * Returns the name of the item corresponding to the ID
-     * 
+     *
      * @param id
      *            id of item
      * @return name of item
@@ -410,7 +410,7 @@ public abstract class DataSource {
 
     /**
      * Returns an unmodifiable map of items
-     * 
+     *
      * @return unmodifiable map of items
      */
     public Map<String, Integer> getItems() {
@@ -419,21 +419,21 @@ public abstract class DataSource {
 
     /**
      * Adds player to whitelist
-     * 
+     *
      * @param name
      */
     abstract public void addToWhitelist(String name);
 
     /**
      * Removes player from whitelist
-     * 
+     *
      * @param name
      */
     abstract public void removeFromWhitelist(String name);
 
     /**
      * Returns true if whitelist is enabled
-     * 
+     *
      * @return true if whitelist is enabled
      * @deprecated use etc.getInstance().isWhitelistEnabled() instead
      */
@@ -444,7 +444,7 @@ public abstract class DataSource {
 
     /**
      * Returns true if the player is on the whitelist
-     * 
+     *
      * @param user
      * @return true if player is on whitelist
      */
@@ -452,7 +452,7 @@ public abstract class DataSource {
 
     /**
      * Adds or modifies specified ban
-     * 
+     *
      * @param ban
      *            Ban to add or modify
      */
@@ -460,7 +460,7 @@ public abstract class DataSource {
 
     /**
      * Checks to see if this player or IP is on the ban list
-     * 
+     *
      * @param player
      *            Player name
      * @param ip
@@ -484,7 +484,7 @@ public abstract class DataSource {
 
     /**
      * Retrieves the ban details
-     * 
+     *
      * @param player
      *            Player name
      * @param ip
@@ -508,36 +508,39 @@ public abstract class DataSource {
 
     /**
      * Adds player to reservelist
-     * 
+     *
      * @param name
      */
     abstract public void addToReserveList(String name);
 
     /**
      * Removes player from reservelist
-     * 
+     *
      * @param name
      */
     abstract public void removeFromReserveList(String name);
 
     /**
      * Returns true if player is on reservelist
-     * 
+     *
      * @param user
      * @return true if player is on reserve list
      */
     abstract public boolean isUserOnReserveList(String user);
-    
+
     /**
-     * Returns the group list
-     * 
-     * @return group list
+     * Returns a <tt>List</tt> containing {@link Group}s.
+     * Please note: This is a clone of the actual list. To modify groups, use
+     * {@link #modifyGroup(Group)}.
+     * @return a <tt>List&lt;Group&gt;</tt> containing all the groups.
      */
-    abstract public List getGroupList();
-    
+    public List<Group> getGroupList() {
+        return new ArrayList<Group>(this.groups);
+    }
+
     /**
      * Retrieves the list of blocks the anti xray will hide
-     * 
+     *
      * @return the list of anti xray blocks
      */
     public List<Integer> getAntiXRayBlocks() {
@@ -551,4 +554,20 @@ public abstract class DataSource {
      * @param ban The ban to expire.
      */
     abstract public void expireBan(Ban ban);
+
+    /**
+     * Returns a <tt>List</tt> containing {@link Ban}s.
+     * Please note: This is a clone of the actual list. To remove/add bans,
+     * use the appropriate methods.
+     * @return a <tt>List&lt;Ban&gt;</tt> containing all the bans.
+     */
+    public List<Ban> getBans() {
+        return new ArrayList<Ban>(this.bans);
+    }
+
+    public Player getDefaultGroupPlayer() {
+        Player player = new Player();
+        player.setGroups(new String[]{etc.getDataSource().getDefaultGroup().Name});
+        return player;
+    }
 }

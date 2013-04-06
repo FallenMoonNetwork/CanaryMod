@@ -1,13 +1,13 @@
 /**
  * BaseVehicle - Base class for interfacing boats and minecarts
- * 
+ *
  * @author James
  */
 public class BaseVehicle extends BaseEntity {
 
     /**
      * Creates an interface for a vehicle
-     * 
+     *
      * @param entity
      */
     public BaseVehicle(OEntity entity) {
@@ -21,30 +21,35 @@ public class BaseVehicle extends BaseEntity {
 
     /**
      * Checks if this vehicle is empty (unoccupied)
-     * 
+     *
      * @return true if unoccupied.
      */
     public boolean isEmpty() {
-        if (entity.bg == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.entity.n == null;
     }
 
     /**
      * Returns the passenger. If there is no passenger this function returns
      * null.
-     * 
+     *
      * @return passenger
      */
     public Player getPassenger() {
-        if (entity.bg != null) {
-            if (isPlayer(entity.bg)) {
-                return ((OEntityPlayerMP) entity.bg).getPlayer();
+        if (this.entity.n != null) {
+            if (isPlayer(this.entity.n)) {
+                return ((OEntityPlayerMP) this.entity.n).getPlayer();
             }
         }
 
         return null;
     }
+
+    /**
+     * Convenience method for setting a player in a minecart because we have getPassenger()
+     * @param p
+     */
+    public void setPassenger(Player p) {
+        setRiddenByEntity(p);
+    }
+
 }

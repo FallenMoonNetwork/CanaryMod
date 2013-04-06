@@ -2,7 +2,7 @@
 
 /**
  * Sign.java - Interface to signs
- * 
+ *
  * @author James
  */
 public class Sign implements ComplexBlock {
@@ -11,7 +11,7 @@ public class Sign implements ComplexBlock {
 
     /**
      * Creates a sign interface
-     * 
+     *
      * @param localSign
      */
     public Sign(OTileEntitySign localSign) {
@@ -20,7 +20,7 @@ public class Sign implements ComplexBlock {
 
     /**
      * Sets the line of text at specified index
-     * 
+     *
      * @param index
      *            line
      * @param text
@@ -34,7 +34,7 @@ public class Sign implements ComplexBlock {
 
     /**
      * Returns the line of text
-     * 
+     *
      * @param index
      *            line of text
      * @return text
@@ -46,33 +46,39 @@ public class Sign implements ComplexBlock {
         return "";
     }
 
+    @Override
     public int getX() {
         return sign.l;
     }
 
+    @Override
     public int getY() {
         return sign.m;
     }
 
+    @Override
     public int getZ() {
         return sign.n;
     }
 
+    @Override
     public Block getBlock() {
         return getWorld().getBlockAt(getX(), getY(), getZ());
     }
 
+    @Override
     public World getWorld() {
         return this.sign.k.world;
     }
 
+    @Override
     public void update() {
         getWorld().getWorld().j(getX(), getY(), getZ());
     }
 
     /**
      * Returns a String value representing this Block
-     * 
+     *
      * @return String representation of this block
      */
     @Override
@@ -82,7 +88,7 @@ public class Sign implements ComplexBlock {
 
     /**
      * Tests the given object to see if it equals this object
-     * 
+     *
      * @param obj
      *            the object to test
      * @return true if the two objects match
@@ -111,7 +117,7 @@ public class Sign implements ComplexBlock {
 
     /**
      * Returns a semi-unique hashcode for this block
-     * 
+     *
      * @return hashcode
      */
     @Override
@@ -122,5 +128,20 @@ public class Sign implements ComplexBlock {
         hash = 97 * hash + getY();
         hash = 97 * hash + getZ();
         return hash;
+    }
+
+    @Override
+    public NBTTagCompound getMetaTag() {
+        return sign.metadata;
+    }
+
+    @Override
+    public void writeToTag(NBTTagCompound tag) {
+        sign.b(tag.getBaseTag());
+    }
+
+    @Override
+    public void readFromTag(NBTTagCompound tag) {
+        sign.a(tag.getBaseTag());
     }
 }

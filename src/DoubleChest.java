@@ -3,7 +3,10 @@ public class DoubleChest extends ItemArray<OInventoryLargeChest> implements Comp
     private String      name = "Large Chest";
 
     public DoubleChest(OInventoryLargeChest chest) {
-        super(chest);
+        this(null, chest);
+    }
+    public DoubleChest(OContainer oContainer, OInventoryLargeChest chest) {
+        super(oContainer, chest);
         block = chest.getChestBlock();
     }
 
@@ -34,7 +37,7 @@ public class DoubleChest extends ItemArray<OInventoryLargeChest> implements Comp
 
     @Override
     public void update() {
-        container.G_();
+        container.d();
     }
 
     @Override
@@ -47,4 +50,18 @@ public class DoubleChest extends ItemArray<OInventoryLargeChest> implements Comp
         return block.getWorld();
     }
 
+    @Override
+    public NBTTagCompound getMetaTag() {
+        return getWorld().getOnlyComplexBlock(block).getMetaTag();
+    }
+
+    @Override
+    public void writeToTag(NBTTagCompound tag) {
+        getWorld().getOnlyComplexBlock(block).writeToTag(tag);
+    }
+
+    @Override
+    public void readFromTag(NBTTagCompound tag) {
+        getWorld().getOnlyComplexBlock(block).readFromTag(tag);
+    }
 }

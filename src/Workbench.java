@@ -1,24 +1,27 @@
-public class Workbench extends ItemArray<OInventoryCraftResult> implements Inventory {
+public class Workbench extends ItemArray<OInventoryCraftResult> {
     private final OContainerWorkbench workbench;
 
     public Workbench(OContainerWorkbench block) {
-        super((OInventoryCraftResult) block.b);
+        super(block, (OInventoryCraftResult) block.f);
         workbench = block;
     }
 
+    @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported. Please use update(Player player)");
-        // This is ugly but we kinda need it. :(
+        workbench.b();
     }
 
+    @Deprecated
     public void update(Player player) {
-        workbench.a((OEntityPlayer) player.getUser());
+        this.update(); // We have an update method now!
     }
 
+    @Override
     public String getName() {
         return container.getName();
     }
 
+    @Override
     public void setName(String value) {
         container.setName(value);
     }

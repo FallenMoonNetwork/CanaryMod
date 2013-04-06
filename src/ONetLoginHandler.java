@@ -1,198 +1,204 @@
 import java.io.IOException;
+import java.io.Serializable;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
-
+import javax.crypto.SecretKey;
 
 public class ONetLoginHandler extends ONetHandler {
 
-    public static Logger a = Logger.getLogger("Minecraft");
-    private static Random d = new Random();
-    public ONetworkManager b;
-    public boolean c = false;
-    private OMinecraftServer e;
+    private static Random c = new Random();
+    private byte[] d;
+    private final OMinecraftServer e;
+    public final OTcpConnection a;
+    public boolean b = false;
     private int f = 0;
     private String g = null;
-    private OPacket1Login h = null;
+    private volatile boolean h = false;
     private String i = "";
-    
-    private String worldname; // CanaryMod: store worldname given by plugins
+    private boolean j = false;
+    private SecretKey k = null;
 
     public ONetLoginHandler(OMinecraftServer ominecraftserver, Socket socket, String s) throws IOException {
-        super();
         this.e = ominecraftserver;
-        this.b = new ONetworkManager(socket, s, this);
-        this.b.f = 0;
+        this.a = new OTcpConnection(ominecraftserver.al(), socket, s, this, ominecraftserver.F().getPrivate());
+        this.a.e = 0;
     }
 
-    public void a() {
-        if (this.h != null) {
-            this.b(this.h);
-            this.h = null;
+    public void c() {
+        if (this.h) {
+            this.d();
         }
 
         if (this.f++ == 600) {
             this.a("Took too long to log in");
         } else {
-            this.b.b();
+            this.a.b();
         }
-
     }
 
     public void a(String s) {
         try {
-            a.info("Disconnecting " + this.b() + ": " + s);
-            this.b.a((OPacket) (new OPacket255KickDisconnect(s)));
-            this.b.d();
-            this.c = true;
+            this.e.al().a("Disconnecting " + this.e() + ": " + s);
+            this.a.a((OPacket) (new OPacket255KickDisconnect(s)));
+            this.a.d();
+            this.b = true;
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-
     }
 
-    public void a(OPacket2Handshake opacket2handshake) {
-        if (this.e.n) {
-            this.i = Long.toString(d.nextLong(), 16);
-            this.b.a((OPacket) (new OPacket2Handshake(this.i)));
+    public void a(OPacket2ClientProtocol opacket2clientprotocol) {
+        this.g = opacket2clientprotocol.f();
+        if (!this.g.toLowerCase().matches("[a-z0-9_]+")) {
+            this.a("Invalid username!");
         } else {
-            this.b.a((OPacket) (new OPacket2Handshake("-")));
-        }
+            PublicKey publickey = this.e.F().getPublic();
 
-    }
-
-    public void a(OPacket1Login opacket1login) {
-        // CanaryMod: Filter bad player names and remove them from the login process
-        if (!opacket1login.b.toLowerCase().matches("[a-z0-9-_]+")) {
-            c = true; // finished processing
-            b.a("This name has been assimilated and you have been kicked.");
-            return;
-        }
-        // CanaryMod End
-        this.g = opacket1login.b;
-        if (opacket1login.a != 29) {
-            if (opacket1login.a > 29) {
-                this.a("Outdated server!");
-            } else {
-                this.a("Outdated client!");
-            }
-
-        } else {
-            if (!this.e.n) {
-                this.b(opacket1login);
-            } else {
-                (new OThreadLoginVerifier(this, opacket1login)).start();
-            }
-
-        }
-    }
-
-    public void b(OPacket1Login opacket1login) {
-        OEntityPlayerMP oentityplayermp = this.e.h.a(this, opacket1login.b); // create new player instance - this has called a loginchecks hook
-
-        if (oentityplayermp != null) { // Is not null, lets go on!
-            this.e.h.b(oentityplayermp);
-            // The world the player will spawn in is set here.
-            // We had the LoginChecks hook in this.e.h.a(this, opacket1login.b); so we have a specific world
-            // already specified and only get the right dimension here if that's needed.
-            oentityplayermp.a((OWorld) this.e.getWorld(oentityplayermp.bi.name, oentityplayermp.w)); 
-            oentityplayermp.c.a((OWorldServer) oentityplayermp.bi);
-            a.info(this.b() + " logged in with entity id " + oentityplayermp.bd + " at (" + oentityplayermp.bm + ", " + oentityplayermp.bn + ", " + oentityplayermp.bo + " in world " + oentityplayermp.bi.name + ". Dimension: " + oentityplayermp.w + ")");
-            OWorldServer oworldserver = this.e.getWorld(oentityplayermp.bi.name, oentityplayermp.w);
-            OChunkCoordinates ochunkcoordinates = oworldserver.p();
-
-            oentityplayermp.c.b(oworldserver.s().m());
-            ONetServerHandler onetserverhandler = new ONetServerHandler(this.e, this.b, oentityplayermp);
-            
-            // CanaryMod - if seed is hidden send 0 instead.
-            onetserverhandler.b((OPacket) (new OPacket1Login("", oentityplayermp.bd, oworldserver.s().p(), oentityplayermp.c.a(), oworldserver.t.g, (byte) oworldserver.q, (byte) oworldserver.y(), (byte) this.e.h.k())));
-            onetserverhandler.b((OPacket) (new OPacket6SpawnPosition(ochunkcoordinates.a, ochunkcoordinates.b, ochunkcoordinates.c)));
-            this.e.h.a(oentityplayermp, oworldserver);
-            // CanaryMod - onPlayerConnect Hook
-            HookParametersConnect hookResult = new HookParametersConnect(String.format(Colors.Yellow + "%s joined the game.", oentityplayermp.v), true);
-
-            hookResult = (HookParametersConnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_CONNECT, oentityplayermp.getPlayer(), hookResult);
-            if (!hookResult.isHidden()) { 
-                this.e.h.a((OPacket) (new OPacket3Chat(hookResult.getJoinMessage())));
-            }
-            
-            // CanaryMod - Check Creative Mode
-            oentityplayermp.getPlayer().refreshCreativeMode();
-            
-            // CanaryMod - Check if player is listed as muted, and mute him
-            if (etc.getDataSource().isPlayerOnMuteList(oentityplayermp.getPlayer().getName())) {
-                oentityplayermp.getPlayer().toggleMute();
-            }
-            // CanaryMod END
-
-            this.e.h.a(oentityplayermp, oworldserver);
-            // this.e.h.a((OPacket) (new OPacket3Chat("\u00a7e" + oentityplayermp.v + " joined the game.")));
-            this.e.h.c(oentityplayermp);
-            onetserverhandler.a(oentityplayermp.bm, oentityplayermp.bn, oentityplayermp.bo, oentityplayermp.bs, oentityplayermp.bt, oentityplayermp.w, oentityplayermp.bi.name);
-            this.e.c.a(onetserverhandler);
-            onetserverhandler.b((OPacket) (new OPacket4UpdateTime(oworldserver.o())));
-
-            // CanaryMod - enable/disable potion effects on login
-            if (hookResult.applyPotionsEffects()) {
-                Iterator iterator = oentityplayermp.aM().iterator();
-
-                while (iterator.hasNext()) {
-                    OPotionEffect opotioneffect = (OPotionEffect) iterator.next();
-
-                    onetserverhandler.b((OPacket) (new OPacket41EntityEffect(oentityplayermp.bd, opotioneffect)));
+            if (opacket2clientprotocol.d() != 60) {
+                if (opacket2clientprotocol.d() > 60) {
+                    this.a("Outdated server!");
+                } else {
+                    this.a("Outdated client!");
                 }
+            } else {
+                this.i = this.e.U() ? Long.toString(c.nextLong(), 16) : "-";
+                this.d = new byte[4];
+                c.nextBytes(this.d);
+                this.a.a((OPacket) (new OPacket253ServerAuthData(this.i, publickey, this.d)));
             }
+        }
+    }
 
-            oentityplayermp.x();
+    public void a(OPacket252SharedKey opacket252sharedkey) {
+        PrivateKey privatekey = this.e.F().getPrivate();
+
+        this.k = opacket252sharedkey.a(privatekey);
+        if (!Arrays.equals(this.d, opacket252sharedkey.b(privatekey))) {
+            this.a("Invalid client reply");
         }
 
-        this.c = true;
+        this.a.a((OPacket) (new OPacket252SharedKey()));
+    }
+
+    public void a(OPacket205ClientCommand opacket205clientcommand) {
+        if (opacket205clientcommand.a == 0) {
+            if (this.j) {
+                this.a("Duplicate login");
+                return;
+            }
+
+            this.j = true;
+            if (this.e.U()) {
+                (new OThreadLoginVerifier(this)).start();
+            } else {
+                this.h = true;
+            }
+        }
+    }
+
+    public void a(OPacket1Login opacket1login) {}
+
+    public void d() {
+        String s = this.e.ad().a(this.a.c(), this.g);
+
+        if (s != null) {
+            this.a(s);
+        } else {
+            OEntityPlayerMP oentityplayermp = this.e.ad().a(this.g);
+
+            if (oentityplayermp != null) {
+                this.e.ad().a((OINetworkManager) this.a, oentityplayermp);
+            }
+        }
+
+        this.b = true;
     }
 
     public void a(String s, Object[] aobject) {
-        a.info(this.b() + " lost connection");
-        this.c = true;
+        this.e.al().a(this.e() + " lost connection");
+        this.b = true;
     }
 
     public void a(OPacket254ServerPing opacket254serverping) {
-        if (this.b.f() == null) {
+        // CanaryMod start - Fix if we don't have a socket, don't do anything
+        if (this.a.c() == null) {
             return;
-        } // CanaryMod - Fix if we don't have a socket, don't do anything
-        try {
-            String s = this.e.s + "\u00a7" + this.e.h.j() + "\u00a7" + this.e.h.k();
+        } // CanaryMod end
 
-            this.b.a((OPacket) (new OPacket255KickDisconnect(s)));
-            // CanaryMod swapped lines below. The network connection should be terminated AFTER removing the socket from the connection list.
-            this.e.c.a(this.b.f());
-            this.b.d();
-            this.c = true;
+        try {
+            OServerConfigurationManager oserverconfigurationmanager = this.e.ad();
+            String s = null;
+
+            if (opacket254serverping.a == 1) {
+                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(60), this.e.x(), this.e.aa(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
+
+                Object object;
+
+                for (Iterator iterator = list.iterator(); iterator.hasNext(); s = s + object.toString().replaceAll("\u0000", "")) {
+                    object = iterator.next();
+                    if (s == null) {
+                        s = "\u00a7";
+                    } else {
+                        s = s + "\u0000";
+                    }
+                }
+            } else {
+                s = this.e.aa() + "\u00a7" + oserverconfigurationmanager.k() + "\u00a7" + oserverconfigurationmanager.l();
+            }
+
+            InetAddress inetaddress = null;
+
+            if (this.a.g() != null) {
+                inetaddress = this.a.g().getInetAddress();
+            }
+
+            this.a.a((OPacket) (new OPacket255KickDisconnect(s)));
+            this.a.d();
+            if (inetaddress != null && this.e.ae() instanceof ODedicatedServerListenThread) {
+                ((ODedicatedServerListenThread) this.e.ae()).a(inetaddress);
+            }
+
+            this.b = true;
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-
     }
 
     public void a(OPacket opacket) {
         this.a("Protocol error");
     }
 
-    public String b() {
-        return this.g != null ? this.g + " [" + this.b.c().toString() + "]" : this.b.c().toString();
+    public String e() {
+        return this.g != null ? this.g + " [" + this.a.c().toString() + "]" : this.a.c().toString();
     }
 
-    public boolean c() {
+    public boolean a() {
         return true;
     }
 
-    // $FF: synthetic method
     static String a(ONetLoginHandler onetloginhandler) {
         return onetloginhandler.i;
     }
 
-    // $FF: synthetic method
-    static OPacket1Login a(ONetLoginHandler onetloginhandler, OPacket1Login opacket1login) {
-        return onetloginhandler.h = opacket1login;
+    static OMinecraftServer b(ONetLoginHandler onetloginhandler) {
+        return onetloginhandler.e;
     }
 
+    static SecretKey c(ONetLoginHandler onetloginhandler) {
+        return onetloginhandler.k;
+    }
+
+    static String d(ONetLoginHandler onetloginhandler) {
+        return onetloginhandler.g;
+    }
+
+    static boolean a(ONetLoginHandler onetloginhandler, boolean flag) {
+        return onetloginhandler.h = flag;
+    }
 }

@@ -27,7 +27,7 @@ public class NoteBlock implements ComplexBlock {
 
     @Override
     public void update() {
-        note.q_();
+        note.k_();
     }
 
     @Override
@@ -56,4 +56,18 @@ public class NoteBlock implements ComplexBlock {
         this.note.a = note;
     }
 
+    @Override
+    public NBTTagCompound getMetaTag() {
+        return note.metadata;
+    }
+
+    @Override
+    public void writeToTag(NBTTagCompound tag) {
+        note.b(tag.getBaseTag());
+    }
+
+    @Override
+    public void readFromTag(NBTTagCompound tag) {
+        note.a(tag.getBaseTag());
+    }
 }

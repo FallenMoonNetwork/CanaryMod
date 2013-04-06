@@ -70,11 +70,11 @@ public class BanSystem {
      */
     public static void fileTempBan(Player player, String reason, int minutes, int hours, int days) {
         int timestamp = (int) (System.currentTimeMillis() / 1000);
-        
+
         hours += 24 * days;
         minutes += 60 * hours;
         timestamp += 60 * minutes;
-        
+
         fileBan(player, reason, timestamp, false);
     }
 
@@ -101,24 +101,24 @@ public class BanSystem {
      */
     public static void fileTempIpBan(Player player, String reason, int minutes, int hours, int days) {
         int timestamp = (int) (System.currentTimeMillis() / 1000);
-        
+
         hours += 24 * days;
         minutes += 60 * hours;
         timestamp += 60 * minutes;
-        
+
         fileBan(player, reason, timestamp, true);
     }
-    
+
     protected static void fileBan(Player player, String reason, int timestamp, boolean byIp) {
         Ban ban = new Ban();
-        
+
         if (byIp)
             ban.setIp(player.getIP());
         else
             ban.setName(player.getName());
         ban.setTimestamp(timestamp);
         ban.setReason(reason);
-        
+
         dataSource.addBan(ban);
     }
 

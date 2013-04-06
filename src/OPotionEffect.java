@@ -1,22 +1,29 @@
-
 public class OPotionEffect {
 
-    // CanaryMod made public
-    public int a;
-    public int b;
-    public int c;
+    int a; // CanaryMod: private -> package-private
+    int b; // CanaryMod: private -> package-private
+    int c; // CanaryMod: private -> package-private
+    private boolean d;
+    private boolean e;
     public boolean permanent = false;
     public PotionEffect potionEffect = new PotionEffect(this);
 
+    public OPotionEffect(int i, int j) {
+        this(i, j, 0);
+    }
+
     public OPotionEffect(int i, int j, int k) {
-        super();
+        this(i, j, k, false);
+    }
+
+    public OPotionEffect(int i, int j, int k, boolean flag) {
         this.a = i;
         this.b = j;
         this.c = k;
+        this.e = flag;
     }
 
     public OPotionEffect(OPotionEffect opotioneffect) {
-        super();
         this.a = opotioneffect.a;
         this.b = opotioneffect.b;
         this.c = opotioneffect.c;
@@ -32,8 +39,9 @@ public class OPotionEffect {
             this.b = opotioneffect.b;
         } else if (opotioneffect.c == this.c && this.b < opotioneffect.b) {
             this.b = opotioneffect.b;
+        } else if (!opotioneffect.e && this.e) {
+            this.e = opotioneffect.e;
         }
-
     }
 
     public int a() {
@@ -48,31 +56,42 @@ public class OPotionEffect {
         return this.c;
     }
 
+    public boolean d() {
+        return this.d;
+    }
+
+    public void a(boolean flag) {
+        this.d = flag;
+    }
+
+    public boolean e() {
+        return this.e;
+    }
+
     public boolean a(OEntityLiving oentityliving) {
         if (this.b > 0) {
-            if (OPotion.a[this.a].b(this.b, this.c)) {
+            if (OPotion.a[this.a].a(this.b, this.c)) {
                 this.b(oentityliving);
             }
 
-            this.e();
+            this.h();
         }
 
         return this.b > 0;
     }
 
-    private int e() {
-        return this.permanent ? this.b : --this.b;
+    private int h() {
+        return this.permanent ? this.b : --this.b; // CanaryMod
     }
 
     public void b(OEntityLiving oentityliving) {
         if (this.b > 0) {
             OPotion.a[this.a].a(oentityliving, this.c);
         }
-
     }
 
-    public String d() {
-        return OPotion.a[this.a].c();
+    public String f() {
+        return OPotion.a[this.a].a();
     }
 
     public int hashCode() {
@@ -83,12 +102,16 @@ public class OPotionEffect {
         String s = "";
 
         if (this.c() > 0) {
-            s = this.d() + " x " + (this.c() + 1) + ", Duration: " + this.b();
+            s = this.f() + " x " + (this.c() + 1) + ", Duration: " + this.b();
         } else {
-            s = this.d() + ", Duration: " + this.b();
+            s = this.f() + ", Duration: " + this.b();
         }
 
-        return OPotion.a[this.a].f() ? "(" + s + ")" : s;
+        if (this.d) {
+            s = s + ", Splash: true";
+        }
+
+        return OPotion.a[this.a].i() ? "(" + s + ")" : s;
     }
 
     public boolean equals(Object object) {
@@ -97,7 +120,24 @@ public class OPotionEffect {
         } else {
             OPotionEffect opotioneffect = (OPotionEffect) object;
 
-            return this.a == opotioneffect.a && this.c == opotioneffect.c && this.b == opotioneffect.b;
+            return this.a == opotioneffect.a && this.c == opotioneffect.c && this.b == opotioneffect.b && this.d == opotioneffect.d && this.e == opotioneffect.e;
         }
+    }
+
+    public ONBTTagCompound a(ONBTTagCompound onbttagcompound) {
+        onbttagcompound.a("Id", (byte) this.a());
+        onbttagcompound.a("Amplifier", (byte) this.c());
+        onbttagcompound.a("Duration", this.b());
+        onbttagcompound.a("Ambient", this.e());
+        return onbttagcompound;
+    }
+
+    public static OPotionEffect b(ONBTTagCompound onbttagcompound) {
+        byte b0 = onbttagcompound.c("Id");
+        byte b1 = onbttagcompound.c("Amplifier");
+        int i = onbttagcompound.e("Duration");
+        boolean flag = onbttagcompound.n("Ambient");
+
+        return new OPotionEffect(b0, i, b1, flag);
     }
 }

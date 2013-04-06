@@ -1,13 +1,13 @@
 /**
  * Ban.java - The ban class! Ban! Ban! Ban!
- * 
+ *
  * @author James
  */
 public class Ban {
 
     private String name = "", ip = "", reason = etc.getInstance().getDefaultBanMessage();
     private int    id = -1, timestamp = -1;
-    
+
     public Ban() {}
 
     public Ban(String name) {
@@ -17,7 +17,7 @@ public class Ban {
     /**
      * Returns the specified IP address for this ban. Will be empty if no IP ban
      * is associated
-     * 
+     *
      * @return the IP address
      */
     public String getIp() {
@@ -26,7 +26,7 @@ public class Ban {
 
     /**
      * Sets the IP address of this ban
-     * 
+     *
      * @param ip
      *            ip to set
      */
@@ -36,7 +36,7 @@ public class Ban {
 
     /**
      * Returns the player's name for this ban
-     * 
+     *
      * @return player's name
      */
     public String getName() {
@@ -45,7 +45,7 @@ public class Ban {
 
     /**
      * Sets the player's name for this ban
-     * 
+     *
      * @param name
      *            player's name
      */
@@ -55,7 +55,7 @@ public class Ban {
 
     /**
      * Returns the ban reason. Will be "N/A" if none specified, or is an old ban
-     * 
+     *
      * @return ban reason
      */
     public String getReason() {
@@ -64,7 +64,7 @@ public class Ban {
 
     /**
      * Sets the ban reason
-     * 
+     *
      * @param reason
      *            ban reason to set
      */
@@ -74,7 +74,7 @@ public class Ban {
 
     /**
      * Returns a UNIX timestamp for when this ban expires
-     * 
+     *
      * @return unix timestamp
      */
     public int getTimestamp() {
@@ -83,7 +83,7 @@ public class Ban {
 
     /**
      * Sets the UNIX timestamp for this ban to expire at.
-     * 
+     *
      * @param timestamp
      */
     public void setTimestamp(int timestamp) {
@@ -92,7 +92,7 @@ public class Ban {
 
     /**
      * Returns the SQL id for this ban (only used with SQL, not flat files)
-     * 
+     *
      * @return
      */
     public int getId() {
@@ -101,11 +101,15 @@ public class Ban {
 
     /**
      * Sets the SQL id for this ban (only used with SQL, not flat files)
-     * 
+     *
      * @param id
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isIP() {
+        return this.ip.isEmpty();
     }
 
     @Override

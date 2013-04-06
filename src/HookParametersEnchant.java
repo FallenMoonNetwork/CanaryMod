@@ -4,17 +4,17 @@ import java.util.List;
 /**
  * HookParametersEnchant - Passed to the ENCHANT hook. Contains the enchanting player, enchanted item and a list of enchantments to apply on it.
  * Changing the list will change the enchantments applied.
- * 
+ *
  * @author YLivay
  */
 public class HookParametersEnchant extends HookParameters {
-   
+
     private Player player;
     private int itemId;
     private List<Enchantment> enchantments;
-    
+
     private boolean isCanceled;
-    
+
     /**
      * Creates an instance of HookParametersEnchant
      * @param player The enchanting player
@@ -30,12 +30,12 @@ public class HookParametersEnchant extends HookParameters {
         {
            if (enchantObject instanceof OEnchantmentData)
            {
-              this.enchantments.add(new Enchantment(Enchantment.Type.fromId(((OEnchantmentData)enchantObject).a.x), ((OEnchantmentData)enchantObject).b));
+              this.enchantments.add(new Enchantment(Enchantment.Type.fromId(((OEnchantmentData)enchantObject).b.z), ((OEnchantmentData)enchantObject).c));
            }
         }
         this.isCanceled = false;
     }
-    
+
     /**
      * Gets the enchanting player
      * @return
@@ -44,7 +44,7 @@ public class HookParametersEnchant extends HookParameters {
     {
         return this.player;
     }
-    
+
     /**
      * Gets the enchanted item id.
      * @return
@@ -53,7 +53,7 @@ public class HookParametersEnchant extends HookParameters {
     {
         return this.itemId;
     }
-    
+
     /**
      * Gets a list of enchantments to apply on the item.
      * Changing this list will change the enchantments that will be applied.
@@ -63,7 +63,7 @@ public class HookParametersEnchant extends HookParameters {
     {
         return this.enchantments;
     }
-    
+
     /**
      * Validates the enchantment list
      * @param checkStackable Check if enchantments stack legally
@@ -98,7 +98,7 @@ public class HookParametersEnchant extends HookParameters {
         }
         return enchantmentsArray.length > 0;
     }
-    
+
     /**
      * See if enchantment is cancelled
      * @return
@@ -107,7 +107,7 @@ public class HookParametersEnchant extends HookParameters {
     {
        return this.isCanceled;
     }
-    
+
     /**
      * Cancels the enchantment
      */

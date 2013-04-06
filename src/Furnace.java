@@ -1,12 +1,15 @@
 /**
  * Furnace.java - Interface for furnaces
- * 
+ *
  * @author 14mRh4X0r
  */
 public class Furnace extends BaseContainerBlock<OTileEntityFurnace> implements ComplexBlock {
 
     public Furnace(OTileEntityFurnace furnace) {
-        super(furnace, "Furnace");
+        this(null, furnace);
+    }
+    public Furnace(OContainer oContainer, OTileEntityFurnace furnace) {
+        super(oContainer, furnace, "Furnace");
     }
 
     /**
@@ -26,7 +29,8 @@ public class Furnace extends BaseContainerBlock<OTileEntityFurnace> implements C
     }
 
     /**
-     * Returns the number of ticks until the item to smelt is smolten.
+     * Returns the number of ticks the item to smelt has smolten.
+     * An item is ready on 200 ticks.
      * @return cook time ticks
      */
     public short getCookTime() {
@@ -34,8 +38,9 @@ public class Furnace extends BaseContainerBlock<OTileEntityFurnace> implements C
     }
 
     /**
-     * Sets the number of ticks until the item to smelt is smolten.
-     * @param time ticks of cooking left
+     * Sets the number of ticks the item to smelt has smolten.
+     * An item is ready on 200 ticks.
+     * @param time ticks of cooking
      */
     public void setCookTime(short time) {
         container.c = time;

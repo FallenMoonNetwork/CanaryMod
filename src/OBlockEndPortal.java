@@ -1,17 +1,16 @@
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-
 
 public class OBlockEndPortal extends OBlockContainer {
 
     public static boolean a = false;
 
     protected OBlockEndPortal(int i, OMaterial omaterial) {
-        super(i, 0, omaterial);
+        super(i, omaterial);
         this.a(1.0F);
     }
 
-    public OTileEntity a_() {
+    public OTileEntity b(OWorld oworld) {
         return new OTileEntityEndPortal();
     }
 
@@ -21,9 +20,9 @@ public class OBlockEndPortal extends OBlockContainer {
         this.a(0.0F, 0.0F, 0.0F, 1.0F, f, 1.0F);
     }
 
-    public void a(OWorld oworld, int i, int j, int k, OAxisAlignedBB oaxisalignedbb, ArrayList arraylist) {}
+    public void a(OWorld oworld, int i, int j, int k, OAxisAlignedBB oaxisalignedbb, List list, OEntity oentity) {}
 
-    public boolean a() {
+    public boolean c() {
         return false;
     }
 
@@ -36,22 +35,22 @@ public class OBlockEndPortal extends OBlockContainer {
     }
 
     public void a(OWorld oworld, int i, int j, int k, OEntity oentity) {
-        if (oentity.bh == null && oentity.bg == null && oentity instanceof OEntityPlayer && !oworld.F) {
+        if (oentity.o == null && oentity.n == null && !oworld.I) {
             // CanaryMod: Check if end is enabled
             if (etc.getInstance().isEndEnabled()) {
-                ((OEntityPlayer) oentity).e(1);
+                oentity.c(1);
             }
         }
     }
 
-    public int c() {
+    public int d() {
         return -1;
     }
 
     public void a(OWorld oworld, int i, int j, int k) {
         if (!a) {
-            if (oworld.t.g != 0) {
-                oworld.e(i, j, k, 0);
+            if (oworld.t.h != 0) {
+                oworld.i(i, j, k);
             }
         }
     }

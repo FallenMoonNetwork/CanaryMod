@@ -1,7 +1,8 @@
-
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Server.java - Interface to server stuff Crow build 3.1.9.
@@ -14,7 +15,7 @@ import java.util.Random;
  */
 public class Server {
 
-    private OMinecraftServer server;
+    private final ODedicatedServer server;
 
     /**
      * Creates a server
@@ -22,7 +23,7 @@ public class Server {
      * @param server
      */
     public Server(OMinecraftServer server) {
-        this.server = server;
+        this.server = (ODedicatedServer) server;
     }
 
     /**
@@ -31,7 +32,7 @@ public class Server {
      * @param msg Message text to send
      */
     public void messageAll(String msg) {
-        server.h.a(new OPacket3Chat(msg));
+        server.ad().a(new OPacket3Chat(msg));
     }
 
     /**
@@ -52,7 +53,7 @@ public class Server {
      *
      */
     public void unban(String player) {
-        server.h.b(player);
+        server.ad().e().b(player);
         etc.getDataSource().expireBan(new Ban(player));
     }
 
@@ -60,6 +61,7 @@ public class Server {
      * Uses the specified console command
      *
      * @param command
+     * @throws OCommandNotFoundException if the command was not found.
      */
     public void useConsoleCommand(String command) {
         server.a(command, server);
@@ -70,29 +72,10 @@ public class Server {
      *
      * @param command command to use
      * @param player player to use command as
+     * @throws OCommandNotFoundException if the command was not found.
      */
     public void useConsoleCommand(String command, Player player) {
-        server.a(command, player.getUser().a);
-    }
-
-    /**
-     * Starts a timer using the built-in timer system.
-     *
-     * @param uniqueString must be unique identifier for this timer
-     * @param time time till it expires (6000 roughly equals 5 minutes)
-     */
-    public void setTimer(String uniqueString, int time) {
-        OMinecraftServer.b.put(uniqueString, time);
-    }
-
-    /**
-     * Check to see if your timer has expired yet.
-     *
-     * @param uniqueString unique identifier
-     * @return false if timer has expired
-     */
-    public boolean isTimerExpired(String uniqueString) {
-        return OMinecraftServer.b.containsKey(uniqueString);
+        server.a(command, player.getEntity());
     }
 
     /**
@@ -144,12 +127,13 @@ public class Server {
      *
      * @return
      */
-    public OMinecraftServer getMCServer() {
+    public ODedicatedServer getMCServer() {
         return server;
     }
 
     /**
      * Tries to match a character's name.
+     * Use this for getting a <tt>Player</tt> from user input.
      *
      * @param name
      * @return
@@ -159,21 +143,21 @@ public class Server {
 
         name = name.toLowerCase();
 
-        for (OEntityPlayerMP player : (List<OEntityPlayerMP>) server.h.b) {
-            String playerName = player.v;
+        for (Player player : this.getPlayerList()) {
+            String playerName = player.getName().toLowerCase();
 
-            if (playerName.toLowerCase().equals(name)) {
+            if (playerName.equals(name)) {
                 // Perfect match found
-                lastPlayer = player.getPlayer();
+                lastPlayer = player;
                 break;
             }
-            if (playerName.toLowerCase().indexOf(name.toLowerCase()) != -1) {
+            if (playerName.indexOf(name) != -1) {
                 // Partial match
                 if (lastPlayer != null) {
                     // Found multiple
                     return null;
                 }
-                lastPlayer = player.getPlayer();
+                lastPlayer = player;
             }
         }
 
@@ -181,13 +165,14 @@ public class Server {
     }
 
     /**
-     * Returns specified player
+     * Returns specified player.
+     * For fuzzy matching, use {@link #matchPlayer(String)}.
      *
      * @param name
      * @return
      */
     public Player getPlayer(String name) {
-        OEntityPlayerMP user = server.h.i(name);
+        OEntityPlayerMP user = server.ad().f(name);
 
         return user == null ? null : user.getPlayer();
     }
@@ -200,7 +185,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
 
-        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.h.b) {
+        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.ad().a) {
             toRet.add(oepmp.getPlayer());
         }
         return toRet;
@@ -212,7 +197,7 @@ public class Server {
      * @return list of player names
      */
     public String getPlayerNames() {
-        return server.h.c();
+        return server.ad().c();
     }
 
     /**
@@ -571,7 +556,7 @@ public class Server {
      * Saves all player inventories to file
      */
     public void saveInventories() {
-        server.h.g();
+        server.ad().g();
     }
 
     /**
@@ -788,13 +773,16 @@ public class Server {
      * @return the default dimension
      */
     public World getDefaultWorld() {
-        return server.getWorld(server.m(), 0).world;
+        OWorld oworld = server.getWorld(server.J(), 0);
+
+        return oworld != null ? oworld.world : null;
     }
 
     /**
      * Returns the dimension at the given dimension. Due to the way the server
      * works, this returns the Nether's {@link World} if {@code dimension} is
-     * -1, the normal dimension's {@link World} otherwise.
+     * -1, the normal dimension's {@link World} if {@code dimension} is 0, and
+     * the End's {@link World} otherwise.
      *
      * @param dimension The dimension to return the World for
      * @return {@code dimension}'s World
@@ -805,42 +793,77 @@ public class Server {
      * </code></blockquote>
      */
     public World getWorld(int dimension) {
-        return server.getWorld(server.m(), dimension).world;
+        OWorld oworld = server.getWorld(server.J(), dimension);
+        return oworld != null ? oworld.world : null;
     }
 
     /**
-     * Adds a recipe to the crafting manager. Due to deadlines, this
-     * documentation isn't written yet, you may want to refer to MCP in the
-     * meantime.
+     * Adds a recipe to the crafting manager.
      *
      * @param item The item to return
-     * @param recipe The recipe to return the item for
+     * @param recipe The recipe to return the item for.<br />
+     * The recipe starts with (an array of) 1-3 strings of equal length
+     * containing 1-3 characters, describing the recipe. Each character denotes
+     * a different item stack. Following the (array of) strings are
+     * character-item stack pairs, specifying which character corresponds to
+     * which item stack. The item stack half of the pair can be
+     * {@link Item.Type}, {@link Block.Type}, or even {@link Item} (the latter
+     * is useful for specifying amounts and data values).<br />
+     *
+     * The following code would add a workbench:
+     * <blockquote><code><pre>
+     * etc.getServer().addRecipe(new Item(Item.Type.Workbench),
+     *                           "##",
+     *                           "##",
+     *                           '#', Item.Type.Wood);
+     * </pre></code></blockquote>
+     * And the following code would add a piston:
+     * <blockquote><code><pre>
+     * etc.getServer().addRecipe(new Item(Item.Type.Piston),
+     *                           "WWW",
+     *                           "CIC",
+     *                           "CRC",
+     *                           'W', Item.Type.Wood,
+     *                           'C', Item.Type.Cobblestone,
+     *                           'I', Item.Type.IronIngot,
+     *                           'R', Item.Type.RedStone);
+     * </pre></code></blockquote>
      */
     public void addRecipe(Item item, Object... recipe) {
         for (int i = 0; i < recipe.length; i++) {
             if (recipe[i] instanceof Block.Type) {
-                recipe[i] = OBlock.m[((Block.Type) recipe[i]).getType()];
+                recipe[i] = OBlock.r[((Block.Type) recipe[i]).getType()];
             } else if (recipe[i] instanceof Item.Type) {
-                recipe[i] = OItem.d[((Item.Type) recipe[i]).getId()];
+                recipe[i] = OItem.f[((Item.Type) recipe[i]).getId()];
+            } else if (recipe[i] instanceof Item) {
+                recipe[i] = ((Item) recipe[i]).getBaseItem();
             }
         }
         OCraftingManager.a().a(item.getBaseItem(), recipe);
     }
 
     /**
-     * Adds a shapeless recipe to the crafting manager. Due to deadlines, this
-     * documentation isn't written yet, you may want to refer to MCP in the
-     * meantime.
+     * Adds a shapeless recipe to the crafting manager.
+     * An example of a shapeless recipe is dyeing wool. It doesn't matter where
+     * the needed items are, they just need to be there.
      *
      * @param item The item to return
-     * @param recipe The recipes to return the item for.
+     * @param recipe The recipe to return the item for.<br>
+     * This is really just a list of items that need to be in the crafting
+     * grid. This code would add the dyeing recipe for red wool:
+     * <blockquote><code>
+     * etc.getServer().addShapelessRecipe(Cloth.RED.getItem(),
+     *         new Item(Item.Type.InkSack, 1, -1, 1), Cloth.WHITE.getItem());
+     * </blockquote></code>
      */
     public void addShapelessRecipe(Item item, Object... recipe) {
         for (int i = 0; i < recipe.length; i++) {
             if (recipe[i] instanceof Block.Type) {
-                recipe[i] = OBlock.m[((Block.Type) recipe[i]).getType()];
+                recipe[i] = OBlock.r[((Block.Type) recipe[i]).getType()];
             } else if (recipe[i] instanceof Item.Type) {
-                recipe[i] = OItem.d[((Item.Type) recipe[i]).getId()];
+                recipe[i] = OItem.f[((Item.Type) recipe[i]).getId()];
+            } else if (recipe[i] instanceof Item) {
+                recipe[i] = ((Item) recipe[i]).getBaseItem();
             }
         }
         OCraftingManager.a().b(item.getBaseItem(), recipe);
@@ -857,10 +880,25 @@ public class Server {
      * equal 1.
      */
     public void addSmeltingRecipe(Item from, Item to) {
+        this.addSmeltingRecipe(from, to, 0F);
+    }
+
+    /**
+     * Adds a smelting recipe to the furnace recipes.
+     * {@code from} is the item that is put into the furnace, and should have
+     * amount 1. {@code to} is the result after smelting.
+     *
+     * @param from The inserted item
+     * @param to The resulting item
+     * @param xp The amount of XP you get
+     * @throws IllegalArgumentException if the amount of {@code from} doesn't
+     * equal 1.
+     */
+    public void addSmeltingRecipe(Item from, Item to, float xp) {
         if (from.getAmount() != 1) {
             throw new IllegalArgumentException("The 'from' amount should be 1");
         }
-        OFurnaceRecipes.a().a(from.getItemId(), to.getBaseItem());
+        OFurnaceRecipes.a().a(from.getItemId(), to.getBaseItem(), xp);
     }
 
     /**
@@ -868,7 +906,8 @@ public class Server {
      *
      * @return a list containing {@code OIRecipe} instances.
      */
-    public List getRecipeList() {
+    @SuppressWarnings("unchecked")
+    public List<OIRecipe> getRecipeList() {
         return OCraftingManager.a().b();
     }
 
@@ -914,8 +953,27 @@ public class Server {
      * @see World.Dimension#toIndex()
      */
     public World[] loadWorld(String name, World.Type type, long seed) {
+        return this.loadWorld(name, type, seed, "");
+    }
+
+    /**
+     * Loads the world with the specified name, type and seed and returns it. If
+     * the world already is loaded, just return the world.
+     *
+     * @param name The name of the world to load.
+     * @param type The type of the world to load. If a world with the specified
+     * name already exists, this argument is ignored.
+     * @param seed The seed of the world to load. If a world with the specified
+     * name already exists, this argument is ignored.
+     * @param generatorSettings The generator settings for the world to load. If
+     * a world with the specified name already exists, this argument is ignored.
+     * @return A {@link World}-array containing the 3 dimensions of the
+     * specified <tt>World</tt>.
+     * @see World.Dimension#toIndex()
+     */
+    public World[] loadWorld(String name, World.Type type, long seed, String generatorSettings) {
         if (!server.worlds.containsKey(name)) {
-            server.loadWorld(name, seed, type);
+            server.a(name, name, seed, type.getNative(), generatorSettings);
         }
 
         OWorldServer[] nativeWorlds = server.worlds.get(name);
@@ -943,13 +1001,51 @@ public class Server {
     public World[] getWorld(String name) {
         return this.isWorldLoaded(name) ? this.loadWorld(name) : null;
     }
-    
+
     /**
      * Get the configuration manager for the given world
      * @param world
      * @return
      */
     public PlayerManager getPlayerManager(World world) {
-        return server.h.getManager(world.getName(), world.getType().getId());
+        return world.getPlayerManager();
+    }
+
+    /**
+     * Get the version of Minecarft this CanaryMod is for.
+     * @return String of the version in the format major.minor[.build]
+     */
+    public String getMCVersion() {
+        return server.x();
+    }
+
+    /**
+     * Returns a <tt>Set&lt;String&gt;</tt> with the names of loaded worlds.
+     * Actually just a shortcut for <tt>etc.getMCServer().worlds.keySet();</tt>
+     *
+     * @return a <tt>Set&lt;String&gt;</tt> with the world names.
+     */
+    public Set<String> getLoadedWorldNames() {
+        return server.worlds.keySet();
+    }
+
+    /**
+     * Returns a <tt>Set&lt;World[]&gt;</tt> with the currently loaded worlds.
+     *
+     * @return a <tt>Set&lt;World[]&gt;</tt> with the loaded worlds.
+     */
+    public Set<World[]> getLoadedWorld() {
+        Set<World[]> loadedWorlds = new HashSet<World[]>(server.worlds.size());
+
+        for (OWorldServer[] aows : server.worlds.values()) {
+            World[] worlds = new World[aows.length];
+            for (int i = 0; i < aows.length; i++) {
+                worlds[i] = aows[i].world;
+            }
+
+            loadedWorlds.add(worlds);
+        }
+
+        return loadedWorlds;
     }
 }

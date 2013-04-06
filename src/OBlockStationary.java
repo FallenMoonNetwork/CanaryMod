@@ -1,51 +1,46 @@
 import java.util.Random;
 
-
 public class OBlockStationary extends OBlockFluid {
 
     protected OBlockStationary(int i, OMaterial omaterial) {
         super(i, omaterial);
-        this.a(false);
-        if (omaterial == OMaterial.h) {
-            this.a(true);
+        this.b(false);
+        if (omaterial == OMaterial.i) {
+            this.b(true);
         }
-
     }
 
     public boolean b(OIBlockAccess oiblockaccess, int i, int j, int k) {
-        return this.cd != OMaterial.h;
+        return this.cO != OMaterial.i;
     }
 
     public void a(OWorld oworld, int i, int j, int k, int l) {
         super.a(oworld, i, j, k, l);
-        if (oworld.a(i, j, k) == this.bO) {
-            this.i(oworld, i, j, k);
+        if (oworld.a(i, j, k) == this.cz) {
+            this.k(oworld, i, j, k);
         }
-
     }
 
-    private void i(OWorld oworld, int i, int j, int k) {
-        int l = oworld.c(i, j, k);
+    private void k(OWorld oworld, int i, int j, int k) {
+        int l = oworld.h(i, j, k);
 
-        oworld.o = true;
-        oworld.a(i, j, k, this.bO - 1, l);
-        oworld.b(i, j, k, i, j, k);
-        oworld.c(i, j, k, this.bO - 1, this.d());
-        oworld.o = false;
+        oworld.f(i, j, k, this.cz - 1, l, 2);
+        oworld.a(i, j, k, this.cz - 1, this.a(oworld));
     }
 
     public void a(OWorld oworld, int i, int j, int k, Random random) {
-        if (this.cd == OMaterial.h) {
+        if (this.cO == OMaterial.i) {
             int l = random.nextInt(3);
 
             // CanaryMod: prevent lava from putting something on fire.
-            Block block = new Block(oworld.world, oworld.a(i, j, k), i, j, k);
+            World world = oworld.world;
+            Block block = new Block(world, world.getBlockIdAt(i, j, k), i, j, k);
 
             block.setStatus(1);
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
                 return;
             }
-			
+
             int i1;
             int j1;
 
@@ -55,11 +50,11 @@ public class OBlockStationary extends OBlockFluid {
                 k += random.nextInt(3) - 1;
                 j1 = oworld.a(i, j, k);
                 if (j1 == 0) {
-                    if (this.j(oworld, i - 1, j, k) || this.j(oworld, i + 1, j, k) || this.j(oworld, i, j, k - 1) || this.j(oworld, i, j, k + 1) || this.j(oworld, i, j - 1, k) || this.j(oworld, i, j + 1, k)) {
-                        oworld.e(i, j, k, OBlock.ar.bO);
+                    if (this.m(oworld, i - 1, j, k) || this.m(oworld, i + 1, j, k) || this.m(oworld, i, j, k - 1) || this.m(oworld, i, j, k + 1) || this.m(oworld, i, j - 1, k) || this.m(oworld, i, j + 1, k)) {
+                        oworld.c(i, j, k, OBlock.av.cz);
                         return;
                     }
-                } else if (OBlock.m[j1].cd.c()) {
+                } else if (OBlock.r[j1].cO.c()) {
                     return;
                 }
             }
@@ -71,16 +66,15 @@ public class OBlockStationary extends OBlockFluid {
                 for (int k1 = 0; k1 < 3; ++k1) {
                     i = i1 + random.nextInt(3) - 1;
                     k = j1 + random.nextInt(3) - 1;
-                    if (oworld.g(i, j + 1, k) && this.j(oworld, i, j, k)) {
-                        oworld.e(i, j + 1, k, OBlock.ar.bO);
+                    if (oworld.c(i, j + 1, k) && this.m(oworld, i, j, k)) {
+                        oworld.c(i, j + 1, k, OBlock.av.cz);
                     }
                 }
             }
         }
-
     }
 
-    private boolean j(OWorld oworld, int i, int j, int k) {
-        return oworld.d(i, j, k).g();
+    private boolean m(OWorld oworld, int i, int j, int k) {
+        return oworld.g(i, j, k).h();
     }
 }

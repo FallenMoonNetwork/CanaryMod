@@ -1,22 +1,22 @@
-
 public class OItemBed extends OItem {
 
     public OItemBed(int i) {
         super(i);
+        this.a(OCreativeTabs.c);
     }
 
-    public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l) {
+    public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l, float f, float f1, float f2) {
         // CanaryMod: store the block that was clicked
-        Block blockClicked = new Block(oworld.world, oworld.world.getBlockIdAt(i, j, k), i, j, k);
+        Block blockClicked = this.getBlockInfo(oworld, i, j, k, l);
 
-        blockClicked.setFaceClicked(Block.Face.fromId(l));
-        
-        if (l != 1) {
+        if (oworld.I) {
+            return true;
+        } else if (l != 1) {
             return false;
         } else {
             ++j;
-            OBlockBed oblockbed = (OBlockBed) OBlock.S;
-            int i1 = OMathHelper.b((double) (oentityplayer.bs * 4.0F / 360.0F) + 0.5D) & 3;
+            OBlockBed oblockbed = (OBlockBed) OBlock.W;
+            int i1 = OMathHelper.c((double) (oentityplayer.A * 4.0F / 360.0F) + 0.5D) & 3;
             byte b0 = 0;
             byte b1 = 0;
 
@@ -35,17 +35,17 @@ public class OItemBed extends OItem {
             if (i1 == 3) {
                 b0 = 1;
             }
-            
+
             // CanaryMod: onItemUse hook
-            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) oentityplayer).getPlayer(), new Block(oworld.world, OBlock.S.bO, i, j, k), blockClicked, new Item(oitemstack))) {
+            if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) oentityplayer).getPlayer(), new Block(oworld.world, Block.Type.Bed.getType(), i, j, k), blockClicked, ((OEntityPlayerMP) oentityplayer).getPlayer().getItemStackInHand())) {
                 return false;
             }
 
-            if (oentityplayer.d(i, j, k) && oentityplayer.d(i + b0, j, k + b1)) {
-                if (oworld.g(i, j, k) && oworld.g(i + b0, j, k + b1) && oworld.e(i, j - 1, k) && oworld.e(i + b0, j - 1, k + b1)) {
-                    oworld.b(i, j, k, oblockbed.bO, i1);
-                    if (oworld.a(i, j, k) == oblockbed.bO) {
-                        oworld.b(i + b0, j, k + b1, oblockbed.bO, i1 + 8);
+            if (oentityplayer.a(i, j, k, l, oitemstack) && oentityplayer.a(i + b0, j, k + b1, l, oitemstack)) {
+                if (oworld.c(i, j, k) && oworld.c(i + b0, j, k + b1) && oworld.w(i, j - 1, k) && oworld.w(i + b0, j - 1, k + b1)) {
+                    oworld.f(i, j, k, oblockbed.cz, i1, 3);
+                    if (oworld.a(i, j, k) == oblockbed.cz) {
+                        oworld.f(i + b0, j, k + b1, oblockbed.cz, i1 + 8, 3);
                     }
 
                     --oitemstack.a;

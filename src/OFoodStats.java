@@ -1,4 +1,3 @@
-
 public class OFoodStats {
 
     // CanaryMod: made fields public
@@ -11,7 +10,7 @@ public class OFoodStats {
     private OEntityPlayer entity;
 
     public OFoodStats() {}
-    
+
     public OFoodStats(OEntityPlayer oentityplayer) {
         this.entity = oentityplayer;
     }
@@ -20,24 +19,24 @@ public class OFoodStats {
         // CanaryMod: Calls onFoodLevelChange
         int newLevel = Math.min(i + this.a, 20);
         int oldLevel = this.a;
-        
+
         this.a = ((Integer) etc.getLoader().callHook(PluginLoader.Hook.FOODLEVEL_CHANGE, new Object[] { ((OEntityPlayerMP) this.entity).getPlayer(), Integer.valueOf(oldLevel), Integer.valueOf(newLevel) })).intValue();
-        
+
         // CanaryMod: Calls onFoodSaturationChange
         float newSLevel = Math.min(this.b + (float) i * f * 2.0F, (float) this.a);
         float oldSLevel = this.b;
 
         this.b = ((Float) etc.getLoader().callHook(PluginLoader.Hook.FOODSATURATION_CHANGE, new Object[] { ((OEntityPlayerMP) this.entity).getPlayer(), Float.valueOf(oldSLevel), Float.valueOf(newSLevel) })).floatValue();
 
-        ((OEntityPlayerMP) entity).getPlayer().updateLevels(); 
+        ((OEntityPlayerMP) entity).getPlayer().updateLevels();
     }
 
     public void a(OItemFood oitemfood) {
-        this.a(oitemfood.o(), oitemfood.p());
+        this.a(oitemfood.g(), oitemfood.h());
     }
 
     public void a(OEntityPlayer oentityplayer) {
-        int i = oentityplayer.bi.q;
+        int i = oentityplayer.q.r;
 
         this.e = this.a;
         if (this.c > 4.0F) {
@@ -61,19 +60,20 @@ public class OFoodStats {
             }
         }
 
-        if (this.a >= 18 && oentityplayer.ag()) {
+        if (this.a >= 18 && oentityplayer.cm()) {
             ++this.d;
             if (this.d >= 80) {
-                oentityplayer.d(1);
+                oentityplayer.j(1);
                 this.d = 0;
             }
         } else if (this.a <= 0) {
             ++this.d;
             if (this.d >= 80) {
-                if (oentityplayer.aD() > 10 || i >= 3 || oentityplayer.aD() > 1 && i >= 2) {
+                if (oentityplayer.aX() > 10 || i >= 3 || oentityplayer.aX() > 1 && i >= 2) {
                     // CanaryMod: DAMAGE From starvation
-                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, PluginLoader.DamageType.STARVATION, null, ((OEntityPlayerMP) oentityplayer).getPlayer(), 1)) {
-                        oentityplayer.a(ODamageSource.g, 1);
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentityplayer.getEntity(), DamageType.STARVATION.getDamageSource(), 1));
+                    if (!ev.isCanceled()) {
+                        oentityplayer.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
                     }
                 }
 
@@ -82,17 +82,15 @@ public class OFoodStats {
         } else {
             this.d = 0;
         }
-
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
-        if (onbttagcompound.c("foodLevel")) {
-            this.a = onbttagcompound.f("foodLevel");
-            this.d = onbttagcompound.f("foodTickTimer");
-            this.b = onbttagcompound.h("foodSaturationLevel");
-            this.c = onbttagcompound.h("foodExhaustionLevel");
+        if (onbttagcompound.b("foodLevel")) {
+            this.a = onbttagcompound.e("foodLevel");
+            this.d = onbttagcompound.e("foodTickTimer");
+            this.b = onbttagcompound.g("foodSaturationLevel");
+            this.c = onbttagcompound.g("foodExhaustionLevel");
         }
-
     }
 
     public void b(ONBTTagCompound onbttagcompound) {
@@ -106,7 +104,7 @@ public class OFoodStats {
         return this.a;
     }
 
-    public boolean b() {
+    public boolean c() {
         return this.a < 20;
     }
 
@@ -114,7 +112,7 @@ public class OFoodStats {
         this.c = Math.min(this.c + f, 40.0F);
     }
 
-    public float c() {
+    public float e() {
         return this.b;
     }
 }
