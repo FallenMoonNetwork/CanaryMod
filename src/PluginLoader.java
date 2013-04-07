@@ -1388,7 +1388,7 @@ public class PluginLoader {
                                 break;
 
                             case HOPPER_TRANSFER:
-                                toRet = listener.onHopperTransfer((HopperBlock) parameters[0], (Item) parameters[1], (Boolean) parameters[2]);
+                                toRet = listener.onHopperTransfer((Hopper) parameters[0], (Item) parameters[1], (Boolean) parameters[2]);
                                 break;
 
                             case MINECART_ACTIVATE:
