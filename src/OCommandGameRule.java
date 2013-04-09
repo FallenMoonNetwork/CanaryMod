@@ -55,6 +55,6 @@ public class OCommandGameRule extends OCommandBase {
     }
 
     private OGameRules d() {
-        return OMinecraftServer.D().a(0).M();
+        return OMinecraftServer.D().getWorld(OMinecraftServer.D().J(), 0).M();
     }
 }
