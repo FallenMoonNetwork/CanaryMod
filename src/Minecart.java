@@ -169,4 +169,18 @@ public class Minecart extends BaseVehicle {
         }
         return null;
     }
+
+    /**
+     * Returns a new <tt>Minecart</tt> of the specified type.
+     * It would still need to be spawned using {@link #spawn()}.
+     * @param world The world for the new cart
+     * @param x The x-coordinate for the new cart
+     * @param y The y-coordinate for the new cart
+     * @param z The z-coordinate for the new cart
+     * @param type The type of the new cart
+     * @return A new minecart of the specified type.
+     */
+    public static Minecart fromType(World world, double x, double y, double z, Type type) {
+        return OEntityMinecart.a(world.getWorld(), x, y, z, type.getType()).getEntity();
+    }
 }

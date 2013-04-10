@@ -80,7 +80,7 @@ public abstract class OEntityMinecart extends OEntity {
         this.r = d0;
         this.s = d1;
         this.t = d2;
-        manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, cart); // CanaryMod: Creation of the cart
+        manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, this.getEntity()); // CanaryMod: Creation of the cart
     }
 
     public double W() {
@@ -95,7 +95,7 @@ public abstract class OEntityMinecart extends OEntity {
             entity = new BaseEntity(odamagesource.h());
         }
 
-        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, cart, entity, i)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, this.getEntity(), entity, i)) {
             return true;
         }
 
@@ -129,7 +129,7 @@ public abstract class OEntityMinecart extends OEntity {
     }
 
     public void a(ODamageSource odamagesource) {
-        manager.callHook(PluginLoader.Hook.VEHICLE_DESTROYED, cart); // CanaryMod: Destruction of the cart
+        manager.callHook(PluginLoader.Hook.VEHICLE_DESTROYED, this.getEntity()); // CanaryMod: Destruction of the cart
         this.w();
         OItemStack oitemstack = new OItemStack(OItem.aA, 1);
 
@@ -153,7 +153,7 @@ public abstract class OEntityMinecart extends OEntity {
 
     public void l_() {
         // CanaryMod: call update hook
-        manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, this.cart);
+        manager.callHook(PluginLoader.Hook.VEHICLE_UPDATE, this.getEntity());
 
         if (this.b != null) {
             this.b.a();
@@ -247,7 +247,7 @@ public abstract class OEntityMinecart extends OEntity {
 
             // CanaryMod: Change of the cart
             if ((int) i != (int) prevX || (int) j != (int) prevY || (int) k != (int) prevZ) {
-                manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i, j, k);
+                manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, this.getEntity(), i, j, k);
             }
 
             if (OBlockRailBase.d_(this.q, j, i - 1, k)) {
@@ -556,7 +556,7 @@ public abstract class OEntityMinecart extends OEntity {
 
         // CanaryMod: Change of the cart
         if ((int) i != (int) lastX || (int) j != (int) lastY || (int) k != (int) lastZ) {
-            manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, cart, i, j, k);
+            manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, this.getEntity(), i, j, k);
             lastX = i;
             lastY = j;
             lastZ = k;
@@ -651,7 +651,7 @@ public abstract class OEntityMinecart extends OEntity {
         if (!this.q.I) {
             if (oentity != this.n) {
                 // CanaryMod: Collision of a cart
-                if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_COLLISION, cart, oentity.entity)) {
+                if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_COLLISION, this.getEntity(), oentity.entity)) {
                     return;
                 }
                 if (oentity instanceof OEntityLiving && !(oentity instanceof OEntityPlayer) && !(oentity instanceof OEntityIronGolem) && this.l() == 0 && this.x * this.x + this.z * this.z > 0.01D && this.n == null && oentity.o == null) {
