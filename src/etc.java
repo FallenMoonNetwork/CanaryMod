@@ -67,7 +67,7 @@ public class etc {
     private String                        versionStr;
     private boolean                       tainted = true;
     // Version, DO NOT CHANGE (is loaded from file version.txt)!
-    private int                           version = 1;
+    private double                        version = 1;
     private String                        username, password, db;
     private String[]                      animals = new String[] {};
     private String[]                      monsters = new String[] {};
@@ -251,8 +251,8 @@ public class etc {
                     versionStr = versionParam.substring(5); // and back to a string.
                     tainted = false; // looks official. We hope.
                 } else {
-                    version = (int) Double.parseDouble(versionParam);
-                    versionStr = Integer.toString(version); // and back to a string.
+                    version = Double.parseDouble(versionParam);
+                    versionStr = Double.toString(version); // and back to a string.
                     tainted = false; // looks official. We hope.
                 }
                 ins.close();
@@ -1117,8 +1117,19 @@ public class etc {
      * Return the current build of the mod
      *
      * @return build/version
+     * @deprecated Use {@link #getVersionMajorMinor() } instead.
      */
+    @Deprecated
     public int getVersion() {
+        return (int) version;
+    }
+    
+    /**
+     * Get the version with both major and minor build numbers
+     * 
+     * @return the version in the form major.minor
+     */
+    public double getVersionMajorMinor() {
         return version;
     }
 

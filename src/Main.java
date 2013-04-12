@@ -72,7 +72,7 @@ public class Main {
 
         if (checkForUpdate()) {
             log("===============");
-            log("New " + (newIsCrow ? "Canary" : "Crow") + " version found.");
+            log("New " + (newIsCrow ? "Crow" : "Canary") + " version found.");
             log("You can download it at http://www.canarymod.net/download");
             log("Be sure to replace version.txt!");
             log("===============");
