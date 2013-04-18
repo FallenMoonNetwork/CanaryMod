@@ -57,7 +57,7 @@ public class World {
         /**
          * Get a <tt>Dimension</tt> by ID.
          * @param type The ID for the <tt>Dimension</tt> to return
-         * @return The <tt>Dimension<tt> for the given ID.
+         * @return The <tt>Dimension</tt> for the given ID.
          * @see #getId()
          */
         public static Dimension fromId(final int type) {
