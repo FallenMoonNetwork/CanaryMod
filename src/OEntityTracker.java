@@ -3,8 +3,8 @@ import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.DelayQueue;
 
 public class OEntityTracker {
 
@@ -18,7 +18,7 @@ public class OEntityTracker {
 
     public OEntityTracker(OWorldServer oworldserver) {
         this.a = oworldserver;
-        this.d = oworldserver.o().ad().a();
+        this.d = oworldserver.p().ad().a();
         this.entityTracker = new EntityTracker(this);
     }
 
@@ -183,7 +183,7 @@ public class OEntityTracker {
             }
         } catch (ConcurrentModificationException concurrentmodificationexception) {
             // people seem to get this concurrentmodificationexceptionception often, lets just catch so it doesn't crash the server.
-            this.a.W().b("CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:", concurrentmodificationexception);
+            this.a.X().b("CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:", concurrentmodificationexception);
         }
         // CanaryMod: Execute runnables contained in eventQueue.
         for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll()) {

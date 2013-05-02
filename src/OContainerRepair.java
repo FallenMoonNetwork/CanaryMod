@@ -197,7 +197,7 @@ public class OContainerRepair extends OContainer {
                 }
             }
 
-            if (this.m != null && !this.m.equalsIgnoreCase(oitemstack.s()) && this.m.length() > 0) {
+            if (this.m != null && this.m.length() > 0 && !this.m.equalsIgnoreCase(this.n.r().c(oitemstack.a())) && !this.m.equals(oitemstack.s())) {
                 j = oitemstack.g() ? 7 : oitemstack.a * 5;
                 i += j;
                 if (oitemstack.t()) {
@@ -255,7 +255,7 @@ public class OContainerRepair extends OContainer {
             }
 
             if (j == i && j > 0 && this.a >= 40) {
-                this.h.W().a("Naming an item only, cost too high; giving discount to cap cost to 39 levels");
+                this.h.X().a("Naming an item only, cost too high; giving discount to cap cost to 39 levels");
                 this.a = 39;
             }
 

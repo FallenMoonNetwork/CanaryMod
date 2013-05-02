@@ -39,7 +39,7 @@ public class Wolf extends TamableEntity {
      * @return collar colour as an int
      */
     public int getCollarColour() {
-        return getEntity().bV();
+        return getEntity().bX();
     }
 
     /**

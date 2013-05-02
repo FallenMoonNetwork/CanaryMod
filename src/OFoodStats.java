@@ -60,7 +60,7 @@ public class OFoodStats {
             }
         }
 
-        if (this.a >= 18 && oentityplayer.cm()) {
+        if (this.a >= 18 && oentityplayer.co()) {
             ++this.d;
             if (this.d >= 80) {
                 oentityplayer.j(1);

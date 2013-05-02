@@ -212,7 +212,7 @@ public abstract class OEntity {
 
         if (!this.q.I && this.q instanceof OWorldServer) {
             this.q.C.a("portal");
-            OMinecraftServer ominecraftserver = ((OWorldServer) this.q).o();
+            OMinecraftServer ominecraftserver = ((OWorldServer) this.q).p();
 
             i = this.y();
             if (this.ap) {
@@ -1183,7 +1183,7 @@ public abstract class OEntity {
 
     public void U() {
         if (this.n != null) {
-            if (!(this.n instanceof OEntityPlayer) || !((OEntityPlayer) this.n).ce()) {
+            if (!(this.n instanceof OEntityPlayer) || !((OEntityPlayer) this.n).cg()) {
                 this.n.U = this.U;
                 this.n.V = this.V + this.W() + this.n.V();
                 this.n.W = this.W;
@@ -1477,7 +1477,7 @@ public abstract class OEntity {
     }
 
     public String toString() {
-        return String.format("%s[\'%s\'/%d, l=\'%s\', x=%.2f, y=%.2f, z=%.2f]", new Object[] { this.getClass().getSimpleName(), this.am(), Integer.valueOf(this.k), this.q == null ? "~NULL~" : this.q.L().k(), Double.valueOf(this.u), Double.valueOf(this.v), Double.valueOf(this.w)});
+        return String.format("%s[\'%s\'/%d, l=\'%s\', x=%.2f, y=%.2f, z=%.2f]", new Object[] { this.getClass().getSimpleName(), this.am(), Integer.valueOf(this.k), this.q == null ? "~NULL~" : this.q.M().k(), Double.valueOf(this.u), Double.valueOf(this.v), Double.valueOf(this.w)});
     }
 
     public boolean aq() {

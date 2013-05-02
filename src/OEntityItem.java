@@ -254,7 +254,7 @@ public class OEntityItem extends OEntity {
 
         if (oitemstack == null) {
             if (this.q != null) {
-                this.q.W().c("Item entity " + this.k + " has no item?!");
+                this.q.X().c("Item entity " + this.k + " has no item?!");
             }
 
             return new OItemStack(OBlock.x);

@@ -486,11 +486,11 @@ public class PlayerCommands extends CommandHandler {
             if (split.length == 2) {
                 return etc.autoComplete(split[1], etc.getDataSource().getItems().keySet().toArray(new String[0]));
             }
-            
+
             if (split.length == 4 && !(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) {
                 return etc.autoCompleteNames(split[3]);
             }
-            
+
             if (split.length == 5 && !(caller instanceof Player) || ((Player) caller).canIgnoreRestrictions()) {
                 return etc.autoCompleteNames(split[4]);
             }
@@ -1427,7 +1427,7 @@ public class PlayerCommands extends CommandHandler {
                 player.sendMessage("User: " + Colors.Yellow + player.getName() + Colors.White);
                 player.sendMessage("Lvl: " + Colors.Yellow + player.getLevel() + Colors.White);
                 player.sendMessage(String.format("Exp:%s %.0f %s/%s %d %s(%s%.2f%%%s)", // Exp: xx / yy (zz.zz%)
-                        Colors.Yellow, ent.ch * ent.ck(), Colors.White,
+                        Colors.Yellow, ent.ch * ent.cm(), Colors.White,
                         Colors.Yellow, ent.ck(), Colors.White,
                         Colors.Yellow, ent.ch * 100, Colors.White));
 

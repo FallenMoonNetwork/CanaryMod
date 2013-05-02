@@ -16,7 +16,7 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
     public OTileEntityBeacon() {}
 
     public void h() {
-        if (this.k.G() % 80L == 0L) {
+        if (this.k.H() % 80L == 0L) {
             this.v();
             this.u();
         }
@@ -33,7 +33,7 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
 
             OAxisAlignedBB oaxisalignedbb = OAxisAlignedBB.a().a((double) this.l, (double) this.m, (double) this.n, (double) (this.l + 1), (double) (this.m + 1), (double) (this.n + 1)).b(d0, d0, d0);
 
-            oaxisalignedbb.e = (double) this.k.P();
+            oaxisalignedbb.e = (double) this.k.Q();
             List list = this.k.a(OEntityPlayer.class, oaxisalignedbb);
             Iterator iterator = list.iterator();
 

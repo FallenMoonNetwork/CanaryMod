@@ -271,9 +271,9 @@ public class OChunk {
                     for (l1 = l; l1 < i1; ++l1) {
                         // CanaryMod start: Catch corrupt index info
                         if (l1 >> 4 < 0 || l1 >> 4 >= 16) {
-                            this.e.W().b("Invalid chunk info array index: {0}", l1 >> 4);
-                            this.e.W().b("l: {0}, i1: {1}", l, i1);
-                            this.e.W().b("Chunk location: {0}, {1}", j1, k1);
+                            this.e.X().b("Invalid chunk info array index: {0}", l1 >> 4);
+                            this.e.X().b("l: {0}, i1: {1}", l, i1);
+                            this.e.X().b("Chunk location: {0}, {1}", j1, k1);
                             l1 = 0;
                         } // CanaryMod end
                         oextendedblockstorage = this.r[l1 >> 4];
@@ -638,10 +638,10 @@ public class OChunk {
         int j = OMathHelper.c(oentity.w / 16.0D);
 
         if (i != this.g || j != this.h) {
-            this.e.W().a().log(Level.SEVERE,
+            this.e.X().a().log(Level.SEVERE,
                     "Entity not in this chunk! Chunk: {0}, {1} Entity: {2}",
                     new Object[] {this.g, this.h, oentity});
-            this.e.W().c("Destroying entity to prevent trouble", new RuntimeException());
+            this.e.X().c("Destroying entity to prevent trouble", new RuntimeException());
             oentity.w();
             return;
         }
@@ -846,10 +846,10 @@ public class OChunk {
 
     public boolean a(boolean flag) {
         if (flag) {
-            if (this.m && this.e.G() != this.n || this.l) {
+            if (this.m && this.e.H() != this.n || this.l) {
                 return true;
             }
-        } else if (this.m && this.e.G() >= this.n + 600L) {
+        } else if (this.m && this.e.H() >= this.n + 600L) {
             return true;
         }
 
@@ -857,7 +857,7 @@ public class OChunk {
     }
 
     public Random a(long i) {
-        return new Random(this.e.F() + (long) (this.g * this.g * 4987142) + (long) (this.g * 5947611) + (long) (this.h * this.h) * 4392871L + (long) (this.h * 389711) ^ i);
+        return new Random(this.e.G() + (long) (this.g * this.g * 4987142) + (long) (this.g * 5947611) + (long) (this.h * this.h) * 4392871L + (long) (this.h * 389711) ^ i);
     }
 
     public boolean g() {

@@ -120,7 +120,7 @@ public class OEntityArrow extends OEntity implements OIProjectile {
             OBlock.r[i].a((OIBlockAccess) this.q, this.d, this.e, this.f);
             OAxisAlignedBB oaxisalignedbb = OBlock.r[i].b(this.q, this.d, this.e, this.f);
 
-            if (oaxisalignedbb != null && oaxisalignedbb.a(this.q.T().a(this.u, this.v, this.w))) {
+            if (oaxisalignedbb != null && oaxisalignedbb.a(this.q.U().a(this.u, this.v, this.w))) {
                 this.i = true;
             }
         }
@@ -148,14 +148,14 @@ public class OEntityArrow extends OEntity implements OIProjectile {
             }
         } else {
             ++this.au;
-            OVec3 ovec3 = this.q.T().a(this.u, this.v, this.w);
-            OVec3 ovec31 = this.q.T().a(this.u + this.x, this.v + this.y, this.w + this.z);
+            OVec3 ovec3 = this.q.U().a(this.u, this.v, this.w);
+            OVec3 ovec31 = this.q.U().a(this.u + this.x, this.v + this.y, this.w + this.z);
             OMovingObjectPosition omovingobjectposition = this.q.a(ovec3, ovec31, false, true);
 
-            ovec3 = this.q.T().a(this.u, this.v, this.w);
-            ovec31 = this.q.T().a(this.u + this.x, this.v + this.y, this.w + this.z);
+            ovec3 = this.q.U().a(this.u, this.v, this.w);
+            ovec31 = this.q.U().a(this.u + this.x, this.v + this.y, this.w + this.z);
             if (omovingobjectposition != null) {
-                ovec31 = this.q.T().a(omovingobjectposition.f.c, omovingobjectposition.f.d, omovingobjectposition.f.e);
+                ovec31 = this.q.U().a(omovingobjectposition.f.c, omovingobjectposition.f.d, omovingobjectposition.f.e);
             }
 
             OEntity oentity = null;

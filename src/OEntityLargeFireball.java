@@ -16,7 +16,7 @@ public class OEntityLargeFireball extends OEntityFireball {
                 omovingobjectposition.g.a(ODamageSource.a((OEntityFireball) this, this.a), 6);
             }
 
-            this.q.a((OEntity) null, this.u, this.v, this.w, (float) this.e, true, this.q.M().b("mobGriefing"));
+            this.q.a((OEntity) null, this.u, this.v, this.w, (float) this.e, true, this.q.N().b("mobGriefing"));
             this.w();
         }
     }

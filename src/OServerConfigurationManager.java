@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public abstract class OServerConfigurationManager {
 
@@ -62,16 +62,16 @@ public abstract class OServerConfigurationManager {
 
         this.e.al().a(oentityplayermp.bS + "[" + s + "] logged in with entity id " + oentityplayermp.k + " at (" + oentityplayermp.u + ", " + oentityplayermp.v + ", " + oentityplayermp.w + ")");
         OWorldServer oworldserver = oentityplayermp.o(); // CanaryMod: get from entity itself.
-        OChunkCoordinates ochunkcoordinates = oworldserver.I();
+        OChunkCoordinates ochunkcoordinates = oworldserver.J();
 
         this.a(oentityplayermp, (OEntityPlayerMP) null, oworldserver);
         ONetServerHandler onetserverhandler = new ONetServerHandler(this.e, oinetworkmanager, oentityplayermp);
 
-        onetserverhandler.b(new OPacket1Login(oentityplayermp.k, oworldserver.L().u(), oentityplayermp.c.b(), oworldserver.L().t(), oworldserver.t.h, oworldserver.r, oworldserver.P(), this.l()));
+        onetserverhandler.b(new OPacket1Login(oentityplayermp.k, oworldserver.M().u(), oentityplayermp.c.b(), oworldserver.M().t(), oworldserver.t.h, oworldserver.r, oworldserver.Q(), this.l()));
         onetserverhandler.b(new OPacket6SpawnPosition(ochunkcoordinates.a, ochunkcoordinates.b, ochunkcoordinates.c));
         onetserverhandler.b(new OPacket202PlayerAbilities(oentityplayermp.ce));
         onetserverhandler.b(new OPacket16BlockItemSwitch(oentityplayermp.bK.c));
-        this.a((OServerScoreboard) oworldserver.V(), oentityplayermp);
+        this.a((OServerScoreboard) oworldserver.W(), oentityplayermp);
         this.b(oentityplayermp, oworldserver);
 
         // CanaryMod - onPlayerConnect Hook
@@ -91,7 +91,7 @@ public abstract class OServerConfigurationManager {
         this.c(oentityplayermp);
         onetserverhandler.a(oentityplayermp.u, oentityplayermp.v, oentityplayermp.w, oentityplayermp.A, oentityplayermp.B);
         this.e.ae().a(onetserverhandler);
-        onetserverhandler.b(new OPacket4UpdateTime(oworldserver.G(), oworldserver.H()));
+        onetserverhandler.b(new OPacket4UpdateTime(oworldserver.H(), oworldserver.I()));
         if (this.e.Q().length() > 0) {
             oentityplayermp.a(this.e.Q(), this.e.S());
         }
@@ -153,17 +153,17 @@ public abstract class OServerConfigurationManager {
     }
 
     public void a(OWorldServer[] aoworldserver) {
-        this.saveHandlers.put(aoworldserver[0].name, aoworldserver[0].K().e());
+        this.saveHandlers.put(aoworldserver[0].name, aoworldserver[0].L().e());
     }
 
     public void a(OEntityPlayerMP oentityplayermp, OWorldServer oworldserver) {
         OWorldServer oworldserver1 = oentityplayermp.o();
 
         if (oworldserver != null) {
-            oworldserver.r().c(oentityplayermp);
+            oworldserver.s().c(oentityplayermp);
         }
 
-        oworldserver1.r().a(oentityplayermp);
+        oworldserver1.s().a(oentityplayermp);
         oworldserver1.b.c((int) oentityplayermp.u >> 4, (int) oentityplayermp.w >> 4);
     }
 
@@ -172,7 +172,7 @@ public abstract class OServerConfigurationManager {
     }
 
     public ONBTTagCompound a(OEntityPlayerMP oentityplayermp) {
-        ONBTTagCompound onbttagcompound = etc.getServer().getDefaultWorld().getWorld().L().i();
+        ONBTTagCompound onbttagcompound = etc.getServer().getDefaultWorld().getWorld().M().i();
         ONBTTagCompound onbttagcompound1;
 
         if (oentityplayermp.c_().equals(this.e.H()) && onbttagcompound != null) {
@@ -210,7 +210,7 @@ public abstract class OServerConfigurationManager {
     }
 
     public void d(OEntityPlayerMP oentityplayermp) {
-        oentityplayermp.o().r().d(oentityplayermp);
+        oentityplayermp.o().s().d(oentityplayermp);
     }
 
     public void e(OEntityPlayerMP oentityplayermp) {
@@ -223,7 +223,7 @@ public abstract class OServerConfigurationManager {
         }
 
         oworldserver.e(oentityplayermp);
-        oworldserver.r().c(oentityplayermp);
+        oworldserver.s().c(oentityplayermp);
         this.a.remove(oentityplayermp);
 
         // CanaryMod: Player color and Prefix
@@ -351,14 +351,15 @@ public abstract class OServerConfigurationManager {
 
     // CanaryMod: alias to set location when spawning
     public OEntityPlayerMP a(OEntityPlayerMP oentityplayermp, int i, boolean flag, Location location) {
-        oentityplayermp.o().p().a(oentityplayermp);
-        oentityplayermp.o().p().b(oentityplayermp);
-        oentityplayermp.o().r().c(oentityplayermp);
-        this.a.remove(oentityplayermp);
-        this.e.getWorld(oentityplayermp.getPlayer().getWorld().getName(), oentityplayermp.ar).f(oentityplayermp);
-        OChunkCoordinates ochunkcoordinates = oentityplayermp.ci();
-        boolean flag1 = oentityplayermp.cj();
+        oentityplayermp.o().q().a(oentityplayermp);
+        oentityplayermp.o().q().b(oentityplayermp);
+        oentityplayermp.o().s().c(oentityplayermp);
 
+        this.a.remove(oentityplayermp);
+
+        this.e.getWorld(oentityplayermp.getPlayer().getWorld().getName(), oentityplayermp.ar).f(oentityplayermp);
+        OChunkCoordinates ochunkcoordinates = oentityplayermp.ck();
+        boolean flag1 = oentityplayermp.cl();
         oentityplayermp.ar = i;
         OItemInWorldManager oiteminworldmanager;
         OWorldServer oworldserver = location != null ? location.getWorld().getWorld() : this.e.getWorld(oentityplayermp.q.name, oentityplayermp.ar);
@@ -402,17 +403,18 @@ public abstract class OServerConfigurationManager {
         }
 
         // Force chunk cache reload on the client
-        oentityplayermp1.a.b(new OPacket9Respawn(oentityplayermp1.ar >= 0 ? -1 : 0, (byte) oentityplayermp1.q.r, oentityplayermp1.q.L().u(), oentityplayermp1.q.P(), oentityplayermp1.c.b()));
-        oentityplayermp1.a.b(new OPacket9Respawn(oentityplayermp1.ar, (byte) oentityplayermp1.q.r, oentityplayermp1.q.L().u(), oentityplayermp1.q.P(), oentityplayermp1.c.b()));
+        oentityplayermp1.a.b(new OPacket9Respawn(oentityplayermp1.ar >= 0 ? -1 : 0, (byte) oentityplayermp1.q.r, oentityplayermp1.q.M().u(), oentityplayermp1.q.Q(), oentityplayermp1.c.b()));
+        oentityplayermp1.a.b(new OPacket9Respawn(oentityplayermp1.ar, (byte) oentityplayermp1.q.r, oentityplayermp1.q.M().u(), oentityplayermp1.q.Q(), oentityplayermp1.c.b()));
         //oentityplayermp1.a(oworldserver);
         //oentityplayermp1.M = false;
 
-        ochunkcoordinates1 = oworldserver.I();
+        ochunkcoordinates1 = oworldserver.J();
+
         oentityplayermp1.a.a(oentityplayermp1.u, oentityplayermp1.v, oentityplayermp1.w, oentityplayermp1.A, oentityplayermp1.B);
         oentityplayermp1.a.b(new OPacket6SpawnPosition(ochunkcoordinates1.a, ochunkcoordinates1.b, ochunkcoordinates1.c));
         oentityplayermp1.a.b(new OPacket43Experience(oentityplayermp1.ch, oentityplayermp1.cg, oentityplayermp1.cf));
         this.b(oentityplayermp1, oworldserver);
-        oworldserver.r().a(oentityplayermp1);
+        oworldserver.s().a(oentityplayermp1);
         oworldserver.d(oentityplayermp1);
         this.a.add(oentityplayermp1);
         oentityplayermp1.d_();
@@ -433,7 +435,7 @@ public abstract class OServerConfigurationManager {
         oentityplayermp.ar = i;
         OWorldServer oworldserver1 = this.e.getWorld(oentityplayermp.q.name, oentityplayermp.ar);
 
-        oentityplayermp.a.b(new OPacket9Respawn(oentityplayermp.ar, (byte) oentityplayermp.q.r, oworldserver1.L().u(), oworldserver1.P(), oentityplayermp.c.b()));
+        oentityplayermp.a.b(new OPacket9Respawn(oentityplayermp.ar, (byte) oentityplayermp.q.r, oworldserver1.M().u(), oworldserver1.Q(), oentityplayermp.c.b()));
         oworldserver.f(oentityplayermp);
         oentityplayermp.M = false;
         this.a(oentityplayermp, j, oworldserver, oworldserver1, flag);
@@ -483,7 +485,7 @@ public abstract class OServerConfigurationManager {
             OChunkCoordinates ochunkcoordinates;
 
             if (i == 1) {
-                ochunkcoordinates = oworldserver1.I();
+                ochunkcoordinates = oworldserver1.J();
             } else {
                 ochunkcoordinates = oworldserver1.l();
             }
@@ -507,7 +509,7 @@ public abstract class OServerConfigurationManager {
                 oentity.b(d0, oentity.v, d1, oentity.A, oentity.B);
                 oworldserver1.a(oentity, false);
                 if (flag) {
-                    oworldserver1.s().a(oentity, d3, d4, d5, f);
+                    oworldserver1.t().a(oentity, d3, d4, d5, f);
                 } //
             }
 
@@ -600,7 +602,8 @@ public abstract class OServerConfigurationManager {
     }
 
     public boolean e(String s) {
-        return this.h.contains(s.trim().toLowerCase()) || this.e.I() && etc.getServer().getDefaultWorld().getWorld().L().v() && this.e.H().equalsIgnoreCase(s) || this.m;
+        return this.h.contains(s.trim().toLowerCase()) || this.e.I() && etc.getServer().getDefaultWorld().getWorld().M().v() && this.e.H().equalsIgnoreCase(s) || this.m;
+
     }
 
     public OEntityPlayerMP f(String s) {
@@ -651,7 +654,7 @@ public abstract class OServerConfigurationManager {
                         s1 = s1.substring(1);
                     }
 
-                    OScorePlayerTeam oscoreplayerteam = oentityplayermp.cq();
+                    OScorePlayerTeam oscoreplayerteam = oentityplayermp.cs();
                     String s2 = oscoreplayerteam == null ? "" : oscoreplayerteam.b();
 
                     if (flag1 == s1.equalsIgnoreCase(s2)) {
@@ -710,14 +713,14 @@ public abstract class OServerConfigurationManager {
                     s = s.substring(0, s.length() - 4);
                 }
 
-                OScoreboard oscoreboard = oentityplayer.cp();
+                OScoreboard oscoreboard = oentityplayer.cr();
                 OScoreObjective oscoreobjective = oscoreboard.b(s);
 
                 if (oscoreobjective == null) {
                     return false;
                 }
 
-                OScore oscore = oentityplayer.cp().a(oentityplayer.am(), oscoreobjective);
+                OScore oscore = oentityplayer.cr().a(oentityplayer.am(), oscoreobjective);
 
                 i = oscore.c();
                 if (i < ((Integer) entry.getValue()).intValue() && flag) {
@@ -777,8 +780,8 @@ public abstract class OServerConfigurationManager {
     public void j() {}
 
     public void b(OEntityPlayerMP oentityplayermp, OWorldServer oworldserver) {
-        oentityplayermp.a.b(new OPacket4UpdateTime(oworldserver.G(), oworldserver.H()));
-        if (oworldserver.O()) {
+        oentityplayermp.a.b(new OPacket4UpdateTime(oworldserver.H(), oworldserver.I()));
+        if (oworldserver.P()) {
             oentityplayermp.a.b(new OPacket70GameEvent(1, 0));
         }
     }
@@ -798,7 +801,7 @@ public abstract class OServerConfigurationManager {
     }
 
     public String[] m() {
-        return etc.getServer().getDefaultWorld().getWorld().K().e().f();
+        return etc.getServer().getDefaultWorld().getWorld().L().e().f();
     }
 
     public boolean n() {
@@ -843,7 +846,7 @@ public abstract class OServerConfigurationManager {
             oentityplayermp.c.a(this.l);
         }
 
-        oentityplayermp.c.b(oworld.L().r());
+        oentityplayermp.c.b(oworld.M().r());
     }
 
     // CanaryMod: change signature to include String stopMsg for custom stop messages.

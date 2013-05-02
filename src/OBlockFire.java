@@ -58,7 +58,7 @@ public class OBlockFire extends OBlock {
     }
 
     public void a(OWorld oworld, int i, int j, int k, Random random) {
-        if (oworld.M().b("doFireTick")) {
+        if (oworld.N().b("doFireTick")) {
             boolean flag = oworld.a(i, j - 1, k) == OBlock.bf.cz;
 
             if (oworld.t instanceof OWorldProviderEnd && oworld.a(i, j - 1, k) == OBlock.D.cz) {
@@ -69,7 +69,7 @@ public class OBlockFire extends OBlock {
                 oworld.i(i, j, k);
             }
 
-            if (!flag && oworld.O() && (oworld.F(i, j, k) || oworld.F(i - 1, j, k) || oworld.F(i + 1, j, k) || oworld.F(i, j, k - 1) || oworld.F(i, j, k + 1))) {
+            if (!flag && oworld.P() && (oworld.F(i, j, k) || oworld.F(i - 1, j, k) || oworld.F(i + 1, j, k) || oworld.F(i, j, k - 1) || oworld.F(i, j, k + 1))) {
                 oworld.i(i, j, k);
             } else {
                 int l = oworld.h(i, j, k);
@@ -119,7 +119,7 @@ public class OBlockFire extends OBlock {
                                             j2 /= 2;
                                         }
 
-                                        if (j2 > 0 && random.nextInt(l1) <= j2 && (!oworld.O() || !oworld.F(i1, k1, j1)) && !oworld.F(i1 - 1, k1, k) && !oworld.F(i1 + 1, k1, j1) && !oworld.F(i1, k1, j1 - 1) && !oworld.F(i1, k1, j1 + 1)) {
+                                        if (j2 > 0 && random.nextInt(l1) <= j2 && (!oworld.P() || !oworld.F(i1, k1, j1)) && !oworld.F(i1 - 1, k1, k) && !oworld.F(i1 + 1, k1, j1) && !oworld.F(i1, k1, j1 - 1) && !oworld.F(i1, k1, j1 + 1)) {
                                             int k2 = l + random.nextInt(5) / 4;
 
                                             if (k2 > 15) {

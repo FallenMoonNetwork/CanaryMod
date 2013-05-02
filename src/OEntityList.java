@@ -73,7 +73,7 @@ public class OEntityList {
         if (oentity != null) {
             oentity.f(onbttagcompound);
         } else {
-            oworld.W().b("Skipping Entity with id " + onbttagcompound.i("id"));
+            oworld.X().b("Skipping Entity with id " + onbttagcompound.i("id"));
         }
 
         return oentity;
@@ -93,7 +93,7 @@ public class OEntityList {
         }
 
         if (oentity == null) {
-            oworld.W().b("Skipping Entity with id " + i);
+            oworld.X().b("Skipping Entity with id " + i);
         }
 
         return oentity;

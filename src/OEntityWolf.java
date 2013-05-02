@@ -64,8 +64,8 @@ public class OEntityWolf extends OEntityTameable {
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("Angry", this.bU());
-        onbttagcompound.a("CollarColor", (byte) this.bV());
+        onbttagcompound.a("Angry", this.bW());
+        onbttagcompound.a("CollarColor", (byte) this.bX());
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
@@ -77,11 +77,11 @@ public class OEntityWolf extends OEntityTameable {
     }
 
     protected boolean bm() {
-        return this.bU();
+        return this.bW() && !this.m();
     }
 
     protected String bb() {
-        return this.bU() ? "mob.wolf.growl" : (this.ab.nextInt(3) == 0 ? (this.m() && this.ah.c(18) < 10 ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
+        return this.bW() ? "mob.wolf.growl" : (this.ab.nextInt(3) == 0 ? (this.m() && this.ah.c(18) < 10 ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
     }
 
     protected String bc() {
@@ -113,13 +113,13 @@ public class OEntityWolf extends OEntityTameable {
     public void l_() {
         super.l_();
         this.f = this.e;
-        if (this.bW()) {
+        if (this.bY()) {
             this.e += (1.0F - this.e) * 0.4F;
         } else {
             this.e += (0.0F - this.e) * 0.4F;
         }
 
-        if (this.bW()) {
+        if (this.bY()) {
             this.bJ = 10;
         }
 
@@ -208,7 +208,7 @@ public class OEntityWolf extends OEntityTameable {
                 } else if (oitemstack.c == OItem.aX.cp) {
                     int i = OBlockCloth.g_(oitemstack.k());
 
-                    if (i != this.bV()) {
+                    if (i != this.bX()) {
                         this.s(i);
                         if (!oentityplayer.ce.d && --oitemstack.a <= 0) {
                             oentityplayer.bK.a(oentityplayer.bK.c, (OItemStack) null);
@@ -224,7 +224,7 @@ public class OEntityWolf extends OEntityTameable {
                 this.bG = false;
                 this.a((OPathEntity) null);
             }
-        } else if (oitemstack != null && oitemstack.c == OItem.aY.cp && !this.bU()) {
+        } else if (oitemstack != null && oitemstack.c == OItem.aY.cp && !this.bW()) {
             if (!oentityplayer.ce.d) {
                 --oitemstack.a;
             }
@@ -271,7 +271,7 @@ public class OEntityWolf extends OEntityTameable {
         return 8;
     }
 
-    public boolean bU() {
+    public boolean bW() {
         return (this.ah.a(16) & 2) != 0;
     }
 
@@ -285,7 +285,7 @@ public class OEntityWolf extends OEntityTameable {
         }
     }
 
-    public int bV() {
+    public int bX() {
         return this.ah.a(20) & 15;
     }
 
@@ -329,7 +329,7 @@ public class OEntityWolf extends OEntityTameable {
         }
     }
 
-    public boolean bW() {
+    public boolean bY() {
         return this.ah.a(19) == 1;
     }
 

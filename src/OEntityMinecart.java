@@ -181,7 +181,7 @@ public abstract class OEntityMinecart extends OEntity {
 
         if (!this.q.I && this.q instanceof OWorldServer) {
             this.q.C.a("portal");
-            OMinecraftServer ominecraftserver = ((OWorldServer) this.q).o();
+            OMinecraftServer ominecraftserver = ((OWorldServer) this.q).p();
 
             i = this.y();
             if (this.ap) {
@@ -616,7 +616,7 @@ public abstract class OEntityMinecart extends OEntity {
                 d1 += 0.5D;
             }
 
-            return this.q.T().a(d0, d1, d2);
+            return this.q.U().a(d0, d1, d2);
         } else {
             return null;
         }
@@ -683,8 +683,8 @@ public abstract class OEntityMinecart extends OEntity {
                     if (oentity instanceof OEntityMinecart) {
                         double d4 = oentity.u - this.u;
                         double d5 = oentity.w - this.w;
-                        OVec3 ovec3 = this.q.T().a(d4, 0.0D, d5).a();
-                        OVec3 ovec31 = this.q.T().a((double) OMathHelper.b(this.A * 3.1415927F / 180.0F), 0.0D, (double) OMathHelper.a(this.A * 3.1415927F / 180.0F)).a();
+                        OVec3 ovec3 = this.q.U().a(d4, 0.0D, d5).a();
+                        OVec3 ovec31 = this.q.U().a((double) OMathHelper.b(this.A * 3.1415927F / 180.0F), 0.0D, (double) OMathHelper.a(this.A * 3.1415927F / 180.0F)).a();
                         double d6 = Math.abs(ovec3.b(ovec31));
 
                         if (d6 < 0.800000011920929D) {

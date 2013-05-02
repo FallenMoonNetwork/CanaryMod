@@ -31,7 +31,7 @@ public class OChunkProviderServer implements OIChunkProvider {
 
     public void b(int i, int j) {
         if (this.h.t.e()) {
-            OChunkCoordinates ochunkcoordinates = this.h.I();
+            OChunkCoordinates ochunkcoordinates = this.h.J();
             int k = i * 16 + 8 - ochunkcoordinates.a;
             int l = j * 16 + 8 - ochunkcoordinates.c;
             short short1 = 128;
@@ -86,7 +86,7 @@ public class OChunkProviderServer implements OIChunkProvider {
 
                         ocrashreportcategory.a("Location", String.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j)}));
                         ocrashreportcategory.a("Position hash", Long.valueOf(k));
-                        ocrashreportcategory.a("Generator", this.d.d());
+                        ocrashreportcategory.a("Generator", this.d.e());
                         throw new OReportedException(ocrashreport);
                     }
                 }
@@ -128,7 +128,7 @@ public class OChunkProviderServer implements OIChunkProvider {
                 OChunk ochunk = this.e.a(this.h, i, j);
 
                 if (ochunk != null) {
-                    ochunk.n = this.h.G();
+                    ochunk.n = this.h.H();
                     if (this.d != null) {
                         this.d.e(i, j);
                     }
@@ -155,7 +155,7 @@ public class OChunkProviderServer implements OIChunkProvider {
     private void b(OChunk ochunk) {
         if (this.e != null) {
             try {
-                ochunk.n = this.h.G();
+                ochunk.n = this.h.H();
                 this.e.a(this.h, ochunk);
             } catch (IOException ioexception) {
                 ioexception.printStackTrace();
@@ -197,18 +197,16 @@ public class OChunkProviderServer implements OIChunkProvider {
             }
         }
 
-        if (flag) {
-            if (this.e == null) {
-                return true;
-            }
-
-            this.e.b();
-        }
-
         return true;
     }
 
-    public boolean b() {
+    public void b() {
+        if (this.e != null) {
+            this.e.b();
+        }
+    }
+
+    public boolean c() {
         if (!this.h.c) {
             for (int i = 0; i < 100; ++i) {
                 if (!this.b.isEmpty()) {
@@ -231,11 +229,39 @@ public class OChunkProviderServer implements OIChunkProvider {
             }
         }
 
-        return this.d.b();
+        return this.d.c();
     }
 
-    public OChunk regenerateChunk(int i, int j) {
-        Long chunkCoordIntPair = OChunkCoordIntPair.a(i, j);
+    public boolean d() {
+        return !this.h.c;
+    }
+
+    public String e() {
+        return "ServerChunkCache: " + this.f.a() + " Drop: " + this.b.size();
+    }
+
+    public List a(OEnumCreatureType oenumcreaturetype, int i, int j, int k) {
+        return this.d.a(oenumcreaturetype, i, j, k);
+    }
+
+    public OChunkPosition a(OWorld oworld, String s, int i, int j, int k) {
+        return this.d.a(oworld, s, i, j, k);
+    }
+
+    public int f() {
+        return this.f.a();
+    }
+
+    public void e(int i, int j) {}
+
+    /**
+     * Regenerates the chunk at the given coordinates
+     * @param x The chunk X coordinate
+     * @param z The chunk Y coordinate
+     * @return The newly generated OChunk
+     */
+    public OChunk regenerateChunk(int x, int z) {
+        Long chunkCoordIntPair = OChunkCoordIntPair.a(x, z);
 
         // Unloading the chunk
         OChunk unloadedChunk = (OChunk) f.a(chunkCoordIntPair.longValue());
@@ -250,7 +276,7 @@ public class OChunkProviderServer implements OIChunkProvider {
         }
 
         // Generating the new chunk
-        OChunk newChunk = d.d(i, j);
+        OChunk newChunk = d.d(x, z);
 
         f.a(chunkCoordIntPair, newChunk);
         g.add(newChunk);
@@ -258,7 +284,7 @@ public class OChunkProviderServer implements OIChunkProvider {
             newChunk.c(); // onChunkLoad
             newChunk.d(); // onChunkUnload
         }
-        newChunk.a(this, this, i, j); //populateChunk
+        newChunk.a(this, this, x, z); //populateChunk
 
         // Save the new chunk, overriding the old one
         a(newChunk);
@@ -270,26 +296,4 @@ public class OChunkProviderServer implements OIChunkProvider {
 
         return newChunk;
     }
-
-    public boolean c() {
-        return !this.h.c;
-    }
-
-    public String d() {
-        return "ServerChunkCache: " + this.f.a() + " Drop: " + this.b.size();
-    }
-
-    public List a(OEnumCreatureType oenumcreaturetype, int i, int j, int k) {
-        return this.d.a(oenumcreaturetype, i, j, k);
-    }
-
-    public OChunkPosition a(OWorld oworld, String s, int i, int j, int k) {
-        return this.d.a(oworld, s, i, j, k);
-    }
-
-    public int e() {
-        return this.f.a();
-    }
-
-    public void e(int i, int j) {}
 }

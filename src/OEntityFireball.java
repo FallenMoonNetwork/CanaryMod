@@ -79,14 +79,14 @@ public abstract class OEntityFireball extends OEntity {
                 ++this.au;
             }
 
-            OVec3 ovec3 = this.q.T().a(this.u, this.v, this.w);
-            OVec3 ovec31 = this.q.T().a(this.u + this.x, this.v + this.y, this.w + this.z);
+            OVec3 ovec3 = this.q.U().a(this.u, this.v, this.w);
+            OVec3 ovec31 = this.q.U().a(this.u + this.x, this.v + this.y, this.w + this.z);
             OMovingObjectPosition omovingobjectposition = this.q.a(ovec3, ovec31);
 
-            ovec3 = this.q.T().a(this.u, this.v, this.w);
-            ovec31 = this.q.T().a(this.u + this.x, this.v + this.y, this.w + this.z);
+            ovec3 = this.q.U().a(this.u, this.v, this.w);
+            ovec31 = this.q.U().a(this.u + this.x, this.v + this.y, this.w + this.z);
             if (omovingobjectposition != null) {
-                ovec31 = this.q.T().a(omovingobjectposition.f.c, omovingobjectposition.f.d, omovingobjectposition.f.e);
+                ovec31 = this.q.U().a(omovingobjectposition.f.c, omovingobjectposition.f.d, omovingobjectposition.f.e);
             }
 
             OEntity oentity = null;

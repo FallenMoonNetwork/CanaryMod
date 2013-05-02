@@ -57,7 +57,7 @@ public class OWorldServer extends OWorld {
 
     public void b() {
         super.b();
-        if (this.L().t() && this.r < 3) {
+        if (this.M().t() && this.r < 3) {
             this.r = 3;
         }
 
@@ -81,12 +81,12 @@ public class OWorldServer extends OWorld {
         }
 
         this.C.a("mobSpawner");
-        if (this.M().b("doMobSpawning")) {
+        if (this.N().b("doMobSpawning")) {
             OSpawnerAnimals.a(this, this.E, this.F, this.x.f() % 400L == 0L);
         }
 
         this.C.c("chunkSource");
-        this.v.b();
+        this.v.c();
         int j = this.a(1.0F);
 
         if (j != this.j) {
@@ -108,13 +108,13 @@ public class OWorldServer extends OWorld {
         this.A.a();
         this.B.a();
         this.C.c("portalForcer");
-        this.P.a(this.G());
+        this.P.a(this.H());
         this.C.b();
-        this.Y();
+        this.Z();
     }
 
     public OSpawnListEntry a(OEnumCreatureType oenumcreaturetype, int i, int j, int k) {
-        List list = this.J().a(oenumcreaturetype, i, j, k);
+        List list = this.K().a(oenumcreaturetype, i, j, k);
 
         return list != null && !list.isEmpty() ? (OSpawnListEntry) OWeightedRandom.a(this.s, (Collection) list) : null;
     }
@@ -145,10 +145,10 @@ public class OWorldServer extends OWorld {
             }
         }
 
-        this.X();
+        this.Y();
     }
 
-    private void X() {
+    private void Y() {
         // CanaryMod: Weather hook
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.WEATHER_CHANGE, world, false)) {
             this.x.g(0);
@@ -173,7 +173,7 @@ public class OWorldServer extends OWorld {
                 }
 
                 oentityplayer = (OEntityPlayer) iterator.next();
-            } while (oentityplayer.cg());
+            } while (oentityplayer.ci());
 
             return false;
         } else {
@@ -204,7 +204,7 @@ public class OWorldServer extends OWorld {
             int k1;
             int l1;
 
-            if (this.s.nextInt(100000) == 0 && this.O() && this.N()) {
+            if (this.s.nextInt(100000) == 0 && this.P() && this.O()) {
                 this.k = this.k * 3 + 1013904223;
                 i1 = this.k >> 2;
                 j1 = k + (i1 & 15);
@@ -228,11 +228,11 @@ public class OWorldServer extends OWorld {
                     this.c(j1 + k, l1 - 1, k1 + l, OBlock.aX.cz);
                 }
 
-                if (this.O() && this.z(j1 + k, l1, k1 + l)) {
+                if (this.P() && this.z(j1 + k, l1, k1 + l)) {
                     this.c(j1 + k, l1, k1 + l, OBlock.aW.cz);
                 }
 
-                if (this.O()) {
+                if (this.P()) {
                     OBiomeGenBase obiomegenbase = this.a(j1 + k, k1 + l);
 
                     if (obiomegenbase.d()) {
@@ -534,7 +534,7 @@ public class OWorldServer extends OWorld {
             this.y = true;
             OWorldChunkManager oworldchunkmanager = this.t.d;
             List list = oworldchunkmanager.a();
-            Random random = new Random(this.F());
+            Random random = new Random(this.G());
             OChunkPosition ochunkposition = oworldchunkmanager.a(0, 0, 256, list, random);
             int i = 0;
             int j = this.t.i();
@@ -544,7 +544,7 @@ public class OWorldServer extends OWorld {
                 i = ochunkposition.a;
                 k = ochunkposition.c;
             } else {
-                this.W().b("Unable to find spawn biome");
+                this.X().b("Unable to find spawn biome");
             }
 
             int l = 0;
@@ -585,7 +585,7 @@ public class OWorldServer extends OWorld {
     }
 
     public void a(boolean flag, OIProgressUpdate oiprogressupdate) throws OMinecraftException {
-        if (this.v.c()) {
+        if (this.v.d()) {
             if (oiprogressupdate != null) {
                 oiprogressupdate.a("Saving level");
             }
@@ -599,8 +599,14 @@ public class OWorldServer extends OWorld {
         }
     }
 
+    public void m() {
+        if (this.v.d()) {
+            this.v.b();
+        }
+    }
+
     protected void a() throws OMinecraftException {
-        this.E();
+        this.F();
         this.w.a(this.x, this.a.ad().q());
         this.z.a();
     }
@@ -645,7 +651,7 @@ public class OWorldServer extends OWorld {
     public void a(OEntity oentity, byte b0) {
         OPacket38EntityStatus opacket38entitystatus = new OPacket38EntityStatus(oentity.k, b0);
 
-        this.p().b(oentity, opacket38entitystatus);
+        this.q().b(oentity, opacket38entitystatus);
     }
 
     public OExplosion a(OEntity oentity, double d0, double d1, double d2, float f, boolean flag, boolean flag1) {
@@ -689,7 +695,7 @@ public class OWorldServer extends OWorld {
 
     }
 
-    private void Y() {
+    private void Z() {
         while (!this.Q[this.R].isEmpty()) {
             int i = this.R;
 
@@ -714,15 +720,15 @@ public class OWorldServer extends OWorld {
         return i == oblockeventdata.f() ? OBlock.r[i].b(this, oblockeventdata.a(), oblockeventdata.b(), oblockeventdata.c(), oblockeventdata.d(), oblockeventdata.e()) : false;
     }
 
-    public void m() {
+    public void n() {
         this.w.a();
     }
 
-    protected void n() {
-        boolean flag = this.O();
+    protected void o() {
+        boolean flag = this.P();
 
-        super.n();
-        if (flag != this.O()) {
+        super.o();
+        if (flag != this.P()) {
             if (flag) {
                 this.a.ad().a((OPacket) (new OPacket70GameEvent(2, 0)));
             } else {
@@ -731,19 +737,19 @@ public class OWorldServer extends OWorld {
         }
     }
 
-    public OMinecraftServer o() {
+    public OMinecraftServer p() {
         return this.a;
     }
 
-    public OEntityTracker p() {
+    public OEntityTracker q() {
         return this.J;
     }
 
-    public OPlayerManager r() {
+    public OPlayerManager s() {
         return this.K;
     }
 
-    public OTeleporter s() {
+    public OTeleporter t() {
         return this.P;
     }
 
@@ -752,6 +758,6 @@ public class OWorldServer extends OWorld {
      * @return
      */
     public EntityTracker getEntityTracker() {
-        return this.p().getCanaryEntityTracker();
+        return this.q().getCanaryEntityTracker();
     }
 }

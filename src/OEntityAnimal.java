@@ -52,7 +52,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
 
             OEntityPlayer oentityplayer = (OEntityPlayer) oentity;
 
-            if (oentityplayer.cb() == null || !this.c(oentityplayer.cb())) {
+            if (oentityplayer.cd() == null || !this.c(oentityplayer.cd())) {
                 this.a_ = null;
             }
         } else if (oentity instanceof OEntityAnimal) {
@@ -164,7 +164,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
                 for (i = 0; i < list.size(); ++i) {
                     OEntityPlayer oentityplayer = (OEntityPlayer) list.get(i);
 
-                    if (oentityplayer.cb() != null && this.c(oentityplayer.cb())) {
+                    if (oentityplayer.cd() != null && this.c(oentityplayer.cd())) {
                         return oentityplayer;
                     }
                 }

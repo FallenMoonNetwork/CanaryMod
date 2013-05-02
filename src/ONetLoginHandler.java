@@ -60,8 +60,8 @@ public class ONetLoginHandler extends ONetHandler {
         } else {
             PublicKey publickey = this.e.F().getPublic();
 
-            if (opacket2clientprotocol.d() != 60) {
-                if (opacket2clientprotocol.d() > 60) {
+            if (opacket2clientprotocol.d() != 61) {
+                if (opacket2clientprotocol.d() > 61) {
                     this.a("Outdated server!");
                 } else {
                     this.a("Outdated client!");
@@ -136,7 +136,7 @@ public class ONetLoginHandler extends ONetHandler {
             String s = null;
 
             if (opacket254serverping.a == 1) {
-                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(60), this.e.x(), this.e.aa(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
+                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(61), this.e.x(), this.e.aa(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
 
                 Object object;
 

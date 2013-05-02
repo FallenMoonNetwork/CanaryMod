@@ -320,7 +320,7 @@ public class ONetServerHandler extends ONetHandler {
         } else if (opacket14blockdig.e == 3) {
             this.c.a(true);
         } else if (opacket14blockdig.e == 5) {
-            this.c.bX();
+            this.c.bZ();
         } else {
             boolean flag = false;
 
@@ -699,7 +699,7 @@ public class ONetServerHandler extends ONetHandler {
         if (opacket205clientcommand.a == 1) {
             if (this.c.j) {
                 this.c = this.d.ad().a(this.c, 0, true);
-            } else if (this.c.o().L().t()) {
+            } else if (this.c.o().M().t()) {
                 if (this.d.I() && this.c.bS.equals(this.d.H())) {
                     this.c.a.c("You have died. Game over, man, it\'s game over!");
                     this.d.P();

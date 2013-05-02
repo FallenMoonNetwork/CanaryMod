@@ -51,7 +51,7 @@ public class OServerCommandManager extends OCommandHandler implements OIAdminCom
     public void a(OICommandSender oicommandsender, int i, String s, Object... aobject) {
         boolean flag = true;
 
-        if (oicommandsender instanceof OTileEntityCommandBlock && !OMinecraftServer.D().worlds.get(etc.getServer().getDefaultWorld().getName())[0].M().b("commandBlockOutput")) { // CanaryMod - multiworld fix
+        if (oicommandsender instanceof OTileEntityCommandBlock && !OMinecraftServer.D().worlds.get(etc.getServer().getDefaultWorld().getName())[0].N().b("commandBlockOutput")) { // CanaryMod - multiworld fix
             flag = false;
         }
 

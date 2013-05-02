@@ -241,7 +241,7 @@ public class OEntityBoat extends OEntity {
 
             this.d(this.x, this.y, this.z);
             if (this.G && d3 > 0.2D) {
-                if (!this.q.I) {
+                if (!this.q.I && !this.M) {
                     this.w();
 
                     int k;

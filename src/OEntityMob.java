@@ -119,7 +119,7 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
         } else {
             int l = this.q.n(i, j, k);
 
-            if (this.q.N()) {
+            if (this.q.O()) {
                 int i1 = this.q.j;
 
                 this.q.j = 10;

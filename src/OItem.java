@@ -361,7 +361,7 @@ public class OItem {
         double d0 = oentityplayer.r + (oentityplayer.u - oentityplayer.r) * (double) f;
         double d1 = oentityplayer.s + (oentityplayer.v - oentityplayer.s) * (double) f + 1.62D - (double) oentityplayer.N;
         double d2 = oentityplayer.t + (oentityplayer.w - oentityplayer.t) * (double) f;
-        OVec3 ovec3 = oworld.T().a(d0, d1, d2);
+        OVec3 ovec3 = oworld.U().a(d0, d1, d2);
         float f3 = OMathHelper.b(-f2 * 0.017453292F - 3.1415927F);
         float f4 = OMathHelper.a(-f2 * 0.017453292F - 3.1415927F);
         float f5 = -OMathHelper.b(-f1 * 0.017453292F);

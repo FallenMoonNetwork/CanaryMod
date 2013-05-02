@@ -23,8 +23,8 @@ public class OCommandWeather extends OCommandBase {
                 i = a(oicommandsender, astring[1], 1, 1000000) * 20;
             }
 
-            OWorldServer oworldserver = OMinecraftServer.D().worlds.get(OMinecraftServer.D().J())[0]; // CanaryMod - multiworld fix
-            OWorldInfo oworldinfo = oworldserver.L();
+            OWorldServer oworldserver = OMinecraftServer.D().getWorld(OMinecraftServer.D().J(), 0); // CanaryMod - multiworld fix
+            OWorldInfo oworldinfo = oworldserver.M();
 
             oworldinfo.g(i);
             oworldinfo.f(i);

@@ -282,7 +282,7 @@ public abstract class OContainer {
 
                     if (oslot2.d() && flag) {
                         oitemstack3 = oslot2.c();
-                        oinventoryplayer.a(j, oitemstack3);
+                        oinventoryplayer.a(j, oitemstack3.m());
                         if ((oslot2.f != oinventoryplayer || !oslot2.a(oitemstack1)) && oitemstack1 != null) {
                             if (k1 > -1) {
                                 oinventoryplayer.a(oitemstack1);
@@ -309,7 +309,7 @@ public abstract class OContainer {
                 }
             } else if (k == 4 && oinventoryplayer.o() == null && i >= 0) {
                 oslot2 = (OSlot) this.c.get(i);
-                if (oslot2 != null && oslot2.d()) {
+                if (oslot2 != null && oslot2.d() && oslot2.a(oentityplayer)) {
                     oitemstack1 = oslot2.a(j == 0 ? 1 : oslot2.c().a);
                     oslot2.a(oentityplayer, oitemstack1);
                     oentityplayer.c(oitemstack1);

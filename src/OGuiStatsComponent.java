@@ -41,8 +41,8 @@ public class OGuiStatsComponent extends JComponent {
                 for (int j = 0; j < level.length; ++j) {
                     this.d[5 + j] = "Lvl " + j + " tick: " + a.format(this.a(this.e.worldTickNanos.get(worldName)[j]) * 1.0E-6D) + " ms";
                     if (level[j] != null && level[j].b != null) {
-                        this.d[5 + j] = this.d[5 + j] + ", " + level[j].b.d();
-                        this.d[5 + j] = this.d[5 + j] + ", Vec3: " + level[j].T().d() + " / " + level[j].T().c();
+                        this.d[5 + j] = this.d[5 + j] + ", " + level[j].b.e();
+                        this.d[5 + j] = this.d[5 + j] + ", Vec3: " + level[j].U().d() + " / " + level[j].U().c();
                     }
                 }
             } // CanaryMod end

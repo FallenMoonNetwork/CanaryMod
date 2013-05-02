@@ -13,11 +13,11 @@ public class OWorldManager implements OIWorldAccess {
     public void a(String s, double d0, double d1, double d2, double d3, double d4, double d5) {}
 
     public void a(OEntity oentity) {
-        this.b.p().a(oentity);
+        this.b.q().a(oentity);
     }
 
     public void b(OEntity oentity) {
-        this.b.p().b(oentity);
+        this.b.q().b(oentity);
     }
 
     public void a(String s, double d0, double d1, double d2, float f, float f1) {
@@ -31,7 +31,7 @@ public class OWorldManager implements OIWorldAccess {
     public void a(int i, int j, int k, int l, int i1, int j1) {}
 
     public void a(int i, int j, int k) {
-        this.b.r().a(i, j, k);
+        this.b.s().a(i, j, k);
     }
 
     public void b(int i, int j, int k) {}

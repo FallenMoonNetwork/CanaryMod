@@ -159,7 +159,7 @@ public class OServerCommandScoreboard extends OCommandBase {
     }
 
     protected OScoreboard d() {
-        return OMinecraftServer.D().getWorld(OMinecraftServer.D().J(), 0).V();
+        return OMinecraftServer.D().getWorld(OMinecraftServer.D().J(), 0).W();
     }
 
     protected OScoreObjective a(String s, boolean flag) {

@@ -1168,7 +1168,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      */
     // TODO pull up
     public int getScore() {
-        return getEntity().bZ();
+        return getEntity().cb();
     }
 
     /**
@@ -1357,7 +1357,7 @@ public class Player extends HumanEntity implements MessageReceiver {
     // TODO pull up
     public Location getRespawnLocation() {
         Location spawn = etc.getServer().getDefaultWorld().getSpawnLocation();
-        OChunkCoordinates loc = getEntity().ci();
+        OChunkCoordinates loc = getEntity().ck();
 
         if (loc != null) {
             spawn = new Location(etc.getServer().getDefaultWorld(), loc.a, loc.b, loc.c);
@@ -1514,7 +1514,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      */
     // TODO pull up
     public EnderChestInventory getEnderChest() {
-        return new EnderChestInventory(getEntity().cn(), this);
+        return new EnderChestInventory(getEntity().cp(), this);
     }
 
     /**

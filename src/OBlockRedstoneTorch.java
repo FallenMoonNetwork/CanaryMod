@@ -17,7 +17,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         List list = (List) b.get(oworld);
 
         if (flag) {
-            list.add(new ORedstoneUpdateInfo(i, j, k, oworld.G()));
+            list.add(new ORedstoneUpdateInfo(i, j, k, oworld.H()));
         }
 
         int l = 0;
@@ -93,7 +93,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         boolean flag = this.m(oworld, i, j, k);
         List list = (List) b.get(oworld);
 
-        while (list != null && !list.isEmpty() && oworld.G() - ((ORedstoneUpdateInfo) list.get(0)).d > 60L) {
+        while (list != null && !list.isEmpty() && oworld.H() - ((ORedstoneUpdateInfo) list.get(0)).d > 60L) {
             list.remove(0);
         }
 

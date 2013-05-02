@@ -3,6 +3,7 @@ public class OEntityEnderman extends OEntityMob {
     private static boolean[] d = new boolean[256];
     private int e = 0;
     private int f = 0;
+    private boolean g;
 
     // CanaryMod Start
     @SuppressWarnings("FieldNameHidesFieldInSuperclass")
@@ -46,6 +47,7 @@ public class OEntityEnderman extends OEntityMob {
 
         if (oentityplayer != null) {
             if (this.e(oentityplayer)) {
+                this.g = true;
                 if (this.f == 0) {
                     this.q.a((OEntity) oentityplayer, "mob.endermen.stare", 1.0F, 1.0F);
                 }
@@ -70,7 +72,7 @@ public class OEntityEnderman extends OEntityMob {
             return false;
         } else {
             OVec3 ovec3 = oentityplayer.i(1.0F).a();
-            OVec3 ovec31 = this.q.T().a(this.u - oentityplayer.u, this.E.b + (double) (this.P / 2.0F) - (oentityplayer.v + (double) oentityplayer.e()), this.w - oentityplayer.w);
+            OVec3 ovec31 = this.q.U().a(this.u - oentityplayer.u, this.E.b + (double) (this.P / 2.0F) - (oentityplayer.v + (double) oentityplayer.e()), this.w - oentityplayer.w);
             double d0 = ovec31.b();
 
             ovec31 = ovec31.a();
@@ -88,7 +90,7 @@ public class OEntityEnderman extends OEntityMob {
         this.bI = this.a_ != null ? 6.5F : 0.3F;
         int i;
 
-        if (!this.q.I && this.q.M().b("mobGriefing")) {
+        if (!this.q.I && this.q.N().b("mobGriefing")) {
             int j;
             int k;
             int l;
@@ -123,12 +125,13 @@ public class OEntityEnderman extends OEntityMob {
             this.q.a("portal", this.u + (this.ab.nextDouble() - 0.5D) * (double) this.O, this.v + this.ab.nextDouble() * (double) this.P - 0.25D, this.w + (this.ab.nextDouble() - 0.5D) * (double) this.O, (this.ab.nextDouble() - 0.5D) * 2.0D, -this.ab.nextDouble(), (this.ab.nextDouble() - 0.5D) * 2.0D);
         }
 
-        if (this.q.u() && !this.q.I) {
+        if (this.q.v() && !this.q.I) {
             float f = this.c(1.0F);
 
             if (f > 0.5F && this.q.l(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w)) && this.ab.nextFloat() * 30.0F < (f - 0.4F) * 2.0F) {
                 this.a_ = null;
                 this.a(false);
+                this.g = false;
                 this.m();
             }
         }
@@ -136,7 +139,12 @@ public class OEntityEnderman extends OEntityMob {
         if (this.F() || this.ae()) {
             this.a_ = null;
             this.a(false);
+            this.g = false;
             this.m();
+        }
+
+        if (this.q() && !this.g && this.ab.nextInt(100) == 0) {
+            this.a(false);
         }
 
         this.bG = false;
@@ -175,7 +183,7 @@ public class OEntityEnderman extends OEntityMob {
     }
 
     protected boolean p(OEntity oentity) {
-        OVec3 ovec3 = this.q.T().a(this.u - oentity.u, this.E.b + (double) (this.P / 2.0F) - oentity.v + (double) oentity.e(), this.w - oentity.w);
+        OVec3 ovec3 = this.q.U().a(this.u - oentity.u, this.E.b + (double) (this.P / 2.0F) - oentity.v + (double) oentity.e(), this.w - oentity.w);
 
         ovec3 = ovec3.a();
         double d0 = 16.0D;
@@ -294,7 +302,13 @@ public class OEntityEnderman extends OEntityMob {
             return false;
         } else {
             this.a(true);
+            if (odamagesource instanceof OEntityDamageSource && odamagesource.i() instanceof OEntityPlayer) {
+                this.g = true;
+            }
+
             if (odamagesource instanceof OEntityDamageSourceIndirect) {
+                this.g = false;
+
                 for (int j = 0; j < 64; ++j) {
                     if (this.m()) {
                         return true;

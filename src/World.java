@@ -339,7 +339,7 @@ public class World {
      * @param z The spawn's new z location
      */
     public void setSpawnLocation(int x, int y, int z) {
-        this.getWorld().L().a(x, y, z);
+        this.getWorld().M().a(x, y, z);
     }
 
     /**
@@ -976,7 +976,7 @@ public class World {
      * @return seed of the world
      */
     public long getRandomSeed() {
-        return world.F();
+        return world.G();
     }
 
     /**
@@ -1025,7 +1025,7 @@ public class World {
     }
 
     public PlayerManager getPlayerManager() {
-        return world.r().getCanaryPlayerManager();
+        return world.s().getCanaryPlayerManager();
     }
 
     public void removePlayerFromWorld(Player player) {

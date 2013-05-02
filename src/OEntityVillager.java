@@ -119,7 +119,7 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
         if (!flag && this.R() && !this.p() && !this.h_()) {
             if (!this.q.I) {
                 this.a(oentityplayer);
-                oentityplayer.a((OIMerchant) this, this.bO());
+                oentityplayer.a((OIMerchant) this, this.bP());
             }
 
             return true;

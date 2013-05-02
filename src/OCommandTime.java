@@ -62,7 +62,7 @@ public class OCommandTime extends OCommandBase {
             for (int j = 0; j < level.length; ++j) {
                 OWorldServer oworldserver = level[j];
 
-                oworldserver.b(oworldserver.H() + (long) i);
+                oworldserver.b(oworldserver.I() + (long) i);
             }
         }
     }

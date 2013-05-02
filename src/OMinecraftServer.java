@@ -1,5 +1,6 @@
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.IOException;
 import java.security.KeyPair;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,12 +59,13 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     private long Q;
     private String R;
     private boolean S;
+    private boolean T = false;
 
     // CanaryMod start: Multiworld \o/
     public Map<String, OWorldServer[]> worlds = new HashMap<String, OWorldServer[]>(1);
     public Map<String, long[][]> worldTickNanos = new HashMap<String, long[][]>(1);
     // CanaryMod end
-    
+
     // CanaryMod start: Stop Message
     private String stopMsg;
     // CanaryMod end
@@ -73,14 +75,14 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         this.n = file1;
         this.p = new OServerCommandManager();
         this.l = new OAnvilSaveConverter(file1);
-        this.am();
+        this.an();
     }
 
-    private void am() {
+    private void an() {
         ODispenserBehaviors.a();
     }
 
-    protected abstract boolean c();
+    protected abstract boolean c() throws IOException;
 
     protected void b(String s) {
         if (this.N().b(s)) {
@@ -140,7 +142,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             }
             toLoad[j].a((OIWorldAccess) (new OWorldManager(this, toLoad[j])));
             if (!this.I()) {
-                toLoad[j].L().a(this.g());
+                toLoad[j].M().a(this.g());
             }
             this.s.a(toLoad);
         }
@@ -157,7 +159,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
         this.al().a("Preparing start region for level " + b0);
         OWorldServer oworldserver = toLoad[b0];
-        OChunkCoordinates ochunkcoordinates = oworldserver.I();
+        OChunkCoordinates ochunkcoordinates = oworldserver.J();
         long j = System.currentTimeMillis();
 
         for (int k = -192; k <= 192 && this.m(); k += 16) {
@@ -206,7 +208,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
                     if (oworldserver != null) {
                         if (!flag) {
-                            this.al().a("Saving chunks for level \'" + oworldserver.L().k() + "\'/" + oworldserver.t.l());
+                        this.al().a("Saving chunks for level \'" + oworldserver.M().k() + "\'/" + oworldserver.t.l());
                         }
 
                         try {
@@ -241,7 +243,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                 for (int i = 0; i < aoworldserver.length; ++i) {
                     OWorldServer oworldserver = aoworldserver[i];
 
-                    oworldserver.m();
+                oworldserver.n();
                 }
             } // CanaryMod: diff visibility
 
@@ -417,14 +419,14 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                 if (i == 0 || this.s()) {
                     OWorldServer oworldserver = level[i];
 
-                    this.a.a(oworldserver.L().k());
+                this.a.a(oworldserver.M().k());
                     this.a.a("pools");
-                    oworldserver.T().a();
+                oworldserver.U().a();
                     this.a.b();
                     if (this.v % 20 == 0) {
                         this.a.a("timeSync");
                         //CanaryMod: send packet for multiworld
-                        this.s.sendPacketToDimension((OPacket) (new OPacket4UpdateTime(oworldserver.G(), oworldserver.H())), worldName, oworldserver.t.h);
+                        this.s.sendPacketToDimension((OPacket) (new OPacket4UpdateTime(oworldserver.H(), oworldserver.I())), worldName, oworldserver.t.h);
                         this.a.b();
                     }
 
@@ -450,7 +452,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
                 this.a.b();
                 this.a.a("tracker");
-                    oworldserver.p().a();
+                oworldserver.q().a();
                 this.a.b();
                 this.a.b();
                 }
@@ -554,7 +556,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             }
 
             if (flag) {
-                odedicatedserver.ao();
+                odedicatedserver.ap();
             }
 
             odedicatedserver.t();
@@ -609,7 +611,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public String x() {
-        return "1.5.1";
+        return "1.5.2";
     }
 
     public int y() {
@@ -772,7 +774,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                 OWorldServer oworldserver = aworld[j];
 
                 if (oworldserver != null) {
-                if (oworldserver.L().t()) {
+                if (oworldserver.M().t()) {
                     oworldserver.r = 3;
                         oworldserver.a(true, true);
                     } else if (this.I()) {
@@ -816,11 +818,11 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                 OWorldServer oworldserver = level[i];
 
                 if (oworldserver != null) {
-                    oworldserver.m();
+                oworldserver.n();
                 }
             }
 
-            this.N().e(level[0].K().g());
+            this.N().e(level[0].L().g());
         } //
         this.n();
     }
@@ -854,7 +856,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             for (int j = 0; j < level.length; ++j) {
                 if (level[j] != null) {
                     OWorldServer oworldserver = level[j];
-                    OWorldInfo oworldinfo = oworldserver.L();
+                    OWorldInfo oworldinfo = oworldserver.M();
 
                     oplayerusagesnooper.a("world[" + i + "][dimension]", Integer.valueOf(oworldserver.t.h));
                     oplayerusagesnooper.a("world[" + i + "][mode]", oworldinfo.r());
@@ -863,7 +865,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                     oplayerusagesnooper.a("world[" + i + "][generator_name]", oworldinfo.u().a());
                     oplayerusagesnooper.a("world[" + i + "][generator_version]", Integer.valueOf(oworldinfo.u().c()));
                     oplayerusagesnooper.a("world[" + i + "][height]", Integer.valueOf(this.C));
-                    oplayerusagesnooper.a("world[" + i + "][chunks_loaded]", Integer.valueOf(oworldserver.J().e()));
+                oplayerusagesnooper.a("world[" + i + "][chunks_loaded]", Integer.valueOf(oworldserver.K().f()));
                     ++i;
                 }
             }
@@ -962,7 +964,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     public void a(OEnumGameType oenumgametype) {
         OWorldServer[] level = D().worlds.get(this.J());
         for (int i = 0; i < level.length; ++i) {
-            level[i].L().a(oenumgametype);
+            level[i].M().a(oenumgametype);
         }
     }
 
@@ -996,10 +998,18 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
     public abstract OILogAgent al();
 
+    public void i(boolean flag) {
+        this.T = flag;
+    }
+
+    public boolean am() {
+        return this.T;
+    }
+
     public static OServerConfigurationManager a(OMinecraftServer ominecraftserver) {
         return ominecraftserver.s;
     }
-    
+
     // CanaryMod start: Custom Stop Message
     public void stopServer(String stopMsg){
     	this.stopMsg = stopMsg;

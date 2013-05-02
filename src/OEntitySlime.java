@@ -190,13 +190,13 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
     public boolean bv() {
         OChunk ochunk = this.q.d(OMathHelper.c(this.u), OMathHelper.c(this.w));
 
-        if (this.q.L().u() == OWorldType.c && this.ab.nextInt(4) != 1) {
+        if (this.q.M().u() == OWorldType.c && this.ab.nextInt(4) != 1) {
             return false;
         } else {
             if (this.p() == 1 || this.q.r > 0) {
                 OBiomeGenBase obiomegenbase = this.q.a(OMathHelper.c(this.u), OMathHelper.c(this.w));
 
-                if (obiomegenbase == OBiomeGenBase.h && this.v > 50.0D && this.v < 70.0D && this.ab.nextFloat() < 0.5F && this.ab.nextFloat() < e[this.q.v()] && this.q.n(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w)) <= this.ab.nextInt(8)) {
+                if (obiomegenbase == OBiomeGenBase.h && this.v > 50.0D && this.v < 70.0D && this.ab.nextFloat() < 0.5F && this.ab.nextFloat() < e[this.q.w()] && this.q.n(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w)) <= this.ab.nextInt(8)) {
                     return super.bv();
                 }
 

@@ -128,7 +128,7 @@ public class OExplosion {
         int i2 = OMathHelper.c(this.e - (double) this.g - 1.0D);
         int j2 = OMathHelper.c(this.e + (double) this.g + 1.0D);
         List list = this.k.b(this.f, OAxisAlignedBB.a().a((double) i, (double) k, (double) i2, (double) j, (double) l1, (double) j2));
-        OVec3 ovec3 = this.k.T().a(this.c, this.d, this.e);
+        OVec3 ovec3 = this.k.U().a(this.c, this.d, this.e);
 
         for (int k2 = 0; k2 < list.size(); ++k2) {
             OEntity oentity = (OEntity) list.get(k2);
@@ -163,7 +163,7 @@ public class OExplosion {
                     oentity.y += d1 * d11;
                     oentity.z += d2 * d11;
                     if (oentity instanceof OEntityPlayer) {
-                        this.l.put((OEntityPlayer) oentity, this.k.T().a(d0 * d10, d1 * d10, d2 * d10));
+                        this.l.put((OEntityPlayer) oentity, this.k.U().a(d0 * d10, d1 * d10, d2 * d10));
                     }
                 }
             }

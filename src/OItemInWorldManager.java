@@ -231,13 +231,13 @@ public class OItemInWorldManager {
             if (this.d()) {
                 this.b.a.b(new OPacket53BlockChange(i, j, k, this.a));
             } else {
-                OItemStack oitemstack = this.b.cb();
+                OItemStack oitemstack = this.b.cd();
                 boolean flag1 = this.b.a(OBlock.r[l]);
 
                 if (oitemstack != null) {
                     oitemstack.a(this.a, l, i, j, k, this.b);
                     if (oitemstack.a == 0) {
-                        this.b.cc();
+                        this.b.ce();
                     }
                 }
 
@@ -270,7 +270,7 @@ public class OItemInWorldManager {
                 oentityplayer.bK.a[oentityplayer.bK.c] = null;
             }
 
-            if (!oentityplayer.bV()) {
+            if (!oentityplayer.bX()) {
                 ((OEntityPlayerMP) oentityplayer).a(oentityplayer.bL);
             }
 

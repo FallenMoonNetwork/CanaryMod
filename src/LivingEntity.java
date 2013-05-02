@@ -302,7 +302,7 @@ public class LivingEntity extends BaseEntity {
      *
      * @param type The type of damage to deal (certain types byass armor or affect potions differently)
      * @param amount The amount of damage to deal (2 = 1 heart)
-     * @deprecated use applyDamage(DamageType, int) 
+     * @deprecated use applyDamage(DamageType, int)
      */
     @Deprecated
     public void applyDamage(PluginLoader.DamageType type, int amount) {
@@ -317,7 +317,7 @@ public class LivingEntity extends BaseEntity {
     public void applyDamage(DamageType type, int amount) {
         getEntity().d(type.getDamageSource().getDamageSource(), amount);
     }
-    
+
     /**
      * Damages this entity, taking into account armor/enchantments/potions
      * @param source
@@ -326,9 +326,9 @@ public class LivingEntity extends BaseEntity {
     public void applayDamage(DamageSource source, int amount) {
         getEntity().d(source.getDamageSource(), amount);
     }
-    
+
     public String getCustomName() {
-        return getEntity().bO();
+        return getEntity().bP();
     }
 
     public void setCustomName(String name) {
@@ -336,6 +336,6 @@ public class LivingEntity extends BaseEntity {
     }
 
     public boolean hasCustomName() {
-        return getEntity().bP();
+        return getEntity().bQ();
     }
 }
