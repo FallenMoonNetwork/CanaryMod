@@ -1429,7 +1429,7 @@ public class PlayerCommands extends CommandHandler {
                 player.sendMessage(String.format("Exp:%s %.0f %s/%s %d %s(%s%.2f%%%s)", // Exp: xx / yy (zz.zz%)
                         Colors.Yellow, ent.ch * ent.ck(), Colors.White,
                         Colors.Yellow, ent.ck(), Colors.White,
-                        Colors.Yellow, ent.ch, Colors.White));
+                        Colors.Yellow, ent.ch * 100, Colors.White));
 
                 if(player.isAdmin()) {
                     player.sendMessage(Colors.Yellow + (etc.getInstance().isOldExperience() ? "Pre-":"Post ") + "1.3.2 Experience System" + Colors.White);

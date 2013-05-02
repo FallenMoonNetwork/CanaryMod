@@ -1024,6 +1024,7 @@ public class Player extends HumanEntity implements MessageReceiver {
             mcServer.ad().a(ent, loc.dimension, true, loc); // Respawn with location
         } else {
             mcServer.ad().sendPlayerToOtherDimension(ent, world.getType().getId(), false);
+            this.updateXP();
         }
     }
 
