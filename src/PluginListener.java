@@ -338,9 +338,9 @@ public class PluginListener {
 
     /**
      * Called when either a lava block or a lighter tries to light something on
-     * fire. block status depends on the light source: 1 = lava. 2 = lighter
-     * (flint + steel). 3 = spread (dynamic spreading of fire). 4 = fire
-     * destroying a block. 5 = lightning
+     * fire. block status depends on the light source: 1 = lava, 2 = lighter
+     * (flint + steel) / fire charge, 3 = spread (dynamic spreading of fire), 4 = fire
+     * destroying a block, 5 = lightning, 6 = fireball
      *
      * @param block
      *            block that the fire wants to spawn in.
@@ -360,9 +360,8 @@ public class PluginListener {
      * @param block
      *            Dynamite block/creeper/ghast fireball/wither skull location block.
      *
-     * @deprecated Use onExplosion(Block,BaseEntity,List) instead. You can still
-     *             use block.getStatus to get what exploded, as well as using
-     *             OEntity.
+     * @deprecated Use {@link #onExplosion(Block, BaseEntity, List)} instead.
+     *             You can still use block.getStatus to get what exploded.
      * @return true if you dont the block to explode.
      */
     @Deprecated
@@ -387,9 +386,9 @@ public class PluginListener {
      * @param blocksaffected
      *            The blocks affected by the explosion in a hashset.
      *
-     * @deprecated Use onExplosion(Block,BaseEntity,List) instead. You can still
-     *             use block.getStatus to get what exploded, as well as using
-     *             Entity.
+     * @deprecated Use {@link #onExplosion(Block, BaseEntity, List)} instead.
+     *             You can still use block.getStatus to get what exploded, as
+     *             well as using entity.
      * @return true if you don't want the explosion to occur.
      */
     @Deprecated
@@ -409,8 +408,9 @@ public class PluginListener {
      *            The block location where the explosion occurred.
      *
      * @param entity
-     *            The entity that caused the explosion(tnt, creeper, fireball,
-     *            skull)
+     *            The entity that caused the explosion (tnt, creeper,
+     *            skull). Due to technical restrictions, an exploding fireball
+     *            causes <tt>entity</tt> to be <tt>null</tt>.
      *
      * @param blocksaffected
      *            The blocks affected by the explosion in a list.

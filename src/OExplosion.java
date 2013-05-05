@@ -36,11 +36,11 @@ public class OExplosion {
         // CanaryMod: allow explosion
         Block block = new Block(this.k.world, this.k.world.getBlockIdAt((int) this.c, (int) this.d, (int) this.e), (int) this.c, (int) this.d, (int) this.e);
 
-        if (this.f == null) {
+        if (this.f instanceof OEntityTNTPrimed || this.f instanceof OEntityMinecartTNT) {
             block.setStatus(1);
         } else if (this.f instanceof OEntityCreeper) {
             block.setStatus(2);
-        } else if (this.f instanceof OEntityFireball) {
+        } else if (this.f == null) {
             block.setStatus(3);
         } else if (this.f instanceof OEntityWitherSkull) {
             block.setStatus(4);
@@ -243,7 +243,11 @@ public class OExplosion {
                 int i1 = this.k.a(i, j - 1, k);
 
                 if (l == 0 && OBlock.s[i1] && this.j.nextInt(3) == 0) {
-                    this.k.c(i, j, k, OBlock.av.cz);
+                    Block b = new Block(0, i, j, k);
+                    b.setStatus(6);
+                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, b, null)) {
+                        this.k.c(i, j, k, OBlock.av.cz);
+                    }
                 }
             }
         }
