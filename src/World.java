@@ -129,8 +129,8 @@ public class World {
      *
      * @return time server time
      */
-    public long getTime() {
-        return world.G();
+    public long getTime() { // XXX: Don't forget to update me!!!
+        return world.H();
     }
 
     /**
@@ -139,7 +139,7 @@ public class World {
      * @return time server time
      */
     public long getRelativeTime() {
-        return world.H();
+        return world.I();
     }
 
     /**
