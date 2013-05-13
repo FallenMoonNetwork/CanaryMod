@@ -1059,7 +1059,7 @@ public class Player extends HumanEntity implements MessageReceiver {
 
     @Override
     public String toString() {
-        return String.format("Player[id=%d, name=%s]", id, getName());
+        return String.format("Player[name=%s]", getName());
     }
 
     @Override
@@ -1069,14 +1069,13 @@ public class Player extends HumanEntity implements MessageReceiver {
         }
         final Player other = (Player) obj;
 
-        return getName().equals(other.getName());
+        return getName() == null ? other.getName() == null : getName().equals(other.getName());
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
 
-        hash = 89 * hash + this.id;
         hash = 89 * hash + (this.getName() != null ? this.getName().hashCode() : 0);
         return hash;
     }

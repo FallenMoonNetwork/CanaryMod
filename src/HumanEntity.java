@@ -21,7 +21,7 @@ public class HumanEntity extends LivingEntity {
      */
     @Override
     public OEntityPlayer getEntity() {
-        return (OEntityPlayer) entity;
+        return entity == null ? null : (OEntityPlayer) entity;
     }
 
     /**
@@ -31,7 +31,8 @@ public class HumanEntity extends LivingEntity {
      */
     @Override
     public String getName() {
-        return getEntity().bS;
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.bS;
     }
 
     /**
@@ -40,7 +41,8 @@ public class HumanEntity extends LivingEntity {
      * @return String
      */
     public String getDisplayName() {
-        return getEntity().getDisplayName();
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.getDisplayName();
     }
 
     /**
@@ -49,7 +51,9 @@ public class HumanEntity extends LivingEntity {
      * @param name The name displayed. Any non-color modification will affect skin.
      */
     public void setDisplayName(String name) {
-        getEntity().setDisplayName(name);
+        if (getEntity() != null) {
+            getEntity().setDisplayName(name);
+        }
     }
 
     /**
@@ -57,7 +61,8 @@ public class HumanEntity extends LivingEntity {
      * @return the disableDamage state
      */
     public boolean isDamageDisabled() {
-        return getEntity().ce.a;
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.ce.a;
     }
 
     /**
@@ -66,7 +71,9 @@ public class HumanEntity extends LivingEntity {
      * @see #updateCapabilities()
      */
     public void setDamageDisabled(boolean disabled) {
-        getEntity().ce.a = disabled;
+        if (getEntity() != null) {
+            getEntity().ce.a = disabled;
+        }
     }
 
     /**
@@ -74,7 +81,8 @@ public class HumanEntity extends LivingEntity {
      * @return the flying state
      */
     public boolean isFlying() {
-        return getEntity().ce.b;
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.ce.b;
     }
 
     /**
@@ -83,7 +91,9 @@ public class HumanEntity extends LivingEntity {
      * @see #updateCapabilities()
      */
     public void setFlying(boolean flying) {
-        getEntity().ce.b = flying;
+        if (getEntity() != null) {
+            getEntity().ce.b = flying;
+        }
     }
 
     /**
@@ -91,7 +101,8 @@ public class HumanEntity extends LivingEntity {
      * @return the canFly state
      */
     public boolean canFly() {
-        return getEntity().ce.c;
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.ce.c;
     }
 
     /**
@@ -100,7 +111,9 @@ public class HumanEntity extends LivingEntity {
      * @see #updateCapabilities()
      */
     public void setCanFly(boolean allow) {
-        getEntity().ce.c = allow;
+        if (getEntity() != null) {
+            getEntity().ce.c = allow;
+        }
     }
 
     /**
@@ -110,7 +123,8 @@ public class HumanEntity extends LivingEntity {
      * @return whether player has a creative inventory.
      */
     public boolean hasCreativePerks() {
-        return getEntity().ce.d;
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.ce.d;
     }
 
     /**
@@ -121,7 +135,9 @@ public class HumanEntity extends LivingEntity {
      * @see #updateCapabilities()
      */
     public void setCreativePerks(boolean creativePerks) {
-        getEntity().ce.d = creativePerks;
+        if (getEntity() != null) {
+            getEntity().ce.d = creativePerks;
+        }
     }
 
     /**
@@ -129,7 +145,8 @@ public class HumanEntity extends LivingEntity {
      * @return whether the player has build restrictions.
      */
     public boolean hasAdventureRestrictions() {
-        return !getEntity().ce.e;
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : !oep.ce.e;
     }
 
     /**
@@ -138,7 +155,9 @@ public class HumanEntity extends LivingEntity {
      * @see #updateCapabilities()
      */
     public void setAdventureRestrictions(boolean restrict) {
-        getEntity().ce.e = !restrict;
+        if (getEntity() != null) {
+            getEntity().ce.e = !restrict;
+        }
     }
 
     /**
@@ -147,7 +166,8 @@ public class HumanEntity extends LivingEntity {
      * @return The current flying speed
      */
     public float getFlyingSpeed() {
-        return getEntity().ce.a();
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.ce.a();
     }
 
     /**
@@ -156,7 +176,8 @@ public class HumanEntity extends LivingEntity {
      * @return The current walking speed
      */
     public float getWalkingSpeed() {
-        return getEntity().ce.b();
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.ce.b();
     }
 
     /**
@@ -164,7 +185,9 @@ public class HumanEntity extends LivingEntity {
      * The client won't be affected unless you call this.
      */
     public void updateCapabilities() {
-        getEntity().n();
+        if (getEntity() != null) {
+            getEntity().n();
+        }
     }
 
     /**
@@ -172,6 +195,7 @@ public class HumanEntity extends LivingEntity {
      * @return Sleeping or not.
      */
     public boolean isSleeping() {
-        return getEntity().ca;
+        OEntityPlayer oep = getEntity();
+        return oep == null ? null : oep.ca;
     }
 }
