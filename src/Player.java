@@ -34,8 +34,8 @@ public class Player extends HumanEntity implements MessageReceiver {
             return new HashMap<Kit, Long>();
         }
     };
-    private List<String> onlyOneUseKits = onlyOneUseKitsGlobal.get(this);
-    private Map<Kit, Long> cooldownKits = cooldownKitsGlobal.get(this);
+    private List<String> onlyOneUseKits;
+    private Map<Kit, Long> cooldownKits;
     private static Pattern badChatPattern = Pattern.compile("[\u00a7\u2302\u00D7\u00AA\u00BA\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB]");
     private String offlineName = ""; // Allows modify command to work on offline players
     private long lastMessage;
@@ -864,6 +864,8 @@ public class Player extends HumanEntity implements MessageReceiver {
     protected void setUser(OEntityPlayerMP player) {
         entity = player;
         inventory = new PlayerInventory(this);
+        onlyOneUseKits = onlyOneUseKitsGlobal.get(this);
+        cooldownKits = cooldownKitsGlobal.get(this);
     }
 
     @Override
