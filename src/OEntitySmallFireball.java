@@ -54,7 +54,7 @@ public class OEntitySmallFireball extends OEntityFireball {
                 if (this.q.c(i, j, k)) {
                     // CanaryMod start: IGNITE hook
                     Block b = new Block(0, i, j, k);
-                    b.setStatus(6);
+                    b.setStatus(7); // Fireball explosion
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, b, null)) {
                         this.q.c(i, j, k, OBlock.av.cz);
                     } // CanaryMod end
