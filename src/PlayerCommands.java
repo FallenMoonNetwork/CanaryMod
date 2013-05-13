@@ -1511,9 +1511,11 @@ public class PlayerCommands extends CommandHandler {
 
             if (args.length == 2) {
                 subject = etc.getServer().matchPlayer(args[1]);
-                info = String.format("%s%s is", Colors.Yellow, subject.getName());
             }
             if (subject != null) {
+                if (subject != caller) {
+                    info = String.format("%s%s is", Colors.Yellow, subject.getName());
+                }
                 if (subject.isCreativeMode()) {
                     caller.notify("Can't apply /god to players in creative mode");
                     return;

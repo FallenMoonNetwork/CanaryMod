@@ -339,8 +339,9 @@ public class PluginListener {
     /**
      * Called when either a lava block or a lighter tries to light something on
      * fire. block status depends on the light source: 1 = lava, 2 = lighter
-     * (flint + steel) / fire charge, 3 = spread (dynamic spreading of fire), 4 = fire
-     * destroying a block, 5 = lightning, 6 = fireball
+     * (flint + steel), 3 = spread (dynamic spreading of fire), 4 = fire
+     * destroying a block, 5 = lightning, 6 = fireball (e.g. fire charge from
+     * dispenser), 7 = fire charge (item use)
      *
      * @param block
      *            block that the fire wants to spawn in.

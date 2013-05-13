@@ -22,8 +22,20 @@ public class Player extends HumanEntity implements MessageReceiver {
     private int restrictions = 0;
     private boolean muted = false;
     private PlayerInventory inventory;
-    private List<String> onlyOneUseKits = new ArrayList<String>();
-    private Map<Kit, Long> cooldownKits = new HashMap<Kit, Long>();
+    private static Map<Player, List<String>> onlyOneUseKitsGlobal = new DefaultMap(new HashMap<Player, List<String>>()) {
+        @Override
+        protected List<String> getDefaultValue() {
+            return new ArrayList<String>();
+        }
+    };
+    private static Map<Player, Map<Kit, Long>> cooldownKitsGlobal = new DefaultMap(new HashMap<Player, Map<Kit, Long>>()) {
+        @Override
+        protected Map<Kit, Long> getDefaultValue() {
+            return new HashMap<Kit, Long>();
+        }
+    };
+    private List<String> onlyOneUseKits = onlyOneUseKitsGlobal.get(this);
+    private Map<Kit, Long> cooldownKits = cooldownKitsGlobal.get(this);
     private static Pattern badChatPattern = Pattern.compile("[\u00a7\u2302\u00D7\u00AA\u00BA\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB]");
     private String offlineName = ""; // Allows modify command to work on offline players
     private long lastMessage;

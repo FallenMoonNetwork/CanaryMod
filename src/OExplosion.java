@@ -243,11 +243,12 @@ public class OExplosion {
                 int i1 = this.k.a(i, j - 1, k);
 
                 if (l == 0 && OBlock.s[i1] && this.j.nextInt(3) == 0) {
+                    // CanaryMod start: IGNITE hook
                     Block b = new Block(0, i, j, k);
                     b.setStatus(6);
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, b, null)) {
                         this.k.c(i, j, k, OBlock.av.cz);
-                    }
+                    } // CanaryMod end
                 }
             }
         }

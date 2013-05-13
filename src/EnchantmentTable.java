@@ -1,6 +1,6 @@
 /**
  * An interface class to Enchantment Tables.
- * @author willem
+ * @author Willem Mulder (14mRh4X0r)
  */
 public class EnchantmentTable extends ItemArray<OInventoryBasic> {
     private final OContainerEnchantment enchantTable;

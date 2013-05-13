@@ -48,7 +48,7 @@ public class OItemFireball extends OItem {
 
                     Boolean preventLighter = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, blockPlaced, blockClicked, ((OEntityPlayerMP) oentityplayer).getPlayer().getItemStackInHand());
 
-                    blockPlaced.setStatus(6); // Specifically to mark this ignite as from a fireball
+                    blockPlaced.setStatus(7); // Specifically to mark this ignite as from a fireball
                     Boolean preventIgnite = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, blockPlaced, player);
 
                     if (preventIgnite || preventLighter) {

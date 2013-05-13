@@ -1,6 +1,6 @@
 /**
  * An interface class to anvils.
- * @author willem
+ * @author Willem Mulder (14mRh4X0r)
  */
 public class Anvil extends InventoryCrafting<OInventoryRepair> {
     private final OContainerRepair anvil;

@@ -1,6 +1,6 @@
 /**
  * Interface to brewing stands.
- * @author willem
+ * @author Willem Mulder (14mRh4X0r)
  */
 public class BrewingStand extends BaseContainerBlock<OTileEntityBrewingStand> implements ComplexBlock {
 

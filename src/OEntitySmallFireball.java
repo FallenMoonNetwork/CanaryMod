@@ -52,7 +52,12 @@ public class OEntitySmallFireball extends OEntityFireball {
                 }
 
                 if (this.q.c(i, j, k)) {
-                    this.q.c(i, j, k, OBlock.av.cz);
+                    // CanaryMod start: IGNITE hook
+                    Block b = new Block(0, i, j, k);
+                    b.setStatus(6);
+                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, b, null)) {
+                        this.q.c(i, j, k, OBlock.av.cz);
+                    } // CanaryMod end
                 }
             }
 
