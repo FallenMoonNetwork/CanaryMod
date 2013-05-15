@@ -1238,7 +1238,7 @@ public class PlayerCommands extends CommandHandler {
                     {
                         Mob mob = new Mob(args[1], loc);
 
-                        mob.spawn(new Mob(args[2]));
+                        mob.spawn(new Mob(args[2], loc));
                     }
                 }
             } else if (args.length == 4) {

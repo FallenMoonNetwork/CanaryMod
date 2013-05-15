@@ -30,11 +30,11 @@ public class Cloth {
         private static Color[]            colors;
         private static Map<String, Color> colorMap;
 
+        @SuppressWarnings("LeakingThisInConstructor")
         private Color(String name, int data) {
             this.name = name;
             this.data = data;
             add(data, this);
-
         }
 
         private static void add(int data, Color color) {
@@ -72,6 +72,7 @@ public class Cloth {
             return name;
         }
 
+        @SuppressWarnings("deprecation")
         public Block getBlock() {
             return new Block(Block.Type.Cloth, getData());
         }

@@ -85,55 +85,52 @@ public class OContainerChest extends OContainer {
 
         OIInventory inv = this.a;
 
-        if(inv instanceof OInventoryLargeChest)
-        {
-            if(super.getInventory() instanceof DoubleChest) {
+        if (inv instanceof OInventoryLargeChest) {
+            if (super.getInventory() instanceof DoubleChest) {
                 Inventory inventory = super.getInventory();
-                if(!inventory.hasOContainer())
+                if (!inventory.hasOContainer()) {
                     inventory.setOContainer(this);
+                }
                 return super.getInventory();
             }
 
-            DoubleChest chest = new DoubleChest(this, (OInventoryLargeChest)inv);
+            DoubleChest chest = new DoubleChest(this, (OInventoryLargeChest) inv);
             setInventory(chest);
             return chest;
-        }
-        else if(inv instanceof OInventoryEnderChest)
-        {
-            if(super.getInventory() instanceof EnderChestInventory) {
+        } else if (inv instanceof OInventoryEnderChest) {
+            if (super.getInventory() instanceof EnderChestInventory) {
                 Inventory inventory = super.getInventory();
-                if(!inventory.hasOContainer())
+                if (!inventory.hasOContainer()) {
                     inventory.setOContainer(this);
+                }
                 return super.getInventory();
             }
 
-            EnderChestInventory chest = new EnderChestInventory(this, (OInventoryEnderChest)inv, null);
+            EnderChestInventory chest = new EnderChestInventory(this, (OInventoryEnderChest) inv, null);
             setInventory(chest);
             return chest;
-        }
-        else if(inv instanceof OTileEntityChest)
-        {
-            if(super.getInventory() instanceof Chest) {
+        } else if (inv instanceof OTileEntityChest) {
+            if (super.getInventory() instanceof Chest) {
                 Inventory inventory = super.getInventory();
-                if(!inventory.hasOContainer())
+                if (!inventory.hasOContainer()) {
                     inventory.setOContainer(this);
+                }
                 return super.getInventory();
             }
 
-            Chest chest = new Chest(this, (OTileEntityChest)inv);
+            Chest chest = new Chest(this, (OTileEntityChest) inv);
             setInventory(chest);
             return chest;
-        }
-        else if(inv instanceof OEntityMinecart)
-        {
-            if(super.getInventory() instanceof StorageMinecart) {
+        } else if (inv instanceof OEntityMinecartContainer) {
+            if (super.getInventory() instanceof ContainerMinecart) {
                 Inventory inventory = super.getInventory();
-                if(!inventory.hasOContainer())
+                if (!inventory.hasOContainer()) {
                     inventory.setOContainer(this);
+                }
                 return super.getInventory();
             }
 
-            StorageMinecart chest = new StorageMinecart(this, (OEntityMinecart)inv);
+            ContainerMinecart chest = ((OEntityMinecartContainer) inv).getEntity();
             setInventory(chest);
             return chest;
         }

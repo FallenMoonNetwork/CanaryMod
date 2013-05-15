@@ -473,6 +473,7 @@ public class PluginListener {
      * @param hpDamage The {@link HookParametersDamage}-instance containing the damage data.
      * @return The (un)changed <tt>hpDamage</tt>
      */
+    @SuppressWarnings("deprecation")
     public HookParametersDamage onDamage(HookParametersDamage hpDamage) {
         if (onDamage(PluginLoader.DamageType.fromDamageSource(hpDamage.getDamageSource().getDamageSource()), hpDamage.getAttacker(), hpDamage.getDefender(), hpDamage.getDamageAmount())) {
             hpDamage.setCanceled();

@@ -33,6 +33,7 @@ public class World {
         private int id;
         private static Map<Integer, Dimension> map;
 
+        @SuppressWarnings("LeakingThisInConstructor")
         private Dimension(int id) {
             this.id = id;
             add(id, this);

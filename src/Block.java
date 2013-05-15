@@ -264,6 +264,8 @@ public class Block {
      * Creates a block of specified type
      *
      * @param type
+     * @deprecated Use a constructor with a {@link World} argument instead, like
+     * {@link #Block(World, int, int, int, int)}
      */
     public Block(int type) {
         this(etc.getServer().getDefaultWorld(), type, 0, 0, 0, 0);
@@ -277,6 +279,8 @@ public class Block {
      * @param x
      * @param y
      * @param z
+     * @deprecated Use a constructor with a {@link World} argument instead, like
+     * {@link #Block(World, int, int, int, int)}
      */
     public Block(int type, int x, int y, int z) {
         this(etc.getServer().getDefaultWorld(), type, x, y, z, 0);
@@ -306,6 +310,8 @@ public class Block {
      * @param y
      * @param z
      * @param data
+     * @deprecated Use a constructor with a {@link World} argument instead, like
+     * {@link #Block(World, int, int, int, int, int)}
      */
     public Block(int type, int x, int y, int z, int data) {
         this(etc.getServer().getDefaultWorld(), type, x, y, z, data);
@@ -363,6 +369,8 @@ public class Block {
      * @param y
      * @param z
      * @param data
+     * @deprecated Use a constructor with a {@link World} argument instead, like
+     * {@link #Block(World, Type, int, int, int, int)}
      */
     public Block(Type type, int x, int y, int z, int data) {
         this(etc.getServer().getDefaultWorld(), type, x, y, z, data);
@@ -374,6 +382,8 @@ public class Block {
      * @param type
      *            Type of block
      * @param data
+     * @deprecated Use a constructor with a {@link World} argument instead, like
+     * {@link #Block(World, Type, int, int, int, int)}
      */
     public Block(Type type, int data) {
         this(etc.getServer().getDefaultWorld(), type, 0, 0, 0, data);
@@ -384,6 +394,8 @@ public class Block {
      *
      * @param type
      *            Type of block
+     * @deprecated Use a constructor with a {@link World} argument instead, like
+     * {@link #Block(World, Type, int, int, int, int)}
      */
     public Block(Type type) {
         this(etc.getServer().getDefaultWorld(), type, 0, 0, 0, 0);

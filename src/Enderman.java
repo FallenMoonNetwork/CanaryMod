@@ -32,6 +32,7 @@ public class Enderman extends Mob {
      *
      * @return Block
      */
+    @SuppressWarnings("deprecation")
     public Block getBlockInHand() {
         return new Block(Block.Type.fromId(getEntity().o()), getEntity().p());
     }

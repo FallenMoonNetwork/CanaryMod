@@ -543,7 +543,6 @@ public abstract class OServerConfigurationManager {
             OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) this.a.get(j);
 
             if (world.equals(oentityplayermp.q.name) && oentityplayermp.ar == i) {
-                // TODO check: CanaryMod re-route time updates to world-specific entity trackers
                 oentityplayermp.a.b(opacket);
             }
         }

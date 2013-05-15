@@ -98,6 +98,7 @@ public class OExplosion {
         }
 
         // CanaryMod start
+        @SuppressWarnings("deprecation")
         boolean cancel = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLODE, block, this.f, hashset); // Call deprecated hook first; it may remove blocks from hashset.
 
         // Add affected blocks into a List of Blocks.
@@ -244,9 +245,9 @@ public class OExplosion {
 
                 if (l == 0 && OBlock.s[i1] && this.j.nextInt(3) == 0) {
                     // CanaryMod start: IGNITE hook
-                    Block b = new Block(0, i, j, k);
-                    b.setStatus(7); // Fireball explosion
-                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, b, null)) {
+                    Block block = new Block(this.k.world, 0, i, j, k);
+                    block.setStatus(7); // Fireball explosion
+                    if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
                         this.k.c(i, j, k, OBlock.av.cz);
                     } // CanaryMod end
                 }
