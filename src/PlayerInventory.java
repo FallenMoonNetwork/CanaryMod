@@ -1,12 +1,12 @@
 public class PlayerInventory extends ItemArray<OInventoryPlayer> {
-    private final OEntityPlayerMP user;
+    private final OEntityPlayer user;
 
-    public PlayerInventory(Player player) {
-        this(null, player);
+    public PlayerInventory(HumanEntity human) {
+        this(null, human);
     }
-    public PlayerInventory(OContainer oContainer, Player player) {
-        super(oContainer, player.getUser().bK);
-        user = player.getUser();
+    public PlayerInventory(OContainer oContainer, HumanEntity human) {
+        super(oContainer, human.getEntity().bK);
+        user = human.getEntity();
     }
 
     /**
@@ -37,7 +37,11 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> {
      */
     @Override
     public String toString() {
-        return String.format("PlayerInventory[user=%s]", user.getPlayer());
+        return String.format("PlayerInventory[user=%s]", this.getHuman());
+    }
+
+    public HumanEntity getHuman() {
+        return user.getEntity();
     }
 
     /**
@@ -46,7 +50,7 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> {
      * @return Player
      */
     public Player getPlayer() {
-        return user.getPlayer();
+        return getHuman() instanceof Player ? (Player) getHuman() : null;
     }
 
     @Override

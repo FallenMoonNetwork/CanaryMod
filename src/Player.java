@@ -21,14 +21,13 @@ public class Player extends HumanEntity implements MessageReceiver {
     private String[] ips = new String[] { "" };
     private int restrictions = 0;
     private boolean muted = false;
-    private PlayerInventory inventory;
-    private static Map<Player, List<String>> onlyOneUseKitsGlobal = new DefaultMap(new HashMap<Player, List<String>>()) {
+    private static Map<Player, List<String>> onlyOneUseKitsGlobal = new DefaultedMap(new HashMap<Player, List<String>>()) {
         @Override
         protected List<String> getDefaultValue() {
             return new ArrayList<String>();
         }
     };
-    private static Map<Player, Map<Kit, Long>> cooldownKitsGlobal = new DefaultMap(new HashMap<Player, Map<Kit, Long>>()) {
+    private static Map<Player, Map<Kit, Long>> cooldownKitsGlobal = new DefaultedMap(new HashMap<Player, Map<Kit, Long>>()) {
         @Override
         protected Map<Kit, Long> getDefaultValue() {
             return new HashMap<Kit, Long>();
@@ -100,17 +99,6 @@ public class Player extends HumanEntity implements MessageReceiver {
             message = Colors.strip(message);
         }
         getEntity().a.msg(message);
-    }
-
-    /**
-     * Gives an item to the player.
-     *
-     * @param item
-     * @see PlayerInventory#insertItem(Item)
-     */
-    public void giveItem(Item item) {
-        inventory.insertItem(item);
-        inventory.update();
     }
 
     /**
@@ -228,165 +216,6 @@ public class Player extends HumanEntity implements MessageReceiver {
                 sendMessage(Colors.Rose + "Exception occured. Check the server for more info.");
             }
         }
-    }
-
-    /**
-     * Gives an item to the player
-     *
-     * @param itemId
-     * @param amount
-     */
-    public void giveItem(int itemId, int amount) {
-        inventory.giveItem(itemId, amount);
-        inventory.update();
-    }
-
-    /**
-     * Gives the player this item by dropping it in front of them<br>
-     * NOTE:  using this method calls Hook PluginLoader.Hook.ITEM_DROP
-     *
-     * @param item
-     * @see PluginLoader.Hook.ITEM_DROP
-     * @see PluginListener.onItemDrop(Player player, ItemEntity item)
-     */
-    public void giveItemDrop(Item item) {
-        giveItemDrop(item.getItemId(), item.getAmount(), item.getDamage());
-    }
-
-    /**
-     * Gives the player this item by dropping it in front of them<br>
-     * NOTE:  using this method calls Hook PluginLoader.Hook.ITEM_DROP
-     *
-     * @param itemId
-     * @param amount
-     * @see PluginLoader.Hook.ITEM_DROP
-     * @see PluginListener.onItemDrop(Player player, ItemEntity item)
-     */
-    public void giveItemDrop(int itemId, int amount) {
-        giveItemDrop(itemId, amount, 0);
-    }
-
-    /**
-     * Gives the player this item by dropping it in front of them<br>
-     * NOTE:  using this method calls Hook PluginLoader.Hook.ITEM_DROP
-     *
-     * @param itemId
-     * @param amount
-     * @param damage
-     * @see PluginLoader.Hook.ITEM_DROP
-     * @see PluginListener.onItemDrop(Player player, ItemEntity item)
-     */
-    public void giveItemDrop(int itemId, int amount, int damage) {
-        OEntityPlayerMP player = getEntity();
-
-        if (amount == -1) {
-            player.c(new OItemStack(itemId, 255, damage));
-        } else {
-            int temp = amount;
-
-            do {
-                if (temp - 64 >= 64) {
-                    player.c(new OItemStack(itemId, 64, damage));
-                } else {
-                    player.c(new OItemStack(itemId, temp, damage));
-                }
-                temp -= 64;
-            } while (temp > 0);
-        }
-    }
-
-    /**
-     * Drop the player inventory
-     */
-    public void dropInventory() {
-        Item[] items = inventory.getContents();
-        for(Item i: items) {
-            if(i == null) {
-                continue;
-            }
-            getWorld().dropItem(getLocation(), i);
-        }
-        inventory.clearContents();
-    }
-
-    /**
-     * Drop the player inventory at the specified Location
-     * @param location the location to drop the inventory at
-     */
-    public void dropInventory(Location location) {
-        Item[] items = inventory.getContents();
-        for(Item i: items) {
-            if(i == null) {
-                continue;
-            }
-            getWorld().dropItem(location, i);
-        }
-        inventory.clearContents();
-    }
-
-    /**
-     * Drop the player inventory at the specified coordinate
-     * @param x
-     * @param y
-     * @param z
-     */
-    public void dropInventory(double x, double y, double z) {
-        Item[] items = inventory.getContents();
-        for(Item i: items) {
-            if(i == null) {
-                continue;
-            }
-            getWorld().dropItem(x, y, z, i);
-        }
-        inventory.clearContents();
-    }
-
-    /**
-     * Drop item form specified slot
-     * @param slot
-     */
-    public void dropItemFromSlot(int slot) {
-        Item i = inventory.getItemFromSlot(slot);
-        if(i != null) {
-            getWorld().dropItem(getLocation(), i);
-            inventory.removeItem(slot);
-        }
-    }
-
-    /**
-     * Drop item form specified slot at the specified Location
-     * @param slot
-     * @param location
-     */
-    public void dropItemFromSlot(int slot, Location location) {
-        Item i = inventory.getItemFromSlot(slot);
-        if(i != null) {
-            getWorld().dropItem(location, i);
-            inventory.removeItem(slot);
-        }
-    }
-
-    /**
-     * Drop item form specified slot at the specified coordinate
-     * @param slot
-     * @param x
-     * @param y
-     * @param z
-     */
-    public void dropItemFromSlot(int slot, double x, double y, double z) {
-        Item i = inventory.getItemFromSlot(slot);
-        if(i != null) {
-            getWorld().dropItem(x, y, z, i);
-            inventory.removeItem(slot);
-        }
-    }
-
-    public boolean hasItem(Item item) {
-        Item i = inventory.getItemFromId(item.getItemId());
-        if(i == null) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -914,39 +743,6 @@ public class Player extends HumanEntity implements MessageReceiver {
     }
 
     /**
-     * Returns item id in player's hand
-     *
-     * @return item id
-     */
-    public int getItemInHand() {
-        return getEntity().a.getItemInHand();
-    }
-
-    /**
-     * Returns the item stack in the player's hand.
-     *
-     * @return Item
-     */
-    @Override
-    public Item getItemStackInHand() {
-        OItemStack result = getEntity().bK.h();
-
-        if (result != null) {
-            return new Item(result, getEntity().bK.c);
-        }
-        return null;
-    }
-
-    /**
-     * Returns this player's inventory.
-     *
-     * @return inventory
-     */
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    /**
      * Returns whether or not this entity is blocking with the item in their hand.
      * @return true if blocking
      */
@@ -1156,173 +952,6 @@ public class Player extends HumanEntity implements MessageReceiver {
     }
 
     /**
-     * Get total experience amount for this Player.
-     *
-     * @return
-     */
-    // TODO pull up
-    public int getXP() {
-        return getEntity().cg;
-    }
-
-    /**
-     * Get experience level for this Player.
-     *
-     * @return
-     */
-    // TODO pull up
-    public int getLevel() {
-        return getEntity().cf;
-    }
-
-    /**
-     * Returns the score for this Player.
-     * @return the score for this Player.
-     */
-    // TODO pull up
-    public int getScore() {
-        return getEntity().cb();
-    }
-
-    /**
-     * Add experience points to total for this Player.
-     * The amount will be capped at 2<sup>31</sup> - 1.
-     *
-     * @param amount the amount of experience points to add.
-     */
-    // TODO pull up
-    public void addXP(int amount) {
-        this.getEntity().w(amount);
-        this.updateXP();
-    }
-
-    /**
-     * Remove experience points from total for this Player.
-     * The amount will be capped at 0.
-     *
-     * @param amount the amount of experience points to remove.
-     */
-    // TODO pull up
-    public void removeXP(int amount) {
-        this.getEntity().removeXP(amount);
-        this.updateXP();
-    }
-
-    /**
-     * Set total experience points for this Player.
-     * Calls {@link #removeXP(int)} or {@link #addXP(int)} based on
-     * <tt>amount</tt> and the current XP.
-     *
-     * @param amount the new amount of experience points.
-     */
-    // TODO pull up
-    public void setXP(int amount) {
-        if (amount < this.getXP()) {
-            this.removeXP(this.getXP() - amount);
-        } else {
-            this.addXP(amount - this.getXP());
-        }
-    }
-
-    /**
-     * Send player the updated experience packet.
-     *
-     */
-    // TODO pull up
-    public void updateXP() {
-        getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().ch, getEntity().cg, getEntity().cf)));
-    }
-
-    /**
-     * Send update food and health to client
-     *
-     */
-    // TODO pull up
-    public void updateLevels() {
-        OEntityPlayerMP entityMP = getEntity();
-
-        entityMP.a.b((OPacket) (new OPacket8UpdateHealth(getHealth(), getFoodLevel(), getFoodSaturationLevel())));
-    }
-
-    /**
-     * Get player Food Level
-     *
-     * @return player food level
-     */
-    // TODO pull up
-    public int getFoodLevel() {
-        return getEntity().bN.a;
-    }
-
-    /**
-     * Set Player food level
-     *
-     * @param foodLevel
-     *         new food level, between 1 and 20
-     */
-    // TODO pull up
-    public void setFoodLevel(int foodLevel) {
-        getEntity().bN.a = Math.min(foodLevel, 20);
-        updateLevels();
-    }
-
-    /**
-     * Get Players food ExhaustionLevel
-     * @return
-     */
-    // TODO pull up
-    public float getFoodExhaustionLevel() {
-        return getEntity().bN.c;
-    }
-
-    /**
-     * Set player food exhaustion level
-     *
-     * @param foodExhaustionLevel
-     */
-    // TODO pull up
-    public void setFoodExhaustionLevel(float foodExhaustionLevel) {
-        getEntity().bN.c = Math.min(foodExhaustionLevel, 40F);
-        updateLevels();
-    }
-
-    /**
-     * Get Players food saturationLevel
-     * @return
-     */
-    // TODO pull up
-    public float getFoodSaturationLevel() {
-        return getEntity().bN.b;
-    }
-
-    /**
-     * Set player food saturation level
-     *
-     * @param foodSaturationLevel
-     */
-    // TODO pull up
-    public void setFoodSaturationLevel(float foodSaturationLevel) {
-        getEntity().bN.b = Math.min(foodSaturationLevel, getFoodLevel());
-        updateLevels();
-    }
-
-    /**
-     * Updates the inventory on the client
-     *
-     */
-    @SuppressWarnings("unchecked")
-    public void updateInventory() {
-        OContainer container = getEntity().bL;
-        ArrayList<OItemStack> list = new ArrayList<OItemStack>();
-
-        for (OSlot slot : (List<OSlot>) container.c) {
-            list.add(slot.c());
-        }
-
-        getEntity().a(container, list);
-    }
-
-    /**
      * Returns whether falling is disabled.
      * @return the disableFalling state
      * @deprecated Misleading name. See {@link #canFly()}
@@ -1360,46 +989,6 @@ public class Player extends HumanEntity implements MessageReceiver {
      */
     public void setBucketAlwaysFull(boolean alwaysFull) {
         setCreativePerks(alwaysFull);
-    }
-
-    /**
-     * Returns a player's respawn location
-     *
-     * @return spawn location
-     */
-    // TODO pull up
-    public Location getRespawnLocation() {
-        Location spawn = etc.getServer().getDefaultWorld().getSpawnLocation();
-        OChunkCoordinates loc = getEntity().ck();
-
-        if (loc != null) {
-            spawn = new Location(etc.getServer().getDefaultWorld(), loc.a, loc.b, loc.c);
-        }
-        return spawn;
-    }
-
-    /**
-     * Sets a player's respawn location
-     *
-     * @param x
-     * @param y
-     * @param z
-     */
-    // TODO pull up
-    public void setRespawnLocation(int x, int y, int z) {
-        OChunkCoordinates loc = new OChunkCoordinates(x, y, z);
-        getEntity().a(loc, true);
-    }
-
-    /**
-     * Sets a player's respawn location
-     *
-     * @param location
-     */
-    // TODO pull up
-    public void setRespawnLocation(Location location) {
-        OChunkCoordinates loc = new OChunkCoordinates((int) Math.floor(location.x), (int) Math.floor(location.y), (int) Math.floor(location.z));
-        getEntity().a(loc, true);
     }
 
     /**
@@ -1521,16 +1110,6 @@ public class Player extends HumanEntity implements MessageReceiver {
     }
 
     /**
-     * Returns this player's ender chest for modification
-     *
-     * @return
-     */
-    // TODO pull up
-    public EnderChestInventory getEnderChest() {
-        return new EnderChestInventory(getEntity().cp(), this);
-    }
-
-    /**
      * This method plays a sound for just this player, and no one else can hear it.
      * @param location the location to play the sound at
      * @param sound the sound to play
@@ -1556,23 +1135,6 @@ public class Player extends HumanEntity implements MessageReceiver {
      */
     public void playSound(double x, double y, double z, Sound sound, float volume, float pitch){
         getEntity().a.b(new OPacket62LevelSound(sound.getSoundString(), x, y, z, volume, pitch));
-    }
-
-    /**
-     * Gets the item the cursor currently has.
-     * @return The {@link Item} the cursor currently has.
-     */
-    public Item getInventoryCursorItem() {
-        return inventory.getCursorItem();
-    }
-
-    /**
-     * Sets the item the cursor should have.
-     */
-    public void setInventoryCursorItem(Item item) {
-        inventory.setCursorItem(item);
-        // Update client
-        getEntity().a.b(new OPacket103SetSlot(-1, -1, item.getBaseItem()));
     }
 
     /**
@@ -1617,5 +1179,34 @@ public class Player extends HumanEntity implements MessageReceiver {
      */
     public boolean wantsColorDisabled() {
         return !this.getEntity().getColorEnabled();
+    }
+
+    @Override
+    public void setInventoryCursorItem(Item item) {
+        super.setInventoryCursorItem(item);
+        // Update client
+        getEntity().a.b(new OPacket103SetSlot(-1, -1, item.getBaseItem()));
+    }
+
+    @Override
+    @SuppressWarnings(value = "unchecked")
+    public void updateInventory() {
+        OContainer container = getEntity().bL;
+        ArrayList<OItemStack> list = new ArrayList<OItemStack>();
+        for (OSlot slot : (List<OSlot>) container.c) {
+            list.add(slot.c());
+        }
+        getEntity().a(container, list);
+    }
+
+    @Override
+    public void updateLevels() {
+        OEntityPlayerMP entityMP = getEntity();
+        entityMP.a.b((OPacket) (new OPacket8UpdateHealth(getHealth(), getFoodLevel(), getFoodSaturationLevel())));
+    }
+
+    @Override
+    public void updateXP() {
+        getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().ch, getEntity().cg, getEntity().cf)));
     }
 }

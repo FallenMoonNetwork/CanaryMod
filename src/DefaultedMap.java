@@ -6,14 +6,14 @@ import java.util.Set;
  * A {@link Map} wrapper that implements default values.
  * @author Willem Mulder (14mRh4X0r)
  */
-public abstract class DefaultMap<K, V> implements Map<K, V> {
+public abstract class DefaultedMap<K, V> implements Map<K, V> {
     private Map<K, V> map;
 
     /**
      * Creates a new instance with <tt>map</tt> as the underlying storage.
      * @param map the {@link Map} to use as storage
      */
-    public DefaultMap(Map<K, V> map) {
+    public DefaultedMap(Map<K, V> map) {
         this.map = map;
     }
 
@@ -82,7 +82,7 @@ public abstract class DefaultMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof DefaultMap && map.equals(((DefaultMap) o).map);
+        return o instanceof DefaultedMap && map.equals(((DefaultedMap) o).map);
     }
 
     @Override

@@ -5,12 +5,13 @@
  *
  */
 public class EnderChestInventory extends ItemArray<OInventoryEnderChest> {
-    private final Player owner;
+    private final HumanEntity owner;
 
-    public EnderChestInventory(OInventoryEnderChest container, Player owner) {
+    public EnderChestInventory(OInventoryEnderChest container, HumanEntity owner) {
         this(null, container, owner);
     }
-    public EnderChestInventory(OContainer oContainer, OInventoryEnderChest container, Player owner) {
+
+    public EnderChestInventory(OContainer oContainer, OInventoryEnderChest container, HumanEntity owner) {
         super(oContainer, container);
         this.owner = owner;
     }
@@ -54,6 +55,16 @@ public class EnderChestInventory extends ItemArray<OInventoryEnderChest> {
      * @return
      */
     public Player getPlayer() {
+        return getHuman() instanceof Player ? (Player) owner : null;
+    }
+
+    /**
+     * Returns the {@link HumanEntity} that this ender chest inventory belongs
+     * to.
+     * @return the {@link HumanEntity} that this ender chest inventory belongs
+     * to
+     */
+    public HumanEntity getHuman() {
         return owner;
     }
 }
