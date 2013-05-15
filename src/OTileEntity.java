@@ -152,7 +152,7 @@ public class OTileEntity {
      * @return the <tt>ComplexBlock</tt> of this <tt>TileEntity</tt>
      */
     public ComplexBlock getComplexBlock() {
-        return null;
+        return this.k.world.getOnlyComplexBlock(this.l, this.m, this.n);
     }
 
     static {
