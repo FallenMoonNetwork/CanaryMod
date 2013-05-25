@@ -168,8 +168,21 @@ public class LivingEntity extends BaseEntity {
     public void removePotionEffect(PotionEffect effect) {
         OPotionEffect var3 = (OPotionEffect) getEntity().bn.get(effect.getType().getId());
 
+        if (var3 == null) { // Return if we don't have the potion effect.
+            return;
+        }
+
         getEntity().bn.remove(Integer.valueOf(effect.getType().getId()));
         getEntity().c(var3);
+    }
+
+    /**
+     * Returns whether this entity has a potion effect of the specified type.
+     * @param effectType The potion effect type to check for
+     * @return whether this entity has a potion effect of the specified type
+     */
+    public boolean hasPotionEffect(PotionEffect.Type effectType) {
+        return getEntity().bn.containsKey(effectType.getId());
     }
 
     /**

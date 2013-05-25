@@ -119,4 +119,26 @@ public class PotionEffect {
     public NBTTagCompound writeToTag(NBTTagCompound tag) {
         return new NBTTagCompound(potionEffect.a(tag.getBaseTag()));
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + (this.potionEffect != null ? this.potionEffect.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PotionEffect other = (PotionEffect) obj;
+        if (this.potionEffect != other.potionEffect && (this.potionEffect == null || !this.potionEffect.equals(other.potionEffect))) {
+            return false;
+        }
+        return true;
+    }
 }
