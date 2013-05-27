@@ -7,6 +7,15 @@
 public class EnderChestInventory extends ItemArray<OInventoryEnderChest> {
     private final HumanEntity owner;
 
+    // These first two constructors are to maintain backward compatibility
+    public EnderChestInventory(OInventoryEnderChest container, Player owner) {
+        this(container, (HumanEntity) owner);
+    }
+
+    public EnderChestInventory(OContainer oContainer, OInventoryEnderChest container, Player owner) {
+        this(oContainer, container, (HumanEntity) owner);
+    }
+
     public EnderChestInventory(OInventoryEnderChest container, HumanEntity owner) {
         this(null, container, owner);
     }

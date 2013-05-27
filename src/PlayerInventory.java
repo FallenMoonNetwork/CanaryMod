@@ -1,6 +1,15 @@
 public class PlayerInventory extends ItemArray<OInventoryPlayer> {
     private final OEntityPlayer user;
 
+    // These first two constructors are to maintain backward compatibility
+    public PlayerInventory(Player player) {
+        this((HumanEntity) player);
+    }
+
+    public PlayerInventory(OContainer oContainer, Player player) {
+        this(oContainer, (HumanEntity) player);
+    }
+
     public PlayerInventory(HumanEntity human) {
         this(null, human);
     }
