@@ -100,7 +100,7 @@ public class ONetServerHandler extends ONetHandler {
             Player player = this.getPlayer();
 
             if (etc.floor(this.n) != etc.floor(player.getX()) || etc.floor(this.o) != etc.floor(player.getY()) || etc.floor(this.p) != etc.floor(player.getZ())) {
-                Location from = new Location(player.getWorld(), etc.floor(this.n), etc.floor(this.o), etc.floor(this.p));
+                Location from = new Location(player.getWorld(), this.n, this.o, this.p, player.getRotation(), player.getPitch());
 
                 Location to = player.getLocation();
 
