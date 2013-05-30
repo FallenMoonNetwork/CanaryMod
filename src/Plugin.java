@@ -115,7 +115,7 @@ public abstract class Plugin {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        return new File(dir, name + ".txt");
+        return new File(dir, filename + ".txt");
     }
 
     /**

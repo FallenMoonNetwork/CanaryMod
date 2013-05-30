@@ -30,9 +30,9 @@ public final class PropertiesFile {
      * @param fileName
      */
     public PropertiesFile(String fileName) {
-        this.fileName = fileName;
-
         File file = new File(fileName);
+
+        this.fileName = file.getPath();
 
         try {
             if (file.exists()) {
@@ -53,10 +53,10 @@ public final class PropertiesFile {
      * @param fileName the name of the properties file EXAMPLE: "MyPlugin.properties"
      */
     public PropertiesFile(String pathName, String fileName) {
-        this.fileName = pathName + fileName;
+        File file = new File(pathName, fileName);
+        File path = file.getParentFile();
 
-        File path = new File(pathName);
-        File file = new File(this.fileName);
+        this.fileName = file.getPath();
 
         try {
             if(!path.exists()){

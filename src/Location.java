@@ -57,7 +57,9 @@ public class Location implements java.io.Serializable {
      * @param X
      * @param Y
      * @param Z
+     * @deprecated Use {@link #Location(World, double, double, double)} instead.
      */
+    @Deprecated
     public Location(double X, double Y, double Z) {
         x = X;
         y = Y;
@@ -88,7 +90,9 @@ public class Location implements java.io.Serializable {
      * @param Z
      * @param rotation
      * @param pitch
+     * @deprecated Use {@link #Location(World, double, double, double, float, float)} instead.
      */
+    @Deprecated
     public Location(double X, double Y, double Z, float rotation, float pitch) {
         x = X;
         y = Y;
