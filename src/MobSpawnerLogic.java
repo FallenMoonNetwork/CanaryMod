@@ -220,7 +220,7 @@ public class MobSpawnerLogic {
         entity.b(properties.getBaseTag());
 
         entry.add("Properties", properties);
-        logic.a(new OWeightedRandomMinecart(logic, entry.getBaseTag()));
+        logic.a(new OWeightedRandomMinecart(logic, entry.getBaseTag(), id.getString("id")));
     }
 
     /**
