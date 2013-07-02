@@ -59,16 +59,6 @@ public class Mob extends LivingEntity {
     }
 
     /**
-     * Returns this mob's name
-     *
-     * @return name
-     */
-    @Override
-    public String getName() {
-        return OEntityList.b(entity);
-    }
-
-    /**
      * Returns the current target of the mob
      *
      * @return OEntity
