@@ -56,11 +56,7 @@ public class OEntitySmallFireball extends OEntityFireball {
                     Block b = new Block(this.q.world, 0, i, j, k);
                     b.setStatus(7); // Fireball explosion
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, b, null)) {
-<<<<<<< HEAD
-                        this.q.c(i, j, k, OBlock.av.cz);
-=======
                         this.q.c(i, j, k, OBlock.aw.cF);
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
                     } // CanaryMod end
                 }
             }

@@ -1191,17 +1191,10 @@ public class Player extends HumanEntity implements MessageReceiver {
     @Override
     @SuppressWarnings(value = "unchecked")
     public void updateInventory() {
-<<<<<<< HEAD
-        OContainer container = getEntity().bL;
-        ArrayList<OItemStack> list = new ArrayList<OItemStack>();
-        for (OSlot slot : (List<OSlot>) container.c) {
-            list.add(slot.c());
-=======
         OContainer container = getEntity().bo;
         ArrayList<OItemStack> list = new ArrayList<OItemStack>();
         for (OSlot slot : (List<OSlot>) container.c) {
             list.add(slot.d());
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
         getEntity().a(container, list);
     }
@@ -1209,19 +1202,11 @@ public class Player extends HumanEntity implements MessageReceiver {
     @Override
     public void updateLevels() {
         OEntityPlayerMP entityMP = getEntity();
-<<<<<<< HEAD
-        entityMP.a.b((OPacket) (new OPacket8UpdateHealth(getHealth(), getFoodLevel(), getFoodSaturationLevel())));
-=======
         entityMP.a.b((OPacket) (new OPacket8UpdateHealth(this.getHealthFloat(), getFoodLevel(), getFoodSaturationLevel())));
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     @Override
     public void updateXP() {
-<<<<<<< HEAD
-        getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().ch, getEntity().cg, getEntity().cf)));
-=======
         getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().bJ, getEntity().bH, getEntity().bI)));
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 }

@@ -92,11 +92,7 @@ public abstract class DefaultedMap<K, V> implements Map<K, V> {
     
     @Override
     public String toString() {
-<<<<<<< HEAD
-        return String.format("DefaultMap[map=%s]", map);
-=======
         return String.format("DefaultedMap[map=%s]", map);
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**

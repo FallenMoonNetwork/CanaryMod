@@ -152,69 +152,6 @@ public class LivingEntity extends LivingEntityBase {
     }
 
     /**
-<<<<<<< HEAD
-     * Gets the entity's mob spawner.
-     * @return MobSpawner of the entity, or null if it wasn't spawned with a mob spawner.
-     */
-    public MobSpawner getSpawner() {
-        MobSpawnerLogic spawner = this.getEntity().spawner;
-        return spawner instanceof MobSpawner ? (MobSpawner) spawner : null;
-    }
-
-    /**
-     * Adds a potion effect to the entity.
-     *
-     * @param effect the effect to add.
-     */
-    public void addPotionEffect(PotionEffect effect) {
-        getEntity().d(effect.potionEffect);
-    }
-
-    /**
-     * Removes a potion effect from entity.
-     *
-     * @param effect The potion effect to remove
-     */
-
-    public void removePotionEffect(PotionEffect effect) {
-        OPotionEffect var3 = (OPotionEffect) getEntity().bn.get(effect.getType().getId());
-
-        if (var3 == null) { // Return if we don't have the potion effect.
-            return;
-        }
-
-        getEntity().bn.remove(Integer.valueOf(effect.getType().getId()));
-        getEntity().c(var3);
-    }
-
-    /**
-     * Returns whether this entity has a potion effect of the specified type.
-     * @param effectType The potion effect type to check for
-     * @return whether this entity has a potion effect of the specified type
-     */
-    public boolean hasPotionEffect(PotionEffect.Type effectType) {
-        return getEntity().bn.containsKey(effectType.getId());
-    }
-
-    /**
-     * Returns a Collection of potion effects active on the entity.
-     *
-     * @return List of potion effects
-     */
-    @SuppressWarnings("unchecked")
-    public List<PotionEffect> getPotionEffects() {
-        Collection<OPotionEffect> potionEffects = getEntity().bC();
-        ArrayList<PotionEffect> list = new ArrayList<PotionEffect>();
-
-        for (OPotionEffect potionEffect : potionEffects) {
-            list.add(potionEffect.potionEffect);
-        }
-        return list;
-    }
-
-    /**
-=======
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
      * Sets the item held by the entity.
      *
      * @param item

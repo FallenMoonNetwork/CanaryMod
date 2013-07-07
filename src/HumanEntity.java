@@ -2,11 +2,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-public class HumanEntity extends LivingEntity {
-=======
 public class HumanEntity extends LivingEntityBase {
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     protected PlayerInventory inventory;
 
     /**
@@ -42,11 +38,7 @@ public class HumanEntity extends LivingEntityBase {
     @Override
     public String getName() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : oep.bS;
-=======
         return oep == null ? null : oep.bu;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -76,11 +68,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean isDamageDisabled() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : oep.ce.a;
-=======
         return oep == null ? null : oep.bG.a;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -90,11 +78,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setDamageDisabled(boolean disabled) {
         if (getEntity() != null) {
-<<<<<<< HEAD
-            getEntity().ce.a = disabled;
-=======
             getEntity().bG.a = disabled;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
     }
 
@@ -104,11 +88,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean isFlying() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : oep.ce.b;
-=======
         return oep == null ? null : oep.bG.b;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -118,11 +98,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setFlying(boolean flying) {
         if (getEntity() != null) {
-<<<<<<< HEAD
-            getEntity().ce.b = flying;
-=======
             getEntity().bG.b = flying;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
     }
 
@@ -132,11 +108,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean canFly() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : oep.ce.c;
-=======
         return oep == null ? null : oep.bG.c;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -146,11 +118,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setCanFly(boolean allow) {
         if (getEntity() != null) {
-<<<<<<< HEAD
-            getEntity().ce.c = allow;
-=======
             getEntity().bG.c = allow;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
     }
 
@@ -162,11 +130,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean hasCreativePerks() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : oep.ce.d;
-=======
         return oep == null ? null : oep.bG.d;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -178,11 +142,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setCreativePerks(boolean creativePerks) {
         if (getEntity() != null) {
-<<<<<<< HEAD
-            getEntity().ce.d = creativePerks;
-=======
             getEntity().bG.d = creativePerks;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
     }
 
@@ -192,11 +152,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean hasAdventureRestrictions() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : !oep.ce.e;
-=======
         return oep == null ? null : !oep.bG.e;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -206,11 +162,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setAdventureRestrictions(boolean restrict) {
         if (getEntity() != null) {
-<<<<<<< HEAD
-            getEntity().ce.e = !restrict;
-=======
             getEntity().bG.e = !restrict;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
     }
 
@@ -221,11 +173,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public float getFlyingSpeed() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : oep.ce.a();
-=======
         return oep == null ? null : oep.bG.a();
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -235,11 +183,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public float getWalkingSpeed() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : oep.ce.b();
-=======
         return oep == null ? null : oep.bG.b();
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -258,11 +202,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean isSleeping() {
         OEntityPlayer oep = getEntity();
-<<<<<<< HEAD
-        return oep == null ? null : oep.ca;
-=======
         return oep == null ? null : oep.bC;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -272,11 +212,7 @@ public class HumanEntity extends LivingEntityBase {
      * @param amount the amount of experience points to add.
      */
     public void addXP(int amount) {
-<<<<<<< HEAD
-        this.getEntity().w(amount);
-=======
         this.getEntity().s(amount);
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         this.updateXP();
     }
 
@@ -371,11 +307,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return
      */
     public float getFoodExhaustionLevel() {
-<<<<<<< HEAD
-        return getEntity().bN.c;
-=======
         return getEntity().bq.c;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -384,11 +316,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return player food level
      */
     public int getFoodLevel() {
-<<<<<<< HEAD
-        return getEntity().bN.a;
-=======
         return getEntity().bq.a;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -396,11 +324,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return
      */
     public float getFoodSaturationLevel() {
-<<<<<<< HEAD
-        return getEntity().bN.b;
-=======
         return getEntity().bq.b;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -426,13 +350,8 @@ public class HumanEntity extends LivingEntityBase {
      * @return item id
      */
     public int getItemInHand() {
-<<<<<<< HEAD
-        if (this.getEntity().bK.h() != null) {
-            return this.getEntity().bK.h().c;
-=======
         if (this.getEntity().bn.h() != null) {
             return this.getEntity().bn.h().c;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
         return -1;
     }
@@ -442,18 +361,10 @@ public class HumanEntity extends LivingEntityBase {
      *
      * @return Item
      */
-<<<<<<< HEAD
-    @Override
-    public Item getItemStackInHand() {
-        OItemStack result = getEntity().bK.h();
-        if (result != null) {
-            return new Item(result, getEntity().bK.c);
-=======
     public Item getItemStackInHand() {
         OItemStack result = getEntity().bn.h();
         if (result != null) {
             return new Item(result, getEntity().bn.c);
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
         return null;
     }
@@ -464,11 +375,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return
      */
     public int getLevel() {
-<<<<<<< HEAD
-        return getEntity().cf;
-=======
         return getEntity().bH;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -478,11 +385,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public Location getRespawnLocation() {
         Location spawn = etc.getServer().getDefaultWorld().getSpawnLocation();
-<<<<<<< HEAD
-        OChunkCoordinates loc = getEntity().ck();
-=======
         OChunkCoordinates loc = getEntity().bA();
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         if (loc != null) {
             spawn = new Location(etc.getServer().getDefaultWorld(), loc.a, loc.b, loc.c);
         }
@@ -494,11 +397,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return the score for this Player.
      */
     public int getScore() {
-<<<<<<< HEAD
-        return getEntity().cb();
-=======
         return getEntity().br();
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -507,11 +406,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return
      */
     public int getXP() {
-<<<<<<< HEAD
-        return getEntity().cg;
-=======
         return getEntity().bI;
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     /**
@@ -613,11 +508,7 @@ public class HumanEntity extends LivingEntityBase {
      * @param foodExhaustionLevel
      */
     public void setFoodExhaustionLevel(float foodExhaustionLevel) {
-<<<<<<< HEAD
-        getEntity().bN.c = Math.min(foodExhaustionLevel, 40.0F);
-=======
         getEntity().bq.c = Math.min(foodExhaustionLevel, 40.0F);
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         updateLevels();
     }
 
@@ -628,11 +519,7 @@ public class HumanEntity extends LivingEntityBase {
      *         new food level, between 1 and 20
      */
     public void setFoodLevel(int foodLevel) {
-<<<<<<< HEAD
-        getEntity().bN.a = Math.min(foodLevel, 20);
-=======
         getEntity().bq.a = Math.min(foodLevel, 20);
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         updateLevels();
     }
 
@@ -642,11 +529,7 @@ public class HumanEntity extends LivingEntityBase {
      * @param foodSaturationLevel
      */
     public void setFoodSaturationLevel(float foodSaturationLevel) {
-<<<<<<< HEAD
-        getEntity().bN.b = Math.min(foodSaturationLevel, getFoodLevel());
-=======
         getEntity().bq.b = Math.min(foodSaturationLevel, getFoodLevel());
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         updateLevels();
     }
 
@@ -728,10 +611,6 @@ public class HumanEntity extends LivingEntityBase {
      * @return this player's {@link EnderChestInventory} for modification
      */
     public EnderChestInventory getEnderChest() {
-<<<<<<< HEAD
-        return new EnderChestInventory(getEntity().cp(), this);
-=======
         return new EnderChestInventory(getEntity().bF(), this);
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 }

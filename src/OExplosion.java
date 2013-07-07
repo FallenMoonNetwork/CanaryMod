@@ -243,20 +243,12 @@ public class OExplosion {
                 l = this.k.a(i, j, k);
                 int i1 = this.k.a(i, j - 1, k);
 
-<<<<<<< HEAD
-                if (l == 0 && OBlock.s[i1] && this.j.nextInt(3) == 0) {
-=======
                 if (l == 0 && OBlock.t[i1] && this.j.nextInt(3) == 0) {
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
                     // CanaryMod start: IGNITE hook
                     Block block = new Block(this.k.world, 0, i, j, k);
                     block.setStatus(7); // Fireball explosion
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
-<<<<<<< HEAD
-                        this.k.c(i, j, k, OBlock.av.cz);
-=======
                         this.k.c(i, j, k, OBlock.aw.cF);
->>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
                     } // CanaryMod end
                 }
             }
