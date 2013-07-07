@@ -36,7 +36,7 @@ public class InventoryCrafting<C extends Container<OItemStack>> extends ItemArra
     public Item getItemFromSlot(int slot) {
         OSlot oslot = getOContainer().getSlot(slot);
         if(oslot != null) {
-            OItemStack oitem = oslot.c();
+            OItemStack oitem = oslot.d();
             return oitem == null ? null : new Item(oitem);
         }
 
@@ -49,7 +49,7 @@ public class InventoryCrafting<C extends Container<OItemStack>> extends ItemArra
 
         for (int i = 0; size > i; i++) {
             OSlot oslot = getOContainer().getSlot(i);
-            if (oslot != null && oslot.c() != null) {
+            if (oslot != null && oslot.d() != null) {
                 continue;
             }
             return i;

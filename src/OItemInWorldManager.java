@@ -26,8 +26,8 @@ public class OItemInWorldManager {
 
     public void a(OEnumGameType oenumgametype) {
         this.c = oenumgametype;
-        oenumgametype.a(this.b.ce);
-        this.b.n();
+        oenumgametype.a(this.b.bG);
+        this.b.o();
     }
 
     public OEnumGameType b() {
@@ -59,7 +59,7 @@ public class OItemInWorldManager {
             if (k == 0) {
                 this.j = false;
             } else {
-                OBlock oblock = OBlock.r[k];
+                OBlock oblock = OBlock.s[k];
 
                 f = oblock.a(this.b, this.b.q, this.k, this.l, this.m) * (float) (i + 1);
                 j = (int) (f * 10.0F);
@@ -75,7 +75,7 @@ public class OItemInWorldManager {
             }
         } else if (this.d) {
             i = this.a.a(this.f, this.g, this.h);
-            OBlock oblock1 = OBlock.r[i];
+            OBlock oblock1 = OBlock.s[i];
 
             if (oblock1 == null) {
                 this.a.f(this.b.k, this.f, this.g, this.h, -1);
@@ -95,7 +95,7 @@ public class OItemInWorldManager {
     }
 
     public void a(int i, int j, int k, int l) {
-        if (!this.c.c() || this.b.e(i, j, k)) {
+        if (!this.c.c() || this.b.d(i, j, k)) {
             if (this.d()) {
                 if (!this.a.a((OEntityPlayer) null, i, j, k, l)) {
                     this.b(i, j, k);
@@ -107,8 +107,8 @@ public class OItemInWorldManager {
                 int i1 = this.a.a(i, j, k);
 
                 if (i1 > 0) {
-                    OBlock.r[i1].a(this.a, i, j, k, (OEntityPlayer) this.b);
-                    f = OBlock.r[i1].a(this.b, this.b.q, i, j, k);
+                    OBlock.s[i1].a(this.a, i, j, k, (OEntityPlayer) this.b);
+                    f = OBlock.s[i1].a(this.b, this.b.q, i, j, k);
                 }
 
                 if (i1 > 0 && f >= 1.0F) {
@@ -133,7 +133,7 @@ public class OItemInWorldManager {
             int i1 = this.a.a(i, j, k);
 
             if (i1 != 0) {
-                OBlock oblock = OBlock.r[i1];
+                OBlock oblock = OBlock.s[i1];
                 float f = oblock.a(this.b, this.b.q, i, j, k) * (float) (l + 1);
 
                 if (f >= 0.7F) {
@@ -158,7 +158,7 @@ public class OItemInWorldManager {
     }
 
     private boolean d(int i, int j, int k) {
-        OBlock oblock = OBlock.r[this.a.a(i, j, k)];
+        OBlock oblock = OBlock.s[this.a.a(i, j, k)];
         int l = this.a.h(i, j, k);
 
         if (oblock != null) {
@@ -175,7 +175,9 @@ public class OItemInWorldManager {
     }
 
     public boolean b(int i, int j, int k) {
-        if (this.c.c() && !this.b.e(i, j, k)) {
+        if (this.c.c() && !this.b.d(i, j, k)) {
+            return false;
+        } else if (this.c.d() && this.b.aV() != null && this.b.aV().b() instanceof OItemSword) {
             return false;
         } else {
             // CanaryMod start - portal destroy
@@ -231,18 +233,18 @@ public class OItemInWorldManager {
             if (this.d()) {
                 this.b.a.b(new OPacket53BlockChange(i, j, k, this.a));
             } else {
-                OItemStack oitemstack = this.b.cd();
-                boolean flag1 = this.b.a(OBlock.r[l]);
+                OItemStack oitemstack = this.b.bt();
+                boolean flag1 = this.b.a(OBlock.s[l]);
 
                 if (oitemstack != null) {
                     oitemstack.a(this.a, l, i, j, k, this.b);
-                    if (oitemstack.a == 0) {
-                        this.b.ce();
+                    if (oitemstack.b == 0) {
+                        this.b.bu();
                     }
                 }
 
                 if (flag && flag1) {
-                    OBlock.r[l].a(this.a, this.b, i, j, k, i1);
+                    OBlock.s[l].a(this.a, this.b, i, j, k, i1);
                 }
             }
 
@@ -251,27 +253,27 @@ public class OItemInWorldManager {
     }
 
     public boolean a(OEntityPlayer oentityplayer, OWorld oworld, OItemStack oitemstack) {
-        int i = oitemstack.a;
+        int i = oitemstack.b;
         int j = oitemstack.k();
         OItemStack oitemstack1 = oitemstack.a(oworld, oentityplayer);
 
-        if (oitemstack1 == oitemstack && (oitemstack1 == null || oitemstack1.a == i && oitemstack1.n() <= 0 && oitemstack1.k() == j)) {
+        if (oitemstack1 == oitemstack && (oitemstack1 == null || oitemstack1.b == i && oitemstack1.n() <= 0 && oitemstack1.k() == j)) {
             return false;
         } else {
-            oentityplayer.bK.a[oentityplayer.bK.c] = oitemstack1;
+            oentityplayer.bn.a[oentityplayer.bn.c] = oitemstack1;
             if (this.d()) {
-                oitemstack1.a = i;
+                oitemstack1.b = i;
                 if (oitemstack1.g()) {
                     oitemstack1.b(j);
                 }
             }
 
-            if (oitemstack1.a == 0) {
-                oentityplayer.bK.a[oentityplayer.bK.c] = null;
+            if (oitemstack1.b == 0) {
+                oentityplayer.bn.a[oentityplayer.bn.c] = null;
             }
 
-            if (!oentityplayer.bX()) {
-                ((OEntityPlayerMP) oentityplayer).a(oentityplayer.bL);
+            if (!oentityplayer.bm()) {
+                ((OEntityPlayerMP) oentityplayer).a(oentityplayer.bo);
             }
 
             return true;
@@ -292,8 +294,9 @@ public class OItemInWorldManager {
     public boolean itemUsed(OEntityPlayer oentityplayer, OWorld oworld, OItemStack oitemstack, Block block, Block block1) {
         // CanaryMod: only call this hook if we're not using buckets/signs
         if (oitemstack != null) {
-            if (oitemstack.a > 0 && oitemstack.c != Item.Type.Sign.getId() && oitemstack.c != Item.Type.Bucket.getId() && oitemstack.c != Item.Type.WaterBucket.getId() && oitemstack.c != Item.Type.LavaBucket.getId() && oitemstack.c != Item.Type.MilkBucket.getId()) {
-                if (oentityplayer instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) oentityplayer).getPlayer(), block, block1, ((OEntityPlayerMP) oentityplayer).getPlayer().getItemStackInHand())) {
+            Item used = new Item(oitemstack);
+            if (used.getAmount() > 0 && used.getType() != Item.Type.Sign && used.getType() != Item.Type.Bucket && used.getType() != Item.Type.WaterBucket && used.getType() != Item.Type.LavaBucket && used.getType() != Item.Type.MilkBucket) {
+                if (oentityplayer instanceof OEntityPlayerMP && (Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, ((OEntityPlayerMP) oentityplayer).getPlayer(), block, block1, used)) {
                     return false;
                 }
             }
@@ -304,9 +307,9 @@ public class OItemInWorldManager {
     public boolean a(OEntityPlayer oentityplayer, OWorld oworld, OItemStack oitemstack, int i, int j, int k, int l, float f, float f1, float f2) {
         int i1;
 
-        if (!oentityplayer.ag() || oentityplayer.bG() == null) {
+        if (!oentityplayer.af() || oentityplayer.aV() == null) {
             i1 = oworld.a(i, j, k);
-            if (i1 > 0 && OBlock.r[i1].a(oworld, i, j, k, oentityplayer, l, f, f1, f2)) {
+            if (i1 > 0 && OBlock.s[i1].a(oworld, i, j, k, oentityplayer, l, f, f1, f2)) {
                 return true;
             }
         }
@@ -315,11 +318,11 @@ public class OItemInWorldManager {
             return false;
         } else if (this.d()) {
             i1 = oitemstack.k();
-            int j1 = oitemstack.a;
+            int j1 = oitemstack.b;
             boolean flag = oitemstack.a(oentityplayer, oworld, i, j, k, l, f, f1, f2);
 
             oitemstack.b(i1);
-            oitemstack.a = j1;
+            oitemstack.b = j1;
             return flag;
         } else {
             return oitemstack.a(oentityplayer, oworld, i, j, k, l, f, f1, f2);

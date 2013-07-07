@@ -33,7 +33,7 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.a[0] != null) {
             OItemStack oitemstack = this.a[0];
 
@@ -52,13 +52,13 @@ public class OInventoryCraftResult implements OIInventory, Container<OItemStack>
         return 64;
     }
 
-    public void k_() {}
+    public void e() {}
 
     public boolean a(OEntityPlayer oentityplayer) {
         return true;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 

@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class OBlockFlowing extends OBlockFluid {
 
-    int a = 0;
+    int a;
     boolean[] b = new boolean[4];
     int[] c = new int[4];
 
@@ -13,77 +13,77 @@ public class OBlockFlowing extends OBlockFluid {
     private void k(OWorld oworld, int i, int j, int k) {
         int l = oworld.h(i, j, k);
 
-        oworld.f(i, j, k, this.cz + 1, l, 2);
+        oworld.f(i, j, k, this.cF + 1, l, 2);
     }
 
     public boolean b(OIBlockAccess oiblockaccess, int i, int j, int k) {
-        return this.cO != OMaterial.i;
+        return this.cU != OMaterial.i;
     }
 
     public void a(OWorld oworld, int i, int j, int k, Random random) {
         // CanaryMod: Store originating block
         World world = oworld.world;
-        Block blockFrom = new Block(world, this.cz, i, j, k);
+        Block blockFrom = world.getBlockAt(i, j, k);
 
-        int l = this.k_(oworld, i, j, k);
+        int l = this.l_(oworld, i, j, k);
         byte b0 = 1;
 
-        if (this.cO == OMaterial.i && !oworld.t.e) {
+        if (this.cU == OMaterial.i && !oworld.t.f) {
             b0 = 2;
         }
 
         boolean flag = true;
-        int i1;
+        int i1 = this.a(oworld);
+        int j1;
 
         if (l > 0) {
             byte b1 = -100;
 
             this.a = 0;
-            int j1 = this.d(oworld, i - 1, j, k, b1);
+            int k1 = this.d(oworld, i - 1, j, k, b1);
 
-            j1 = this.d(oworld, i + 1, j, k, j1);
-            j1 = this.d(oworld, i, j, k - 1, j1);
-            j1 = this.d(oworld, i, j, k + 1, j1);
-            i1 = j1 + b0;
-            if (i1 >= 8 || j1 < 0) {
-                i1 = -1;
+            k1 = this.d(oworld, i + 1, j, k, k1);
+            k1 = this.d(oworld, i, j, k - 1, k1);
+            k1 = this.d(oworld, i, j, k + 1, k1);
+            j1 = k1 + b0;
+            if (j1 >= 8 || k1 < 0) {
+                j1 = -1;
             }
 
-            if (this.k_(oworld, i, j + 1, k) >= 0) {
-                int k1 = this.k_(oworld, i, j + 1, k);
+            if (this.l_(oworld, i, j + 1, k) >= 0) {
+                int l1 = this.l_(oworld, i, j + 1, k);
 
-                if (k1 >= 8) {
-                    i1 = k1;
+                if (l1 >= 8) {
+                    j1 = l1;
                 } else {
-                    i1 = k1 + 8;
+                    j1 = l1 + 8;
                 }
             }
 
-            if (this.a >= 2 && this.cO == OMaterial.h) {
+            if (this.a >= 2 && this.cU == OMaterial.h) {
                 if (oworld.g(i, j - 1, k).a()) {
-                    i1 = 0;
-                } else if (oworld.g(i, j - 1, k) == this.cO && oworld.h(i, j - 1, k) == 0) {
-                    i1 = 0;
+                    j1 = 0;
+                } else if (oworld.g(i, j - 1, k) == this.cU && oworld.h(i, j - 1, k) == 0) {
+                    j1 = 0;
                 }
             }
 
-            if (this.cO == OMaterial.i && l < 8 && i1 < 8 && i1 > l && random.nextInt(4) != 0) {
-                i1 = l;
-                flag = false;
+            if (this.cU == OMaterial.i && l < 8 && j1 < 8 && j1 > l && random.nextInt(4) != 0) {
+                i1 *= 4;
             }
 
-            if (i1 == l) {
+            if (j1 == l) {
                 if (flag) {
                     this.k(oworld, i, j, k);
                 }
             } else {
-                l = i1;
-                if (i1 < 0) {
+                l = j1;
+                if (j1 < 0) {
                     oworld.i(i, j, k);
                 } else {
-                    oworld.b(i, j, k, i1, 2);
-                    oworld.a(i, j, k, this.cz, this.a(oworld));
-                    oworld.f(i, j, k, this.cz);
+                    oworld.b(i, j, k, j1, 2);
+                    oworld.a(i, j, k, this.cF, i1);
+                    oworld.f(i, j, k, this.cF);
                 }
             }
         } else {
@@ -91,8 +91,8 @@ public class OBlockFlowing extends OBlockFluid {
         }
 
         if (this.o(oworld, i, j - 1, k)) {
-            if (this.cO == OMaterial.i && oworld.g(i, j - 1, k) == OMaterial.h) {
-                oworld.c(i, j - 1, k, OBlock.x.cz);
+            if (this.cU == OMaterial.i && oworld.g(i, j - 1, k) == OMaterial.h) {
+                oworld.c(i, j - 1, k, OBlock.y.cF);
                 this.j(oworld, i, j - 1, k);
                 return;
             }
@@ -109,12 +109,12 @@ public class OBlockFlowing extends OBlockFluid {
         } else if (l >= 0 && (l == 0 || this.n(oworld, i, j - 1, k))) {
             boolean[] aboolean = this.m(oworld, i, j, k);
 
-            i1 = l + b0;
+            j1 = l + b0;
             if (l >= 8) {
-                i1 = 1;
+                j1 = 1;
             }
 
-            if (i1 >= 8) {
+            if (j1 >= 8) {
                 return;
             }
 
@@ -123,7 +123,7 @@ public class OBlockFlowing extends OBlockFluid {
                 Block blockTo = new Block(world, 0, i - 1, j, k);
 
                 if (!((Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))) {
-                    this.e(oworld, i - 1, j, k, i1);
+                    this.e(oworld, i - 1, j, k, j1);
                 }
             }
 
@@ -131,7 +131,7 @@ public class OBlockFlowing extends OBlockFluid {
                 Block blockTo = new Block(world, 0, i + 1, j, k);
 
                 if (!((Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))) {
-                    this.e(oworld, i + 1, j, k, i1);
+                    this.e(oworld, i + 1, j, k, j1);
                 }
             }
 
@@ -139,7 +139,7 @@ public class OBlockFlowing extends OBlockFluid {
                 Block blockTo = new Block(world, 0, i, j, k - 1);
 
                 if (!((Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))) {
-                    this.e(oworld, i, j, k - 1, i1);
+                    this.e(oworld, i, j, k - 1, j1);
                 }
             }
 
@@ -147,7 +147,7 @@ public class OBlockFlowing extends OBlockFluid {
                 Block blockTo = new Block(world, 0, i, j, k + 1);
 
                 if (!((Boolean) etc.getLoader().callHook(PluginLoader.Hook.FLOW, blockFrom, blockTo))) {
-                    this.e(oworld, i, j, k + 1, i1);
+                    this.e(oworld, i, j, k + 1, j1);
                 }
             }
         }
@@ -158,14 +158,14 @@ public class OBlockFlowing extends OBlockFluid {
             int i1 = oworld.a(i, j, k);
 
             if (i1 > 0) {
-                if (this.cO == OMaterial.i) {
+                if (this.cU == OMaterial.i) {
                     this.j(oworld, i, j, k);
                 } else {
-                    OBlock.r[i1].c(oworld, i, j, k, oworld.h(i, j, k), 0);
+                    OBlock.s[i1].c(oworld, i, j, k, oworld.h(i, j, k), 0);
                 }
             }
 
-            oworld.f(i, j, k, this.cz, l, 3);
+            oworld.f(i, j, k, this.cF, l, 3);
         }
     }
 
@@ -193,7 +193,7 @@ public class OBlockFlowing extends OBlockFluid {
                     ++i2;
                 }
 
-                if (!this.n(oworld, l1, j, i2) && (oworld.g(l1, j, i2) != this.cO || oworld.h(l1, j, i2) != 0)) {
+                if (!this.n(oworld, l1, j, i2) && (oworld.g(l1, j, i2) != this.cU || oworld.h(l1, j, i2) != 0)) {
                     if (!this.n(oworld, l1, j - 1, i2)) {
                         return l;
                     }
@@ -237,7 +237,7 @@ public class OBlockFlowing extends OBlockFluid {
                 ++j1;
             }
 
-            if (!this.n(oworld, i1, j, j1) && (oworld.g(i1, j, j1) != this.cO || oworld.h(i1, j, j1) != 0)) {
+            if (!this.n(oworld, i1, j, j1) && (oworld.g(i1, j, j1) != this.cU || oworld.h(i1, j, j1) != 0)) {
                 if (this.n(oworld, i1, j - 1, j1)) {
                     this.c[l] = this.d(oworld, i1, j, j1, 1, l);
                 } else {
@@ -264,13 +264,13 @@ public class OBlockFlowing extends OBlockFluid {
     private boolean n(OWorld oworld, int i, int j, int k) {
         int l = oworld.a(i, j, k);
 
-        if (l != OBlock.aI.cz && l != OBlock.aP.cz && l != OBlock.aH.cz && l != OBlock.aJ.cz && l != OBlock.bb.cz) {
+        if (l != OBlock.aJ.cF && l != OBlock.aQ.cF && l != OBlock.aI.cF && l != OBlock.aK.cF && l != OBlock.bc.cF) {
             if (l == 0) {
                 return false;
             } else {
-                OMaterial omaterial = OBlock.r[l].cO;
+                OMaterial omaterial = OBlock.s[l].cU;
 
-                return omaterial == OMaterial.C ? true : omaterial.c();
+                return omaterial == OMaterial.D ? true : omaterial.c();
             }
         } else {
             return true;
@@ -278,7 +278,7 @@ public class OBlockFlowing extends OBlockFluid {
     }
 
     protected int d(OWorld oworld, int i, int j, int k, int l) {
-        int i1 = this.k_(oworld, i, j, k);
+        int i1 = this.l_(oworld, i, j, k);
 
         if (i1 < 0) {
             return l;
@@ -309,17 +309,17 @@ public class OBlockFlowing extends OBlockFluid {
 
         OMaterial omaterial = oworld.g(i, j, k);
 
-        return omaterial == this.cO ? false : (omaterial == OMaterial.i ? false : !this.n(oworld, i, j, k));
+        return omaterial == this.cU ? false : (omaterial == OMaterial.i ? false : !this.n(oworld, i, j, k));
     }
 
     public void a(OWorld oworld, int i, int j, int k) {
         super.a(oworld, i, j, k);
-        if (oworld.a(i, j, k) == this.cz) {
-            oworld.a(i, j, k, this.cz, this.a(oworld));
+        if (oworld.a(i, j, k) == this.cF) {
+            oworld.a(i, j, k, this.cF, this.a(oworld));
         }
     }
 
     public boolean l() {
-        return false;
+        return true;
     }
 }

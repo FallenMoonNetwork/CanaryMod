@@ -27,7 +27,7 @@ public class JukeBox implements ComplexBlock {
 
     @Override
     public void update() {
-        jukebox.k_();
+        jukebox.h();
     }
 
     @Override

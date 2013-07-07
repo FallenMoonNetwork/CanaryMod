@@ -41,7 +41,7 @@ public class OInventoryCrafting implements OIInventory, Container<OItemStack>
         return false;
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.a[i] != null) {
             OItemStack oitemstack = this.a[i];
 
@@ -56,14 +56,14 @@ public class OInventoryCrafting implements OIInventory, Container<OItemStack>
         if (this.a[i] != null) {
             OItemStack oitemstack;
 
-            if (this.a[i].a <= j) {
+            if (this.a[i].b <= j) {
                 oitemstack = this.a[i];
                 this.a[i] = null;
                 this.c.a((OIInventory) this);
                 return oitemstack;
             } else {
                 oitemstack = this.a[i].a(j);
-                if (this.a[i].a == 0) {
+                if (this.a[i].b == 0) {
                     this.a[i] = null;
                 }
 
@@ -84,13 +84,13 @@ public class OInventoryCrafting implements OIInventory, Container<OItemStack>
         return 64;
     }
 
-    public void k_() {}
+    public void e() {}
 
     public boolean a(OEntityPlayer oentityplayer) {
         return true;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 

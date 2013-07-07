@@ -16,17 +16,17 @@ public class ONetLoginHandler extends ONetHandler {
     private byte[] d;
     private final OMinecraftServer e;
     public final OTcpConnection a;
-    public boolean b = false;
-    private int f = 0;
-    private String g = null;
-    private volatile boolean h = false;
+    public boolean b;
+    private int f;
+    private String g;
+    private volatile boolean h;
     private String i = "";
-    private boolean j = false;
-    private SecretKey k = null;
+    private boolean j;
+    private SecretKey k;
 
     public ONetLoginHandler(OMinecraftServer ominecraftserver, Socket socket, String s) throws IOException {
         this.e = ominecraftserver;
-        this.a = new OTcpConnection(ominecraftserver.al(), socket, s, this, ominecraftserver.F().getPrivate());
+        this.a = new OTcpConnection(ominecraftserver.an(), socket, s, this, ominecraftserver.H().getPrivate());
         this.a.e = 0;
     }
 
@@ -44,7 +44,7 @@ public class ONetLoginHandler extends ONetHandler {
 
     public void a(String s) {
         try {
-            this.e.al().a("Disconnecting " + this.e() + ": " + s);
+            this.e.an().a("Disconnecting " + this.e() + ": " + s);
             this.a.a((OPacket) (new OPacket255KickDisconnect(s)));
             this.a.d();
             this.b = true;
@@ -58,16 +58,16 @@ public class ONetLoginHandler extends ONetHandler {
         if (!this.g.toLowerCase().matches("[a-z0-9_]+")) {
             this.a("Invalid username!");
         } else {
-            PublicKey publickey = this.e.F().getPublic();
+            PublicKey publickey = this.e.H().getPublic();
 
-            if (opacket2clientprotocol.d() != 61) {
-                if (opacket2clientprotocol.d() > 61) {
+            if (opacket2clientprotocol.d() != 73) {
+                if (opacket2clientprotocol.d() > 73) {
                     this.a("Outdated server!");
                 } else {
                     this.a("Outdated client!");
                 }
             } else {
-                this.i = this.e.U() ? Long.toString(c.nextLong(), 16) : "-";
+                this.i = this.e.W() ? Long.toString(c.nextLong(), 16) : "-";
                 this.d = new byte[4];
                 c.nextBytes(this.d);
                 this.a.a((OPacket) (new OPacket253ServerAuthData(this.i, publickey, this.d)));
@@ -76,7 +76,7 @@ public class ONetLoginHandler extends ONetHandler {
     }
 
     public void a(OPacket252SharedKey opacket252sharedkey) {
-        PrivateKey privatekey = this.e.F().getPrivate();
+        PrivateKey privatekey = this.e.H().getPrivate();
 
         this.k = opacket252sharedkey.a(privatekey);
         if (!Arrays.equals(this.d, opacket252sharedkey.b(privatekey))) {
@@ -94,7 +94,7 @@ public class ONetLoginHandler extends ONetHandler {
             }
 
             this.j = true;
-            if (this.e.U()) {
+            if (this.e.W()) {
                 (new OThreadLoginVerifier(this)).start();
             } else {
                 this.h = true;
@@ -105,15 +105,15 @@ public class ONetLoginHandler extends ONetHandler {
     public void a(OPacket1Login opacket1login) {}
 
     public void d() {
-        String s = this.e.ad().a(this.a.c(), this.g);
+        String s = this.e.af().a(this.a.c(), this.g);
 
         if (s != null) {
             this.a(s);
         } else {
-            OEntityPlayerMP oentityplayermp = this.e.ad().a(this.g);
+            OEntityPlayerMP oentityplayermp = this.e.af().a(this.g);
 
             if (oentityplayermp != null) {
-                this.e.ad().a((OINetworkManager) this.a, oentityplayermp);
+                this.e.af().a((OINetworkManager) this.a, oentityplayermp);
             }
         }
 
@@ -121,7 +121,7 @@ public class ONetLoginHandler extends ONetHandler {
     }
 
     public void a(String s, Object[] aobject) {
-        this.e.al().a(this.e() + " lost connection");
+        this.e.an().a(this.e() + " lost connection");
         this.b = true;
     }
 
@@ -132,11 +132,13 @@ public class ONetLoginHandler extends ONetHandler {
         } // CanaryMod end
 
         try {
-            OServerConfigurationManager oserverconfigurationmanager = this.e.ad();
+            OServerConfigurationManager oserverconfigurationmanager = this.e.af();
             String s = null;
 
-            if (opacket254serverping.a == 1) {
-                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(61), this.e.x(), this.e.aa(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
+            if (opacket254serverping.d()) {
+                s = this.e.ac() + "\u00a7" + oserverconfigurationmanager.k() + "\u00a7" + oserverconfigurationmanager.l();
+            } else {
+                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(73), this.e.z(), this.e.ac(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
 
                 Object object;
 
@@ -148,8 +150,6 @@ public class ONetLoginHandler extends ONetHandler {
                         s = s + "\u0000";
                     }
                 }
-            } else {
-                s = this.e.aa() + "\u00a7" + oserverconfigurationmanager.k() + "\u00a7" + oserverconfigurationmanager.l();
             }
 
             InetAddress inetaddress = null;
@@ -160,8 +160,8 @@ public class ONetLoginHandler extends ONetHandler {
 
             this.a.a((OPacket) (new OPacket255KickDisconnect(s)));
             this.a.d();
-            if (inetaddress != null && this.e.ae() instanceof ODedicatedServerListenThread) {
-                ((ODedicatedServerListenThread) this.e.ae()).a(inetaddress);
+            if (inetaddress != null && this.e.ag() instanceof ODedicatedServerListenThread) {
+                ((ODedicatedServerListenThread) this.e.ag()).a(inetaddress);
             }
 
             this.b = true;

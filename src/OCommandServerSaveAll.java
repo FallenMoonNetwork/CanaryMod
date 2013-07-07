@@ -10,12 +10,16 @@ public class OCommandServerSaveAll extends OCommandBase {
         return 4;
     }
 
-    public void b(OICommandSender oicommandsender, String[] astring) {
-        OMinecraftServer ominecraftserver = OMinecraftServer.D();
+    public String c(OICommandSender oicommandsender) {
+        return "commands.save.usage";
+    }
 
-        oicommandsender.a(oicommandsender.a("commands.save.start", new Object[0]));
-        if (ominecraftserver.ad() != null) {
-            ominecraftserver.ad().g();
+    public void b(OICommandSender oicommandsender, String[] astring) {
+        OMinecraftServer ominecraftserver = OMinecraftServer.F();
+
+        oicommandsender.a(OChatMessageComponent.e("commands.save.start"));
+        if (ominecraftserver.af() != null) {
+            ominecraftserver.af().g();
         }
 
         try {
@@ -36,7 +40,7 @@ public class OCommandServerSaveAll extends OCommandBase {
             }
 
             if (astring.length > 0 && "flush".equals(astring[0])) {
-                oicommandsender.a(oicommandsender.a("commands.save.flushStart", new Object[0]));
+                oicommandsender.a(OChatMessageComponent.e("commands.save.flushStart"));
 
                 for (OWorldServer[] level: ominecraftserver.worlds.values()) { // CanaryMod: multiworld
                     for (i = 0; i < level.length; ++i) {
@@ -50,7 +54,7 @@ public class OCommandServerSaveAll extends OCommandBase {
                     }
                 }
 
-                oicommandsender.a(oicommandsender.a("commands.save.flushEnd", new Object[0]));
+                oicommandsender.a(OChatMessageComponent.e("commands.save.flushEnd"));
             }
         } catch (OMinecraftException ominecraftexception) {
             a(oicommandsender, "commands.save.failed", new Object[] { ominecraftexception.getMessage()});

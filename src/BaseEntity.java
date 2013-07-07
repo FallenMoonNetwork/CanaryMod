@@ -305,7 +305,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public int getAirTicks() {
-        return this.getEntity().ak();
+        return this.getEntity().aj();
     }
 
     /**
@@ -446,7 +446,7 @@ public class BaseEntity implements Metadatable {
      * @return the sprinting state
      */
     public boolean getSprinting() {
-        return this.entity.ah();
+        return this.entity.ag();
     }
 
     /**
@@ -500,8 +500,7 @@ public class BaseEntity implements Metadatable {
         loc.z = getZ();
         loc.rotX = getRotation();
         loc.rotY = getPitch();
-        loc.dimension = getWorld().getType().getId();
-        loc.world = getWorld().getName();
+        loc.setWorld(getWorld());
         return loc;
     }
 
@@ -538,7 +537,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public boolean isInvulnerable() {
-        return getEntity().aq();
+        return getEntity().ap();
     }
 
     /**
@@ -569,7 +568,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public BaseEntity getRiddenByEntity() {
-        if(this.entity.n == null)
+        if (this.entity.n == null)
             return null;
         return this.entity.n.getEntity();
     }
@@ -588,7 +587,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public BaseEntity getRidingEntity() {
-        if(this.entity.o == null)
+        if (this.entity.o == null)
             return null;
         return this.entity.o.getEntity();
     }
@@ -606,7 +605,7 @@ public class BaseEntity implements Metadatable {
     }
 
     /**
-     * Dismounts entity from vehicle
+     * Dismounts entity from vehicle.
      */
     public void dismount() {
         setRidingEntity(null);
@@ -636,7 +635,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public float getEyeHeight() {
-        return getEntity().e();
+        return getEntity().f();
     }
 
     /**
@@ -645,7 +644,7 @@ public class BaseEntity implements Metadatable {
      * @return true if sneaking
      */
     public boolean getSneaking() {
-        return getEntity().ag();
+        return getEntity().af();
     }
 
     /**
@@ -656,5 +655,14 @@ public class BaseEntity implements Metadatable {
      */
     public void setSneaking(boolean sneaking) {
         getEntity().b(sneaking);
+    }
+
+    /**
+     * Gets the entity's mob spawner.
+     * @return MobSpawner of the entity, or null if it wasn't spawned with a mob spawner.
+     */
+    public MobSpawner getSpawner() {
+        MobSpawnerLogic spawner = this.getEntity().spawner;
+        return spawner instanceof MobSpawner ? (MobSpawner) spawner : null;
     }
 }

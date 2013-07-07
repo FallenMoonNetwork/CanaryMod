@@ -11,12 +11,12 @@ public class OBlockStationary extends OBlockFluid {
     }
 
     public boolean b(OIBlockAccess oiblockaccess, int i, int j, int k) {
-        return this.cO != OMaterial.i;
+        return this.cU != OMaterial.i;
     }
 
     public void a(OWorld oworld, int i, int j, int k, int l) {
         super.a(oworld, i, j, k, l);
-        if (oworld.a(i, j, k) == this.cz) {
+        if (oworld.a(i, j, k) == this.cF) {
             this.k(oworld, i, j, k);
         }
     }
@@ -24,12 +24,12 @@ public class OBlockStationary extends OBlockFluid {
     private void k(OWorld oworld, int i, int j, int k) {
         int l = oworld.h(i, j, k);
 
-        oworld.f(i, j, k, this.cz - 1, l, 2);
-        oworld.a(i, j, k, this.cz - 1, this.a(oworld));
+        oworld.f(i, j, k, this.cF - 1, l, 2);
+        oworld.a(i, j, k, this.cF - 1, this.a(oworld));
     }
 
     public void a(OWorld oworld, int i, int j, int k, Random random) {
-        if (this.cO == OMaterial.i) {
+        if (this.cU == OMaterial.i) {
             int l = random.nextInt(3);
 
             // CanaryMod: prevent lava from putting something on fire.
@@ -51,10 +51,10 @@ public class OBlockStationary extends OBlockFluid {
                 j1 = oworld.a(i, j, k);
                 if (j1 == 0) {
                     if (this.m(oworld, i - 1, j, k) || this.m(oworld, i + 1, j, k) || this.m(oworld, i, j, k - 1) || this.m(oworld, i, j, k + 1) || this.m(oworld, i, j - 1, k) || this.m(oworld, i, j + 1, k)) {
-                        oworld.c(i, j, k, OBlock.av.cz);
+                        oworld.c(i, j, k, OBlock.aw.cF);
                         return;
                     }
-                } else if (OBlock.r[j1].cO.c()) {
+                } else if (OBlock.s[j1].cU.c()) {
                     return;
                 }
             }
@@ -67,7 +67,7 @@ public class OBlockStationary extends OBlockFluid {
                     i = i1 + random.nextInt(3) - 1;
                     k = j1 + random.nextInt(3) - 1;
                     if (oworld.c(i, j + 1, k) && this.m(oworld, i, j, k)) {
-                        oworld.c(i, j + 1, k, OBlock.av.cz);
+                        oworld.c(i, j + 1, k, OBlock.aw.cF);
                     }
                 }
             }

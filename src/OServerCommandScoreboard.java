@@ -18,6 +18,10 @@ public class OServerCommandScoreboard extends OCommandBase {
         return 2;
     }
 
+    public String c(OICommandSender oicommandsender) {
+        return "commands.scoreboard.usage";
+    }
+
     public void b(OICommandSender oicommandsender, String[] astring) {
         if (astring.length >= 1) {
             if (astring[0].equalsIgnoreCase("objectives")) {
@@ -38,7 +42,7 @@ public class OServerCommandScoreboard extends OCommandBase {
                         throw new OWrongUsageException("commands.scoreboard.objectives.remove.usage", new Object[0]);
                     }
 
-                    this.e(oicommandsender, astring[2]);
+                    this.f(oicommandsender, astring[2]);
                 } else {
                     if (!astring[1].equalsIgnoreCase("setdisplay")) {
                         throw new OWrongUsageException("commands.scoreboard.objectives.usage", new Object[0]);
@@ -159,7 +163,7 @@ public class OServerCommandScoreboard extends OCommandBase {
     }
 
     protected OScoreboard d() {
-        return OMinecraftServer.D().getWorld(OMinecraftServer.D().J(), 0).W();
+        return OMinecraftServer.F().getWorld(OMinecraftServer.F().L(), 0).X();
     }
 
     protected OScoreObjective a(String s, boolean flag) {
@@ -200,9 +204,9 @@ public class OServerCommandScoreboard extends OCommandBase {
             throw new OCommandException("commands.scoreboard.objectives.add.alreadyExists", new Object[] { s});
         } else if (s.length() > 16) {
             throw new OSyntaxErrorException("commands.scoreboard.objectives.add.tooLong", new Object[] { s, Integer.valueOf(16)});
+        } else if (s.length() == 0) {
+            throw new OWrongUsageException("commands.scoreboard.objectives.add.usage", new Object[0]);
         } else {
-            OScoreObjective oscoreobjective = oscoreboard.a(s, oscoreobjectivecriteria);
-
             if (astring.length > i) {
                 String s2 = a(oicommandsender, astring, i);
 
@@ -211,8 +215,12 @@ public class OServerCommandScoreboard extends OCommandBase {
                 }
 
                 if (s2.length() > 0) {
-                    oscoreobjective.a(s2);
+                    oscoreboard.a(s, oscoreobjectivecriteria).a(s2);
+                } else {
+                    oscoreboard.a(s, oscoreobjectivecriteria);
                 }
+            } else {
+                oscoreboard.a(s, oscoreobjectivecriteria);
             }
 
             a(oicommandsender, "commands.scoreboard.objectives.add.success", new Object[] { s});
@@ -227,9 +235,9 @@ public class OServerCommandScoreboard extends OCommandBase {
             throw new OCommandException("commands.scoreboard.teams.add.alreadyExists", new Object[] { s});
         } else if (s.length() > 16) {
             throw new OSyntaxErrorException("commands.scoreboard.teams.add.tooLong", new Object[] { s, Integer.valueOf(16)});
+        } else if (s.length() == 0) {
+            throw new OWrongUsageException("commands.scoreboard.teams.add.usage", new Object[0]);
         } else {
-            OScorePlayerTeam oscoreplayerteam = oscoreboard.f(s);
-
             if (astring.length > i) {
                 String s1 = a(oicommandsender, astring, i);
 
@@ -238,8 +246,12 @@ public class OServerCommandScoreboard extends OCommandBase {
                 }
 
                 if (s1.length() > 0) {
-                    oscoreplayerteam.a(s1);
+                    oscoreboard.f(s).a(s1);
+                } else {
+                    oscoreboard.f(s);
                 }
+            } else {
+                oscoreboard.f(s);
             }
 
             a(oicommandsender, "commands.scoreboard.teams.add.success", new Object[] { s});
@@ -309,8 +321,8 @@ public class OServerCommandScoreboard extends OCommandBase {
                 throw new OCommandException("commands.scoreboard.teams.list.player.empty", new Object[] { oscoreplayerteam.b()});
             }
 
-            oicommandsender.a(OEnumChatFormatting.c + oicommandsender.a("commands.scoreboard.teams.list.player.count", new Object[] { Integer.valueOf(collection.size()), oscoreplayerteam.b()}));
-            oicommandsender.a(a(collection.toArray()));
+            oicommandsender.a(OChatMessageComponent.b("commands.scoreboard.teams.list.player.count", new Object[] { Integer.valueOf(collection.size()), oscoreplayerteam.b()}).a(OEnumChatFormatting.c));
+            oicommandsender.a(OChatMessageComponent.d(a(collection.toArray())));
         } else {
             Collection collection1 = oscoreboard.g();
 
@@ -318,13 +330,13 @@ public class OServerCommandScoreboard extends OCommandBase {
                 throw new OCommandException("commands.scoreboard.teams.list.empty", new Object[0]);
             }
 
-            oicommandsender.a(OEnumChatFormatting.c + oicommandsender.a("commands.scoreboard.teams.list.count", new Object[] { Integer.valueOf(collection1.size())}));
+            oicommandsender.a(OChatMessageComponent.b("commands.scoreboard.teams.list.count", new Object[] { Integer.valueOf(collection1.size())}).a(OEnumChatFormatting.c));
             Iterator iterator = collection1.iterator();
 
             while (iterator.hasNext()) {
                 OScorePlayerTeam oscoreplayerteam1 = (OScorePlayerTeam) iterator.next();
 
-                oicommandsender.a(oicommandsender.a("commands.scoreboard.teams.list.entry", new Object[] { oscoreplayerteam1.b(), oscoreplayerteam1.c(), Integer.valueOf(oscoreplayerteam1.d().size())}));
+                oicommandsender.a(OChatMessageComponent.b("commands.scoreboard.teams.list.entry", new Object[] { oscoreplayerteam1.b(), oscoreplayerteam1.c(), Integer.valueOf(oscoreplayerteam1.d().size())}));
             }
         }
     }
@@ -336,12 +348,12 @@ public class OServerCommandScoreboard extends OCommandBase {
         String s;
 
         if (oicommandsender instanceof OEntityPlayer && i == astring.length) {
-            s = c(oicommandsender).am();
+            s = b(oicommandsender).al();
             oscoreboard.a(s, oscoreplayerteam);
             hashset.add(s);
         } else {
             while (i < astring.length) {
-                s = d(oicommandsender, astring[i++]);
+                s = e(oicommandsender, astring[i++]);
                 oscoreboard.a(s, oscoreplayerteam);
                 hashset.add(s);
             }
@@ -359,7 +371,7 @@ public class OServerCommandScoreboard extends OCommandBase {
         String s;
 
         if (oicommandsender instanceof OEntityPlayer && i == astring.length) {
-            s = c(oicommandsender).am();
+            s = b(oicommandsender).al();
             if (oscoreboard.g(s)) {
                 hashset.add(s);
             } else {
@@ -367,7 +379,7 @@ public class OServerCommandScoreboard extends OCommandBase {
             }
         } else {
             while (i < astring.length) {
-                s = d(oicommandsender, astring[i++]);
+                s = e(oicommandsender, astring[i++]);
                 if (oscoreboard.g(s)) {
                     hashset.add(s);
                 } else {
@@ -405,7 +417,7 @@ public class OServerCommandScoreboard extends OCommandBase {
         }
     }
 
-    protected void e(OICommandSender oicommandsender, String s) {
+    protected void f(OICommandSender oicommandsender, String s) {
         OScoreboard oscoreboard = this.d();
         OScoreObjective oscoreobjective = this.a(s, false);
 
@@ -420,13 +432,13 @@ public class OServerCommandScoreboard extends OCommandBase {
         if (collection.size() <= 0) {
             throw new OCommandException("commands.scoreboard.objectives.list.empty", new Object[0]);
         } else {
-            oicommandsender.a(OEnumChatFormatting.c + oicommandsender.a("commands.scoreboard.objectives.list.count", new Object[] { Integer.valueOf(collection.size())}));
+            oicommandsender.a(OChatMessageComponent.b("commands.scoreboard.objectives.list.count", new Object[] { Integer.valueOf(collection.size())}).a(OEnumChatFormatting.c));
             Iterator iterator = collection.iterator();
 
             while (iterator.hasNext()) {
                 OScoreObjective oscoreobjective = (OScoreObjective) iterator.next();
 
-                oicommandsender.a(oicommandsender.a("commands.scoreboard.objectives.list.entry", new Object[] { oscoreobjective.b(), oscoreobjective.d(), oscoreobjective.c().a()}));
+                oicommandsender.a(OChatMessageComponent.b("commands.scoreboard.objectives.list.entry", new Object[] { oscoreobjective.b(), oscoreobjective.d(), oscoreobjective.c().a()}));
             }
         }
     }
@@ -457,20 +469,20 @@ public class OServerCommandScoreboard extends OCommandBase {
         OScoreboard oscoreboard = this.d();
 
         if (astring.length > i) {
-            String s = d(oicommandsender, astring[i++]);
+            String s = e(oicommandsender, astring[i++]);
             Map map = oscoreboard.d(s);
 
             if (map.size() <= 0) {
                 throw new OCommandException("commands.scoreboard.players.list.player.empty", new Object[] { s});
             }
 
-            oicommandsender.a(OEnumChatFormatting.c + oicommandsender.a("commands.scoreboard.players.list.player.count", new Object[] { Integer.valueOf(map.size()), s}));
+            oicommandsender.a(OChatMessageComponent.b("commands.scoreboard.players.list.player.count", new Object[] { Integer.valueOf(map.size()), s}).a(OEnumChatFormatting.c));
             Iterator iterator = map.values().iterator();
 
             while (iterator.hasNext()) {
                 OScore oscore = (OScore) iterator.next();
 
-                oicommandsender.a(oicommandsender.a("commands.scoreboard.players.list.player.entry", new Object[] { Integer.valueOf(oscore.c()), oscore.d().d(), oscore.d().b()}));
+                oicommandsender.a(OChatMessageComponent.b("commands.scoreboard.players.list.player.entry", new Object[] { Integer.valueOf(oscore.c()), oscore.d().d(), oscore.d().b()}));
             }
         } else {
             Collection collection = oscoreboard.d();
@@ -479,14 +491,14 @@ public class OServerCommandScoreboard extends OCommandBase {
                 throw new OCommandException("commands.scoreboard.players.list.empty", new Object[0]);
             }
 
-            oicommandsender.a(OEnumChatFormatting.c + oicommandsender.a("commands.scoreboard.players.list.count", new Object[] { Integer.valueOf(collection.size())}));
-            oicommandsender.a(a(collection.toArray()));
+            oicommandsender.a(OChatMessageComponent.b("commands.scoreboard.players.list.count", new Object[] { Integer.valueOf(collection.size())}).a(OEnumChatFormatting.c));
+            oicommandsender.a(OChatMessageComponent.d(a(collection.toArray())));
         }
     }
 
     protected void l(OICommandSender oicommandsender, String[] astring, int i) {
         String s = astring[i - 1];
-        String s1 = d(oicommandsender, astring[i++]);
+        String s1 = e(oicommandsender, astring[i++]);
         OScoreObjective oscoreobjective = this.a(astring[i++], true);
         int j = s.equalsIgnoreCase("set") ? a(oicommandsender, astring[i++]) : a(oicommandsender, astring[i++], 1);
         OScoreboard oscoreboard = this.d();
@@ -505,7 +517,7 @@ public class OServerCommandScoreboard extends OCommandBase {
 
     protected void m(OICommandSender oicommandsender, String[] astring, int i) {
         OScoreboard oscoreboard = this.d();
-        String s = d(oicommandsender, astring[i++]);
+        String s = e(oicommandsender, astring[i++]);
 
         oscoreboard.c(s);
         a(oicommandsender, "commands.scoreboard.players.reset.success", new Object[] { s});
@@ -548,7 +560,7 @@ public class OServerCommandScoreboard extends OCommandBase {
                     }
                 } else {
                     if (astring.length == 3) {
-                        return a(astring, OMinecraftServer.D().A());
+                        return a(astring, OMinecraftServer.F().C());
                     }
 
                     if (astring.length == 4) {
@@ -566,11 +578,11 @@ public class OServerCommandScoreboard extends OCommandBase {
                     }
 
                     if (astring.length >= 4) {
-                        return a(astring, OMinecraftServer.D().A());
+                        return a(astring, OMinecraftServer.F().C());
                     }
                 } else {
                     if (astring[1].equalsIgnoreCase("leave")) {
-                        return a(astring, OMinecraftServer.D().A());
+                        return a(astring, OMinecraftServer.F().C());
                     }
 
                     if (!astring[1].equalsIgnoreCase("empty") && !astring[1].equalsIgnoreCase("list") && !astring[1].equalsIgnoreCase("remove")) {

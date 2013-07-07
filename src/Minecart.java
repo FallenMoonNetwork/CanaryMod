@@ -143,7 +143,7 @@ public class Minecart extends BaseVehicle {
      * @return This minecart's current damage value
      */
     public int getDamage() {
-        return getEntity().i();
+        return (int)getEntity().i(); // @ TODO : Why did this change in 1.6.1?
     }
 
     /**

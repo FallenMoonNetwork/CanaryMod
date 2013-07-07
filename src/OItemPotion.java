@@ -54,8 +54,8 @@ public class OItemPotion extends OItem {
     }
 
     public OItemStack b(OItemStack oitemstack, OWorld oworld, OEntityPlayer oentityplayer) {
-        if (!oentityplayer.ce.d) {
-            --oitemstack.a;
+        if (!oentityplayer.bG.d) {
+            --oitemstack.b;
         }
 
         if (!oworld.I) {
@@ -72,39 +72,39 @@ public class OItemPotion extends OItem {
             }
         }
 
-        if (!oentityplayer.ce.d) {
-            if (oitemstack.a <= 0) {
-                return new OItemStack(OItem.bu);
+        if (!oentityplayer.bG.d) {
+            if (oitemstack.b <= 0) {
+                return new OItemStack(OItem.bv);
             }
 
-            oentityplayer.bK.a(new OItemStack(OItem.bu));
+            oentityplayer.bn.a(new OItemStack(OItem.bv));
         }
 
         return oitemstack;
     }
 
-    public int c_(OItemStack oitemstack) {
+    public int d_(OItemStack oitemstack) {
         return 32;
     }
 
-    public OEnumAction b_(OItemStack oitemstack) {
+    public OEnumAction c_(OItemStack oitemstack) {
         return OEnumAction.c;
     }
 
     public OItemStack a(OItemStack oitemstack, OWorld oworld, OEntityPlayer oentityplayer) {
         if (f(oitemstack.k())) {
-            if (!oentityplayer.ce.d) {
-                --oitemstack.a;
+            if (!oentityplayer.bG.d) {
+                --oitemstack.b;
             }
 
-            oworld.a((OEntity) oentityplayer, "random.bow", 0.5F, 0.4F / (e.nextFloat() * 0.4F + 0.8F));
+            oworld.a((OEntity) oentityplayer, "random.bow", 0.5F, 0.4F / (f.nextFloat() * 0.4F + 0.8F));
             if (!oworld.I) {
                 oworld.d((OEntity) (new OEntityPotion(oworld, oentityplayer, oitemstack)));
             }
 
             return oitemstack;
         } else {
-            oentityplayer.a(oitemstack, this.c_(oitemstack));
+            oentityplayer.a(oitemstack, this.d_(oitemstack));
             return oitemstack;
         }
     }
@@ -127,7 +127,7 @@ public class OItemPotion extends OItem {
                 s = OStatCollector.a("potion.prefix.grenade").trim() + " ";
             }
 
-            List list = OItem.bt.g(oitemstack);
+            List list = OItem.bu.g(oitemstack);
             String s1;
 
             if (list != null && !list.isEmpty()) {

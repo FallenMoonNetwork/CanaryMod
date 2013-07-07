@@ -5,7 +5,7 @@ public class OItemDoor extends OItem {
     public OItemDoor(int i, OMaterial omaterial) {
         super(i);
         this.a = omaterial;
-        this.cq = 1;
+        this.cw = 1;
         this.a(OCreativeTabs.d);
     }
 
@@ -17,9 +17,9 @@ public class OItemDoor extends OItem {
             OBlock oblock;
 
             if (this.a == OMaterial.d) {
-                oblock = OBlock.aI;
+                oblock = OBlock.aJ;
             } else {
-                oblock = OBlock.aP;
+                oblock = OBlock.aQ;
             }
 
             if (oentityplayer.a(i, j, k, l, oitemstack) && oentityplayer.a(i, j + 1, k, l, oitemstack)) {
@@ -28,7 +28,7 @@ public class OItemDoor extends OItem {
                 } else {
                     // CanaryMod hook: onItemUse
                     Block blockClicked = this.getBlockInfo(oworld, i, j, k, l);
-                    Block blockPlaced = new Block(oworld.world, oblock.cz, i, j, k);
+                    Block blockPlaced = new Block(oworld.world, oblock.cF, i, j, k);
 
                     // Call the hook
                     if (oentityplayer instanceof OEntityPlayerMP) {
@@ -42,7 +42,7 @@ public class OItemDoor extends OItem {
                     int i1 = OMathHelper.c((double) ((oentityplayer.A + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
 
                     a(oworld, i, j, k, i1, oblock);
-                    --oitemstack.a;
+                    --oitemstack.b;
                     return true;
                 }
             } else {
@@ -73,8 +73,8 @@ public class OItemDoor extends OItem {
 
         int i1 = (oworld.u(i - b0, j, k - b1) ? 1 : 0) + (oworld.u(i - b0, j + 1, k - b1) ? 1 : 0);
         int j1 = (oworld.u(i + b0, j, k + b1) ? 1 : 0) + (oworld.u(i + b0, j + 1, k + b1) ? 1 : 0);
-        boolean flag = oworld.a(i - b0, j, k - b1) == oblock.cz || oworld.a(i - b0, j + 1, k - b1) == oblock.cz;
-        boolean flag1 = oworld.a(i + b0, j, k + b1) == oblock.cz || oworld.a(i + b0, j + 1, k + b1) == oblock.cz;
+        boolean flag = oworld.a(i - b0, j, k - b1) == oblock.cF || oworld.a(i - b0, j + 1, k - b1) == oblock.cF;
+        boolean flag1 = oworld.a(i + b0, j, k + b1) == oblock.cF || oworld.a(i + b0, j + 1, k + b1) == oblock.cF;
         boolean flag2 = false;
 
         if (flag && !flag1) {
@@ -83,9 +83,9 @@ public class OItemDoor extends OItem {
             flag2 = true;
         }
 
-        oworld.f(i, j, k, oblock.cz, l, 2);
-        oworld.f(i, j + 1, k, oblock.cz, 8 | (flag2 ? 1 : 0), 2);
-        oworld.f(i, j, k, oblock.cz);
-        oworld.f(i, j + 1, k, oblock.cz);
+        oworld.f(i, j, k, oblock.cF, l, 2);
+        oworld.f(i, j + 1, k, oblock.cF, 8 | (flag2 ? 1 : 0), 2);
+        oworld.f(i, j, k, oblock.cF);
+        oworld.f(i, j + 1, k, oblock.cF);
     }
 }

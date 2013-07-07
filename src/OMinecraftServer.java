@@ -1,6 +1,7 @@
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
+import java.net.Proxy;
 import java.security.KeyPair;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,51 +16,52 @@ import java.util.logging.Logger;
 
 public abstract class OMinecraftServer implements OICommandSender, Runnable, OIPlayerUsage {
 
-    private static OMinecraftServer k = null;
-    private final OISaveFormat l;
-    private final OPlayerUsageSnooper m = new OPlayerUsageSnooper("server", this);
-    private final File n;
-    private final List o = new ArrayList();
-    private final OICommandManager p;
+    private static OMinecraftServer l;
+    private final OISaveFormat m;
+    private final OPlayerUsageSnooper n = new OPlayerUsageSnooper("server", this, aq());
+    private final File o;
+    private final List p = new ArrayList();
+    private final OICommandManager q;
     public final OProfiler a = new OProfiler();
-    private String q;
-    private int r = -1;
+    private String r;
+    private int s = -1;
     //public OWorldServer[] b;
-    private OServerConfigurationManager s;
-    private boolean t = true;
-    private boolean u = false;
-    private int v = 0;
-    public String c;
-    public int d;
-    private boolean w;
+    private OServerConfigurationManager t;
+    private boolean u = true;
+    private boolean v;
+    private int w;
+    protected Proxy c;
+    public String d;
+    public int e;
     private boolean x;
     private boolean y;
     private boolean z;
     private boolean A;
-    private String B;
-    private int C;
-    private long D;
+    private boolean B;
+    private String C;
+    private int D;
     private long E;
     private long F;
     private long G;
-    public final long[] e = new long[100];
-    public final long[] f = new long[100];
-    public final long[] g = new long[100];
-    public final long[] h = new long[100];
-    public final long[] i = new long[100];
-    //public long[][] j;
-    private KeyPair H;
-    private String I;
+    private long H;
+    public final long[] f;
+    public final long[] g;
+    public final long[] h;
+    public final long[] i;
+    public final long[] j;
+    //public long[][] k;
+    private KeyPair I;
     private String J;
-    private boolean L;
+    private String K;
     private boolean M;
     private boolean N;
-    private String O = "";
-    private boolean P = false;
-    private long Q;
-    private String R;
-    private boolean S;
-    private boolean T = false;
+    private boolean O;
+    private String P;
+    private boolean Q;
+    private long R;
+    private String S;
+    private boolean T;
+    private boolean U;
 
     // CanaryMod start: Multiworld \o/
     public Map<String, OWorldServer[]> worlds = new HashMap<String, OWorldServer[]>(1);
@@ -71,52 +73,59 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     // CanaryMod end
 
     public OMinecraftServer(File file1) {
-        k = this;
-        this.n = file1;
-        this.p = new OServerCommandManager();
-        this.l = new OAnvilSaveConverter(file1);
-        this.an();
+        this.c = Proxy.NO_PROXY;
+        this.f = new long[100];
+        this.g = new long[100];
+        this.h = new long[100];
+        this.i = new long[100];
+        this.j = new long[100];
+        this.P = "";
+        l = this;
+        this.o = file1;
+        this.q = new OServerCommandManager();
+        this.m = new OAnvilSaveConverter(file1);
+        this.ar();
     }
 
-    private void an() {
+    private void ar() {
         ODispenserBehaviors.a();
     }
 
-    protected abstract boolean c() throws IOException;
+    protected abstract boolean d() throws IOException;
 
-    protected void b(String s) {
-        if (this.N().b(s)) {
-            this.al().a("Converting map!");
-            this.c("menu.convertingLevel");
-            this.N().a(s, new OConvertingProgressUpdate(this));
+    protected void a(String s) {
+        if (this.P().b(s)) {
+            this.an().a("Converting map!");
+            this.b("menu.convertingLevel");
+            this.P().a(s, new OConvertingProgressUpdate(this));
         }
     }
 
-    protected synchronized void c(String s) {
-        this.R = s;
+    protected synchronized void b(String s) {
+        this.S = s;
     }
 
     protected void a(String s, String s1, long i, OWorldType oworldtype, String s2) {
-        this.b(s);
-        this.c("menu.loadingLevel");
+        this.a(s);
+        this.b("menu.loadingLevel");
 
         OWorldServer[] toLoad = new OWorldServer[3];
 
         this.worlds.put(s, toLoad);
         this.worldTickNanos.put(s, new long[toLoad.length][100]);
 
-        OISaveHandler oisavehandler = this.l.a(s, true);
+        OISaveHandler oisavehandler = this.m.a(s, true);
         OWorldInfo oworldinfo = oisavehandler.d();
         OWorldSettings oworldsettings;
 
         if (oworldinfo == null) {
-            oworldsettings = new OWorldSettings(i, this.g(), this.f(), this.i(), oworldtype);
+            oworldsettings = new OWorldSettings(i, this.h(), this.g(), this.j(), oworldtype);
             oworldsettings.a(s2);
         } else {
             oworldsettings = new OWorldSettings(oworldinfo);
         }
 
-        if (this.M) {
+        if (this.N) {
             oworldsettings.a();
         }
 
@@ -132,39 +141,45 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             }
 
             if (j == 0) {
-                if (this.M()) {
-                    toLoad[j] = new ODemoWorldServer(this, oisavehandler, s1, b0, this.a, this.al());
+                if (this.O()) {
+                    toLoad[j] = new ODemoWorldServer(this, oisavehandler, s1, b0, this.a, this.an());
                 } else {
-                    toLoad[j] = new OWorldServer(this, oisavehandler, s1, b0, oworldsettings, this.a, this.al());
+                    toLoad[j] = new OWorldServer(this, oisavehandler, s1, b0, oworldsettings, this.a, this.an());
                 }
             } else {
-                toLoad[j] = new OWorldServerMulti(this, oisavehandler, s1, b0, oworldsettings, toLoad[0], this.a, this.al());
+                toLoad[j] = new OWorldServerMulti(this, oisavehandler, s1, b0, oworldsettings, toLoad[0], this.a, this.an());
             }
+
             toLoad[j].a((OIWorldAccess) (new OWorldManager(this, toLoad[j])));
-            if (!this.I()) {
-                toLoad[j].M().a(this.g());
+            if (!this.K()) {
+                toLoad[j].N().a(this.h());
             }
-            this.s.a(toLoad);
+
+            this.t.a(toLoad);
         }
 
-        this.c(this.h());
-        this.e(toLoad);
+        this.c(this.i());
+        this.f(toLoad);
     }
 
-    protected void e(OWorldServer[] toLoad) { // CanaryMod: add world array as parameter
+    protected void f(OWorldServer[] toLoad) { // CanaryMod: add world array as parameter
+        boolean flag = true;
+        boolean flag1 = true;
+        boolean flag2 = true;
+        boolean flag3 = true;
         int i = 0;
 
-        this.c("menu.generatingTerrain");
+        this.b("menu.generatingTerrain");
         byte b0 = 0;
 
-        this.al().a("Preparing start region for level " + b0);
+        this.an().a("Preparing start region for level " + b0);
         OWorldServer oworldserver = toLoad[b0];
-        OChunkCoordinates ochunkcoordinates = oworldserver.J();
-        long j = System.currentTimeMillis();
+        OChunkCoordinates ochunkcoordinates = oworldserver.K();
+        long j = aq();
 
-        for (int k = -192; k <= 192 && this.m(); k += 16) {
-            for (int l = -192; l <= 192 && this.m(); l += 16) {
-                long i1 = System.currentTimeMillis();
+        for (int k = -192; k <= 192 && this.o(); k += 16) {
+            for (int l = -192; l <= 192 && this.o(); l += 16) {
+                long i1 = aq();
 
                 if (i1 - j > 1000L) {
                     this.a_("Preparing spawn area", i * 100 / 625);
@@ -176,30 +191,32 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             }
         }
 
-        this.j();
+        this.l();
     }
 
-    public abstract boolean f();
+    public abstract boolean g();
 
-    public abstract OEnumGameType g();
+    public abstract OEnumGameType h();
 
-    public abstract int h();
+    public abstract int i();
 
-    public abstract boolean i();
+    public abstract boolean j();
+
+    public abstract int k();
 
     protected void a_(String s, int i) {
-        this.c = s;
-        this.d = i;
-        this.al().a(s + ": " + i + "%");
+        this.d = s;
+        this.e = i;
+        this.an().a(s + ": " + i + "%");
     }
 
-    protected void j() {
-        this.c = null;
-        this.d = 0;
+    protected void l() {
+        this.d = null;
+        this.e = 0;
     }
 
     protected void a(boolean flag) {
-        if (!this.N) {
+        if (!this.O) {
             for (OWorldServer[] aoworldserver : this.worlds.values()) {
                 int i = aoworldserver.length;
 
@@ -208,13 +225,13 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
                     if (oworldserver != null) {
                         if (!flag) {
-                        this.al().a("Saving chunks for level \'" + oworldserver.M().k() + "\'/" + oworldserver.t.l());
+                            this.an().a("Saving chunks for level \'" + oworldserver.N().k() + "\'/" + oworldserver.t.l());
                         }
 
                         try {
                             oworldserver.a(true, (OIProgressUpdate) null);
                         } catch (OMinecraftException ominecraftexception) {
-                            this.al().b(ominecraftexception.getMessage());
+                            this.an().b(ominecraftexception.getMessage());
                         }
                     }
                 }
@@ -222,75 +239,75 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         }
     }
 
-    public void k() {
-        if (!this.N) {
-            this.al().a("Stopping server");
-            if (this.ae() != null) {
-                this.ae().a();
+    public void m() {
+        if (!this.O) {
+            this.an().a("Stopping server");
+            if (this.ag() != null) {
+                this.ag().a();
             }
 
             etc.getLoader().unloadPlugins(); // CanaryMod: unload plugins
 
-            if (this.s != null) {
-                this.al().a("Saving players");
-                this.s.g();
-                this.s.r(stopMsg); // CanaryMod: custom stop message added
+            if (this.t != null) {
+                this.an().a("Saving players");
+                this.t.g();
+                this.t.r(stopMsg); // CanaryMod: custom stop message added
             }
 
-            this.al().a("Saving worlds");
+            this.an().a("Saving worlds");
             this.a(false);
             for (OWorldServer[] aoworldserver : this.worlds.values()) {
                 for (int i = 0; i < aoworldserver.length; ++i) {
                     OWorldServer oworldserver = aoworldserver[i];
 
-                oworldserver.n();
+                    oworldserver.n();
                 }
             } // CanaryMod: diff visibility
 
-            if (this.m != null && this.m.d()) {
-                this.m.e();
+            if (this.n != null && this.n.d()) {
+                this.n.e();
             }
         }
     }
 
-    public String l() {
-        return this.q;
+    public String n() {
+        return this.r;
     }
 
-    public void d(String s) {
-        this.q = s;
+    public void c(String s) {
+        this.r = s;
     }
 
-    public boolean m() {
-        return this.t;
+    public boolean o() {
+        return this.u;
     }
 
-    public void n() { //STOP
-        this.t = false;
+    public void p() {
+        this.u = false;
     }
 
     public void run() {
         try {
-            if (this.c()) {
+            if (this.d()) {
                 // CanaryMod: load once!
                 if (!etc.getLoader().isLoaded()) {
                     etc.getLoader().loadPlugins();
                 }
 
-                long i = System.currentTimeMillis();
+                long i = aq();
 
-                for (long j = 0L; this.t; this.P = true) {
-                    long k = System.currentTimeMillis();
+                for (long j = 0L; this.u; this.Q = true) {
+                    long k = aq();
                     long l = k - i;
 
-                    if (l > 2000L && i - this.Q >= 15000L) {
-                        this.al().b("Can\'t keep up! Did the system time change, or is the server overloaded?");
+                    if (l > 2000L && i - this.R >= 15000L) {
+                        this.an().b("Can\'t keep up! Did the system time change, or is the server overloaded?");
                         l = 2000L;
-                        this.Q = i;
+                        this.R = i;
                     }
 
                     if (l < 0L) {
-                        this.al().b("Time ran backwards! Did the system time change?");
+                        this.an().b("Time ran backwards! Did the system time change?");
                         l = 0L;
                     }
 
@@ -306,12 +323,12 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                     }
                     // CanaryMod end
                     if (allSleeping) {
-                        this.q();
+                        this.s();
                         j = 0L;
                     } else {
                         while (j > 50L) {
                             j -= 50L;
-                            this.q();
+                            this.s();
                         }
                     }
 
@@ -322,7 +339,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             }
         } catch (Throwable throwable) {
             throwable.printStackTrace();
-            this.al().c("Encountered an unexpected exception " + throwable.getClass().getSimpleName(), throwable);
+            this.an().c("Encountered an unexpected exception " + throwable.getClass().getSimpleName(), throwable);
             OCrashReport ocrashreport = null;
 
             if (throwable instanceof OReportedException) {
@@ -331,80 +348,80 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                 ocrashreport = this.b(new OCrashReport("Exception in server tick loop", throwable));
             }
 
-            File file1 = new File(new File(this.o(), "crash-reports"), "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-server.txt");
+            File file1 = new File(new File(this.q(), "crash-reports"), "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-server.txt");
 
-            if (ocrashreport.a(file1, this.al())) {
-                this.al().c("This crash report has been saved to: " + file1.getAbsolutePath());
+            if (ocrashreport.a(file1, this.an())) {
+                this.an().c("This crash report has been saved to: " + file1.getAbsolutePath());
             } else {
-                this.al().c("We were unable to save this crash report to disk.");
+                this.an().c("We were unable to save this crash report to disk.");
             }
 
             this.a(ocrashreport);
         } finally {
             try {
-                this.k();
-                this.u = true;
+                this.m();
+                this.v = true;
             } catch (Throwable throwable1) {
                 throwable1.printStackTrace();
             } finally {
-                this.p();
+                this.r();
             }
         }
     }
 
-    protected File o() {
+    protected File q() {
         return new File(".");
     }
 
     protected void a(OCrashReport ocrashreport) {}
 
-    protected void p() {}
+    protected void r() {}
 
-    protected void q() {
+    protected void s() {
         long i = System.nanoTime();
 
         OAxisAlignedBB.a().a();
-        ++this.v;
-        if (this.S) {
-            this.S = false;
+        ++this.w;
+        if (this.T) {
+            this.T = false;
             this.a.a = true;
             this.a.a();
         }
 
         this.a.a("root");
-        this.r();
-        if (this.v % 900 == 0) {
+        this.t();
+        if (this.w % 900 == 0) {
             this.a.a("save");
-            this.s.g();
+            this.t.g();
             this.a(true);
             this.a.b();
         }
 
         this.a.a("tallying");
-        this.i[this.v % 100] = System.nanoTime() - i;
-        this.e[this.v % 100] = OPacket.q - this.D;
-        this.D = OPacket.q;
-        this.f[this.v % 100] = OPacket.r - this.E;
-        this.E = OPacket.r;
-        this.g[this.v % 100] = OPacket.o - this.F;
-        this.F = OPacket.o;
-        this.h[this.v % 100] = OPacket.p - this.G;
-        this.G = OPacket.p;
+        this.j[this.w % 100] = System.nanoTime() - i;
+        this.f[this.w % 100] = OPacket.q - this.E;
+        this.E = OPacket.q;
+        this.g[this.w % 100] = OPacket.r - this.F;
+        this.F = OPacket.r;
+        this.h[this.w % 100] = OPacket.o - this.G;
+        this.G = OPacket.o;
+        this.i[this.w % 100] = OPacket.p - this.H;
+        this.H = OPacket.p;
         this.a.b();
         this.a.a("snooper");
-        if (!this.m.d() && this.v > 100) {
-            this.m.a();
+        if (!this.n.d() && this.w > 100) {
+            this.n.a();
         }
 
-        if (this.v % 6000 == 0) {
-            this.m.b();
+        if (this.w % 6000 == 0) {
+            this.n.b();
         }
 
         this.a.b();
         this.a.b();
     }
 
-    public void r() {
+    public void t() {
         this.a.a("levels");
 
         int i;
@@ -416,70 +433,70 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                 long j = System.nanoTime();
                 if (level[i] == null) continue; // CanaryMod: prevent NPE
 
-                if (i == 0 || this.s()) {
+                if (i == 0 || this.u()) {
                     OWorldServer oworldserver = level[i];
 
-                this.a.a(oworldserver.M().k());
+                    this.a.a(oworldserver.N().k());
                     this.a.a("pools");
-                oworldserver.U().a();
+                    oworldserver.V().a();
                     this.a.b();
-                    if (this.v % 20 == 0) {
+                    if (this.w % 20 == 0) {
                         this.a.a("timeSync");
                         //CanaryMod: send packet for multiworld
-                        this.s.sendPacketToDimension((OPacket) (new OPacket4UpdateTime(oworldserver.H(), oworldserver.I())), worldName, oworldserver.t.h);
+                        this.t.sendPacketToDimension((OPacket) (new OPacket4UpdateTime(oworldserver.I(), oworldserver.J(), oworldserver.O().b("doDaylightCycle"))), worldName, oworldserver.t.i);
                         this.a.b();
                     }
 
-                this.a.a("tick");
+                    this.a.a("tick");
 
-                OCrashReport ocrashreport;
+                    OCrashReport ocrashreport;
 
-                try {
-                    oworldserver.b();
-                } catch (Throwable throwable) {
-                    ocrashreport = OCrashReport.a(throwable, "Exception ticking world");
-                    oworldserver.a(ocrashreport);
-                    throw new OReportedException(ocrashreport);
+                    try {
+                        oworldserver.b();
+                    } catch (Throwable throwable) {
+                        ocrashreport = OCrashReport.a(throwable, "Exception ticking world");
+                        oworldserver.a(ocrashreport);
+                        throw new OReportedException(ocrashreport);
+                    }
+
+                    try {
+                        oworldserver.h();
+                    } catch (Throwable throwable1) {
+                        ocrashreport = OCrashReport.a(throwable1, "Exception ticking world entities");
+                        oworldserver.a(ocrashreport);
+                        throw new OReportedException(ocrashreport);
+                    }
+
+                    this.a.b();
+                    this.a.a("tracker");
+                    oworldserver.q().a();
+                    this.a.b();
+                    this.a.b();
                 }
 
-                try {
-                    oworldserver.h();
-                } catch (Throwable throwable1) {
-                    ocrashreport = OCrashReport.a(throwable1, "Exception ticking world entities");
-                    oworldserver.a(ocrashreport);
-                    throw new OReportedException(ocrashreport);
-                }
-
-                this.a.b();
-                this.a.a("tracker");
-                oworldserver.q().a();
-                this.a.b();
-                this.a.b();
-                }
-
-                this.worldTickNanos.get(worldName)[i][this.v % 100] = System.nanoTime() - j;
+                this.worldTickNanos.get(worldName)[i][this.w % 100] = System.nanoTime() - j;
             }
         }
 
         this.a.c("connection");
-        this.ae().b();
+        this.ag().b();
         this.a.c("players");
-        this.s.b();
+        this.t.b();
         this.a.c("tickables");
 
-        for (i = 0; i < this.o.size(); ++i) {
-            ((OIUpdatePlayerListBox) this.o.get(i)).a();
+        for (i = 0; i < this.p.size(); ++i) {
+            ((OIUpdatePlayerListBox) this.p.get(i)).a();
         }
 
         this.a.b();
     }
 
-    public boolean s() {
+    public boolean u() {
         return true;
     }
 
     public void a(OIUpdatePlayerListBox oiupdateplayerlistbox) {
-        this.o.add(oiupdateplayerlistbox);
+        this.p.add(oiupdateplayerlistbox);
     }
 
     public static void main(String[] astring) {
@@ -534,13 +551,13 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
             ODedicatedServer odedicatedserver = new ODedicatedServer(new File(s1));
 
-            oilogagent = odedicatedserver.al();
+            oilogagent = odedicatedserver.an();
             if (s != null) {
-                odedicatedserver.k(s);
+                odedicatedserver.j(s);
             }
 
             if (s2 != null) {
-                odedicatedserver.l(s2);
+                odedicatedserver.k(s2);
             }
 
             if (i >= 0) {
@@ -556,10 +573,10 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             }
 
             if (flag) {
-                odedicatedserver.ap();
+                odedicatedserver.at();
             }
 
-            odedicatedserver.t();
+            odedicatedserver.v();
             Runtime.getRuntime().addShutdownHook(new OThreadDedicatedServer(odedicatedserver));
         } catch (Exception exception) {
             if (oilogagent != null) {
@@ -570,20 +587,20 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         }
     }
 
-    public void t() {
+    public void v() {
         (new OThreadMinecraftServer(this, "Server thread")).start();
     }
 
-    public File e(String s) {
-        return new File(this.o(), s);
+    public File d(String s) {
+        return new File(this.q(), s);
+    }
+
+    public void e(String s) {
+        this.an().a(s);
     }
 
     public void f(String s) {
-        this.al().a(s);
-    }
-
-    public void g(String s) {
-        this.al().b(s);
+        this.an().b(s);
     }
 
     public OWorldServer a(int i) {
@@ -598,55 +615,55 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         return aows != null && aows.length > index ? aows[index] : null;
     }
 
-    public String u() {
-        return this.q;
-    }
-
-    public int v() {
+    public String w() {
         return this.r;
     }
 
-    public String w() {
-        return this.B;
+    public int x() {
+        return this.s;
     }
 
-    public String x() {
-        return "1.5.2";
+    public String y() {
+        return this.C;
     }
 
-    public int y() {
-        return this.s.k();
+    public String z() {
+        return "1.6.1";
     }
 
-    public int z() {
-        return this.s.l();
+    public int A() {
+        return this.t.k();
     }
 
-    public String[] A() {
-        return this.s.d();
+    public int B() {
+        return this.t.l();
     }
 
-    public String B() {
+    public String[] C() {
+        return this.t.d();
+    }
+
+    public String D() {
         return "";
     }
 
-    public String h(String s) {
-        ORConConsoleSource.a.c();
-        this.p.a(ORConConsoleSource.a, s);
-        return ORConConsoleSource.a.d();
+    public String g(String s) {
+        ORConConsoleSource.a.d();
+        this.q.a(ORConConsoleSource.a, s);
+        return ORConConsoleSource.a.e();
     }
 
-    public boolean C() {
+    public boolean E() {
         return false;
     }
 
-    public void i(String s) {
-        this.al().c(s);
+    public void h(String s) {
+        this.an().c(s);
     }
 
-    public void j(String s) {
-        if (this.C()) {
-            this.al().a(s);
+    public void i(String s) {
+        if (this.E()) {
+            this.an().a(s);
         }
     }
 
@@ -660,7 +677,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             ocrashreport.g().a("Vec3 Pool Size", (Callable) (new OCallableServerProfiler(this)));
         }
 
-        if (this.s != null) {
+        if (this.t != null) {
             ocrashreport.g().a("Player Count", (Callable) (new OCallableServerMemoryStats(this)));
         }
 
@@ -673,7 +690,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         if (s.startsWith("/")) {
             s = s.substring(1);
             boolean flag = !s.contains(" ");
-            List list = this.p.b(oicommandsender, s);
+            List list = this.q.b(oicommandsender, s);
 
             if (list != null) {
                 Iterator iterator = list.iterator();
@@ -693,7 +710,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         } else {
             String[] astring = s.split(" ", -1);
             String s2 = astring[astring.length - 1];
-            String[] astring1 = this.s.d();
+            String[] astring1 = this.t.d();
             int i = astring1.length;
 
             for (int j = 0; j < i; ++j) {
@@ -708,64 +725,60 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         }
     }
 
-    public static OMinecraftServer D() {
-        return k;
+    public static OMinecraftServer F() {
+        return l;
     }
 
     public String c_() {
         return "Server";
     }
 
-    public void a(String s) {
-        this.al().a(OStringUtils.a(s));
+    public void a(OChatMessageComponent ochatmessagecomponent) {
+        this.an().a(ochatmessagecomponent.toString());
     }
 
     public boolean a(int i, String s) {
         return true;
     }
 
-    public String a(String s, Object... aobject) {
-        return OStringTranslate.a().a(s, aobject);
+    public OICommandManager G() {
+        return this.q;
     }
 
-    public OICommandManager E() {
-        return this.p;
-    }
-
-    public KeyPair F() {
-        return this.H;
-    }
-
-    public int G() {
-        return this.r;
-    }
-
-    public void b(int i) {
-        this.r = i;
-    }
-
-    public String H() {
+    public KeyPair H() {
         return this.I;
     }
 
-    public void k(String s) {
-        this.I = s;
+    public int I() {
+        return this.s;
     }
 
-    public boolean I() {
-        return this.I != null;
+    public void b(int i) {
+        this.s = i;
     }
 
     public String J() {
         return this.J;
     }
 
-    public void l(String s) {
+    public void j(String s) {
         this.J = s;
     }
 
+    public boolean K() {
+        return this.J != null;
+    }
+
+    public String L() {
+        return this.K;
+    }
+
+    public void k(String s) {
+        this.K = s;
+    }
+
     public void a(KeyPair keypair) {
-        this.H = keypair;
+        this.I = keypair;
     }
 
     public void c(int i) {
@@ -774,80 +787,81 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
                 OWorldServer oworldserver = aworld[j];
 
                 if (oworldserver != null) {
-                if (oworldserver.M().t()) {
+                if (oworldserver.N().t()) {
                     oworldserver.r = 3;
                         oworldserver.a(true, true);
-                    } else if (this.I()) {
+                } else if (this.K()) {
                     oworldserver.r = i;
                     oworldserver.a(oworldserver.r > 0, true);
                     } else {
                     oworldserver.r = i;
-                    oworldserver.a(this.L(), this.x);
+                    oworldserver.a(this.N(), this.y);
                     }
                 }
             }
         } //
     }
 
-    protected boolean L() {
+    protected boolean N() {
         return true;
     }
 
-    public boolean M() {
-        return this.L;
+    public boolean O() {
+        return this.M;
     }
 
     public void b(boolean flag) {
-        this.L = flag;
-    }
-
-    public void c(boolean flag) {
         this.M = flag;
     }
 
-    public OISaveFormat N() {
-        return this.l;
+    public void c(boolean flag) {
+        this.N = flag;
     }
 
-    public void P() {
-        this.N = true;
-        this.N().d();
+    public OISaveFormat P() {
+        return this.m;
+    }
+
+    public void R() {
+        this.O = true;
+        this.P().d();
 
         for (OWorldServer[] level : this.worlds.values()) {
             for (int i = 0; i < level.length; ++i) {
                 OWorldServer oworldserver = level[i];
 
                 if (oworldserver != null) {
-                oworldserver.n();
+                    oworldserver.n();
                 }
             }
 
-            this.N().e(level[0].L().g());
+            this.P().e(level[0].M().g());
         } //
-        this.n();
+        this.p();
     }
 
-    public String Q() {
-        return this.O;
+    public String S() {
+        return this.P;
     }
 
-    public void n(String s) {
-        this.O = s;
+    public void m(String s) {
+        this.P = s;
     }
 
     public void a(OPlayerUsageSnooper oplayerusagesnooper) {
-        oplayerusagesnooper.a("whitelist_enabled", Boolean.valueOf(false));
-        oplayerusagesnooper.a("whitelist_count", Integer.valueOf(0));
-        oplayerusagesnooper.a("players_current", Integer.valueOf(this.y()));
-        oplayerusagesnooper.a("players_max", Integer.valueOf(this.z()));
-        oplayerusagesnooper.a("players_seen", Integer.valueOf(this.s.m().length));
-        oplayerusagesnooper.a("uses_auth", Boolean.valueOf(this.w));
-        oplayerusagesnooper.a("gui_state", this.ag() ? "enabled" : "disabled");
-        oplayerusagesnooper.a("avg_tick_ms", Integer.valueOf((int) (OMathHelper.a(this.i) * 1.0E-6D)));
-        oplayerusagesnooper.a("avg_sent_packet_count", Integer.valueOf((int) OMathHelper.a(this.e)));
-        oplayerusagesnooper.a("avg_sent_packet_size", Integer.valueOf((int) OMathHelper.a(this.f)));
-        oplayerusagesnooper.a("avg_rec_packet_count", Integer.valueOf((int) OMathHelper.a(this.g)));
-        oplayerusagesnooper.a("avg_rec_packet_size", Integer.valueOf((int) OMathHelper.a(this.h)));
+        oplayerusagesnooper.a("whitelist_enabled", Boolean.valueOf(etc.getInstance().isWhitelistEnabled()));
+        oplayerusagesnooper.a("whitelist_count", Integer.valueOf(-1));
+        oplayerusagesnooper.a("players_current", Integer.valueOf(this.A()));
+        oplayerusagesnooper.a("players_max", Integer.valueOf(this.B()));
+        oplayerusagesnooper.a("players_seen", Integer.valueOf(this.t.m().length));
+        oplayerusagesnooper.a("uses_auth", Boolean.valueOf(this.x));
+        oplayerusagesnooper.a("gui_state", this.ai() ? "enabled" : "disabled");
+        oplayerusagesnooper.a("run_time", Long.valueOf((aq() - oplayerusagesnooper.g()) / 60L * 1000L));
+        oplayerusagesnooper.a("avg_tick_ms", Integer.valueOf((int) (OMathHelper.a(this.j) * 1.0E-6D)));
+        oplayerusagesnooper.a("avg_sent_packet_count", Integer.valueOf((int) OMathHelper.a(this.f)));
+        oplayerusagesnooper.a("avg_sent_packet_size", Integer.valueOf((int) OMathHelper.a(this.g)));
+        oplayerusagesnooper.a("avg_rec_packet_count", Integer.valueOf((int) OMathHelper.a(this.h)));
+        oplayerusagesnooper.a("avg_rec_packet_size", Integer.valueOf((int) OMathHelper.a(this.i)));
         int i = 0;
         for (Map.Entry<String, OWorldServer[]> entry : this.worlds.entrySet()) {
             OWorldServer[] level = entry.getValue();
@@ -856,16 +870,16 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             for (int j = 0; j < level.length; ++j) {
                 if (level[j] != null) {
                     OWorldServer oworldserver = level[j];
-                    OWorldInfo oworldinfo = oworldserver.M();
+                    OWorldInfo oworldinfo = oworldserver.N();
 
-                    oplayerusagesnooper.a("world[" + i + "][dimension]", Integer.valueOf(oworldserver.t.h));
-                    oplayerusagesnooper.a("world[" + i + "][mode]", oworldinfo.r());
-                    oplayerusagesnooper.a("world[" + i + "][difficulty]", Integer.valueOf(oworldserver.r));
-                    oplayerusagesnooper.a("world[" + i + "][hardcore]", Boolean.valueOf(oworldinfo.t()));
-                    oplayerusagesnooper.a("world[" + i + "][generator_name]", oworldinfo.u().a());
-                    oplayerusagesnooper.a("world[" + i + "][generator_version]", Integer.valueOf(oworldinfo.u().c()));
-                    oplayerusagesnooper.a("world[" + i + "][height]", Integer.valueOf(this.C));
-                oplayerusagesnooper.a("world[" + i + "][chunks_loaded]", Integer.valueOf(oworldserver.K().f()));
+                    oplayerusagesnooper.a("world[" + level + "][" + i + "][dimension]", Integer.valueOf(oworldserver.t.i));
+                    oplayerusagesnooper.a("world[" + level + "][" + i + "][mode]", oworldinfo.r());
+                    oplayerusagesnooper.a("world[" + level + "][" + i + "][difficulty]", Integer.valueOf(oworldserver.r));
+                    oplayerusagesnooper.a("world[" + level + "][" + i + "][hardcore]", Boolean.valueOf(oworldinfo.t()));
+                    oplayerusagesnooper.a("world[" + level + "][" + i + "][generator_name]", oworldinfo.u().a());
+                    oplayerusagesnooper.a("world[" + level + "][" + i + "][generator_version]", Integer.valueOf(oworldinfo.u().c()));
+                    oplayerusagesnooper.a("world[" + level + "][" + i + "][height]", Integer.valueOf(this.D));
+                    oplayerusagesnooper.a("world[" + level + "][" + i + "][chunks_loaded]", Integer.valueOf(oworldserver.L().f()));
                     ++i;
                 }
             }
@@ -875,120 +889,124 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public void b(OPlayerUsageSnooper oplayerusagesnooper) {
-        oplayerusagesnooper.a("singleplayer", Boolean.valueOf(this.I()));
+        oplayerusagesnooper.a("singleplayer", Boolean.valueOf(this.K()));
         oplayerusagesnooper.a("server_brand", this.getServerModName());
         oplayerusagesnooper.a("gui_supported", GraphicsEnvironment.isHeadless() ? "headless" : "supported");
-        oplayerusagesnooper.a("dedicated", Boolean.valueOf(this.T()));
+        oplayerusagesnooper.a("dedicated", Boolean.valueOf(this.V()));
     }
 
-    public boolean R() {
+    public boolean T() {
         return true;
     }
 
-    public int S() {
+    public int U() {
         return 16;
     }
 
-    public abstract boolean T();
+    public abstract boolean V();
 
-    public boolean U() {
-        return this.w;
-    }
-
-    public void d(boolean flag) {
-        this.w = flag;
-    }
-
-    public boolean V() {
+    public boolean W() {
         return this.x;
     }
 
-    public void e(boolean flag) {
+    public void d(boolean flag) {
         this.x = flag;
     }
 
-    public boolean W() {
+    public boolean X() {
         return this.y;
     }
 
-    public void f(boolean flag) {
+    public void e(boolean flag) {
         this.y = flag;
     }
 
-    public boolean X() {
+    public boolean Y() {
         return this.z;
     }
 
-    public void g(boolean flag) {
+    public void f(boolean flag) {
         this.z = flag;
     }
 
-    public boolean Y() {
+    public boolean Z() {
         return this.A;
     }
 
-    public void h(boolean flag) {
+    public void g(boolean flag) {
         this.A = flag;
     }
 
-    public abstract boolean Z();
-
-    public String aa() {
+    public boolean aa() {
         return this.B;
     }
 
-    public void o(String s) {
-        this.B = s;
+    public void h(boolean flag) {
+        this.B = flag;
     }
 
-    public int ab() {
+    public abstract boolean ab();
+
+    public String ac() {
         return this.C;
     }
 
+    public void n(String s) {
+        this.C = s;
+    }
+
+    public int ad() {
+        return this.D;
+    }
+
     public void d(int i) {
-        this.C = i;
+        this.D = i;
     }
 
-    public boolean ac() {
-        return this.u;
+    public boolean ae() {
+        return this.v;
     }
 
-    public OServerConfigurationManager ad() {
-        return this.s;
+    public OServerConfigurationManager af() {
+        return this.t;
     }
 
     public void a(OServerConfigurationManager oserverconfigurationmanager) {
-        this.s = oserverconfigurationmanager;
+        this.t = oserverconfigurationmanager;
     }
 
     public void a(OEnumGameType oenumgametype) {
-        OWorldServer[] level = D().worlds.get(this.J());
+        OWorldServer[] level = F().worlds.get(this.L());
         for (int i = 0; i < level.length; ++i) {
-            level[i].M().a(oenumgametype);
+            level[i].N().a(oenumgametype);
         }
     }
 
-    public abstract ONetworkListenThread ae();
+    public abstract ONetworkListenThread ag();
 
-    public boolean ag() {
+    public boolean ai() {
         return false;
     }
 
     public abstract String a(OEnumGameType oenumgametype, boolean flag);
 
-    public int ah() {
-        return this.v;
+    public int aj() {
+        return this.w;
     }
 
-    public void ai() {
-        this.S = true;
+    public void ak() {
+        this.T = true;
     }
 
     public OChunkCoordinates b() {
         return new OChunkCoordinates(0, 0, 0);
     }
 
-    public int ak() {
+    public OWorld f_() {
+        return this.getWorld(this.L(), 0);
+    }
+
+    public int am() {
         return etc.getInstance().getSpawnProtectionSize(); // CanaryMod
     }
 
@@ -996,18 +1014,26 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
         return false;
     }
 
-    public abstract OILogAgent al();
+    public abstract OILogAgent an();
 
     public void i(boolean flag) {
-        this.T = flag;
+        this.U = flag;
     }
 
-    public boolean am() {
-        return this.T;
+    public boolean ao() {
+        return this.U;
+    }
+
+    public Proxy ap() {
+        return this.c;
+    }
+
+    public static long aq() {
+        return System.currentTimeMillis();
     }
 
     public static OServerConfigurationManager a(OMinecraftServer ominecraftserver) {
-        return ominecraftserver.s;
+        return ominecraftserver.t;
     }
 
     // CanaryMod start: Custom Stop Message

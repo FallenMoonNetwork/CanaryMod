@@ -54,7 +54,7 @@ public class Villager extends Mob {
      * @return
      */
     public Profession getProfession() {
-        return Profession.values()[getEntity().m()];
+        return Profession.values()[getEntity().bP()];
     }
 
     /**
@@ -63,7 +63,7 @@ public class Villager extends Mob {
      * @param profession
      */
     public void setProfession(Profession profession) {
-        getEntity().s(profession.ordinal());
+        getEntity().p(profession.ordinal());
     }
 
     @Override

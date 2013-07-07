@@ -7,10 +7,10 @@ public abstract class OMobSpawnerBaseLogic {
 
     public int b = 20;
     private String a = "Pig";
-    private List e = null;
-    private OWeightedRandomMinecart f = null;
+    private List e;
+    private OWeightedRandomMinecart f;
     public double c;
-    public double d = 0.0D;
+    public double d;
     int g = 200; // CanaryMod: private -> package-private
     int h = 800; // CanaryMod: private -> package-private
     int i = 4; // CanaryMod: private -> package-private
@@ -92,13 +92,13 @@ public abstract class OMobSpawnerBaseLogic {
                     OEntityLiving oentityliving = oentity instanceof OEntityLiving ? (OEntityLiving) oentity : null;
 
                     oentity.b(d0, d3, d4, this.a().s.nextFloat() * 360.0F, 0.0F);
-                    if (oentityliving == null || oentityliving.bv()) {
+                    if (oentityliving == null || oentityliving.bo()) {
                         this.a(oentity);
                         this.a().e(2004, this.b(), this.c(), this.d(), 0);
                         if (oentityliving != null) {
                             // CanaryMod - set spawner block for spawned entity
                             oentityliving.spawner = this.logic;
-                            oentityliving.aU();
+                            oentityliving.q();
                         }
 
                         flag = true;
@@ -134,7 +134,7 @@ public abstract class OMobSpawnerBaseLogic {
 
             for (OEntity oentity1 = oentity; onbttagcompound.b("Riding"); onbttagcompound = onbttagcompound1) {
                 onbttagcompound1 = onbttagcompound.l("Riding");
-                OEntity oentity2 = OEntityList.a(onbttagcompound1.i("id"), this.a());
+                OEntity oentity2 = OEntityList.a(onbttagcompound1.i("id"), oentity.q);
 
                 if (oentity2 != null) {
                     ONBTTagCompound onbttagcompound2 = new ONBTTagCompound();
@@ -150,14 +150,17 @@ public abstract class OMobSpawnerBaseLogic {
 
                     oentity2.f(onbttagcompound2);
                     oentity2.b(oentity1.u, oentity1.v, oentity1.w, oentity1.A, oentity1.B);
-                    this.a().d(oentity2);
+                    if (oentity.q != null) {
+                        oentity.q.d(oentity2);
+                    }
+
                     oentity1.a(oentity2);
                 }
 
                 oentity1 = oentity2;
             }
-        } else if (oentity instanceof OEntityLiving && oentity.q != null) {
-            ((OEntityLiving) oentity).bJ();
+        } else if (oentity instanceof OEntityLivingBase && oentity.q != null) {
+            ((OEntityLiving) oentity).a((OEntityLivingData) null);
             this.a().d(oentity);
         }
 

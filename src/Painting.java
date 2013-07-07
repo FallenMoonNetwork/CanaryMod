@@ -248,6 +248,6 @@ public class Painting extends HangingEntity {
      * @return
      */
     public int getHeight() {
-        return getEntity().g();
+        return getEntity().e();
     }
 }

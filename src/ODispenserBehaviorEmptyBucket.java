@@ -5,7 +5,7 @@ final class ODispenserBehaviorEmptyBucket extends OBehaviorDefaultDispenseItem {
     ODispenserBehaviorEmptyBucket() {}
 
     public OItemStack b(OIBlockSource oiblocksource, OItemStack oitemstack) {
-        OEnumFacing oenumfacing = OBlockDispenser.j_(oiblocksource.h());
+        OEnumFacing oenumfacing = OBlockDispenser.l_(oiblocksource.h());
         OWorld oworld = oiblocksource.k();
         int i = oiblocksource.d() + oenumfacing.c();
         int j = oiblocksource.e() + oenumfacing.d();
@@ -15,20 +15,20 @@ final class ODispenserBehaviorEmptyBucket extends OBehaviorDefaultDispenseItem {
         OItem oitem;
 
         if (OMaterial.h.equals(omaterial) && l == 0) {
-            oitem = OItem.ay;
+            oitem = OItem.az;
         } else {
             if (!OMaterial.i.equals(omaterial) || l != 0) {
                 return super.b(oiblocksource, oitemstack);
             }
 
-            oitem = OItem.az;
+            oitem = OItem.aA;
         }
 
         oworld.i(i, j, k);
-        if (--oitemstack.a == 0) {
+        if (--oitemstack.b == 0) {
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), null)) {
-                oitemstack.c = oitem.cp;
-                oitemstack.a = 1;
+                oitemstack.d = oitem.cv;
+                oitemstack.b = 1;
             }
         } else if (((OTileEntityDispenser) oiblocksource.j()).a(new OItemStack(oitem)) < 0) {
             this.b.a(oiblocksource, new OItemStack(oitem));

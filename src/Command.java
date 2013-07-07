@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Used in {@link PlayerCommands} to determine which strings invoke the annotated
- * {@link BaseCommand}
+ * {@link BaseCommand}.
  * @author 14mRh4X0r
  */
 @Retention(RUNTIME)

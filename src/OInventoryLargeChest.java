@@ -42,8 +42,8 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
         return i >= this.b.j_() ? this.c.a(i - this.b.j_(), j) : this.b.a(i, j);
     }
 
-    public OItemStack b(int i) {
-        return i >= this.b.j_() ? this.c.b(i - this.b.j_()) : this.b.b(i);
+    public OItemStack a_(int i) {
+        return i >= this.b.j_() ? this.c.a_(i - this.b.j_()) : this.b.a_(i);
     }
 
     public void a(int i, OItemStack oitemstack) {
@@ -58,18 +58,18 @@ public class OInventoryLargeChest implements OIInventory, Container<OItemStack> 
         return this.b.d();
     }
 
-    public void k_() {
-        this.b.k_();
-        this.c.k_();
+    public void e() {
+        this.b.e();
+        this.c.e();
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
         return this.b.a(oentityplayer) && this.c.a(oentityplayer);
     }
 
-    public void f() {
-        this.b.f();
-        this.c.f();
+    public void k_() {
+        this.b.k_();
+        this.c.k_();
     }
 
     public void g() {

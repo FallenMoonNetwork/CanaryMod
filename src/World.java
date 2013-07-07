@@ -122,7 +122,7 @@ public class World {
      * @return the dimension type
      */
     public Dimension getType() {
-        return Dimension.fromId(world.t.h);
+        return Dimension.fromId(world.t.i);
     }
 
     /**
@@ -340,7 +340,7 @@ public class World {
      * @param z The spawn's new z location
      */
     public void setSpawnLocation(int x, int y, int z) {
-        this.getWorld().M().a(x, y, z);
+        this.getWorld().N().a(x, y, z);
     }
 
     /**
@@ -977,7 +977,7 @@ public class World {
      * @return seed of the world
      */
     public long getRandomSeed() {
-        return world.G();
+        return world.J();
     }
 
     /**
@@ -1144,7 +1144,7 @@ public class World {
      * @param pitch The pitch of the note (0-24?).
      */
     public void playNote(int x, int y, int z, Sound.Instrument instrument, int pitch) {
-        ((OBlockNote) OBlock.r[25]).b(getWorld(), x, y, z, instrument.ordinal(), pitch);
+        ((OBlockNote) OBlock.s[25]).b(getWorld(), x, y, z, instrument.ordinal(), pitch);
     }
 
     /**

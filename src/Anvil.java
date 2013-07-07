@@ -2,11 +2,11 @@
  * An interface class to anvils.
  * @author Willem Mulder (14mRh4X0r)
  */
-public class Anvil extends InventoryCrafting<OInventoryRepair> {
+public class Anvil extends InventoryCrafting<OContainerRepairINNER1> {
     private final OContainerRepair anvil;
 
     public Anvil(OContainerRepair container, OIInventory result, int resultStartIndex) {
-        super(container, (OInventoryRepair) OContainerRepair.a(container), result, resultStartIndex);
+        super(container, (OContainerRepairINNER1) OContainerRepair.a(container), result, resultStartIndex);
         this.anvil = container;
     }
 

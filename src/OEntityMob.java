@@ -7,15 +7,15 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
 
     public OEntityMob(OWorld oworld) {
         super(oworld);
-        this.be = 5;
+        this.b = 5;
     }
 
     public void c() {
-        this.br();
-        float f = this.c(1.0F);
+        this.aS();
+        float f = this.d(1.0F);
 
         if (f > 0.5F) {
-            this.bC += 2;
+            this.aV += 2;
         }
 
         super.c();
@@ -28,23 +28,23 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
         }
     }
 
-    protected OEntity j() {
+    protected OEntity bH() {
         OEntityPlayer oentityplayer = this.q.b(this, 16.0D);
 
-        return oentityplayer != null && this.n(oentityplayer) ? oentityplayer : null;
+        return oentityplayer != null && this.o(oentityplayer) ? oentityplayer : null;
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
-        if (this.aq()) {
+    public boolean a(ODamageSource odamagesource, float f) {
+        if (this.ap()) {
             return false;
-        } else if (super.a(odamagesource, i)) {
+        } else if (super.a(odamagesource, f)) {
             OEntity oentity = odamagesource.i();
 
             if (this.n != oentity && this.o != oentity) {
                 if (oentity != this) {
                     // CanaryMod start - MOB_TARGET hook
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, oentity.getEntity(), this.getEntity())) {
-                        this.a_ = oentity;
+                        this.j = oentity;
                     } // CanaryMod end
                 }
 
@@ -58,40 +58,31 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
     }
 
     public boolean m(OEntity oentity) {
-        int i = this.c(oentity);
+        float f = (float) this.a(OSharedMonsterAttributes.e).e();
+        int i = 0;
 
-        if (this.a(OPotion.g)) {
-            i += 3 << this.b(OPotion.g).c();
+        if (oentity instanceof OEntityLivingBase) {
+            f += OEnchantmentHelper.a((OEntityLivingBase) this, (OEntityLivingBase) oentity);
+            i += OEnchantmentHelper.b(this, (OEntityLivingBase) oentity);
         }
 
-        if (this.a(OPotion.t)) {
-            i -= 2 << this.b(OPotion.t).c();
-        }
-
-        int j = 0;
-
-        if (oentity instanceof OEntityLiving) {
-            i += OEnchantmentHelper.a((OEntityLiving) this, (OEntityLiving) oentity);
-            j += OEnchantmentHelper.b(this, (OEntityLiving) oentity);
-        }
-
-        boolean flag = oentity.a(ODamageSource.a((OEntityLiving) this), i);
+        boolean flag = oentity.a(ODamageSource.a((OEntityLivingBase) this), f);
 
         if (flag) {
-            if (j > 0) {
-                oentity.g((double) (-OMathHelper.a(this.A * 3.1415927F / 180.0F) * (float) j * 0.5F), 0.1D, (double) (OMathHelper.b(this.A * 3.1415927F / 180.0F) * (float) j * 0.5F));
+            if (i > 0) {
+                oentity.g((double) (-OMathHelper.a(this.A * 3.1415927F / 180.0F) * (float) i * 0.5F), 0.1D, (double) (OMathHelper.b(this.A * 3.1415927F / 180.0F) * (float) i * 0.5F));
                 this.x *= 0.6D;
                 this.z *= 0.6D;
             }
 
-            int k = OEnchantmentHelper.a((OEntityLiving) this);
+            int j = OEnchantmentHelper.a((OEntityLivingBase) this);
 
-            if (k > 0) {
-                oentity.d(k * 4);
+            if (j > 0) {
+                oentity.d(j * 4);
             }
 
-            if (oentity instanceof OEntityLiving) {
-                OEnchantmentThorns.a(this, (OEntityLiving) oentity, this.ab);
+            if (oentity instanceof OEntityLivingBase) {
+                OEnchantmentThorns.a(this, (OEntityLivingBase) oentity, this.ab);
             }
         }
 
@@ -99,8 +90,8 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
     }
 
     protected void a(OEntity oentity, float f) {
-        if (this.ba <= 0 && f < 2.0F && oentity.E.e > this.E.b && oentity.E.b < this.E.e) {
-            this.ba = 20;
+        if (this.aC <= 0 && f < 2.0F && oentity.E.e > this.E.b && oentity.E.b < this.E.e) {
+            this.aC = 20;
             this.m(oentity);
         }
     }
@@ -119,7 +110,7 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
         } else {
             int l = this.q.n(i, j, k);
 
-            if (this.q.O()) {
+            if (this.q.P()) {
                 int i1 = this.q.j;
 
                 this.q.j = 10;
@@ -131,12 +122,13 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
         }
     }
 
-    public boolean bv() {
-        return this.i_() && super.bv();
+    public boolean bo() {
+        return this.q.r > 0 && this.i_() && super.bo();
     }
 
-    public int c(OEntity oentity) {
-        return 2;
+    protected void ax() {
+        super.ax();
+        this.aT().b(OSharedMonsterAttributes.e);
     }
 
     @Override

@@ -36,10 +36,6 @@ public class OContainerBeacon extends OContainer {
         oicrafting.a(this, 2, this.i);
     }
 
-    public void b() {
-        super.b();
-    }
-
     public OTileEntityBeacon e() {
         return this.a;
     }
@@ -52,8 +48,8 @@ public class OContainerBeacon extends OContainer {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if (i == 0) {
@@ -62,7 +58,7 @@ public class OContainerBeacon extends OContainer {
                 }
 
                 oslot.a(oitemstack1, oitemstack);
-            } else if (!this.f.d() && this.f.a(oitemstack1) && oitemstack1.a == 1) {
+            } else if (!this.f.e() && this.f.a(oitemstack1) && oitemstack1.b == 1) {
                 if (!this.a(oitemstack1, 0, 1, false)) {
                     return null;
                 }
@@ -78,13 +74,13 @@ public class OContainerBeacon extends OContainer {
                 return null;
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
 
-            if (oitemstack1.a == oitemstack.a) {
+            if (oitemstack1.b == oitemstack.b) {
                 return null;
             }
 

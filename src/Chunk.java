@@ -159,7 +159,7 @@ public class Chunk {
      * resends chunk data to clients
      */
     public void update() {
-        etc.getMCServer().ad().a(new OPacket51MapChunk(chunk, true, 0));
+        etc.getMCServer().af().a(new OPacket51MapChunk(chunk, true, 0));
     }
 
     /**
@@ -178,6 +178,11 @@ public class Chunk {
             return getX() == other.getX() && getZ() == other.getZ();
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (getX() & 0xffff) + ((getZ() & 0xffff) << 16);
     }
 
     @Override

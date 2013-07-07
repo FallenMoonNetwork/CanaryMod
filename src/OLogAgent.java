@@ -31,7 +31,7 @@ public class OLogAgent implements OILogAgent {
             this.a.removeHandler(handler);
         }
 
-        OLogFormatter ologformatter = new OLogFormatter(this, (OLogAgentINNER1) null);
+        OLogFormatter ologformatter = new OLogFormatter(this, (OLogAgentEmptyAnon) null);
         ConsoleHandler consolehandler = new ConsoleHandler();
 
         consolehandler.setFormatter(ologformatter);

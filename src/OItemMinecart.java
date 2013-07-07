@@ -5,7 +5,7 @@ public class OItemMinecart extends OItem {
 
     public OItemMinecart(int i, int j) {
         super(i);
-        this.cq = 1;
+        this.cw = 1;
         this.a = j;
         this.a(OCreativeTabs.e);
         OBlockDispenser.a.a(this, b);
@@ -14,11 +14,11 @@ public class OItemMinecart extends OItem {
     public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l, float f, float f1, float f2) {
         int i1 = oworld.a(i, j, k);
 
-        if (OBlockRailBase.d_(i1)) {
+        if (OBlockRailBase.e_(i1)) {
             if (!oworld.I) {
                 OEntityMinecart oentityminecart = OEntityMinecart.a(oworld, (double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), this.a);
 
-                if (oitemstack.t()) {
+                if (oitemstack.u()) {
                     oentityminecart.a(oitemstack.s());
                 }
 
@@ -29,11 +29,12 @@ public class OItemMinecart extends OItem {
                 if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_USE, player, block, block, ((OEntityPlayerMP) oentityplayer).getPlayer().getItemStackInHand())) {
                     return false;
                 }
+
                 oworld.d((OEntity) oentityminecart);
 
             }
 
-            --oitemstack.a;
+            --oitemstack.b;
             return true;
         } else {
             return false;

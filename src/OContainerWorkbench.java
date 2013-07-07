@@ -53,25 +53,25 @@ public class OContainerWorkbench extends OContainer {
         super.b(oentityplayer);
         if (!this.g.I) {
             for (int i = 0; i < 9; ++i) {
-                OItemStack oitemstack = this.a.b(i);
+                OItemStack oitemstack = this.a.a_(i);
 
                 if (oitemstack != null) {
-                    oentityplayer.c(oitemstack);
+                    oentityplayer.b(oitemstack);
                 }
             }
         }
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
-        return this.g.a(this.h, this.i, this.j) != OBlock.aC.cz ? false : oentityplayer.e((double) this.h + 0.5D, (double) this.i + 0.5D, (double) this.j + 0.5D) <= 64.0D;
+        return this.g.a(this.h, this.i, this.j) != OBlock.aD.cF ? false : oentityplayer.e((double) this.h + 0.5D, (double) this.i + 0.5D, (double) this.j + 0.5D) <= 64.0D;
     }
 
     public OItemStack b(OEntityPlayer oentityplayer, int i) {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if (i == 0) {
@@ -92,13 +92,13 @@ public class OContainerWorkbench extends OContainer {
                 return null;
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
 
-            if (oitemstack1.a == oitemstack.a) {
+            if (oitemstack1.b == oitemstack.b) {
                 return null;
             }
 

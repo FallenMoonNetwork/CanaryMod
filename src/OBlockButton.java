@@ -148,7 +148,7 @@ public abstract class OBlockButton extends OBlock {
             oworld.g(i, j, k, i, j, k);
             oworld.a((double) i + 0.5D, (double) j + 0.5D, (double) k + 0.5D, "random.click", 0.3F, 0.6F);
             this.d(oworld, i, j, k, j1);
-            oworld.a(i, j, k, this.cz, this.a(oworld));
+            oworld.a(i, j, k, this.cF, this.a(oworld));
             return true;
         }
     }
@@ -234,7 +234,7 @@ public abstract class OBlockButton extends OBlock {
         boolean flag = (l & 8) != 0;
 
         this.d(l);
-        List list = oworld.a(OEntityArrow.class, OAxisAlignedBB.a().a((double) i + this.cG, (double) j + this.cH, (double) k + this.cI, (double) i + this.cJ, (double) j + this.cK, (double) k + this.cL));
+        List list = oworld.a(OEntityArrow.class, OAxisAlignedBB.a().a((double) i + this.cM, (double) j + this.cN, (double) k + this.cO, (double) i + this.cP, (double) j + this.cQ, (double) k + this.cR));
         boolean flag1 = !list.isEmpty();
 
         if (flag1 && !flag) {
@@ -252,22 +252,22 @@ public abstract class OBlockButton extends OBlock {
         }
 
         if (flag1) {
-            oworld.a(i, j, k, this.cz, this.a(oworld));
+            oworld.a(i, j, k, this.cF, this.a(oworld));
         }
     }
 
     private void d(OWorld oworld, int i, int j, int k, int l) {
-        oworld.f(i, j, k, this.cz);
+        oworld.f(i, j, k, this.cF);
         if (l == 1) {
-            oworld.f(i - 1, j, k, this.cz);
+            oworld.f(i - 1, j, k, this.cF);
         } else if (l == 2) {
-            oworld.f(i + 1, j, k, this.cz);
+            oworld.f(i + 1, j, k, this.cF);
         } else if (l == 3) {
-            oworld.f(i, j, k - 1, this.cz);
+            oworld.f(i, j, k - 1, this.cF);
         } else if (l == 4) {
-            oworld.f(i, j, k + 1, this.cz);
+            oworld.f(i, j, k + 1, this.cF);
         } else {
-            oworld.f(i, j - 1, k, this.cz);
+            oworld.f(i, j - 1, k, this.cF);
         }
     }
 }

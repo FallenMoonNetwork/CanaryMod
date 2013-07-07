@@ -18,7 +18,8 @@ public class OEntityTracker {
 
     public OEntityTracker(OWorldServer oworldserver) {
         this.a = oworldserver;
-        this.d = oworldserver.p().ad().a();
+        this.d = oworldserver.p().af().a();
+
         this.entityTracker = new EntityTracker(this);
     }
 
@@ -85,14 +86,12 @@ public class OEntityTracker {
             this.a(oentity, 160, 10, true);
         } else if (oentity instanceof OEntityFallingSand) {
             this.a(oentity, 160, 20, true);
-        } else if (oentity instanceof OEntityPainting) {
+        } else if (oentity instanceof OEntityHanging) {
             this.a(oentity, 160, Integer.MAX_VALUE, false);
         } else if (oentity instanceof OEntityXPOrb) {
             this.a(oentity, 160, 20, true);
         } else if (oentity instanceof OEntityEnderCrystal) {
             this.a(oentity, 256, Integer.MAX_VALUE, false);
-        } else if (oentity instanceof OEntityItemFrame) {
-            this.a(oentity, 160, Integer.MAX_VALUE, false);
         }
     }
 
@@ -183,7 +182,7 @@ public class OEntityTracker {
             }
         } catch (ConcurrentModificationException concurrentmodificationexception) {
             // people seem to get this concurrentmodificationexceptionception often, lets just catch so it doesn't crash the server.
-            this.a.X().b("CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:", concurrentmodificationexception);
+            this.a.Y().b("CanaryMod WARNING: ConcurrentModificationException in OEntityTracker:", concurrentmodificationexception);
         }
         // CanaryMod: Execute runnables contained in eventQueue.
         for (DelayedTask task = delayQueue.poll(); task != null; task = delayQueue.poll()) {

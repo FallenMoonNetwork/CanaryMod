@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Interface for living entities.
  */
-public class LivingEntity extends BaseEntity {
+public class LivingEntity extends LivingEntityBase {
 
     /**
      * Interface for living entities
@@ -35,9 +35,12 @@ public class LivingEntity extends BaseEntity {
      * Returns the entity's health.
      *
      * @return health
+     * @deprecated Health is measured in floats now, use
+     * {@link #getHealthFloat()} instead.
      */
+    @Deprecated
     public int getHealth() {
-        return getEntity().aS;
+        return (int) getHealthFloat();
     }
 
     /**
@@ -45,18 +48,24 @@ public class LivingEntity extends BaseEntity {
      *
      * @param health
      *            amount of health to increase the players health with.
+     * @deprecated Health is measured in floats now, use
+     * {@link #increaseHealth(float)} instead.
      */
+    @Deprecated
     public void increaseHealth(int health) {
-        getEntity().j(health);
+        getEntity().f(health);
     }
 
     /**
      * Sets the entity's health. 20 = max health 1 = 1/2 heart 2 = 1 heart
      *
-     * @param health
+     * @param health The entity's new health.
+     * @deprecated Health is measured in floats now, use
+     * {@link #setHealth(float)} instead.
      */
+    @Deprecated
     public void setHealth(int health) {
-        getEntity().b(health);
+        setHealth((float) health);
     }
 
     /**
@@ -64,26 +73,9 @@ public class LivingEntity extends BaseEntity {
      *
      * @return
      */
+    // TODO: pull up
     public int getDeathTicks() {
-        return getEntity().aZ;
-    }
-
-    /**
-     * Get an entities max health value
-     * @return max health
-     */
-    public int getMaxHealth(){
-        return getEntity().aW();
-    }
-
-    /**
-     * Set the entities max health
-     * @param toSet max health
-     */
-    public void setMaxHealth(int toSet){
-        if(toSet > 0) {
-            getEntity().maxHealth = toSet;
-        }
+        return getEntity().aB;
     }
 
     /**
@@ -91,8 +83,31 @@ public class LivingEntity extends BaseEntity {
      *
      * @param ticks
      */
+    // TODO: pull up
     public void setDeathTicks(int ticks) {
-        getEntity().aZ = ticks;
+        getEntity().aB = ticks;
+    }
+
+    /**
+     * Get an entities max health value
+     * @return max health
+     * @deprecated Max health is measured in doubles now, use
+     * {@link #getMaxHealthDouble()} instead.
+     */
+    @Deprecated
+    public int getMaxHealth(){
+        return (int) getMaxHealthDouble();
+    }
+
+    /**
+     * Set the entities max health
+     * @param toSet max health
+     * @deprecated Max health is measured in doubles now, use
+     * {@link #setMaxHealth(double)} instead.
+     */
+    @Deprecated
+    public void setMaxHealth(int toSet){
+        setMaxHealth(toSet);
     }
 
     /**
@@ -101,27 +116,20 @@ public class LivingEntity extends BaseEntity {
      *
      * @return
      */
+    // TODO: pull up
     public int getBaseNoDamageTicks() {
-        return getEntity().av;
-    }
-
-    /**
-     * Set the amount of ticks this entity will not take damage. (until it
-     * heals) 20 ticks per second.
-     *
-     * @param ticks
-     */
-    public void setBaseNoDamageTicks(int ticks) {
-        getEntity().av = ticks;
+        return getEntity().aI;
     }
 
     /**
      * Get the current maximum damage taken during this NoDamageTime
      *
      * @return
+     * @deprecated Damage is measured in floats now, use
+     * {@link #getLastDamageFloat()} instead.
      */
     public int getLastDamage() {
-        return getEntity().bB;
+        return (int) getLastDamageFloat();
     }
 
     /**
@@ -129,9 +137,11 @@ public class LivingEntity extends BaseEntity {
      * damage is higher than this number the difference will be added)
      *
      * @param amount
+     * @deprecated Damage is measured in floats now, use
+     * {@link #setLastDamage(float)} instead.
      */
     public void setLastDamage(int amount) {
-        getEntity().bB = amount;
+        setLastDamage((float) amount);
     }
 
     /**
@@ -142,6 +152,7 @@ public class LivingEntity extends BaseEntity {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the entity's mob spawner.
      * @return MobSpawner of the entity, or null if it wasn't spawned with a mob spawner.
      */
@@ -202,6 +213,8 @@ public class LivingEntity extends BaseEntity {
     }
 
     /**
+=======
+>>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
      * Sets the item held by the entity.
      *
      * @param item
@@ -216,7 +229,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public Item getItemStackInHand() {
-        OItemStack stack = getEntity().bG();
+        OItemStack stack = getEntity().aV();
         return stack == null ? null : new Item(stack);
     }
 
@@ -245,7 +258,7 @@ public class LivingEntity extends BaseEntity {
         if(slot < 0 || slot > 3) {
             return null;
         }
-        OItemStack stack = getEntity().q(slot);
+        OItemStack stack = getEntity().o(slot);
         return stack == null ? null : new Item(stack);
     }
 
@@ -255,7 +268,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public boolean isPersistent() {
-        return getEntity().bW;
+        return getEntity().bt;
     }
 
     /**
@@ -264,7 +277,7 @@ public class LivingEntity extends BaseEntity {
      * @param isPersistent
      */
     public void setPersistent(boolean isPersistent) {
-        getEntity().bW = isPersistent;
+        getEntity().bt = isPersistent;
     }
 
     /**
@@ -275,7 +288,7 @@ public class LivingEntity extends BaseEntity {
      */
     public float getDropChance(int slot) {
         if(slot >= 0 && slot <= 4) {
-            return getEntity().bq[slot];
+            return getEntity().e[slot];
         }
         return 0;
     }
@@ -288,7 +301,7 @@ public class LivingEntity extends BaseEntity {
      */
     public void setDropChance(int slot, float chance) {
         if(slot >= 0 && slot <= 4) {
-            getEntity().bq[slot] = chance;
+            getEntity().e[slot] = chance;
         }
     }
 
@@ -298,7 +311,7 @@ public class LivingEntity extends BaseEntity {
      * @return
      */
     public boolean canPickUpLoot() {
-        return getEntity().bV;
+        return getEntity().bz();
     }
 
     /**
@@ -307,7 +320,7 @@ public class LivingEntity extends BaseEntity {
      * @param flag
      */
     public void setCanPickUpLoot(boolean flag) {
-        getEntity().bV = flag;
+        getEntity().h(flag);
     }
 
     /**
@@ -319,16 +332,31 @@ public class LivingEntity extends BaseEntity {
      */
     @Deprecated
     public void applyDamage(PluginLoader.DamageType type, int amount) {
-        getEntity().d(type.getDamageSource(), amount);
+        getEntity().d(type.getDamageSource(), (float) amount);
     }
 
     /**
      * Damages this entity, taking into account armor/enchantments/potions
      * @param type
      * @param amount
+     * @deprecated Damage is measured in floats now. Use
+     * {@link #applyDamage(DamageType, float)} instead.
      */
+    @Deprecated
     public void applyDamage(DamageType type, int amount) {
-        getEntity().d(type.getDamageSource().getDamageSource(), amount);
+        getEntity().d(type.getDamageSource().getDamageSource(), (float) amount);
+    }
+
+    /**
+     * Damages this entity, taking into account armor/enchantments/potions
+     * @param source
+     * @param amount
+     * @deprecated Damage is measured in floats now, use
+     * {@link #applyDamage(DamageSource, float)} instead.
+     */
+    @Deprecated
+    public void applayDamage(DamageSource source, int amount) {
+        getEntity().d(source.getDamageSource(), amount);
     }
 
     /**
@@ -336,19 +364,51 @@ public class LivingEntity extends BaseEntity {
      * @param source
      * @param amount
      */
-    public void applayDamage(DamageSource source, int amount) {
+    // TODO: pull up
+    public void applyDamage(DamageSource source, float amount) {
         getEntity().d(source.getDamageSource(), amount);
     }
 
+    /**
+     * Returns this entity's custom name.
+     * @return This entity's custom name if it has one, an empty string otherwise
+     */
     public String getCustomName() {
-        return getEntity().bP();
+        return getEntity().bw();
     }
 
+    /**
+     * Sets this entity's custom name.
+     * @param name This entity's new custom name
+     */
     public void setCustomName(String name) {
-        getEntity().c(name);
+        getEntity().a(name);
     }
 
+    /**
+     * Returns whether this entity has a custom name.
+     * @return <tt>true</tt> if this entity has a custom name, <tt>false</tt>
+     * otherwise.
+     */
     public boolean hasCustomName() {
-        return getEntity().bQ();
+        return getEntity().bx();
+    }
+
+    /**
+     * Returns whether a possible custom name is shown on this entity.
+     * @return <tt>true</tt> if a possible custom name is shown, <tt>false</tt>
+     * otherwise.
+     */
+    public boolean isCustomNameVisible() {
+        return getEntity().by();
+    }
+
+    /**
+     * Sets whether a possible custom name is shown on this entity.
+     * @param visible <tt>true</tt> to show a possible custom name,
+     * <tt>false</tt> to hide it.
+     */
+    public void setCustomNameVisible(boolean visible) {
+        getEntity().g(visible);
     }
 }

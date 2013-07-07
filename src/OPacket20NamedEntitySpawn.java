@@ -1,5 +1,5 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,34 +26,34 @@ public class OPacket20NamedEntitySpawn extends OPacket {
         this.e = OMathHelper.c(oentityplayer.w * 32.0D);
         this.f = (byte) ((int) (oentityplayer.A * 256.0F / 360.0F));
         this.g = (byte) ((int) (oentityplayer.B * 256.0F / 360.0F));
-        OItemStack oitemstack = oentityplayer.bK.h();
+        OItemStack oitemstack = oentityplayer.bn.h();
 
-        this.h = oitemstack == null ? 0 : oitemstack.c;
+        this.h = oitemstack == null ? 0 : oitemstack.d;
         this.i = oentityplayer.u();
     }
 
-    public void a(DataInputStream datainputstream) throws IOException {
-        this.a = datainputstream.readInt();
-        this.b = a(datainputstream, 16);
-        this.c = datainputstream.readInt();
-        this.d = datainputstream.readInt();
-        this.e = datainputstream.readInt();
-        this.f = datainputstream.readByte();
-        this.g = datainputstream.readByte();
-        this.h = datainputstream.readShort();
-        this.j = ODataWatcher.a(datainputstream);
+    public void a(DataInput datainput) throws IOException {
+        this.a = datainput.readInt();
+        this.b = a(datainput, 16);
+        this.c = datainput.readInt();
+        this.d = datainput.readInt();
+        this.e = datainput.readInt();
+        this.f = datainput.readByte();
+        this.g = datainput.readByte();
+        this.h = datainput.readShort();
+        this.j = ODataWatcher.a(datainput);
     }
 
-    public void a(DataOutputStream dataoutputstream) throws IOException {
-        dataoutputstream.writeInt(this.a);
-        a(this.b, dataoutputstream);
-        dataoutputstream.writeInt(this.c);
-        dataoutputstream.writeInt(this.d);
-        dataoutputstream.writeInt(this.e);
-        dataoutputstream.writeByte(this.f);
-        dataoutputstream.writeByte(this.g);
-        dataoutputstream.writeShort(this.h);
-        this.i.a(dataoutputstream);
+    public void a(DataOutput dataoutput) throws IOException {
+        dataoutput.writeInt(this.a);
+        a(this.b, dataoutput);
+        dataoutput.writeInt(this.c);
+        dataoutput.writeInt(this.d);
+        dataoutput.writeInt(this.e);
+        dataoutput.writeByte(this.f);
+        dataoutput.writeByte(this.g);
+        dataoutput.writeShort(this.h);
+        this.i.a(dataoutput);
     }
 
     public void a(ONetHandler onethandler) {

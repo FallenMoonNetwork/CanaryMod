@@ -7,9 +7,9 @@ public class OBlockPistonBase extends OBlock {
     private boolean attemptRetractBlock; // CanaryMod: Used to signal wether to retract the block attached to the stick piston.
 
     public OBlockPistonBase(int i, boolean flag) {
-        super(i, OMaterial.F);
+        super(i, OMaterial.G);
         this.a = flag;
-        this.a(j);
+        this.a(k);
         this.c(0.5F);
         this.a(OCreativeTabs.d);
     }
@@ -26,8 +26,8 @@ public class OBlockPistonBase extends OBlock {
         return false;
     }
 
-    public void a(OWorld oworld, int i, int j, int k, OEntityLiving oentityliving, OItemStack oitemstack) {
-        int l = a(oworld, i, j, k, oentityliving);
+    public void a(OWorld oworld, int i, int j, int k, OEntityLivingBase oentitylivingbase, OItemStack oitemstack) {
+        int l = a(oworld, i, j, k, oentitylivingbase);
 
         oworld.b(i, j, k, l, 2);
         if (!oworld.I) {
@@ -60,7 +60,7 @@ public class OBlockPistonBase extends OBlock {
                     boolean allowExtension = !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PISTON_EXTEND, new Block(oworld.world, (this.a) ? Block.Type.StickyPiston.getType() : Block.Type.Piston.getType(), i, j, k, l));
 
                     if (allowExtension) {
-                        oworld.d(i, j, k, this.cz, 0, i1);
+                        oworld.d(i, j, k, this.cF, 0, i1);
                     }
                 }
             } else if (!flag && e(l)) {
@@ -69,7 +69,7 @@ public class OBlockPistonBase extends OBlock {
                 this.attemptRetractBlock = !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PISTON_RETRACT, new Block(oworld.world, (this.a) ? Block.Type.StickyPiston.getType() : Block.Type.Piston.getType(), i, j, k, l));
 
                 oworld.b(i, j, k, i1, 2);
-                oworld.d(i, j, k, this.cz, 1, i1);
+                oworld.d(i, j, k, this.cF, 1, i1);
             }
         }
     }
@@ -106,8 +106,8 @@ public class OBlockPistonBase extends OBlock {
                 ((OTileEntityPiston) otileentity).f();
             }
 
-            oworld.f(i, j, k, OBlock.ag.cz, i1, 3);
-            oworld.a(i, j, k, OBlockPistonMoving.a(this.cz, i1, i1, false, true));
+            oworld.f(i, j, k, OBlock.ah.cF, i1, 3);
+            oworld.a(i, j, k, OBlockPistonMoving.a(this.cF, i1, i1, false, true));
             if (this.a) {
                 int j1 = i + OFacing.b[i1] * 2;
                 int k1 = j + OFacing.c[i1] * 2;
@@ -116,7 +116,7 @@ public class OBlockPistonBase extends OBlock {
                 int j2 = oworld.h(j1, k1, l1);
                 boolean flag1 = false;
 
-                if (i2 == OBlock.ag.cz) {
+                if (i2 == OBlock.ah.cF) {
                     OTileEntity otileentity1 = oworld.r(j1, k1, l1);
 
                     if (otileentity1 instanceof OTileEntityPiston) {
@@ -131,11 +131,11 @@ public class OBlockPistonBase extends OBlock {
                     }
                 }
 
-                if (this.attemptRetractBlock && !flag1 && i2 > 0 && a(i2, oworld, j1, k1, l1, false) && (OBlock.r[i2].h() == 0 || i2 == OBlock.ad.cz || i2 == OBlock.Z.cz)) {
+                if (this.attemptRetractBlock && !flag1 && i2 > 0 && a(i2, oworld, j1, k1, l1, false) && (OBlock.s[i2].h() == 0 || i2 == OBlock.ae.cF || i2 == OBlock.aa.cF)) {
                     i += OFacing.b[i1];
                     j += OFacing.c[i1];
                     k += OFacing.d[i1];
-                    oworld.f(i, j, k, OBlock.ag.cz, j2, 3);
+                    oworld.f(i, j, k, OBlock.ah.cF, j2, 3);
                     oworld.a(i, j, k, OBlockPistonMoving.a(i2, j2, i1, false, false));
                     oworld.i(j1, k1, l1);
                 } else if (!flag1 || !this.attemptRetractBlock) { // if retraction fails normally (!flag) OR the onPistonRetract returned false earlier.
@@ -155,6 +155,8 @@ public class OBlockPistonBase extends OBlock {
         int l = oiblockaccess.h(i, j, k);
 
         if (e(l)) {
+            float f = 0.25F;
+
             switch (d(l)) {
                 case 0:
                     this.a(0.0F, 0.25F, 0.0F, 1.0F, 1.0F, 1.0F);
@@ -210,9 +212,9 @@ public class OBlockPistonBase extends OBlock {
         return (i & 8) != 0;
     }
 
-    public static int a(OWorld oworld, int i, int j, int k, OEntityLiving oentityliving) {
-        if (OMathHelper.e((float) oentityliving.u - (float) i) < 2.0F && OMathHelper.e((float) oentityliving.w - (float) k) < 2.0F) {
-            double d0 = oentityliving.v + 1.82D - (double) oentityliving.N;
+    public static int a(OWorld oworld, int i, int j, int k, OEntityLivingBase oentitylivingbase) {
+        if (OMathHelper.e((float) oentitylivingbase.u - (float) i) < 2.0F && OMathHelper.e((float) oentitylivingbase.w - (float) k) < 2.0F) {
+            double d0 = oentitylivingbase.v + 1.82D - (double) oentitylivingbase.N;
 
             if (d0 - (double) j > 2.0D) {
                 return 1;
@@ -223,25 +225,25 @@ public class OBlockPistonBase extends OBlock {
             }
         }
 
-        int l = OMathHelper.c((double) (oentityliving.A * 4.0F / 360.0F) + 0.5D) & 3;
+        int l = OMathHelper.c((double) (oentitylivingbase.A * 4.0F / 360.0F) + 0.5D) & 3;
 
         return l == 0 ? 2 : (l == 1 ? 5 : (l == 2 ? 3 : (l == 3 ? 4 : 0)));
     }
 
     private static boolean a(int i, OWorld oworld, int j, int k, int l, boolean flag) {
-        if (i == OBlock.at.cz) {
+        if (i == OBlock.au.cF) {
             return false;
         } else {
-            if (i != OBlock.ad.cz && i != OBlock.Z.cz) {
-                if (OBlock.r[i].l(oworld, j, k, l) == -1.0F) {
+            if (i != OBlock.ae.cF && i != OBlock.aa.cF) {
+                if (OBlock.s[i].l(oworld, j, k, l) == -1.0F) {
                     return false;
                 }
 
-                if (OBlock.r[i].h() == 2) {
+                if (OBlock.s[i].h() == 2) {
                     return false;
                 }
 
-                if (OBlock.r[i].h() == 1) {
+                if (OBlock.s[i].h() == 1) {
                     if (!flag) {
                         return false;
                     }
@@ -252,7 +254,7 @@ public class OBlockPistonBase extends OBlock {
                 return false;
             }
 
-            return !(OBlock.r[i] instanceof OITileEntityProvider);
+            return !(OBlock.s[i] instanceof OITileEntityProvider);
         }
     }
 
@@ -275,7 +277,7 @@ public class OBlockPistonBase extends OBlock {
                         return false;
                     }
 
-                    if (OBlock.r[i2].h() != 1) {
+                    if (OBlock.s[i2].h() != 1) {
                         if (l1 == 12) {
                             return false;
                         }
@@ -313,7 +315,7 @@ public class OBlockPistonBase extends OBlock {
                         return false;
                     }
 
-                    if (OBlock.r[i2].h() != 1) {
+                    if (OBlock.s[i2].h() != 1) {
                         if (l1 == 12) {
                             return false;
                         }
@@ -325,7 +327,7 @@ public class OBlockPistonBase extends OBlock {
                         continue;
                     }
 
-                    OBlock.r[i2].c(oworld, i1, j1, k1, oworld.h(i1, j1, k1), 0);
+                    OBlock.s[i2].c(oworld, i1, j1, k1, oworld.h(i1, j1, k1), 0);
                     oworld.i(i1, j1, k1);
                 }
             }
@@ -347,11 +349,11 @@ public class OBlockPistonBase extends OBlock {
                 int k3 = oworld.a(l2, i3, j3);
                 int l3 = oworld.h(l2, i3, j3);
 
-                if (k3 == this.cz && l2 == i && i3 == j && j3 == k) {
-                    oworld.f(i1, j1, k1, OBlock.ag.cz, l | (this.a ? 8 : 0), 4);
-                    oworld.a(i1, j1, k1, OBlockPistonMoving.a(OBlock.ae.cz, l | (this.a ? 8 : 0), l, true, false));
+                if (k3 == this.cF && l2 == i && i3 == j && j3 == k) {
+                    oworld.f(i1, j1, k1, OBlock.ah.cF, l | (this.a ? 8 : 0), 4);
+                    oworld.a(i1, j1, k1, OBlockPistonMoving.a(OBlock.af.cF, l | (this.a ? 8 : 0), l, true, false));
                 } else {
-                    oworld.f(i1, j1, k1, OBlock.ag.cz, l3, 4);
+                    oworld.f(i1, j1, k1, OBlock.ah.cF, l3, 4);
                     oworld.a(i1, j1, k1, OBlockPistonMoving.a(k3, l3, l, true, false));
                 }
 

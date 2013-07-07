@@ -3,6 +3,8 @@ public class OEntityFireworkRocket extends OEntity {
     protected int a; // CanaryMod: private -> protected
     protected int b; // CanaryMod: private -> protected
 
+    private Firework entity = new Firework(this);
+
     public OEntityFireworkRocket(OWorld oworld) {
         super(oworld);
         this.a(0.25F, 0.25F);
@@ -76,7 +78,7 @@ public class OEntityFireworkRocket extends OEntity {
             this.q.a("fireworksSpark", this.u, this.v - 0.3D, this.w, this.ab.nextGaussian() * 0.05D, -this.y * 0.5D, this.ab.nextGaussian() * 0.05D);
         }
 
-        if (!this.q.I && this.a > this.b && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FIREWORK_EXPLODE, new Firework(this))) { // CanaryMod: call onFireworkExplode when the rocket explodes
+        if (!this.q.I && this.a > this.b && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FIREWORK_EXPLODE, this.getEntity())) { // CanaryMod: call onFireworkExplode when the rocket explodes
             this.q.a((OEntity) this, (byte) 17);
             this.w();
         }
@@ -109,11 +111,17 @@ public class OEntityFireworkRocket extends OEntity {
         }
     }
 
-    public float c(float f) {
-        return super.c(f);
+    public float d(float f) {
+        return super.d(f);
     }
 
-    public boolean ap() {
+    public boolean ao() {
         return false;
     }
+
+    // CanaryMod start: add getEntity
+    @Override
+    public Firework getEntity() {
+        return entity;
+    } // CanaryMod end
 }

@@ -35,8 +35,8 @@ public class OContainerDispenser extends OContainer {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if (i < 9) {
@@ -47,13 +47,13 @@ public class OContainerDispenser extends OContainer {
                 return null;
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
 
-            if (oitemstack1.a == oitemstack.a) {
+            if (oitemstack1.b == oitemstack.b) {
                 return null;
             }
 

@@ -1,50 +1,68 @@
 import java.util.List;
+import java.util.UUID;
 
 public class OEntityPigZombie extends OEntityZombie {
 
-    private int d = 0;
-    private int e = 0;
+    private static final UUID bq = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
+    private static final OAttributeModifier br = (new OAttributeModifier(bq, "Attacking speed boost", 0.45D, 0)).a(false);
+    private int bs;
+    private int bt;
+    private OEntity bu;
 
     public OEntityPigZombie(OWorld oworld) {
         super(oworld);
-        this.aH = "/mob/pigzombie.png";
-        this.bI = 0.5F;
         this.ag = true;
     }
 
-    protected boolean bh() {
+    protected void ax() {
+        super.ax();
+        this.a(bp).a(0.0D);
+        this.a(OSharedMonsterAttributes.d).a(0.5D);
+        this.a(OSharedMonsterAttributes.e).a(5.0D);
+    }
+
+    protected boolean bb() {
         return false;
     }
 
     public void l_() {
-        this.bI = this.a_ != null ? 0.95F : 0.5F;
-        if (this.e > 0 && --this.e == 0) {
-            this.a("mob.zombiepig.zpigangry", this.ba() * 2.0F, ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) * 1.8F);
+        if (this.bu != this.j && !this.q.I) {
+            OAttributeInstance oattributeinstance = this.a(OSharedMonsterAttributes.d);
+
+            oattributeinstance.b(br);
+            if (this.j != null) {
+                oattributeinstance.a(br);
+            }
+        }
+
+        this.bu = this.j;
+        if (this.bt > 0 && --this.bt == 0) {
+            this.a("mob.zombiepig.zpigangry", this.aW() * 2.0F, ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) * 1.8F);
         }
 
         super.l_();
     }
 
-    public boolean bv() {
+    public boolean bo() {
         return this.q.r > 0 && this.q.b(this.E) && this.q.a((OEntity) this, this.E).isEmpty() && !this.q.d(this.E);
     }
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("Anger", (short) this.d);
+        onbttagcompound.a("Anger", (short) this.bs);
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        this.d = onbttagcompound.d("Anger");
+        this.bs = onbttagcompound.d("Anger");
     }
 
-    protected OEntity j() {
-        return this.d == 0 ? null : super.j();
+    protected OEntity bH() {
+        return this.bs == 0 ? null : super.bH();
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
-        if (this.aq()) {
+    public boolean a(ODamageSource odamagesource, float f) {
+        if (this.ap()) {
             return false;
         } else {
             OEntity oentity = odamagesource.i();
@@ -53,87 +71,77 @@ public class OEntityPigZombie extends OEntityZombie {
                 if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, oentity.getEntity(), this.getEntity())) { // CanaryMod: MOB_TARGET
                     List list = this.q.b((OEntity) this, this.E.b(32.0D, 32.0D, 32.0D));
 
-                    for (int j = 0; j < list.size(); ++j) {
-                        OEntity oentity1 = (OEntity) list.get(j);
+                    for (int i = 0; i < list.size(); ++i) {
+                        OEntity oentity1 = (OEntity) list.get(i);
 
                         if (oentity1 instanceof OEntityPigZombie) {
                             OEntityPigZombie oentitypigzombie = (OEntityPigZombie) oentity1;
 
-                            oentitypigzombie.p(oentity);
+                            oentitypigzombie.c(oentity);
                         }
                     }
 
-                    this.p(oentity);
+                    this.c(oentity);
                 } //
             }
 
-            return super.a(odamagesource, i);
+            return super.a(odamagesource, f);
         }
     }
 
-    private void p(OEntity oentity) {
-        this.a_ = oentity;
-        this.d = 400 + this.ab.nextInt(400);
-        this.e = this.ab.nextInt(40);
+    private void c(OEntity oentity) {
+        this.j = oentity;
+        this.bs = 400 + this.ab.nextInt(400);
+        this.bt = this.ab.nextInt(40);
     }
 
-    protected String bb() {
+    protected String r() {
         return "mob.zombiepig.zpig";
     }
 
-    protected String bc() {
+    protected String aK() {
         return "mob.zombiepig.zpighurt";
     }
 
-    protected String bd() {
+    protected String aL() {
         return "mob.zombiepig.zpigdeath";
     }
 
-    protected void a(boolean flag, int i) {
+    protected void b(boolean flag, int i) {
         int j = this.ab.nextInt(2 + i);
 
         int k;
 
         for (k = 0; k < j; ++k) {
-            this.b(OItem.bn.cp, 1);
+            this.b(OItem.bo.cv, 1);
         }
 
         j = this.ab.nextInt(2 + i);
 
         for (k = 0; k < j; ++k) {
-            this.b(OItem.br.cp, 1);
+            this.b(OItem.bs.cv, 1);
         }
     }
 
-    public boolean a_(OEntityPlayer oentityplayer) {
+    public boolean a(OEntityPlayer oentityplayer) {
         return false;
     }
 
     protected void l(int i) {
-        this.b(OItem.q.cp, 1);
+        this.b(OItem.r.cv, 1);
     }
 
-    protected int be() {
-        return OItem.bn.cp;
+    protected int s() {
+        return OItem.bo.cv;
     }
 
-    protected void bH() {
-        this.c(0, new OItemStack(OItem.H));
+    protected void bs() {
+        this.c(0, new OItemStack(OItem.I));
     }
 
-    public void bJ() {
-        super.bJ();
-        this.i(false);
-    }
-
-    public int c(OEntity oentity) {
-        OItemStack oitemstack = this.bG();
-        int i = 5;
-
-        if (oitemstack != null) {
-            i += oitemstack.a((OEntity) this);
-        }
-
-        return i;
+    public OEntityLivingData a(OEntityLivingData oentitylivingdata) {
+        super.a(oentitylivingdata);
+        this.j(false);
+        return oentitylivingdata;
     }
 }

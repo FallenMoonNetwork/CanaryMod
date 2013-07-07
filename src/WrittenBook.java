@@ -28,10 +28,10 @@ public class WrittenBook {
      */
     public WrittenBook(OItemStack book) {
         this.book = book;
-        if (book.d == null) {
+        if (book.e == null) {
             book.d(new ONBTTagCompound());
         }
-        this.nbtTag = new NBTTagCompound(book.d);
+        this.nbtTag = new NBTTagCompound(book.e);
     }
 
     /**

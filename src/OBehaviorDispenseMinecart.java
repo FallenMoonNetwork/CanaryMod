@@ -5,7 +5,7 @@ final class OBehaviorDispenseMinecart extends OBehaviorDefaultDispenseItem {
     OBehaviorDispenseMinecart() {}
 
     public OItemStack b(OIBlockSource oiblocksource, OItemStack oitemstack) {
-        OEnumFacing oenumfacing = OBlockDispenser.j_(oiblocksource.h());
+        OEnumFacing oenumfacing = OBlockDispenser.l_(oiblocksource.h());
         OWorld oworld = oiblocksource.k();
         double d0 = oiblocksource.a() + (double) ((float) oenumfacing.c() * 1.125F);
         double d1 = oiblocksource.b() + (double) ((float) oenumfacing.d() * 1.125F);
@@ -16,10 +16,10 @@ final class OBehaviorDispenseMinecart extends OBehaviorDefaultDispenseItem {
         int l = oworld.a(i, j, k);
         double d3;
 
-        if (OBlockRailBase.d_(l)) {
+        if (OBlockRailBase.e_(l)) {
             d3 = 0.0D;
         } else {
-            if (l != 0 || !OBlockRailBase.d_(oworld.a(i, j - 1, k))) {
+            if (l != 0 || !OBlockRailBase.e_(oworld.a(i, j - 1, k))) {
                 return this.b.a(oiblocksource, oitemstack);
             }
 
@@ -29,6 +29,10 @@ final class OBehaviorDispenseMinecart extends OBehaviorDefaultDispenseItem {
         OEntityMinecart oentityminecart = OEntityMinecart.a(oworld, d0, d1 + d3, d2, ((OItemMinecart) oitemstack.b()).a);
 
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), new Minecart(oentityminecart))) {
+            if (oitemstack.u()) {
+                oentityminecart.a(oitemstack.s());
+            }
+
             oworld.d((OEntity) oentityminecart);
             oitemstack.a(1);
         }

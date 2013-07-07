@@ -146,7 +146,7 @@ public class PluginLoader {
          */
         VEHICLE_UPDATE, //
         /**
-         * Calls {@link PluginListener#onVehicleDamage(BaseVehicle, BaseEntity, int) }
+         * Calls {@link PluginListener#onVehicleDamage(BaseVehicle, BaseEntity, float) }
          */
         VEHICLE_DAMAGE, //
         /**
@@ -514,13 +514,13 @@ public class PluginLoader {
         }
 
         /**
-        * Returns the message that would be displayed in chat if a player died from this.
-        *
-        * @param died The player who 'died'.
-        * @return The death message.
-        */
+         * Returns the message that would be displayed in chat if a player died from this.
+         *
+         * @param died The player who 'died'.
+         * @return The death message.
+         */
         public String getDeathMessage(Player died) {
-            return source.b(OEntityLiving.class.cast(died.getEntity().getClass()));
+            return source.b((OEntityLivingBase) died.getEntity()).toString();
         }
 
          public static DamageType fromDamageSource(ODamageSource source) {
@@ -1083,7 +1083,7 @@ public class PluginLoader {
                                 break;
 
                             case VEHICLE_DAMAGE:
-                                if (listener.onVehicleDamage((BaseVehicle) parameters[0], (BaseEntity) parameters[1], (Integer) parameters[2])) {
+                                if (listener.onVehicleDamage((BaseVehicle) parameters[0], (BaseEntity) parameters[1], (Float) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;

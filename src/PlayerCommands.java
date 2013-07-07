@@ -1427,9 +1427,9 @@ public class PlayerCommands extends CommandHandler {
                 player.sendMessage("User: " + Colors.Yellow + player.getName() + Colors.White);
                 player.sendMessage("Lvl: " + Colors.Yellow + player.getLevel() + Colors.White);
                 player.sendMessage(String.format("Exp:%s %.0f %s/%s %d %s(%s%.2f%%%s)", // Exp: xx / yy (zz.zz%)
-                        Colors.Yellow, ent.ch * ent.cm(), Colors.White,
-                        Colors.Yellow, ent.ck(), Colors.White,
-                        Colors.Yellow, ent.ch * 100, Colors.White));
+                        Colors.Yellow, ent.bJ * ent.bC(), Colors.White,
+                        Colors.Yellow, ent.bC(), Colors.White,
+                        Colors.Yellow, ent.bJ * 100, Colors.White));
 
                 if(player.isAdmin()) {
                     player.sendMessage(Colors.Yellow + (etc.getInstance().isOldExperience() ? "Pre-":"Post ") + "1.3.2 Experience System" + Colors.White);
@@ -1598,7 +1598,7 @@ public class PlayerCommands extends CommandHandler {
                 sendData(caller, "IP address : ", subject.getIP());
                 sendData(caller, "Groups: ", subject.getGroups());
                 sendData(caller, "Commands: ", subject.getCommands());
-                sendData(caller, "Health: ", subject.getHealth());
+                sendData(caller, "Health: ", subject.getHealthFloat());
                 sendData(caller, "Muted: ", subject.isMuted());
                 sendData(caller, "Food Level: ", subject.getFoodLevel());
                 sendData(caller, "Food Exhaustion: ", String.format("%.2f", subject.getFoodExhaustionLevel()));

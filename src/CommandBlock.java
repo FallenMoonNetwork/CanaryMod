@@ -28,7 +28,7 @@ public class CommandBlock implements ComplexBlock, MessageReceiver {
 
     @Override
     public void update() {
-        base.k_();
+        base.e();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CommandBlock implements ComplexBlock, MessageReceiver {
      * @param command the command to execute when this block is activated
      */
     public void setCommand(String command) {
-        base.b(command);
+        base.a(command);
     }
 
     /**
@@ -73,7 +73,7 @@ public class CommandBlock implements ComplexBlock, MessageReceiver {
      * @param prefix
      */
     public void setPrefix(String prefix) {
-        base.c(prefix);
+        base.b(prefix);
     }
 
     /**
@@ -108,6 +108,6 @@ public class CommandBlock implements ComplexBlock, MessageReceiver {
 
     @Override
     public void notify(String message) {
-        base.a(message);
+        base.a(OChatMessageComponent.d(message));
     }
 }

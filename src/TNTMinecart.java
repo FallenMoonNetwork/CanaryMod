@@ -63,6 +63,6 @@ public class TNTMinecart extends Minecart {
      * @return <tt>true</tt> if the fuse is lit, <tt>false</tt> otherwise.
      */
     public boolean isFuseLit() {
-        return this.getEntity().ay();
+        return this.getEntity().ax();
     }
 }

@@ -1,25 +1,25 @@
 public class OEntityOcelot extends OEntityTameable {
 
-    private OEntityAITempt e;
+    private OEntityAITempt bq;
+
     private Ocelot ocelot = new Ocelot(this); // CanaryMod: one ocelot per ocelot
 
     public OEntityOcelot(OWorld oworld) {
         super(oworld);
-        this.aH = "/mob/ozelot.png";
         this.a(0.6F, 0.8F);
-        this.aC().a(true);
-        this.bo.a(1, new OEntityAISwimming(this));
-        this.bo.a(2, this.d);
-        this.bo.a(3, this.e = new OEntityAITempt(this, 0.18F, OItem.aV.cp, true));
-        this.bo.a(4, new OEntityAIAvoidEntity(this, OEntityPlayer.class, 16.0F, 0.23F, 0.4F));
-        this.bo.a(5, new OEntityAIFollowOwner(this, 0.3F, 10.0F, 5.0F));
-        this.bo.a(6, new OEntityAIOcelotSit(this, 0.4F));
-        this.bo.a(7, new OEntityAILeapAtTarget(this, 0.3F));
-        this.bo.a(8, new OEntityAIOcelotAttack(this));
-        this.bo.a(9, new OEntityAIMate(this, 0.23F));
-        this.bo.a(10, new OEntityAIWander(this, 0.23F));
-        this.bo.a(11, new OEntityAIWatchClosest(this, OEntityPlayer.class, 10.0F));
-        this.bp.a(1, new OEntityAITargetNonTamed(this, OEntityChicken.class, 14.0F, 750, false));
+        this.k().a(true);
+        this.c.a(1, new OEntityAISwimming(this));
+        this.c.a(2, this.bp);
+        this.c.a(3, this.bq = new OEntityAITempt(this, 0.6D, OItem.aW.cv, true));
+        this.c.a(4, new OEntityAIAvoidEntity(this, OEntityPlayer.class, 16.0F, 0.8D, 1.33D));
+        this.c.a(5, new OEntityAIFollowOwner(this, 1.0D, 10.0F, 5.0F));
+        this.c.a(6, new OEntityAIOcelotSit(this, 1.33D));
+        this.c.a(7, new OEntityAILeapAtTarget(this, 0.3F));
+        this.c.a(8, new OEntityAIOcelotAttack(this));
+        this.c.a(9, new OEntityAIMate(this, 0.8D));
+        this.c.a(10, new OEntityAIWander(this, 0.8D));
+        this.c.a(11, new OEntityAIWatchClosest(this, OEntityPlayer.class, 10.0F));
+        this.d.a(1, new OEntityAITargetNonTamed(this, OEntityChicken.class, 750, false));
     }
 
     protected void a() {
@@ -27,14 +27,14 @@ public class OEntityOcelot extends OEntityTameable {
         this.ah.a(18, Byte.valueOf((byte) 0));
     }
 
-    public void bp() {
-        if (this.aA().a()) {
-            float f = this.aA().b();
+    public void bg() {
+        if (this.i().a()) {
+            double d0 = this.i().b();
 
-            if (f == 0.18F) {
+            if (d0 == 0.6D) {
                 this.b(true);
                 this.c(false);
-            } else if (f == 0.4F) {
+            } else if (d0 == 1.33D) {
                 this.b(false);
                 this.c(true);
             } else {
@@ -47,80 +47,81 @@ public class OEntityOcelot extends OEntityTameable {
         }
     }
 
-    protected boolean bm() {
-        return !this.m();
+    protected boolean t() {
+        return !this.bP() && this.ac > 2400;
     }
 
-    public boolean bh() {
+    public boolean bb() {
         return true;
     }
 
-    public int aW() {
-        //CanaryMod: set max health here, but check for uninitialized value.
-        return this.maxHealth == 0 ? 10 : this.maxHealth;
+    protected void ax() {
+        super.ax();
+        this.a(OSharedMonsterAttributes.a).a(10.0D);
+        this.a(OSharedMonsterAttributes.d).a(0.30000001192092896D);
     }
 
-    protected void a(float f) {}
+    protected void b(float f) {}
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("CatType", this.t());
+        onbttagcompound.a("CatType", this.bW());
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        this.s(onbttagcompound.e("CatType"));
+        this.p(onbttagcompound.e("CatType"));
     }
 
-    protected String bb() {
-        return this.m() ? (this.r() ? "mob.cat.purr" : (this.ab.nextInt(4) == 0 ? "mob.cat.purreow" : "mob.cat.meow")) : "";
+    protected String r() {
+        return this.bP() ? (this.bU() ? "mob.cat.purr" : (this.ab.nextInt(4) == 0 ? "mob.cat.purreow" : "mob.cat.meow")) : "";
     }
 
-    protected String bc() {
+    protected String aK() {
         return "mob.cat.hitt";
     }
 
-    protected String bd() {
+    protected String aL() {
         return "mob.cat.hitt";
     }
 
-    protected float ba() {
+    protected float aW() {
         return 0.4F;
     }
 
-    protected int be() {
-        return OItem.aG.cp;
+    protected int s() {
+        return OItem.aH.cv;
     }
 
     public boolean m(OEntity oentity) {
-        return oentity.a(ODamageSource.a((OEntityLiving) this), 3);
+        return oentity.a(ODamageSource.a((OEntityLivingBase) this), 3.0F);
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
-        if (this.aq()) {
+    public boolean a(ODamageSource odamagesource, float f) {
+        if (this.ap()) {
             return false;
         } else {
-            this.d.a(false);
-            return super.a(odamagesource, i);
+            this.bp.a(false);
+            return super.a(odamagesource, f);
         }
     }
 
-    protected void a(boolean flag, int i) {}
+    protected void b(boolean flag, int i) {}
 
-    public boolean a_(OEntityPlayer oentityplayer) {
-        OItemStack oitemstack = oentityplayer.bK.h();
+    public boolean a(OEntityPlayer oentityplayer) {
+        OItemStack oitemstack = oentityplayer.bn.h();
 
-        if (this.m()) {
-            if (oentityplayer.bS.equalsIgnoreCase(this.o()) && !this.q.I && !this.c(oitemstack)) {
-                this.d.a(!this.n());
+        if (this.bP()) {
+            if (oentityplayer.c_().equalsIgnoreCase(this.h_()) && !this.q.I && !this.c(oitemstack)) {
+                this.bp.a(!this.bQ());
             }
-        } else if (this.e.f() && oitemstack != null && oitemstack.c == OItem.aV.cp && oentityplayer.e(this) < 9.0D) {
-            if (!oentityplayer.ce.d) {
-                --oitemstack.a;
+        } else if (this.bq.f() && oitemstack != null && oitemstack.d == OItem.aW.cv && oentityplayer.e(this) < 9.0D) {
+            if (!oentityplayer.bG.d) {
+                --oitemstack.b;
             }
 
-            if (oitemstack.a <= 0) {
-                oentityplayer.bK.a(oentityplayer.bK.c, (OItemStack) null);
+            if (oitemstack.b <= 0) {
+                oentityplayer.bn.a(oentityplayer.bn.c, (OItemStack) null);
             }
 
             if (!this.q.I) {
@@ -132,14 +133,14 @@ public class OEntityOcelot extends OEntityTameable {
 
                 // if taming succeeded normally (tameResult == 0) or plugin hook result is allow (force taming)
                 if (tameResult == 0 && res == PluginLoader.HookResult.DEFAULT_ACTION || res == PluginLoader.HookResult.ALLOW_ACTION) {
+                    this.k(true);
+                    this.p(1 + this.q.s.nextInt(3));
+                    this.b(oentityplayer.c_());
                     this.j(true);
-                    this.s(1 + this.q.s.nextInt(3));
-                    this.a(oentityplayer.bS);
-                    this.i(true);
-                    this.d.a(true);
+                    this.bp.a(true);
                     this.q.a((OEntity) this, (byte) 7);
                 } else {
-                    this.i(false);
+                    this.j(false);
                     this.q.a((OEntity) this, (byte) 6);
                 }
             }
@@ -147,48 +148,48 @@ public class OEntityOcelot extends OEntityTameable {
             return true;
         }
 
-        return super.a_(oentityplayer);
+        return super.a(oentityplayer);
     }
 
     public OEntityOcelot b(OEntityAgeable oentityageable) {
         OEntityOcelot oentityocelot = new OEntityOcelot(this.q);
 
-        if (this.m()) {
-            oentityocelot.a(this.o());
-            oentityocelot.j(true);
-            oentityocelot.s(this.t());
+        if (this.bP()) {
+            oentityocelot.b(this.h_());
+            oentityocelot.k(true);
+            oentityocelot.p(this.bW());
         }
 
         return oentityocelot;
     }
 
     public boolean c(OItemStack oitemstack) {
-        return oitemstack != null && oitemstack.c == OItem.aV.cp;
+        return oitemstack != null && oitemstack.d == OItem.aW.cv;
     }
 
     public boolean a(OEntityAnimal oentityanimal) {
         if (oentityanimal == this) {
             return false;
-        } else if (!this.m()) {
+        } else if (!this.bP()) {
             return false;
         } else if (!(oentityanimal instanceof OEntityOcelot)) {
             return false;
         } else {
             OEntityOcelot oentityocelot = (OEntityOcelot) oentityanimal;
 
-            return !oentityocelot.m() ? false : this.r() && oentityocelot.r();
+            return !oentityocelot.bP() ? false : this.bU() && oentityocelot.bU();
         }
     }
 
-    public int t() {
+    public int bW() {
         return this.ah.a(18);
     }
 
-    public void s(int i) {
+    public void p(int i) {
         this.ah.b(18, Byte.valueOf((byte) i));
     }
 
-    public boolean bv() {
+    public boolean bo() {
         if (this.q.s.nextInt(3) == 0) {
             return false;
         } else {
@@ -203,7 +204,7 @@ public class OEntityOcelot extends OEntityTameable {
 
                 int l = this.q.a(i, j - 1, k);
 
-                if (l == OBlock.y.cz || l == OBlock.O.cz) {
+                if (l == OBlock.z.cF || l == OBlock.P.cF) {
                     return true;
                 }
             }
@@ -212,20 +213,23 @@ public class OEntityOcelot extends OEntityTameable {
         }
     }
 
-    public String am() {
-        return this.bQ() ? this.bP() : (this.m() ? "entity.Cat.name" : super.am());
+    public String al() {
+        return this.bx() ? this.bw() : (this.bP() ? "entity.Cat.name" : super.al());
     }
 
-    public void bJ() {
+    public OEntityLivingData a(OEntityLivingData oentitylivingdata) {
+        oentitylivingdata = super.a(oentitylivingdata);
         if (this.q.s.nextInt(7) == 0) {
             for (int i = 0; i < 2; ++i) {
                 OEntityOcelot oentityocelot = new OEntityOcelot(this.q);
 
                 oentityocelot.b(this.u, this.v, this.w, this.A, 0.0F);
-                oentityocelot.a(-24000);
+                oentityocelot.c(-24000);
                 this.q.d((OEntity) oentityocelot);
             }
         }
+
+        return oentitylivingdata;
     }
 
     public OEntityAgeable a(OEntityAgeable oentityageable) {

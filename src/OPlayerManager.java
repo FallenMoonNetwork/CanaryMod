@@ -7,8 +7,10 @@ public class OPlayerManager {
     private final List b = new ArrayList();
     private final OLongHashMap c = new OLongHashMap();
     private final List d = new ArrayList();
-    private final int e;
-    private final int[][] f = new int[][] { { 1, 0}, { 0, 1}, { -1, 0}, { 0, -1}};
+    private final List e = new ArrayList();
+    private final int f;
+    private long g;
+    private final int[][] h = new int[][] { { 1, 0}, { 0, 1}, { -1, 0}, { 0, -1}};
 
     private PlayerManager playerManager; // CanaryMod player manager wrap
 
@@ -18,7 +20,7 @@ public class OPlayerManager {
         } else if (i < 3) {
             throw new IllegalArgumentException("Too small view radius!");
         } else {
-            this.e = i;
+            this.f = i;
             this.a = oworldserver;
         }
 
@@ -34,8 +36,23 @@ public class OPlayerManager {
     }
 
     public void b() {
-        for (int i = 0; i < this.d.size(); ++i) {
-            ((OPlayerInstance) this.d.get(i)).a();
+        long i = this.a.I();
+        int j;
+        OPlayerInstance oplayerinstance;
+
+        if (i - this.g > 8000L) {
+            this.g = i;
+
+            for (j = 0; j < this.e.size(); ++j) {
+                oplayerinstance = (OPlayerInstance) this.e.get(j);
+                oplayerinstance.b();
+                oplayerinstance.a();
+            }
+        } else {
+            for (j = 0; j < this.d.size(); ++j) {
+                oplayerinstance = (OPlayerInstance) this.d.get(j);
+                oplayerinstance.b();
+            }
         }
 
         this.d.clear();
@@ -55,6 +72,7 @@ public class OPlayerManager {
         if (oplayerinstance == null && flag) {
             oplayerinstance = new OPlayerInstance(this, i, j);
             this.c.a(k, oplayerinstance);
+            this.e.add(oplayerinstance);
         }
 
         return oplayerinstance;
@@ -77,8 +95,8 @@ public class OPlayerManager {
         oentityplayermp.d = oentityplayermp.u;
         oentityplayermp.e = oentityplayermp.w;
 
-        for (int k = i - this.e; k <= i + this.e; ++k) {
-            for (int l = j - this.e; l <= j + this.e; ++l) {
+        for (int k = i - this.f; k <= i + this.f; ++k) {
+            for (int l = j - this.f; l <= j + this.f; ++l) {
                 this.a(k, l, true).a(oentityplayermp);
             }
         }
@@ -90,7 +108,7 @@ public class OPlayerManager {
     public void b(OEntityPlayerMP oentityplayermp) {
         ArrayList arraylist = new ArrayList(oentityplayermp.f);
         int i = 0;
-        int j = this.e;
+        int j = this.f;
         int k = (int) oentityplayermp.u >> 4;
         int l = (int) oentityplayermp.w >> 4;
         int i1 = 0;
@@ -106,7 +124,7 @@ public class OPlayerManager {
 
         for (k1 = 1; k1 <= j * 2; ++k1) {
             for (int l1 = 0; l1 < 2; ++l1) {
-                int[] aint = this.f[i++ % 4];
+                int[] aint = this.h[i++ % 4];
 
                 for (int i2 = 0; i2 < k1; ++i2) {
                     i1 += aint[0];
@@ -122,8 +140,8 @@ public class OPlayerManager {
         i %= 4;
 
         for (k1 = 0; k1 < j * 2; ++k1) {
-            i1 += this.f[i][0];
-            j1 += this.f[i][1];
+            i1 += this.h[i][0];
+            j1 += this.h[i][1];
             ochunkcoordintpair = OPlayerInstance.a(this.a(k + i1, l + j1, true));
             if (arraylist.contains(ochunkcoordintpair)) {
                 oentityplayermp.f.add(ochunkcoordintpair);
@@ -135,8 +153,8 @@ public class OPlayerManager {
         int i = (int) oentityplayermp.d >> 4;
         int j = (int) oentityplayermp.e >> 4;
 
-        for (int k = i - this.e; k <= i + this.e; ++k) {
-            for (int l = j - this.e; l <= j + this.e; ++l) {
+        for (int k = i - this.f; k <= i + this.f; ++k) {
+            for (int l = j - this.f; l <= j + this.f; ++l) {
                 OPlayerInstance oplayerinstance = this.a(k, l, false);
 
                 if (oplayerinstance != null) {
@@ -165,13 +183,13 @@ public class OPlayerManager {
         if (d2 >= 64.0D) {
             int k = (int) oentityplayermp.d >> 4;
             int l = (int) oentityplayermp.e >> 4;
-            int i1 = this.e;
+            int i1 = this.f;
             int j1 = i - k;
             int k1 = j - l;
 
             if (j1 != 0 || k1 != 0) {
                 // CanaryMod speed up teleporting.
-                if (j1 > this.e || j1 < -this.e || k1 > this.e || k1 < -this.e) {
+                if (j1 > this.f || j1 < -this.f || k1 > this.f || k1 < -this.f) {
                     this.c(oentityplayermp);
                     this.a(oentityplayermp);
                     return;
@@ -219,6 +237,10 @@ public class OPlayerManager {
     }
 
     static List c(OPlayerManager oplayermanager) {
+        return oplayermanager.e;
+    }
+
+    static List d(OPlayerManager oplayermanager) {
         return oplayermanager.d;
     }
 

@@ -26,7 +26,7 @@ public class OTileEntity {
         }
     }
 
-    public OWorld az() {
+    public OWorld ay() {
         return this.k;
     }
 
@@ -79,7 +79,7 @@ public class OTileEntity {
         if (otileentity != null) {
             otileentity.a(onbttagcompound);
         } else {
-            OMinecraftServer.D().al().b("Skipping TileEntity with id " + onbttagcompound.i("id"));
+            OMinecraftServer.F().an().b("Skipping TileEntity with id " + onbttagcompound.i("id"));
         }
 
         return otileentity;
@@ -93,19 +93,19 @@ public class OTileEntity {
         return this.p;
     }
 
-    public void k_() {
+    public void e() {
         if (this.k != null) {
             this.p = this.k.h(this.l, this.m, this.n);
             this.k.b(this.l, this.m, this.n, this);
             if (this.q() != null) {
-                this.k.m(this.l, this.m, this.n, this.q().cz);
+                this.k.m(this.l, this.m, this.n, this.q().cF);
             }
         }
     }
 
     public OBlock q() {
         if (this.q == null) {
-            this.q = OBlock.r[this.k.a(this.l, this.m, this.n)];
+            this.q = OBlock.s[this.k.a(this.l, this.m, this.n)];
         }
 
         return this.q;
@@ -138,7 +138,7 @@ public class OTileEntity {
 
     public void a(OCrashReportCategory ocrashreportcategory) {
         ocrashreportcategory.a("Name", (Callable) (new OCallableTileEntityName(this)));
-        OCrashReportCategory.a(ocrashreportcategory, this.l, this.m, this.n, this.q().cz, this.p());
+        OCrashReportCategory.a(ocrashreportcategory, this.l, this.m, this.n, this.q().cF, this.p());
         ocrashreportcategory.a("Actual block type", (Callable) (new OCallableTileEntityID(this)));
         ocrashreportcategory.a("Actual block data value", (Callable) (new OCallableTileEntityData(this)));
     }

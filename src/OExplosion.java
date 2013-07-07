@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class OExplosion {
 
-    public boolean a = false;
+    public boolean a;
     public boolean b = true;
     private int i = 16;
     private Random j = new Random();
@@ -78,7 +78,7 @@ public class OExplosion {
                             int k1 = this.k.a(l, i1, j1);
 
                             if (k1 > 0) {
-                                OBlock oblock = OBlock.r[k1];
+                                OBlock oblock = OBlock.s[k1];
                                 float f3 = this.f != null ? this.f.a(this, this.k, l, i1, j1, oblock) : oblock.a(this.f);
 
                                 f1 -= (f3 + 0.3F) * f2;
@@ -129,7 +129,7 @@ public class OExplosion {
         int i2 = OMathHelper.c(this.e - (double) this.g - 1.0D);
         int j2 = OMathHelper.c(this.e + (double) this.g + 1.0D);
         List list = this.k.b(this.f, OAxisAlignedBB.a().a((double) i, (double) k, (double) i2, (double) j, (double) l1, (double) j2));
-        OVec3 ovec3 = this.k.U().a(this.c, this.d, this.e);
+        OVec3 ovec3 = this.k.V().a(this.c, this.d, this.e);
 
         for (int k2 = 0; k2 < list.size(); ++k2) {
             OEntity oentity = (OEntity) list.get(k2);
@@ -137,7 +137,7 @@ public class OExplosion {
 
             if (d7 <= 1.0D) {
                 d0 = oentity.u - this.c;
-                d1 = oentity.v + (double) oentity.e() - this.d;
+                d1 = oentity.v + (double) oentity.f() - this.d;
                 d2 = oentity.w - this.e;
                 double d8 = (double) OMathHelper.a(d0 * d0 + d1 * d1 + d2 * d2);
 
@@ -150,13 +150,13 @@ public class OExplosion {
 
 
                     // CanaryMod Damage hook: Explosions
-                    int damage = (int) ((d10 * d10 + d10) / 2.0D * 8.0D * (double) this.g + 1.0D);
+                    float damage = (float) ((int) ((d10 * d10 + d10) / 2.0D * 8.0D * (double) this.g + 1.0D));
                     DamageSource damageSource = ODamageSource.a(this).damageSource;
 
                     HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(damageSource.getSourceEntity(), oentity.getEntity(), damageSource, damage));
                     if (!cancel && !ev.isCanceled()) {
                         //Cannot add a random damage source here, only damage applies
-                        oentity.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
+                        oentity.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmountFloat());
                     }
                     double d11 = OEnchantmentProtection.a(oentity, d10);
 
@@ -164,7 +164,7 @@ public class OExplosion {
                     oentity.y += d1 * d11;
                     oentity.z += d2 * d11;
                     if (oentity instanceof OEntityPlayer) {
-                        this.l.put((OEntityPlayer) oentity, this.k.U().a(d0 * d10, d1 * d10, d2 * d10));
+                        this.l.put((OEntityPlayer) oentity, this.k.V().a(d0 * d10, d1 * d10, d2 * d10));
                     }
                 }
             }
@@ -220,7 +220,7 @@ public class OExplosion {
                 }
 
                 if (l > 0) {
-                    OBlock oblock = OBlock.r[l];
+                    OBlock oblock = OBlock.s[l];
 
                     if (oblock.a(this)) {
                         oblock.a(this.k, i, j, k, this.k.h(i, j, k), 1.0F / this.g, 0);
@@ -243,12 +243,20 @@ public class OExplosion {
                 l = this.k.a(i, j, k);
                 int i1 = this.k.a(i, j - 1, k);
 
+<<<<<<< HEAD
                 if (l == 0 && OBlock.s[i1] && this.j.nextInt(3) == 0) {
+=======
+                if (l == 0 && OBlock.t[i1] && this.j.nextInt(3) == 0) {
+>>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
                     // CanaryMod start: IGNITE hook
                     Block block = new Block(this.k.world, 0, i, j, k);
                     block.setStatus(7); // Fireball explosion
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, block, null)) {
+<<<<<<< HEAD
                         this.k.c(i, j, k, OBlock.av.cz);
+=======
+                        this.k.c(i, j, k, OBlock.aw.cF);
+>>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
                     } // CanaryMod end
                 }
             }
@@ -259,7 +267,7 @@ public class OExplosion {
         return this.l;
     }
 
-    public OEntityLiving c() {
-        return this.f == null ? null : (this.f instanceof OEntityTNTPrimed ? ((OEntityTNTPrimed) this.f).c() : (this.f instanceof OEntityLiving ? (OEntityLiving) this.f : null));
+    public OEntityLivingBase c() {
+        return this.f == null ? null : (this.f instanceof OEntityTNTPrimed ? ((OEntityTNTPrimed) this.f).c() : (this.f instanceof OEntityLivingBase ? (OEntityLivingBase) this.f : null));
     }
 }

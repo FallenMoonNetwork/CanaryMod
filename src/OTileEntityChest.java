@@ -5,7 +5,7 @@ import java.util.List;
 public class OTileEntityChest extends OTileEntity implements OIInventory, Container<OItemStack> {
 
     private OItemStack[] i = new OItemStack[36];
-    public boolean a = false;
+    public boolean a;
     public OTileEntityChest b;
     public OTileEntityChest c;
     public OTileEntityChest d;
@@ -33,18 +33,18 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         if (this.i[i] != null) {
             OItemStack oitemstack;
 
-            if (this.i[i].a <= j) {
+            if (this.i[i].b <= j) {
                 oitemstack = this.i[i];
                 this.i[i] = null;
-                this.k_();
+                this.e();
                 return oitemstack;
             } else {
                 oitemstack = this.i[i].a(j);
-                if (this.i[i].a == 0) {
+                if (this.i[i].b == 0) {
                     this.i[i] = null;
                 }
 
-                this.k_();
+                this.e();
                 return oitemstack;
             }
         } else {
@@ -52,7 +52,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.i[i] != null) {
             OItemStack oitemstack = this.i[i];
 
@@ -65,11 +65,11 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
 
     public void a(int i, OItemStack oitemstack) {
         this.i[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.d()) {
-            oitemstack.a = this.d();
+        if (oitemstack != null && oitemstack.b > this.d()) {
+            oitemstack.b = this.d();
         }
 
-        this.k_();
+        this.e();
     }
 
     public String b() {
@@ -209,7 +209,7 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
     }
 
     private boolean a(int i, int j, int k) {
-        OBlock oblock = OBlock.r[this.k.a(i, j, k)];
+        OBlock oblock = OBlock.s[this.k.a(i, j, k)];
 
         return oblock != null && oblock instanceof OBlockChest ? ((OBlockChest) oblock).a == this.l() : false;
     }
@@ -229,8 +229,8 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
             while (iterator.hasNext()) {
                 OEntityPlayer oentityplayer = (OEntityPlayer) iterator.next();
 
-                if (oentityplayer.bM instanceof OContainerChest) {
-                    OIInventory oiinventory = ((OContainerChest) oentityplayer.bM).e();
+                if (oentityplayer.bp instanceof OContainerChest) {
+                    OIInventory oiinventory = ((OContainerChest) oentityplayer.bp).e();
 
                     if (oiinventory == this || oiinventory instanceof OInventoryLargeChest && ((OInventoryLargeChest) oiinventory).a((OIInventory) this)) {
                         ++this.h;
@@ -303,23 +303,23 @@ public class OTileEntityChest extends OTileEntity implements OIInventory, Contai
         }
     }
 
-    public void f() {
+    public void k_() {
         if (this.h < 0) {
             this.h = 0;
         }
 
         ++this.h;
-        this.k.d(this.l, this.m, this.n, this.q().cz, 1, this.h);
-        this.k.f(this.l, this.m, this.n, this.q().cz);
-        this.k.f(this.l, this.m - 1, this.n, this.q().cz);
+        this.k.d(this.l, this.m, this.n, this.q().cF, 1, this.h);
+        this.k.f(this.l, this.m, this.n, this.q().cF);
+        this.k.f(this.l, this.m - 1, this.n, this.q().cF);
     }
 
     public void g() {
         if (this.q() != null && this.q() instanceof OBlockChest) {
             --this.h;
-            this.k.d(this.l, this.m, this.n, this.q().cz, 1, this.h);
-            this.k.f(this.l, this.m, this.n, this.q().cz);
-            this.k.f(this.l, this.m - 1, this.n, this.q().cz);
+            this.k.d(this.l, this.m, this.n, this.q().cF, 1, this.h);
+            this.k.f(this.l, this.m, this.n, this.q().cF);
+            this.k.f(this.l, this.m - 1, this.n, this.q().cF);
         }
     }
 

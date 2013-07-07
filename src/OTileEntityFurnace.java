@@ -6,9 +6,9 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
     private static final int[] e = new int[] { 2, 1};
     private static final int[] f = new int[] { 1};
     private OItemStack[] g = new OItemStack[3];
-    public int a = 0;
-    public int b = 0;
-    public int c = 0;
+    public int a;
+    public int b;
+    public int c;
     private String h;
 
     private final Furnace furnace = new Furnace(this); // CanaryMod
@@ -27,13 +27,13 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
         if (this.g[i] != null) {
             OItemStack oitemstack;
 
-            if (this.g[i].a <= j) {
+            if (this.g[i].b <= j) {
                 oitemstack = this.g[i];
                 this.g[i] = null;
                 return oitemstack;
             } else {
                 oitemstack = this.g[i].a(j);
-                if (this.g[i].a == 0) {
+                if (this.g[i].b == 0) {
                     this.g[i] = null;
                 }
 
@@ -44,7 +44,7 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.g[i] != null) {
             OItemStack oitemstack = this.g[i];
 
@@ -57,8 +57,8 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
 
     public void a(int i, OItemStack oitemstack) {
         this.g[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.d()) {
-            oitemstack.a = this.d();
+        if (oitemstack != null && oitemstack.b > this.d()) {
+            oitemstack.b = this.d();
         }
 
     }
@@ -142,9 +142,9 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
                 if (this.a > 0) {
                     flag1 = true;
                     if (this.g[1] != null) {
-                        --this.g[1].a;
-                        if (this.g[1].a == 0) {
-                            OItem oitem = this.g[1].b().s();
+                        --this.g[1].b;
+                        if (this.g[1].b == 0) {
+                            OItem oitem = this.g[1].b().t();
 
                             this.g[1] = oitem != null ? new OItemStack(oitem) : null;
                         }
@@ -170,7 +170,7 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
         }
 
         if (flag1) {
-            this.k_();
+            this.e();
         }
 
     }
@@ -179,24 +179,24 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
         if (this.g[0] == null) {
             return false;
         } else {
-            OItemStack oitemstack = OFurnaceRecipes.a().b(this.g[0].b().cp);
+            OItemStack oitemstack = OFurnaceRecipes.a().b(this.g[0].b().cv);
 
-            return oitemstack == null ? false : (this.g[2] == null ? true : (!this.g[2].a(oitemstack) ? false : (this.g[2].a < this.d() && this.g[2].a < this.g[2].e() ? true : this.g[2].a < oitemstack.e())));
+            return oitemstack == null ? false : (this.g[2] == null ? true : (!this.g[2].a(oitemstack) ? false : (this.g[2].b < this.d() && this.g[2].b < this.g[2].e() ? true : this.g[2].b < oitemstack.e())));
         }
     }
 
     public void l() {
         if (this.u()) {
-            OItemStack oitemstack = OFurnaceRecipes.a().b(this.g[0].b().cp);
+            OItemStack oitemstack = OFurnaceRecipes.a().b(this.g[0].b().cv);
 
             if (this.g[2] == null) {
                 this.g[2] = oitemstack.m();
-            } else if (this.g[2].c == oitemstack.c) {
-                ++this.g[2].a;
+            } else if (this.g[2].d == oitemstack.d) {
+                ++this.g[2].b;
             }
 
-            --this.g[0].a;
-            if (this.g[0].a <= 0) {
+            --this.g[0].b;
+            if (this.g[0].b <= 0) {
                 this.g[0] = null;
             }
 
@@ -207,22 +207,26 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
         if (oitemstack == null) {
             return 0;
         } else {
-            int i = oitemstack.b().cp;
+            int i = oitemstack.b().cv;
             OItem oitem = oitemstack.b();
 
-            if (i < 256 && OBlock.r[i] != null) {
-                OBlock oblock = OBlock.r[i];
+            if (i < 256 && OBlock.s[i] != null) {
+                OBlock oblock = OBlock.s[i];
 
-                if (oblock == OBlock.bS) {
+                if (oblock == OBlock.bT) {
                     return 150;
                 }
 
-                if (oblock.cO == OMaterial.d) {
+                if (oblock.cU == OMaterial.d) {
                     return 300;
+                }
+
+                if (oblock == OBlock.cE) {
+                    return 16000;
                 }
             }
 
-            return oitem instanceof OItemTool && ((OItemTool) oitem).g().equals("WOOD") ? 200 : (oitem instanceof OItemSword && ((OItemSword) oitem).h().equals("WOOD") ? 200 : (oitem instanceof OItemHoe && ((OItemHoe) oitem).g().equals("WOOD") ? 200 : (i == OItem.E.cp ? 100 : (i == OItem.n.cp ? 1600 : (i == OItem.az.cp ? 20000 : (i == OBlock.C.cz ? 100 : (i == OItem.bp.cp ? 2400 : 0)))))));
+            return oitem instanceof OItemTool && ((OItemTool) oitem).g().equals("WOOD") ? 200 : (oitem instanceof OItemSword && ((OItemSword) oitem).i().equals("WOOD") ? 200 : (oitem instanceof OItemHoe && ((OItemHoe) oitem).g().equals("WOOD") ? 200 : (i == OItem.F.cv ? 100 : (i == OItem.o.cv ? 1600 : (i == OItem.aA.cv ? 20000 : (i == OBlock.D.cF ? 100 : (i == OItem.bq.cv ? 2400 : 0)))))));
         }
     }
 
@@ -234,7 +238,7 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
         return this.k.r(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 
@@ -251,7 +255,7 @@ public class OTileEntityFurnace extends OTileEntity implements OISidedInventory,
     }
 
     public boolean b(int i, OItemStack oitemstack, int j) {
-        return j != 0 || i != 1 || oitemstack.c == OItem.ax.cp;
+        return j != 0 || i != 1 || oitemstack.d == OItem.ay.cv;
     }
 
     @Override

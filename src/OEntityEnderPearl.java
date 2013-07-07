@@ -4,14 +4,14 @@ public class OEntityEnderPearl extends OEntityThrowable {
         super(oworld);
     }
 
-    public OEntityEnderPearl(OWorld oworld, OEntityLiving oentityliving) {
-        super(oworld, oentityliving);
+    public OEntityEnderPearl(OWorld oworld, OEntityLivingBase oentitylivingbase) {
+        super(oworld, oentitylivingbase);
     }
 
     protected void a(OMovingObjectPosition omovingobjectposition) {
-        if(!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, new Projectile(this), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
+        if(!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
             if (omovingobjectposition.g != null) {
-                omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), 0);
+            omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), 0.0F);
             }
             // CanaryMod start - Fix enderpearl dupe bug
             Player p = null;
@@ -34,11 +34,15 @@ public class OEntityEnderPearl extends OEntityThrowable {
                     OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) this.h();
 
                     if (!oentityplayermp.a.b && oentityplayermp.q == this.q) {
+                    if (this.h().ae()) {
+                        this.h().a((OEntity) null);
+                    }
+
                         this.h().a(this.u, this.v, this.w);
                         this.h().T = 0.0F;
-                        HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(this.getEntity(), oentityplayermp.getPlayer(), DamageType.ENDERPEARL.getDamageSource(), 5));
+                        HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(this.getEntity(), oentityplayermp.getPlayer(), DamageType.ENDERPEARL.getDamageSource(), 5.0F));
                         if (!ev.isCanceled()) {
-                            this.h().a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
+                            this.h().a(ev.getDamageSource().getDamageSource(), ev.getDamageAmountFloat());
                         } //
                     }
                 }

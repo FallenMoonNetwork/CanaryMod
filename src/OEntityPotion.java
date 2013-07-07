@@ -9,12 +9,12 @@ public class OEntityPotion extends OEntityThrowable {
         super(oworld);
     }
 
-    public OEntityPotion(OWorld oworld, OEntityLiving oentityliving, int i) {
-        this(oworld, oentityliving, new OItemStack(OItem.bt, 1, i));
+    public OEntityPotion(OWorld oworld, OEntityLivingBase oentitylivingbase, int i) {
+        this(oworld, oentitylivingbase, new OItemStack(OItem.bu, 1, i));
     }
 
-    public OEntityPotion(OWorld oworld, OEntityLiving oentityliving, OItemStack oitemstack) {
-        super(oworld, oentityliving);
+    public OEntityPotion(OWorld oworld, OEntityLivingBase oentitylivingbase, OItemStack oitemstack) {
+        super(oworld, oentitylivingbase);
         this.c = oitemstack;
     }
 
@@ -23,7 +23,7 @@ public class OEntityPotion extends OEntityThrowable {
         this.c = oitemstack;
     }
 
-    protected float g() {
+    protected float e() {
         return 0.05F;
     }
 
@@ -37,7 +37,7 @@ public class OEntityPotion extends OEntityThrowable {
 
     public void a(int i) {
         if (this.c == null) {
-            this.c = new OItemStack(OItem.bt, 1, 0);
+            this.c = new OItemStack(OItem.bu, 1, 0);
         }
 
         this.c.b(i);
@@ -45,31 +45,31 @@ public class OEntityPotion extends OEntityThrowable {
 
     public int i() {
         if (this.c == null) {
-            this.c = new OItemStack(OItem.bt, 1, 0);
+            this.c = new OItemStack(OItem.bu, 1, 0);
         }
 
         return this.c.k();
     }
 
     protected void a(OMovingObjectPosition omovingobjectposition) {
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, new Projectile(this), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity()) && !this.q.I) {
-            List list = OItem.bt.g(this.c);
+        if (!this.q.I && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
+            List list = OItem.bu.g(this.c);
 
             if (list != null && !list.isEmpty()) {
                 OAxisAlignedBB oaxisalignedbb = this.E.b(4.0D, 2.0D, 4.0D);
-                List list1 = this.q.a(OEntityLiving.class, oaxisalignedbb);
+                List list1 = this.q.a(OEntityLivingBase.class, oaxisalignedbb);
 
                 if (list1 != null && !list1.isEmpty()) {
                     Iterator iterator = list1.iterator();
 
                     while (iterator.hasNext()) {
-                        OEntityLiving oentityliving = (OEntityLiving) iterator.next();
-                        double d0 = this.e(oentityliving);
+                        OEntityLivingBase oentitylivingbase = (OEntityLivingBase) iterator.next();
+                        double d0 = this.e(oentitylivingbase);
 
                         if (d0 < 16.0D) {
                             double d1 = 1.0D - Math.sqrt(d0) / 4.0D;
 
-                            if (oentityliving == omovingobjectposition.g) {
+                            if (oentitylivingbase == omovingobjectposition.g) {
                                 d1 = 1.0D;
                             }
 
@@ -80,12 +80,12 @@ public class OEntityPotion extends OEntityThrowable {
                                 int i = opotioneffect.a();
 
                                 if (OPotion.a[i].b()) {
-                                    OPotion.a[i].a(this.h(), oentityliving, opotioneffect.c(), d1);
+                                    OPotion.a[i].a(this.h(), oentitylivingbase, opotioneffect.c(), d1);
                                 } else {
                                     int j = (int) (d1 * (double) opotioneffect.b() + 0.5D);
 
                                     if (j > 20) {
-                                        oentityliving.d(new OPotionEffect(i, j, opotioneffect.c()));
+                                        oentitylivingbase.d(new OPotionEffect(i, j, opotioneffect.c()));
                                     }
                                 }
                             }

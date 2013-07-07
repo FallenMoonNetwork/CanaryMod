@@ -43,7 +43,7 @@ public class OCommandHandler implements OICommandManager {
 
                     @Override
                     public void notify(String message) {
-                        oicommandsender.a(message);
+                        oicommandsender.a(OChatMessageComponent.d(message));
                     }
                 };
             }
@@ -62,7 +62,7 @@ public class OCommandHandler implements OICommandManager {
                 throw new OCommandNotFoundException();
             }
 
-            if (oicommand.b(oicommandsender)) {
+            if (oicommand.a(oicommandsender)) {
                 if (i > -1) {
                     OEntityPlayerMP[] aoentityplayermp = OPlayerSelector.c(oicommandsender, astring[i]);
                     String s2 = astring[i];
@@ -72,13 +72,13 @@ public class OCommandHandler implements OICommandManager {
                     for (int l = 0; l < k; ++l) {
                         OEntityPlayerMP oentityplayermp = aoentityplayermp1[l];
 
-                        astring[i] = oentityplayermp.am();
+                        astring[i] = oentityplayermp.al();
 
                         try {
                             oicommand.b(oicommandsender, astring);
                             ++j;
                         } catch (OCommandException ocommandexception) {
-                            oicommandsender.a(OEnumChatFormatting.m + oicommandsender.a(ocommandexception.getMessage(), ocommandexception.a()));
+                            oicommandsender.a(OChatMessageComponent.b(ocommandexception.getMessage(), ocommandexception.a()).a(OEnumChatFormatting.m));
                         }
                     }
 
@@ -88,14 +88,14 @@ public class OCommandHandler implements OICommandManager {
                     ++j;
                 }
             } else {
-                oicommandsender.a("" + OEnumChatFormatting.m + "You do not have permission to use this command.");
+                oicommandsender.a(OChatMessageComponent.e("commands.generic.permission").a(OEnumChatFormatting.m));
             }
         } catch (OWrongUsageException owrongusageexception) {
-            oicommandsender.a(OEnumChatFormatting.m + oicommandsender.a("commands.generic.usage", new Object[] { oicommandsender.a(owrongusageexception.getMessage(), owrongusageexception.a())}));
+            oicommandsender.a(OChatMessageComponent.b("commands.generic.usage", new Object[] { OChatMessageComponent.b(owrongusageexception.getMessage(), owrongusageexception.a())}).a(OEnumChatFormatting.m));
         } catch (OCommandException ocommandexception1) {
-            oicommandsender.a(OEnumChatFormatting.m + oicommandsender.a(ocommandexception1.getMessage(), ocommandexception1.a()));
+            oicommandsender.a(OChatMessageComponent.b(ocommandexception1.getMessage(), ocommandexception1.a()).a(OEnumChatFormatting.m));
         } catch (Throwable throwable) {
-            oicommandsender.a(OEnumChatFormatting.m + oicommandsender.a("commands.generic.exception", new Object[0]));
+            oicommandsender.a(OChatMessageComponent.e("commands.generic.exception").a(OEnumChatFormatting.m));
             throwable.printStackTrace();
         }
 
@@ -144,7 +144,7 @@ public class OCommandHandler implements OICommandManager {
             while (iterator.hasNext()) {
                 Entry entry = (Entry) iterator.next();
 
-                if (OCommandBase.a(s1, (String) entry.getKey()) && ((OICommand) entry.getValue()).b(oicommandsender)) {
+                if (OCommandBase.a(s1, (String) entry.getKey()) && ((OICommand) entry.getValue()).a(oicommandsender)) {
                     arraylist.add(entry.getKey());
                 }
             }
@@ -170,7 +170,7 @@ public class OCommandHandler implements OICommandManager {
         while (iterator.hasNext()) {
             OICommand oicommand = (OICommand) iterator.next();
 
-            if (oicommand.b(oicommandsender)) {
+            if (oicommand.a(oicommandsender)) {
                 arraylist.add(oicommand);
             }
         }

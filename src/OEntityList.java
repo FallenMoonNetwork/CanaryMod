@@ -73,7 +73,7 @@ public class OEntityList {
         if (oentity != null) {
             oentity.f(onbttagcompound);
         } else {
-            oworld.X().b("Skipping Entity with id " + onbttagcompound.i("id"));
+            oworld.Y().b("Skipping Entity with id " + onbttagcompound.i("id"));
         }
 
         return oentity;
@@ -93,7 +93,7 @@ public class OEntityList {
         }
 
         if (oentity == null) {
-            oworld.X().b("Skipping Entity with id " + i);
+            oworld.Y().b("Skipping Entity with id " + i);
         }
 
         return oentity;
@@ -132,6 +132,7 @@ public class OEntityList {
     static {
         a(OEntityItem.class, "Item", 1);
         a(OEntityXPOrb.class, "XPOrb", 2);
+        a(OEntityLeashKnot.class, "LeashKnot", 8);
         a(OEntityPainting.class, "Painting", 9);
         a(OEntityArrow.class, "Arrow", 10);
         a(OEntitySnowball.class, "Snowball", 11);
@@ -182,6 +183,7 @@ public class OEntityList {
         a(OEntitySnowman.class, "SnowMan", 97);
         a(OEntityOcelot.class, "Ozelot", 98, 15720061, 5653556);
         a(OEntityIronGolem.class, "VillagerGolem", 99);
+        a(OEntityHorse.class, "EntityHorse", 100, 12623485, 15656192);
         a(OEntityVillager.class, "Villager", 120, 5651507, 12422002);
         a(OEntityEnderCrystal.class, "EnderCrystal", 200);
     }

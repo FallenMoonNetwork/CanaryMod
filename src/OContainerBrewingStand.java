@@ -2,7 +2,7 @@ public class OContainerBrewingStand extends OContainer {
 
     private OTileEntityBrewingStand a;
     private final OSlot f;
-    private int g = 0;
+    private int g;
 
     public OContainerBrewingStand(OInventoryPlayer oinventoryplayer, OTileEntityBrewingStand otileentitybrewingstand) {
         this.a = otileentitybrewingstand;
@@ -55,16 +55,16 @@ public class OContainerBrewingStand extends OContainer {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if ((i < 0 || i > 2) && i != 3) {
-                if (!this.f.d() && this.f.a(oitemstack1)) {
+                if (!this.f.e() && this.f.a(oitemstack1)) {
                     if (!this.a(oitemstack1, 3, 4, false)) {
                         return null;
                     }
-                } else if (OSlotBrewingStandPotion.a_(oitemstack)) {
+                } else if (OSlotBrewingStandPotion.b_(oitemstack)) {
                     if (!this.a(oitemstack1, 0, 3, false)) {
                         return null;
                     }
@@ -87,13 +87,13 @@ public class OContainerBrewingStand extends OContainer {
                 oslot.a(oitemstack1, oitemstack);
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
 
-            if (oitemstack1.a == oitemstack.a) {
+            if (oitemstack1.b == oitemstack.b) {
                 return null;
             }
 

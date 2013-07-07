@@ -23,18 +23,18 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
         if (this.b[i] != null) {
             OItemStack oitemstack;
 
-            if (this.b[i].a <= j) {
+            if (this.b[i].b <= j) {
                 oitemstack = this.b[i];
                 this.b[i] = null;
-                this.k_();
+                this.e();
                 return oitemstack;
             } else {
                 oitemstack = this.b[i].a(j);
-                if (this.b[i].a == 0) {
+                if (this.b[i].b == 0) {
                     this.b[i] = null;
                 }
 
-                this.k_();
+                this.e();
                 return oitemstack;
             }
         } else {
@@ -42,7 +42,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.b[i] != null) {
             OItemStack oitemstack = this.b[i];
 
@@ -68,16 +68,16 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
 
     public void a(int i, OItemStack oitemstack) {
         this.b[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.d()) {
-            oitemstack.a = this.d();
+        if (oitemstack != null && oitemstack.b > this.d()) {
+            oitemstack.b = this.d();
         }
 
-        this.k_();
+        this.e();
     }
 
     public int a(OItemStack oitemstack) {
         for (int i = 0; i < this.b.length; ++i) {
-            if (this.b[i] == null || this.b[i].c == 0) {
+            if (this.b[i] == null || this.b[i].d == 0) {
                 this.a(i, oitemstack);
                 return i;
             }
@@ -146,7 +146,7 @@ public class OTileEntityDispenser extends OTileEntity implements OIInventory, Co
         return this.k.r(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 

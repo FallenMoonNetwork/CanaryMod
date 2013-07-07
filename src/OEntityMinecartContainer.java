@@ -26,15 +26,15 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
                 float f1 = this.ab.nextFloat() * 0.8F + 0.1F;
                 float f2 = this.ab.nextFloat() * 0.8F + 0.1F;
 
-                while (oitemstack.a > 0) {
+                while (oitemstack.b > 0) {
                     int j = this.ab.nextInt(21) + 10;
 
-                    if (j > oitemstack.a) {
-                        j = oitemstack.a;
+                    if (j > oitemstack.b) {
+                        j = oitemstack.b;
                     }
 
-                    oitemstack.a -= j;
-                    OEntityItem oentityitem = new OEntityItem(this.q, this.u + (double) f, this.v + (double) f1, this.w + (double) f2, new OItemStack(oitemstack.c, j, oitemstack.k()));
+                    oitemstack.b -= j;
+                    OEntityItem oentityitem = new OEntityItem(this.q, this.u + (double) f, this.v + (double) f1, this.w + (double) f2, new OItemStack(oitemstack.d, j, oitemstack.k()));
                     float f3 = 0.05F;
 
                     oentityitem.x = (double) ((float) this.ab.nextGaussian() * f3);
@@ -54,13 +54,13 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
         if (this.a[i] != null) {
             OItemStack oitemstack;
 
-            if (this.a[i].a <= j) {
+            if (this.a[i].b <= j) {
                 oitemstack = this.a[i];
                 this.a[i] = null;
                 return oitemstack;
             } else {
                 oitemstack = this.a[i].a(j);
-                if (this.a[i].a == 0) {
+                if (this.a[i].b == 0) {
                     this.a[i] = null;
                 }
 
@@ -71,7 +71,7 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.a[i] != null) {
             OItemStack oitemstack = this.a[i];
 
@@ -84,18 +84,18 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
 
     public void a(int i, OItemStack oitemstack) {
         this.a[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.d()) {
-            oitemstack.a = this.d();
+        if (oitemstack != null && oitemstack.b > this.d()) {
+            oitemstack.b = this.d();
         }
     }
 
-    public void k_() {}
+    public void e() {}
 
     public boolean a(OEntityPlayer oentityplayer) {
         return this.M ? false : oentityplayer.e(this) <= 64.0D;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 
@@ -111,9 +111,9 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
         return 64;
     }
 
-    public void c(int i) {
+    public void b(int i) {
         this.b = false;
-        super.c(i);
+        super.b(i);
     }
 
     public void w() {
@@ -126,15 +126,15 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
                     float f1 = this.ab.nextFloat() * 0.8F + 0.1F;
                     float f2 = this.ab.nextFloat() * 0.8F + 0.1F;
 
-                    while (oitemstack.a > 0) {
+                    while (oitemstack.b > 0) {
                         int j = this.ab.nextInt(21) + 10;
 
-                        if (j > oitemstack.a) {
-                            j = oitemstack.a;
+                        if (j > oitemstack.b) {
+                            j = oitemstack.b;
                         }
 
-                        oitemstack.a -= j;
-                        OEntityItem oentityitem = new OEntityItem(this.q, this.u + (double) f, this.v + (double) f1, this.w + (double) f2, new OItemStack(oitemstack.c, j, oitemstack.k()));
+                        oitemstack.b -= j;
+                        OEntityItem oentityitem = new OEntityItem(this.q, this.u + (double) f, this.v + (double) f1, this.w + (double) f2, new OItemStack(oitemstack.d, j, oitemstack.k()));
 
                         if (oitemstack.p()) {
                             oentityitem.d().d((ONBTTagCompound) oitemstack.q().b());
@@ -187,7 +187,7 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
         }
     }
 
-    public boolean a_(OEntityPlayer oentityplayer) {
+    public boolean c(OEntityPlayer oentityplayer) {
         if (!this.q.I) {
             oentityplayer.a((OIInventory) this);
         }

@@ -30,7 +30,7 @@ public class OInventoryMerchant implements OIInventory, Container<OItemStack> {
                 oitemstack = this.b[i];
                 this.b[i] = null;
                 return oitemstack;
-            } else if (this.b[i].a <= j) {
+            } else if (this.b[i].b <= j) {
                 oitemstack = this.b[i];
                 this.b[i] = null;
                 if (this.d(i)) {
@@ -40,7 +40,7 @@ public class OInventoryMerchant implements OIInventory, Container<OItemStack> {
                 return oitemstack;
             } else {
                 oitemstack = this.b[i].a(j);
-                if (this.b[i].a == 0) {
+                if (this.b[i].b == 0) {
                     this.b[i] = null;
                 }
 
@@ -59,7 +59,7 @@ public class OInventoryMerchant implements OIInventory, Container<OItemStack> {
         return i == 0 || i == 1;
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.b[i] != null) {
             OItemStack oitemstack = this.b[i];
 
@@ -72,8 +72,8 @@ public class OInventoryMerchant implements OIInventory, Container<OItemStack> {
 
     public void a(int i, OItemStack oitemstack) {
         this.b[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.d()) {
-            oitemstack.a = this.d();
+        if (oitemstack != null && oitemstack.b > this.d()) {
+            oitemstack.b = this.d();
         }
 
         if (this.d(i)) {
@@ -98,7 +98,7 @@ public class OInventoryMerchant implements OIInventory, Container<OItemStack> {
         return this.a.m_() == oentityplayer;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 
@@ -106,7 +106,7 @@ public class OInventoryMerchant implements OIInventory, Container<OItemStack> {
         return true;
     }
 
-    public void k_() {
+    public void e() {
         this.h();
     }
 
@@ -144,6 +144,8 @@ public class OInventoryMerchant implements OIInventory, Container<OItemStack> {
                 }
             }
         }
+
+        this.a.a_(this.a(2));
     }
 
     public OMerchantRecipe i() {

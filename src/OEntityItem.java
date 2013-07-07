@@ -12,7 +12,6 @@ public class OEntityItem extends OEntity {
 
     public OEntityItem(OWorld oworld, double d0, double d1, double d2) {
         super(oworld);
-        this.a = 0;
         this.d = 5;
         this.c = (float) (Math.random() * 3.141592653589793D * 2.0D);
         this.a(0.25F, 0.25F);
@@ -29,13 +28,12 @@ public class OEntityItem extends OEntity {
         this.a(oitemstack);
     }
 
-    protected boolean f_() {
+    protected boolean e_() {
         return false;
     }
 
     public OEntityItem(OWorld oworld) {
         super(oworld);
-        this.a = 0;
         this.d = 5;
         this.c = (float) (Math.random() * 3.141592653589793D * 2.0D);
         this.a(0.25F, 0.25F);
@@ -70,7 +68,7 @@ public class OEntityItem extends OEntity {
             }
 
             if (!this.q.I) {
-                this.g();
+                this.e();
             }
         }
 
@@ -81,7 +79,7 @@ public class OEntityItem extends OEntity {
             int i = this.q.a(OMathHelper.c(this.u), OMathHelper.c(this.E.b) - 1, OMathHelper.c(this.w));
 
             if (i > 0) {
-                f = OBlock.r[i].cP * 0.98F;
+                f = OBlock.s[i].cV * 0.98F;
             }
 
             // CanaryMod start
@@ -111,7 +109,7 @@ public class OEntityItem extends OEntity {
         }
     }
 
-    private void g() {
+    private void e() {
         Iterator iterator = this.q.a(OEntityItem.class, this.E.b(0.5D, 0.0D, 0.5D)).iterator();
 
         while (iterator.hasNext()) {
@@ -134,14 +132,14 @@ public class OEntityItem extends OEntity {
                 return false;
             } else if (oitemstack1.p() && !oitemstack1.q().equals(oitemstack.q())) {
                 return false;
-            } else if (oitemstack1.b().m() && oitemstack1.k() != oitemstack.k()) {
+            } else if (oitemstack1.b().n() && oitemstack1.k() != oitemstack.k()) {
                 return false;
-            } else if (oitemstack1.a < oitemstack.a) {
+            } else if (oitemstack1.b < oitemstack.b) {
                 return oentityitem.a(this);
-            } else if (oitemstack1.a + oitemstack.a > oitemstack1.e()) {
+            } else if (oitemstack1.b + oitemstack.b > oitemstack1.e()) {
                 return false;
             } else {
-                oitemstack1.a += oitemstack.a;
+                oitemstack1.b += oitemstack.b;
                 oentityitem.b = Math.max(oentityitem.b, this.b);
                 oentityitem.a = Math.min(oentityitem.a, this.a);
                 oentityitem.a(oitemstack1);
@@ -162,17 +160,17 @@ public class OEntityItem extends OEntity {
     }
 
     protected void e(int i) {
-        this.a(ODamageSource.a, i);
+        this.a(ODamageSource.a, (float) i);
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
-        if (this.aq()) {
+    public boolean a(ODamageSource odamagesource, float f) {
+        if (this.ap()) {
             return false;
-        } else if (this.d() != null && this.d().c == OItem.bT.cp && odamagesource.c()) {
+        } else if (this.d() != null && this.d().d == OItem.bU.cv && odamagesource.c()) {
             return false;
         } else {
             this.J();
-            this.d -= i;
+            this.d = (int) ((float) this.d - f);
             if (this.d <= 0) {
                 this.w();
             }
@@ -203,49 +201,49 @@ public class OEntityItem extends OEntity {
     public void b_(OEntityPlayer oentityplayer) {
         if (!this.q.I) {
             OItemStack oitemstack = this.d();
-            int i = oitemstack.a;
+            int i = oitemstack.b;
 
             // CanaryMod: First simulate the pickup and call the hooks
-            if (this.b == 0 && oentityplayer.bK.canPickup(this)){
-                if(oentityplayer.bK.a(oitemstack)) {
-                    if (oitemstack.c == OBlock.N.cz) {
+            if (this.b == 0 && oentityplayer.bn.canPickup(this)){
+                if(oentityplayer.bn.a(oitemstack)) {
+                    if (oitemstack.d == OBlock.O.cF) {
                         oentityplayer.a((OStatBase) OAchievementList.g);
                     }
                 }
 
-                if (oitemstack.c == OItem.aG.cp) {
+                if (oitemstack.d == OItem.aH.cv) {
                         oentityplayer.a((OStatBase) OAchievementList.t);
                     }
 
-                if (oitemstack.c == OItem.o.cp) {
+                if (oitemstack.d == OItem.p.cv) {
                         oentityplayer.a((OStatBase) OAchievementList.w);
                     }
 
-                if (oitemstack.c == OItem.bp.cp) {
+                if (oitemstack.d == OItem.bq.cv) {
                         oentityplayer.a((OStatBase) OAchievementList.z);
                     }
 
                 this.a("random.pop", 0.2F, ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 oentityplayer.a((OEntity) this, i);
-                if (oitemstack.a <= 0) {
+                if (oitemstack.b <= 0) {
                     this.w();
                 }
             }
         }
     }
 
-    public String am() {
+    public String al() {
         return OStatCollector.a("item." + this.d().a());
     }
 
-    public boolean ap() {
+    public boolean ao() {
         return false;
     }
 
-    public void c(int i) {
-        super.c(i);
+    public void b(int i) {
+        super.b(i);
         if (!this.q.I) {
-            this.g();
+            this.e();
         }
     }
 
@@ -254,10 +252,10 @@ public class OEntityItem extends OEntity {
 
         if (oitemstack == null) {
             if (this.q != null) {
-                this.q.X().c("Item entity " + this.k + " has no item?!");
+                this.q.Y().c("Item entity " + this.k + " has no item?!");
             }
 
-            return new OItemStack(OBlock.x);
+            return new OItemStack(OBlock.y);
         } else {
             return oitemstack;
         }
@@ -267,4 +265,10 @@ public class OEntityItem extends OEntity {
         this.u().b(10, oitemstack);
         this.u().h(10);
     }
+
+    // CanaryMod start: add getEntity
+    @Override
+    public ItemEntity getEntity() {
+        return item;
+    } // CanaryMod end
 }

@@ -38,7 +38,7 @@ public class HookParametersSlotClick {
             return null;
 
         OSlot slot = openContainer.a(inventorySlot);
-        OItemStack itemstack = slot.c();
+        OItemStack itemstack = slot.d();
         return itemstack == null ? null : new Item(itemstack);
     }
 

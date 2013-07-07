@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class OBlockEndPortal extends OBlockContainer {
 
-    public static boolean a = false;
+    public static boolean a;
 
     protected OBlockEndPortal(int i, OMaterial omaterial) {
         super(i, omaterial);
@@ -38,7 +38,7 @@ public class OBlockEndPortal extends OBlockContainer {
         if (oentity.o == null && oentity.n == null && !oworld.I) {
             // CanaryMod: Check if end is enabled
             if (etc.getInstance().isEndEnabled()) {
-                oentity.c(1);
+                oentity.b(1);
             }
         }
     }
@@ -49,7 +49,7 @@ public class OBlockEndPortal extends OBlockContainer {
 
     public void a(OWorld oworld, int i, int j, int k) {
         if (!a) {
-            if (oworld.t.h != 0) {
+            if (oworld.t.i != 0) {
                 oworld.i(i, j, k);
             }
         }

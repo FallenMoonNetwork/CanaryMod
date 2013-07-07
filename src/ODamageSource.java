@@ -14,20 +14,20 @@ public class ODamageSource {
     public static ODamageSource l = (new ODamageSource("wither")).j();
     public static ODamageSource m = new ODamageSource("anvil");
     public static ODamageSource n = new ODamageSource("fallingBlock");
-    private boolean p = false;
-    private boolean q = false;
+    private boolean p;
+    private boolean q;
     private float r = 0.3F;
     private boolean s;
     private boolean t;
     private boolean u;
-    private boolean v = false;
-    private boolean w = false;
+    private boolean v;
+    private boolean w;
     public String o;
 
     DamageSource damageSource = new DamageSource(this); // CanaryMod: reference to wrapper
 
-    public static ODamageSource a(OEntityLiving oentityliving) {
-        return new OEntityDamageSource("mob", oentityliving);
+    public static ODamageSource a(OEntityLivingBase oentitylivingbase) {
+        return new OEntityDamageSource("mob", oentitylivingbase);
     }
 
     public static ODamageSource a(OEntityPlayer oentityplayer) {
@@ -116,12 +116,12 @@ public class ODamageSource {
         return this;
     }
 
-    public String b(OEntityLiving oentityliving) {
-        OEntityLiving oentityliving1 = oentityliving.bN();
+    public OChatMessageComponent b(OEntityLivingBase oentitylivingbase) {
+        OEntityLivingBase oentitylivingbase1 = oentitylivingbase.aO();
         String s = "death.attack." + this.o;
         String s1 = s + ".player";
 
-        return oentityliving1 != null && OStatCollector.b(s1) ? OStatCollector.a(s1, new Object[] { oentityliving.ax(), oentityliving1.ax()}) : OStatCollector.a(s, new Object[] { oentityliving.ax()});
+        return oentitylivingbase1 != null && OStatCollector.b(s1) ? OChatMessageComponent.b(s1, new Object[] { oentitylivingbase.aw(), oentitylivingbase1.aw()}) : OChatMessageComponent.b(s, new Object[] { oentitylivingbase.aw()});
     }
 
     public boolean m() {

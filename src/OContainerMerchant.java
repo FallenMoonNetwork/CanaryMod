@@ -54,8 +54,8 @@ public class OContainerMerchant extends OContainer {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if (i == 2) {
@@ -76,13 +76,13 @@ public class OContainerMerchant extends OContainer {
                 return null;
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
 
-            if (oitemstack1.a == oitemstack.a) {
+            if (oitemstack1.b == oitemstack.b) {
                 return null;
             }
 
@@ -101,18 +101,18 @@ public class OContainerMerchant extends OContainer {
 
     public void b(OEntityPlayer oentityplayer) {
         super.b(oentityplayer);
-        this.a.a((OEntityPlayer) null);
+        this.a.a_((OEntityPlayer) null);
         super.b(oentityplayer);
         if (!this.g.I) {
-            OItemStack oitemstack = this.f.b(0);
+            OItemStack oitemstack = this.f.a_(0);
 
             if (oitemstack != null) {
-                oentityplayer.c(oitemstack);
+                oentityplayer.b(oitemstack);
             }
 
-            oitemstack = this.f.b(1);
+            oitemstack = this.f.a_(1);
             if (oitemstack != null) {
-                oentityplayer.c(oitemstack);
+                oentityplayer.b(oitemstack);
             }
         }
     }

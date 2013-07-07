@@ -16,7 +16,7 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
     public OTileEntityBeacon() {}
 
     public void h() {
-        if (this.k.H() % 80L == 0L) {
+        if (this.k.I() % 80L == 0L) {
             this.v();
             this.u();
         }
@@ -33,7 +33,7 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
 
             OAxisAlignedBB oaxisalignedbb = OAxisAlignedBB.a().a((double) this.l, (double) this.m, (double) this.n, (double) (this.l + 1), (double) (this.m + 1), (double) (this.n + 1)).b(d0, d0, d0);
 
-            oaxisalignedbb.e = (double) this.k.Q();
+            oaxisalignedbb.e = (double) this.k.R();
             List list = this.k.a(OEntityPlayer.class, oaxisalignedbb);
             Iterator iterator = list.iterator();
 
@@ -76,7 +76,7 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
                     for (int l = this.n - i; l <= this.n + i; ++l) {
                         int i1 = this.k.a(k, j, l);
 
-                        if (i1 != OBlock.bZ.cz && i1 != OBlock.al.cz && i1 != OBlock.aB.cz && i1 != OBlock.am.cz) {
+                        if (i1 != OBlock.ca.cF && i1 != OBlock.am.cF && i1 != OBlock.aC.cF && i1 != OBlock.an.cF) {
                             flag = false;
                             break;
                         }
@@ -174,21 +174,21 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
 
     public OItemStack a(int i, int j) {
         if (i == 0 && this.h != null) {
-            if (j >= this.h.a) {
+            if (j >= this.h.b) {
                 OItemStack oitemstack = this.h;
 
                 this.h = null;
                 return oitemstack;
             } else {
-                this.h.a -= j;
-                return new OItemStack(this.h.c, j, this.h.k());
+                this.h.b -= j;
+                return new OItemStack(this.h.d, j, this.h.k());
             }
         } else {
             return null;
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (i == 0 && this.h != null) {
             OItemStack oitemstack = this.h;
 
@@ -225,12 +225,12 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
         return this.k.r(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 
     public boolean b(int i, OItemStack oitemstack) {
-        return oitemstack.c == OItem.bI.cp || oitemstack.c == OItem.o.cp || oitemstack.c == OItem.q.cp || oitemstack.c == OItem.p.cp;
+        return oitemstack.d == OItem.bJ.cv || oitemstack.d == OItem.p.cv || oitemstack.d == OItem.r.cv || oitemstack.d == OItem.q.cv;
     }
 
     @Override

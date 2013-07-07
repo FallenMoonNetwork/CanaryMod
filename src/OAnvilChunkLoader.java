@@ -52,16 +52,16 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
 
     protected OChunk a(OWorld oworld, int i, int j, ONBTTagCompound onbttagcompound) {
         if (!onbttagcompound.b("Level")) {
-            oworld.X().c("Chunk file at " + i + "," + j + " is missing level data, skipping");
+            oworld.Y().c("Chunk file at " + i + "," + j + " is missing level data, skipping");
             return null;
         } else if (!onbttagcompound.l("Level").b("Sections")) {
-            oworld.X().c("Chunk file at " + i + "," + j + " is missing block data, skipping");
+            oworld.Y().c("Chunk file at " + i + "," + j + " is missing block data, skipping");
             return null;
         } else {
             OChunk ochunk = this.a(oworld, onbttagcompound.l("Level"));
 
             if (!ochunk.a(i, j)) {
-                oworld.X().c("Chunk file at " + i + "," + j + " is in the wrong location; relocating. (Expected " + i + ", " + j + ", got " + ochunk.g + ", " + ochunk.h + ")");
+                oworld.Y().c("Chunk file at " + i + "," + j + " is in the wrong location; relocating. (Expected " + i + ", " + j + ", got " + ochunk.g + ", " + ochunk.h + ")");
                 onbttagcompound.a("xPos", i);
                 onbttagcompound.a("zPos", j);
                 ochunk = this.a(oworld, onbttagcompound.l("Level"));
@@ -72,7 +72,7 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
     }
 
     public void a(OWorld oworld, OChunk ochunk) throws OMinecraftException, IOException {
-        oworld.F();
+        oworld.G();
 
         try {
             ONBTTagCompound onbttagcompound = new ONBTTagCompound();
@@ -149,12 +149,13 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
     private void a(OChunk ochunk, OWorld oworld, ONBTTagCompound onbttagcompound) {
         onbttagcompound.a("xPos", ochunk.g);
         onbttagcompound.a("zPos", ochunk.h);
-        onbttagcompound.a("LastUpdate", oworld.H());
+        onbttagcompound.a("LastUpdate", oworld.I());
         onbttagcompound.a("HeightMap", ochunk.f);
         onbttagcompound.a("TerrainPopulated", ochunk.k);
+        onbttagcompound.a("InhabitedTime", ochunk.q);
         OExtendedBlockStorage[] aoextendedblockstorage = ochunk.i();
         ONBTTagList onbttaglist = new ONBTTagList("Sections");
-        boolean flag = !oworld.t.f;
+        boolean flag = !oworld.t.g;
         OExtendedBlockStorage[] aoextendedblockstorage1 = aoextendedblockstorage;
         int i = aoextendedblockstorage.length;
 
@@ -221,7 +222,7 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
         List list = oworld.a(ochunk, false);
 
         if (list != null) {
-            long k = oworld.H();
+            long k = oworld.I();
             ONBTTagList onbttaglist3 = new ONBTTagList();
             Iterator iterator1 = list.iterator();
 
@@ -249,10 +250,11 @@ public class OAnvilChunkLoader implements OIChunkLoader, OIThreadedFileIO {
 
         ochunk.f = onbttagcompound.k("HeightMap");
         ochunk.k = onbttagcompound.n("TerrainPopulated");
+        ochunk.q = onbttagcompound.f("InhabitedTime");
         ONBTTagList onbttaglist = onbttagcompound.m("Sections");
         byte b0 = 16;
         OExtendedBlockStorage[] aoextendedblockstorage = new OExtendedBlockStorage[b0];
-        boolean flag = !oworld.t.f;
+        boolean flag = !oworld.t.g;
 
         for (int k = 0; k < onbttaglist.c(); ++k) {
             ONBTTagCompound onbttagcompound1 = (ONBTTagCompound) onbttaglist.b(k);

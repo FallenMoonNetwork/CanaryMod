@@ -4,9 +4,14 @@ public class HookParametersDamage extends HookParameters {
     private DamageSource ds;
     private BaseEntity attacker;
     private BaseEntity defender;
-    private int amount;
+    private float amount;
 
+    @Deprecated
     public HookParametersDamage(BaseEntity attacker, BaseEntity defender, DamageSource ds, int amount) {
+        this(attacker, defender, ds, (float) amount);
+    }
+
+    public HookParametersDamage(BaseEntity attacker, BaseEntity defender, DamageSource ds, float amount) {
         this.attacker = attacker;
         this.defender = defender;
         this.amount = amount;
@@ -38,10 +43,18 @@ public class HookParametersDamage extends HookParameters {
     }
 
     public int getDamageAmount() {
+        return (int) amount;
+    }
+
+    public float getDamageAmountFloat() {
         return amount;
     }
 
     public void setDamageAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setDamageAmount(float amount) {
         this.amount = amount;
     }
 }

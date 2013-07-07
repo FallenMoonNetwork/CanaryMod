@@ -17,12 +17,12 @@ public class DamageSource {
 
     /**
      * Get the death message for the player that will be displayed in chat,
-     * if the player dies from this {@link DamageSource}
+     * if the player dies from this {@link DamageSource}.
      * @param player
      * @return
      */
     public String getDeathMessage(Player player) {
-        return osource.b(player.getEntity());
+        return osource.b(player.getEntity()).i();
     }
 
     /**

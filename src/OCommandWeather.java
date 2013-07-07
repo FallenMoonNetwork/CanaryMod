@@ -13,18 +13,20 @@ public class OCommandWeather extends OCommandBase {
         return 2;
     }
 
+    public String c(OICommandSender oicommandsender) {
+        return "commands.weather.usage";
+    }
+
     public void b(OICommandSender oicommandsender, String[] astring) {
-        if (astring.length < 1) {
-            throw new OWrongUsageException("commands.weather.usage", new Object[0]);
-        } else {
+        if (astring.length >= 1 && astring.length <= 2) {
             int i = (300 + (new Random()).nextInt(600)) * 20;
 
             if (astring.length >= 2) {
                 i = a(oicommandsender, astring[1], 1, 1000000) * 20;
             }
 
-            OWorldServer oworldserver = OMinecraftServer.D().getWorld(OMinecraftServer.D().J(), 0); // CanaryMod - multiworld fix
-            OWorldInfo oworldinfo = oworldserver.M();
+            OWorldServer oworldserver = OMinecraftServer.F().getWorld(oicommandsender.f_().name, 0); // CanaryMod - multiworld fix
+            OWorldInfo oworldinfo = oworldserver.N();
 
             oworldinfo.g(i);
             oworldinfo.f(i);
@@ -36,11 +38,17 @@ public class OCommandWeather extends OCommandBase {
                 oworldinfo.b(true);
                 oworldinfo.a(false);
                 a(oicommandsender, "commands.weather.rain", new Object[0]);
-            } else if ("thunder".equalsIgnoreCase(astring[0])) {
+            } else {
+                if (!"thunder".equalsIgnoreCase(astring[0])) {
+                    throw new OWrongUsageException("commands.weather.usage", new Object[0]);
+                }
+
                 oworldinfo.b(true);
                 oworldinfo.a(true);
                 a(oicommandsender, "commands.weather.thunder", new Object[0]);
             }
+        } else {
+            throw new OWrongUsageException("commands.weather.usage", new Object[0]);
         }
     }
 

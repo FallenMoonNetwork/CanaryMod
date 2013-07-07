@@ -3,8 +3,8 @@ import java.util.Random;
 public class OBlockLeaves extends OBlockLeavesBase {
 
     public static final String[] a = new String[] { "oak", "spruce", "birch", "jungle"};
-    public static final String[][] b = new String[][] { { "leaves", "leaves_spruce", "leaves", "leaves_jungle"}, { "leaves_opaque", "leaves_spruce_opaque", "leaves_opaque", "leaves_jungle_opaque"}};
-    private OIcon[][] cR = new OIcon[2][];
+    public static final String[][] b = new String[][] { { "leaves_oak", "leaves_spruce", "leaves_birch", "leaves_jungle"}, { "leaves_oak_opaque", "leaves_spruce_opaque", "leaves_birch_opaque", "leaves_jungle_opaque"}};
+    private OIcon[][] cX = new OIcon[2][];
     int[] c;
 
     protected OBlockLeaves(int i) {
@@ -23,7 +23,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
                     for (int i2 = -b0; i2 <= b0; ++i2) {
                         int j2 = oworld.a(i + k1, j + l1, k + i2);
 
-                        if (j2 == OBlock.O.cz) {
+                        if (j2 == OBlock.P.cF) {
                             int k2 = oworld.h(i + k1, j + l1, k + i2);
 
                             oworld.b(i + k1, j + l1, k + i2, k2 | 8, 4);
@@ -60,9 +60,9 @@ public class OBlockLeaves extends OBlockLeavesBase {
                         for (i2 = -b0; i2 <= b0; ++i2) {
                             for (j2 = -b0; j2 <= b0; ++j2) {
                                 k2 = oworld.a(i + l1, j + i2, k + j2);
-                                if (k2 == OBlock.N.cz) {
+                                if (k2 == OBlock.O.cF) {
                                     this.c[(l1 + k1) * j1 + (i2 + k1) * b1 + j2 + k1] = 0;
-                                } else if (k2 == OBlock.O.cz) {
+                                } else if (k2 == OBlock.P.cF) {
                                     this.c[(l1 + k1) * j1 + (i2 + k1) * b1 + j2 + k1] = -2;
                                 } else {
                                     this.c[(l1 + k1) * j1 + (i2 + k1) * b1 + j2 + k1] = -1;
@@ -132,7 +132,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
     }
 
     public int a(int i, Random random, int j) {
-        return OBlock.C.cz;
+        return OBlock.D.cF;
     }
 
     public void a(OWorld oworld, int i, int j, int k, int l, float f, int i1) {
@@ -165,15 +165,15 @@ public class OBlockLeaves extends OBlockLeavesBase {
             }
 
             if ((l & 3) == 0 && oworld.s.nextInt(j1) == 0) {
-                this.b(oworld, i, j, k, new OItemStack(OItem.k, 1, 0));
+                this.b(oworld, i, j, k, new OItemStack(OItem.l, 1, 0));
             }
         }
     }
 
     public void a(OWorld oworld, OEntityPlayer oentityplayer, int i, int j, int k, int l) {
-        if (!oworld.I && oentityplayer.cd() != null && oentityplayer.cd().c == OItem.bf.cp) {
-            oentityplayer.a(OStatList.C[this.cz], 1);
-            this.b(oworld, i, j, k, new OItemStack(OBlock.O.cz, 1, l & 3));
+        if (!oworld.I && oentityplayer.bt() != null && oentityplayer.bt().d == OItem.bg.cv) {
+            oentityplayer.a(OStatList.C[this.cF], 1);
+            this.b(oworld, i, j, k, new OItemStack(OBlock.P.cF, 1, l & 3));
         } else {
             super.a(oworld, oentityplayer, i, j, k, l);
         }
@@ -187,7 +187,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
         return !this.d;
     }
 
-    protected OItemStack c_(int i) {
-        return new OItemStack(this.cz, 1, i & 3);
+    protected OItemStack d_(int i) {
+        return new OItemStack(this.cF, 1, i & 3);
     }
 }

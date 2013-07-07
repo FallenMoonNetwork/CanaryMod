@@ -6,6 +6,8 @@ public class OMerchantRecipe {
     private int d;
     private int e;
 
+    private VillagerTrade trade = new VillagerTrade(this); // CanaryMod: reference to wrapper
+
     public OMerchantRecipe(ONBTTagCompound onbttagcompound) {
         this.a(onbttagcompound);
     }
@@ -42,11 +44,11 @@ public class OMerchantRecipe {
     }
 
     public boolean a(OMerchantRecipe omerchantrecipe) {
-        return this.a.c == omerchantrecipe.a.c && this.c.c == omerchantrecipe.c.c ? this.b == null && omerchantrecipe.b == null || this.b != null && omerchantrecipe.b != null && this.b.c == omerchantrecipe.b.c : false;
+        return this.a.d == omerchantrecipe.a.d && this.c.d == omerchantrecipe.c.d ? this.b == null && omerchantrecipe.b == null || this.b != null && omerchantrecipe.b != null && this.b.d == omerchantrecipe.b.d : false;
     }
 
     public boolean b(OMerchantRecipe omerchantrecipe) {
-        return this.a(omerchantrecipe) && (this.a.a < omerchantrecipe.a.a || this.b != null && this.b.a < omerchantrecipe.b.a);
+        return this.a(omerchantrecipe) && (this.a.b < omerchantrecipe.a.b || this.b != null && this.b.b < omerchantrecipe.b.b);
     }
 
     public void f() {
@@ -96,4 +98,9 @@ public class OMerchantRecipe {
         onbttagcompound.a("maxUses", this.e);
         return onbttagcompound;
     }
+
+    // CanaryMod start: add getVillagerTrade()
+    public VillagerTrade getVillagerTrade() {
+        return trade;
+    } // CanaryMod end
 }

@@ -38,7 +38,7 @@ class OLogFormatter extends Formatter { // CanaryMod: include for synthetic cons
         return stringbuilder.toString();
     }
 
-    OLogFormatter(OLogAgent ologagent, OLogAgentINNER1 ologagentinner1) {
+    OLogFormatter(OLogAgent ologagent, OLogAgentEmptyAnon ologagentemptyanon) {
         this(ologagent);
     }
 }

@@ -21,11 +21,11 @@ public class OWorldManager implements OIWorldAccess {
     }
 
     public void a(String s, double d0, double d1, double d2, float f, float f1) {
-        this.a.ad().a(d0, d1, d2, f > 1.0F ? (double) (16.0F * f) : 16.0D, this.b.t.h, new OPacket62LevelSound(s, d0, d1, d2, f, f1), this.b.name); // CanaryMod: pass world name
+        this.a.af().a(d0, d1, d2, f > 1.0F ? (double) (16.0F * f) : 16.0D, this.b.t.i, new OPacket62LevelSound(s, d0, d1, d2, f, f1), this.b.name); // CanaryMod: pass world name
     }
 
     public void a(OEntityPlayer oentityplayer, String s, double d0, double d1, double d2, float f, float f1) {
-        this.a.ad().a(oentityplayer, d0, d1, d2, f > 1.0F ? (double) (16.0F * f) : 16.0D, this.b.t.h, new OPacket62LevelSound(s, d0, d1, d2, f, f1), this.b.name); // CanaryMod: pass world name
+        this.a.af().a(oentityplayer, d0, d1, d2, f > 1.0F ? (double) (16.0F * f) : 16.0D, this.b.t.i, new OPacket62LevelSound(s, d0, d1, d2, f, f1), this.b.name); // CanaryMod: pass world name
     }
 
     public void a(int i, int j, int k, int l, int i1, int j1) {}
@@ -39,15 +39,15 @@ public class OWorldManager implements OIWorldAccess {
     public void a(String s, int i, int j, int k) {}
 
     public void a(OEntityPlayer oentityplayer, int i, int j, int k, int l, int i1) {
-        this.a.ad().a(oentityplayer, (double) j, (double) k, (double) l, 64.0D, this.b.t.h, new OPacket61DoorChange(i, j, k, l, i1, false), this.b.name); // CanaryMod: pass world name
+        this.a.af().a(oentityplayer, (double) j, (double) k, (double) l, 64.0D, this.b.t.i, new OPacket61DoorChange(i, j, k, l, i1, false), this.b.name); // CanaryMod: pass world name
     }
 
     public void a(int i, int j, int k, int l, int i1) {
-        this.a.ad().a((OPacket) (new OPacket61DoorChange(i, j, k, l, i1, true)));
+        this.a.af().a((OPacket) (new OPacket61DoorChange(i, j, k, l, i1, true)));
     }
 
     public void b(int i, int j, int k, int l, int i1) {
-        Iterator iterator = this.a.ad().a.iterator();
+        Iterator iterator = this.a.af().a.iterator();
 
         while (iterator.hasNext()) {
             OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) iterator.next();

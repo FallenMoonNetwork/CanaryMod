@@ -1,6 +1,6 @@
-public abstract class OEntityTameable extends OEntityAnimal {
+public abstract class OEntityTameable extends OEntityAnimal implements OEntityOwnable {
 
-    protected OEntityAISit d = new OEntityAISit(this);
+    protected OEntityAISit bp = new OEntityAISit(this);
 
     private TamableEntity tamableEntity = new TamableEntity(this);
 
@@ -16,13 +16,13 @@ public abstract class OEntityTameable extends OEntityAnimal {
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        if (this.o() == null) {
+        if (this.h_() == null) {
             onbttagcompound.a("Owner", "");
         } else {
-            onbttagcompound.a("Owner", this.o());
+            onbttagcompound.a("Owner", this.h_());
         }
 
-        onbttagcompound.a("Sitting", this.n());
+        onbttagcompound.a("Sitting", this.bQ());
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
@@ -30,15 +30,15 @@ public abstract class OEntityTameable extends OEntityAnimal {
         String s = onbttagcompound.i("Owner");
 
         if (s.length() > 0) {
-            this.a(s);
-            this.j(true);
+            this.b(s);
+            this.k(true);
         }
 
-        this.d.a(onbttagcompound.n("Sitting"));
-        this.k(onbttagcompound.n("Sitting"));
+        this.bp.a(onbttagcompound.n("Sitting"));
+        this.l(onbttagcompound.n("Sitting"));
     }
 
-    protected void i(boolean flag) {
+    protected void j(boolean flag) {
         String s = "heart";
 
         if (!flag) {
@@ -54,11 +54,11 @@ public abstract class OEntityTameable extends OEntityAnimal {
         }
     }
 
-    public boolean m() {
+    public boolean bP() {
         return (this.ah.a(16) & 4) != 0;
     }
 
-    public void j(boolean flag) {
+    public void k(boolean flag) {
         byte b0 = this.ah.a(16);
 
         if (flag) {
@@ -68,11 +68,11 @@ public abstract class OEntityTameable extends OEntityAnimal {
         }
     }
 
-    public boolean n() {
+    public boolean bQ() {
         return (this.ah.a(16) & 1) != 0;
     }
 
-    public void k(boolean flag) {
+    public void l(boolean flag) {
         byte b0 = this.ah.a(16);
 
         if (flag) {
@@ -82,20 +82,24 @@ public abstract class OEntityTameable extends OEntityAnimal {
         }
     }
 
-    public String o() {
+    public String h_() {
         return this.ah.e(17);
     }
 
-    public void a(String s) {
+    public void b(String s) {
         this.ah.b(17, s);
     }
 
-    public OEntityLiving p() {
-        return this.q.a(this.o());
+    public OEntityLivingBase bR() {
+        return this.q.a(this.h_());
     }
 
-    public OEntityAISit q() {
-        return this.d;
+    public OEntityAISit bS() {
+        return this.bp;
+    }
+
+    public OEntity d() {
+        return this.bR();
     }
 
     @Override

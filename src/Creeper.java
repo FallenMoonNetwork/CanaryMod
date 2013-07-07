@@ -40,7 +40,7 @@ public class Creeper extends Mob {
      * @return
      */
     public boolean isCharged() {
-        return getEntity().m();
+        return getEntity().bP();
     }
 
     /**

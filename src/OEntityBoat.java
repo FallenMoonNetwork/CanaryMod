@@ -24,14 +24,14 @@ public class OEntityBoat extends OEntity {
         this.N = this.P / 2.0F;
     }
 
-    protected boolean f_() {
+    protected boolean e_() {
         return false;
     }
 
     protected void a() {
         this.ah.a(17, new Integer(0));
         this.ah.a(18, new Integer(1));
-        this.ah.a(19, new Integer(0));
+        this.ah.a(19, new Float(0.0F));
     }
 
     public OAxisAlignedBB g(OEntity oentity) {
@@ -65,34 +65,34 @@ public class OEntityBoat extends OEntity {
         return (double) this.P * 0.0D - 0.30000001192092896D;
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
+    public boolean a(ODamageSource odamagesource, float f) {
         // CanaryMod: Attack of the boat
         BaseEntity entity = null;
 
         if (odamagesource != null && odamagesource.i() != null) {
-            entity = new BaseEntity(odamagesource.i());
+            entity = odamagesource.i().getEntity();
         }
-        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, boat, entity, i)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, boat, entity, f)) {
             return true;
         }
 
 
-        if (this.aq()) {
+        if (this.ap()) {
             return false;
         } else if (!this.q.I && !this.M) {
-            this.h(-this.h());
-            this.b(10);
-            this.a(this.d() + i * 10);
+            this.c(-this.h());
+            this.a(10);
+            this.a(this.d() + f * 10.0F);
             this.J();
-            boolean flag = odamagesource.i() instanceof OEntityPlayer && ((OEntityPlayer) odamagesource.i()).ce.d;
+            boolean flag = odamagesource.i() instanceof OEntityPlayer && ((OEntityPlayer) odamagesource.i()).bG.d;
 
-            if (flag || this.d() > 40) {
+            if (flag || this.d() > 40.0F) {
                 if (this.n != null) {
                     this.n.a((OEntity) this);
                 }
 
                 if (!flag) {
-                    this.a(OItem.aF.cp, 1, 0.0F);
+                    this.a(OItem.aG.cv, 1, 0.0F);
                 }
 
                 this.w();
@@ -117,12 +117,12 @@ public class OEntityBoat extends OEntity {
         double prevY = this.s;
         double prevZ = this.t;
 
-        if (this.g() > 0) {
-            this.b(this.g() - 1);
+        if (this.e() > 0) {
+            this.a(this.e() - 1);
         }
 
-        if (this.d() > 0) {
-            this.a(this.d() - 1);
+        if (this.d() > 0.0F) {
+            this.a(this.d() - 1.0F);
         }
 
         this.r = this.u;
@@ -208,9 +208,14 @@ public class OEntityBoat extends OEntity {
                 this.y += 0.007000000216066837D;
             }
 
-            if (this.n != null) {
-                this.x += this.n.x * this.b;
-                this.z += this.n.z * this.b;
+            if (this.n != null && this.n instanceof OEntityLivingBase) {
+                d4 = (double) ((OEntityLivingBase) this.n).bf;
+                if (d4 > 0.0D) {
+                    d5 = -Math.sin((double) (this.n.A * 3.1415927F / 180.0F));
+                    d10 = Math.cos((double) (this.n.A * 3.1415927F / 180.0F));
+                    this.x += d5 * this.b * 0.05000000074505806D;
+                    this.z += d10 * this.b * 0.05000000074505806D;
+                }
             }
 
             d4 = Math.sqrt(this.x * this.x + this.z * this.z);
@@ -247,11 +252,11 @@ public class OEntityBoat extends OEntity {
                     int k;
 
                     for (k = 0; k < 3; ++k) {
-                        this.a(OBlock.B.cz, 1, 0.0F);
+                        this.a(OBlock.C.cF, 1, 0.0F);
                     }
 
                     for (k = 0; k < 2; ++k) {
-                        this.a(OItem.E.cp, 1, 0.0F);
+                        this.a(OItem.F.cv, 1, 0.0F);
                     }
                 }
             } else {
@@ -306,9 +311,9 @@ public class OEntityBoat extends OEntity {
                         int l1 = OMathHelper.c(this.v) + k1;
                         int i2 = this.q.a(i1, l1, j1);
 
-                        if (i2 == OBlock.aW.cz) {
+                        if (i2 == OBlock.aX.cF) {
                             this.q.i(i1, l1, j1);
-                        } else if (i2 == OBlock.bD.cz) {
+                        } else if (i2 == OBlock.bE.cF) {
                             this.q.a(i1, l1, j1, true);
                         }
                     }
@@ -334,7 +339,7 @@ public class OEntityBoat extends OEntity {
 
     protected void a(ONBTTagCompound onbttagcompound) {}
 
-    public boolean a_(OEntityPlayer oentityplayer) {
+    public boolean c(OEntityPlayer oentityplayer) {
         // CanaryMod: Entering the boat
         manager.callHook(PluginLoader.Hook.VEHICLE_ENTERED, boat, oentityplayer.entity);
 
@@ -349,23 +354,23 @@ public class OEntityBoat extends OEntity {
         }
     }
 
+    public void a(float f) {
+        this.ah.b(19, Float.valueOf(f));
+    }
+
+    public float d() {
+        return this.ah.d(19);
+    }
+
     public void a(int i) {
-        this.ah.b(19, Integer.valueOf(i));
-    }
-
-    public int d() {
-        return this.ah.c(19);
-    }
-
-    public void b(int i) {
         this.ah.b(17, Integer.valueOf(i));
     }
 
-    public int g() {
+    public int e() {
         return this.ah.c(17);
     }
 
-    public void h(int i) {
+    public void c(int i) {
         this.ah.b(18, Integer.valueOf(i));
     }
 

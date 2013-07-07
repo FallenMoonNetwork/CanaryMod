@@ -33,17 +33,21 @@ public class ONBTTagList extends ONBTBase {
         }
     }
 
-    void a(DataInput datainput) throws IOException {
-        this.c = datainput.readByte();
-        int i = datainput.readInt();
+    void a(DataInput datainput, int i) throws IOException {
+        if (i > 512) {
+            throw new RuntimeException("Tried to read NBT tag with too high complexity, depth > 512");
+        } else {
+            this.c = datainput.readByte();
+            int j = datainput.readInt();
 
-        this.a = new ArrayList();
+            this.a = new ArrayList();
 
-        for (int j = 0; j < i; ++j) {
-            ONBTBase onbtbase = ONBTBase.a(this.c, (String) null);
+            for (int k = 0; k < j; ++k) {
+                ONBTBase onbtbase = ONBTBase.a(this.c, (String) null);
 
-            onbtbase.a(datainput);
-            this.a.add(onbtbase);
+                onbtbase.a(datainput, i + 1);
+                this.a.add(onbtbase);
+            }
         }
     }
 

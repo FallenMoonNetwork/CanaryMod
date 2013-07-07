@@ -5,7 +5,7 @@ final class ODispenserBehaviorFireball extends OBehaviorDefaultDispenseItem {
     ODispenserBehaviorFireball() {}
 
     public OItemStack b(OIBlockSource oiblocksource, OItemStack oitemstack) {
-        OEnumFacing oenumfacing = OBlockDispenser.j_(oiblocksource.h());
+        OEnumFacing oenumfacing = OBlockDispenser.l_(oiblocksource.h());
         OIPosition oiposition = OBlockDispenser.a(oiblocksource);
         double d0 = oiposition.a() + (double) ((float) oenumfacing.c() * 0.3F);
         double d1 = oiposition.b() + (double) ((float) oenumfacing.c() * 0.3F);

@@ -5,11 +5,11 @@ public abstract class OEntityFireball extends OEntity {
     protected int e = -1; // CanaryMod: private to protected
     private int f = -1;
     private int g = -1;
-    private int h = 0;
-    private boolean i = false;
-    public OEntityLiving a;
+    private int h;
+    private boolean i;
+    public OEntityLivingBase a;
     private int j;
-    private int au = 0;
+    private int au;
     public double b;
     public double c;
     public double d;
@@ -33,11 +33,11 @@ public abstract class OEntityFireball extends OEntity {
         this.d = d5 / d6 * 0.1D;
     }
 
-    public OEntityFireball(OWorld oworld, OEntityLiving oentityliving, double d0, double d1, double d2) {
+    public OEntityFireball(OWorld oworld, OEntityLivingBase oentitylivingbase, double d0, double d1, double d2) {
         super(oworld);
-        this.a = oentityliving;
+        this.a = oentitylivingbase;
         this.a(1.0F, 1.0F);
-        this.b(oentityliving.u, oentityliving.v, oentityliving.w, oentityliving.A, oentityliving.B);
+        this.b(oentitylivingbase.u, oentitylivingbase.v, oentitylivingbase.w, oentitylivingbase.A, oentitylivingbase.B);
         this.b(this.u, this.v, this.w);
         this.N = 0.0F;
         this.x = this.y = this.z = 0.0D;
@@ -79,14 +79,14 @@ public abstract class OEntityFireball extends OEntity {
                 ++this.au;
             }
 
-            OVec3 ovec3 = this.q.U().a(this.u, this.v, this.w);
-            OVec3 ovec31 = this.q.U().a(this.u + this.x, this.v + this.y, this.w + this.z);
+            OVec3 ovec3 = this.q.V().a(this.u, this.v, this.w);
+            OVec3 ovec31 = this.q.V().a(this.u + this.x, this.v + this.y, this.w + this.z);
             OMovingObjectPosition omovingobjectposition = this.q.a(ovec3, ovec31);
 
-            ovec3 = this.q.U().a(this.u, this.v, this.w);
-            ovec31 = this.q.U().a(this.u + this.x, this.v + this.y, this.w + this.z);
+            ovec3 = this.q.V().a(this.u, this.v, this.w);
+            ovec31 = this.q.V().a(this.u + this.x, this.v + this.y, this.w + this.z);
             if (omovingobjectposition != null) {
-                ovec31 = this.q.U().a(omovingobjectposition.f.c, omovingobjectposition.f.d, omovingobjectposition.f.e);
+                ovec31 = this.q.V().a(omovingobjectposition.f.c, omovingobjectposition.f.d, omovingobjectposition.f.e);
             }
 
             OEntity oentity = null;
@@ -96,7 +96,7 @@ public abstract class OEntityFireball extends OEntity {
             for (int j = 0; j < list.size(); ++j) {
                 OEntity oentity1 = (OEntity) list.get(j);
 
-                if (oentity1.K() && (!oentity1.i(this.a) || this.au >= 25)) {
+                if (oentity1.K() && (!oentity1.h(this.a) || this.au >= 25)) {
                     float f = 0.3F;
                     OAxisAlignedBB oaxisalignedbb = oentity1.E.b((double) f, (double) f, (double) f);
                     OMovingObjectPosition omovingobjectposition1 = oaxisalignedbb.a(ovec3, ovec31);
@@ -208,8 +208,8 @@ public abstract class OEntityFireball extends OEntity {
         return 1.0F;
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
-        if (this.aq()) {
+    public boolean a(ODamageSource odamagesource, float f) {
+        if (this.ap()) {
             return false;
         } else {
             this.J();
@@ -225,8 +225,8 @@ public abstract class OEntityFireball extends OEntity {
                     this.d = this.z * 0.1D;
                 }
 
-                if (odamagesource.i() instanceof OEntityLiving) {
-                    this.a = (OEntityLiving) odamagesource.i();
+                if (odamagesource.i() instanceof OEntityLivingBase) {
+                    this.a = (OEntityLivingBase) odamagesource.i();
                 }
 
                 return true;
@@ -236,7 +236,7 @@ public abstract class OEntityFireball extends OEntity {
         }
     }
 
-    public float c(float f) {
+    public float d(float f) {
         return 1.0F;
     }
 }

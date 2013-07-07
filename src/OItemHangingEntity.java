@@ -32,7 +32,7 @@ public class OItemHangingEntity extends OItem {
                         oworld.d((OEntity) oentityhanging);
                     }
 
-                    --oitemstack.a;
+                    --oitemstack.b;
                 }
 
                 return true;

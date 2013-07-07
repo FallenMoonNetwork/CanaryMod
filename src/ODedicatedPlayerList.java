@@ -12,12 +12,12 @@ public class ODedicatedPlayerList extends OServerConfigurationManager {
 
     public ODedicatedPlayerList(ODedicatedServer odedicatedserver) {
         super(odedicatedserver);
-        this.d = odedicatedserver.e("ops.txt");
-        // this.e = odedicatedserver.e("white-list.txt"); // CanaryMod: disable Notchian whitelist
+        this.d = odedicatedserver.d("ops.txt");
+        // this.e = odedicatedserver.d("white-list.txt"); // CanaryMod: disable Notchian whitelist
         this.c = odedicatedserver.a("view-distance", 10);
         this.b = odedicatedserver.a("max-players", 20);
         // this.a(odedicatedserver.a("white-list", false)); // CanaryMod: disable Notchian whitelist
-        if (!odedicatedserver.I()) {
+        if (!odedicatedserver.K()) {
             this.e().a(true);
             this.f().a(true);
         }
@@ -50,13 +50,13 @@ public class ODedicatedPlayerList extends OServerConfigurationManager {
         this.u();
     }
 
-    public void i(String s) {
-        super.i(s);
+    public void h(String s) {
+        super.h(s);
         this.w();
     }
 
-    public void h(String s) {
-        super.h(s);
+    public void g(String s) {
+        super.g(s);
         this.w();
     }
 
@@ -76,7 +76,7 @@ public class ODedicatedPlayerList extends OServerConfigurationManager {
 
             bufferedreader.close();
         } catch (Exception exception) {
-            this.s().al().b("Failed to load operators list: " + exception);
+            this.s().an().b("Failed to load operators list: " + exception);
         }
     }
 
@@ -93,7 +93,7 @@ public class ODedicatedPlayerList extends OServerConfigurationManager {
 
             printwriter.close();
         } catch (Exception exception) {
-            this.s().al().b("Failed to save operators list: " + exception);
+            this.s().an().b("Failed to save operators list: " + exception);
         }
     }
 
@@ -109,7 +109,7 @@ public class ODedicatedPlayerList extends OServerConfigurationManager {
 
             bufferedreader.close();
         } catch (Exception exception) {
-            this.s().al().b("Failed to load white-list: " + exception);
+            this.s().an().b("Failed to load white-list: " + exception);
         }
     }
 
@@ -126,7 +126,7 @@ public class ODedicatedPlayerList extends OServerConfigurationManager {
 
             printwriter.close();
         } catch (Exception exception) {
-            this.s().al().b("Failed to save white-list: " + exception);
+            this.s().an().b("Failed to save white-list: " + exception);
         }
     }
 

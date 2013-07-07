@@ -69,7 +69,7 @@ public class Arrow extends Projectile {
 
     @Override
     public boolean setShooter(LivingEntity shooter) {
-        setShooter(shooter);
+        setShooter((BaseEntity) shooter);
         return true;
     }
 

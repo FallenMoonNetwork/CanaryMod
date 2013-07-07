@@ -9,14 +9,14 @@ public abstract class OBlockBasePressurePlate extends OBlock {
         this.a = s;
         this.a(OCreativeTabs.d);
         this.b(true);
-        this.b_(this.d(15));
+        this.c_(this.d(15));
     }
 
     public void a(OIBlockAccess oiblockaccess, int i, int j, int k) {
-        this.b_(oiblockaccess.h(i, j, k));
+        this.c_(oiblockaccess.h(i, j, k));
     }
 
-    protected void b_(int i) {
+    protected void c_(int i) {
         boolean flag = this.c(i) > 0;
         float f = 0.0625F;
 
@@ -48,13 +48,13 @@ public abstract class OBlockBasePressurePlate extends OBlock {
     }
 
     public boolean c(OWorld oworld, int i, int j, int k) {
-        return oworld.w(i, j - 1, k) || OBlockFence.l_(oworld.a(i, j - 1, k));
+        return oworld.w(i, j - 1, k) || OBlockFence.n_(oworld.a(i, j - 1, k));
     }
 
     public void a(OWorld oworld, int i, int j, int k, int l) {
         boolean flag = false;
 
-        if (!oworld.w(i, j - 1, k) && !OBlockFence.l_(oworld.a(i, j - 1, k))) {
+        if (!oworld.w(i, j - 1, k) && !OBlockFence.n_(oworld.a(i, j - 1, k))) {
             flag = true;
         }
 
@@ -89,7 +89,7 @@ public abstract class OBlockBasePressurePlate extends OBlock {
 
         // CanaryMod: Allow pressure plate interaction to power redstone
         if (l != i1) {
-            i1 = this.d((Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(oworld.world, this.cz, i, j, k), l, i1));
+            i1 = this.d((Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, oworld.world.getBlockAt(i, j, k), l, i1));
         }
 
         boolean flag = l > 0;
@@ -108,7 +108,7 @@ public abstract class OBlockBasePressurePlate extends OBlock {
         }
 
         if (flag1) {
-            oworld.a(i, j, k, this.cz, this.a(oworld));
+            oworld.a(i, j, k, this.cF, this.a(oworld));
         }
     }
 
@@ -127,8 +127,8 @@ public abstract class OBlockBasePressurePlate extends OBlock {
     }
 
     protected void b_(OWorld oworld, int i, int j, int k) {
-        oworld.f(i, j, k, this.cz);
-        oworld.f(i, j - 1, k, this.cz);
+        oworld.f(i, j, k, this.cF);
+        oworld.f(i, j - 1, k, this.cF);
     }
 
     public int b(OIBlockAccess oiblockaccess, int i, int j, int k, int l) {

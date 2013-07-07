@@ -6,13 +6,13 @@ public class OBehaviorDefaultDispenseItem implements OIBehaviorDispenseItem {
         OItemStack oitemstack1 = this.b(oiblocksource, oitemstack);
 
         this.a(oiblocksource);
-        this.a(oiblocksource, OBlockDispenser.j_(oiblocksource.h()));
+        this.a(oiblocksource, OBlockDispenser.l_(oiblocksource.h()));
         return oitemstack1;
     }
 
     protected OItemStack b(OIBlockSource oiblocksource, OItemStack oitemstack) {
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), null)) {
-            OEnumFacing oenumfacing = OBlockDispenser.j_(oiblocksource.h());
+            OEnumFacing oenumfacing = OBlockDispenser.l_(oiblocksource.h());
             OIPosition oiposition = OBlockDispenser.a(oiblocksource);
             OItemStack oitemstack1 = oitemstack.a(1);
 

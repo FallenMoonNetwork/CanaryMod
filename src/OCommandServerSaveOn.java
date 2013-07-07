@@ -10,18 +10,31 @@ public class OCommandServerSaveOn extends OCommandBase {
         return 4;
     }
 
+    public String c(OICommandSender oicommandsender) {
+        return "commands.save-on.usage";
+    }
+
     public void b(OICommandSender oicommandsender, String[] astring) {
-        OMinecraftServer ominecraftserver = OMinecraftServer.D();
+        OMinecraftServer ominecraftserver = OMinecraftServer.F();
+        boolean flag = false;
 
         for (OWorldServer[] level : ominecraftserver.worlds.values()) { // CanaryMod: multiworld
             for (int i = 0; i < level.length; ++i) {
                 if (level[i] != null) {
                     OWorldServer oworldserver = level[i];
-                    oworldserver.c = false;
+
+                    if (oworldserver.c) {
+                        oworldserver.c = false;
+                        flag = true;
+                    }
                 }
             }
         }
 
-        a(oicommandsender, "commands.save.enabled", new Object[0]);
+        if (flag) {
+            a(oicommandsender, "commands.save.enabled", new Object[0]);
+        } else {
+            throw new OCommandException("commands.save-on.alreadyOn", new Object[0]);
+        }
     }
 }

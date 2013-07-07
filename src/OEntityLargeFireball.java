@@ -6,17 +6,17 @@ public class OEntityLargeFireball extends OEntityFireball {
         super(oworld);
     }
 
-    public OEntityLargeFireball(OWorld oworld, OEntityLiving oentityliving, double d0, double d1, double d2) {
-        super(oworld, oentityliving, d0, d1, d2);
+    public OEntityLargeFireball(OWorld oworld, OEntityLivingBase oentitylivingbase, double d0, double d1, double d2) {
+        super(oworld, oentitylivingbase, d0, d1, d2);
     }
 
     protected void a(OMovingObjectPosition omovingobjectposition) {
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, new Projectile(this), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity()) && !this.q.I) {
             if (omovingobjectposition.g != null) {
-                omovingobjectposition.g.a(ODamageSource.a((OEntityFireball) this, this.a), 6);
+                omovingobjectposition.g.a(ODamageSource.a((OEntityFireball) this, this.a), 6.0F);
             }
 
-            this.q.a((OEntity) null, this.u, this.v, this.w, (float) this.e, true, this.q.N().b("mobGriefing"));
+            this.q.a((OEntity) null, this.u, this.v, this.w, (float) this.e, true, this.q.O().b("mobGriefing"));
             this.w();
         }
     }

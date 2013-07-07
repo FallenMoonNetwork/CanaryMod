@@ -2,33 +2,32 @@ import java.util.List;
 
 public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals {
 
-    private int d;
-    private int e = 0;
-    private Mob mob = new Mob(this);
+    private int bp;
+    private int bq;
 
     public OEntityAnimal(OWorld oworld) {
         super(oworld);
     }
 
-    protected void bp() {
+    protected void bg() {
         if (this.b() != 0) {
-            this.d = 0;
+            this.bp = 0;
         }
 
-        super.bp();
+        super.bg();
     }
 
     public void c() {
         super.c();
         if (this.b() != 0) {
-            this.d = 0;
+            this.bp = 0;
         }
 
-        if (this.d > 0) {
-            --this.d;
+        if (this.bp > 0) {
+            --this.bp;
             String s = "heart";
 
-            if (this.d % 10 == 0) {
+            if (this.bp % 10 == 0) {
                 double d0 = this.ab.nextGaussian() * 0.02D;
                 double d1 = this.ab.nextGaussian() * 0.02D;
                 double d2 = this.ab.nextGaussian() * 0.02D;
@@ -36,7 +35,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
                 this.q.a(s, this.u + (double) (this.ab.nextFloat() * this.O * 2.0F) - (double) this.O, this.v + 0.5D + (double) (this.ab.nextFloat() * this.P), this.w + (double) (this.ab.nextFloat() * this.O * 2.0F) - (double) this.O, d0, d1, d2);
             }
         } else {
-            this.e = 0;
+            this.bq = 0;
         }
     }
 
@@ -47,43 +46,43 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
                 double d1 = oentity.w - this.w;
 
                 this.A = (float) (Math.atan2(d1, d0) * 180.0D / 3.1415927410125732D) - 90.0F;
-                this.b = true;
+                this.bn = true;
             }
 
             OEntityPlayer oentityplayer = (OEntityPlayer) oentity;
 
-            if (oentityplayer.cd() == null || !this.c(oentityplayer.cd())) {
-                this.a_ = null;
+            if (oentityplayer.bt() == null || !this.c(oentityplayer.bt())) {
+                this.j = null;
             }
         } else if (oentity instanceof OEntityAnimal) {
             OEntityAnimal oentityanimal = (OEntityAnimal) oentity;
 
             if (this.b() > 0 && oentityanimal.b() < 0) {
                 if ((double) f < 2.5D) {
-                    this.b = true;
+                    this.bn = true;
                 }
-            } else if (this.d > 0 && oentityanimal.d > 0) {
-                if (oentityanimal.a_ == null && !(Boolean) manager.callHook(PluginLoader.Hook.MOB_TARGET, this.getEntity(), oentityanimal.getEntity())) {
-                    oentityanimal.a_ = this;
+            } else if (this.bp > 0 && oentityanimal.bp > 0) {
+                if (oentityanimal.j == null && !(Boolean) manager.callHook(PluginLoader.Hook.MOB_TARGET, this.getEntity(), oentityanimal.getEntity())) {
+                    oentityanimal.j = this;
                 }
 
-                if (oentityanimal.a_ == this && (double) f < 3.5D) {
-                    ++oentityanimal.d;
-                    ++this.d;
-                    ++this.e;
-                    if (this.e % 4 == 0) {
+                if (oentityanimal.j == this && (double) f < 3.5D) {
+                    ++oentityanimal.bp;
+                    ++this.bp;
+                    ++this.bq;
+                    if (this.bq % 4 == 0) {
                         this.q.a("heart", this.u + (double) (this.ab.nextFloat() * this.O * 2.0F) - (double) this.O, this.v + 0.5D + (double) (this.ab.nextFloat() * this.P), this.w + (double) (this.ab.nextFloat() * this.O * 2.0F) - (double) this.O, 0.0D, 0.0D, 0.0D);
                     }
 
-                    if (this.e == 60) {
+                    if (this.bq == 60) {
                         this.b((OEntityAnimal) oentity);
                     }
                 } else {
-                    this.e = 0;
+                    this.bq = 0;
                 }
             } else {
-                this.e = 0;
-                this.a_ = null;
+                this.bq = 0;
+                this.j = null;
             }
         }
     }
@@ -92,15 +91,15 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
         OEntityAgeable oentityageable = this.a((OEntityAgeable) oentityanimal);
 
         if (oentityageable != null) {
-            this.a(6000);
-            oentityanimal.a(6000);
-            this.d = 0;
-            this.e = 0;
-            this.a_ = null;
-            oentityanimal.a_ = null;
-            oentityanimal.e = 0;
-            oentityanimal.d = 0;
-            oentityageable.a(-24000);
+            this.c(6000);
+            oentityanimal.c(6000);
+            this.bp = 0;
+            this.bq = 0;
+            this.j = null;
+            oentityanimal.j = null;
+            oentityanimal.bq = 0;
+            oentityanimal.bp = 0;
+            oentityageable.c(-24000);
             oentityageable.b(this.u, this.v, this.w, this.A, this.B);
 
             for (int i = 0; i < 7; ++i) {
@@ -115,33 +114,41 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
         }
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
-        if (this.aq()) {
+    public boolean a(ODamageSource odamagesource, float f) {
+        if (this.ap()) {
             return false;
         } else {
-            this.c = 60;
-            this.a_ = null;
-            this.d = 0;
-            return super.a(odamagesource, i);
+            this.bo = 60;
+            if (!this.bb()) {
+                OAttributeInstance oattributeinstance = this.a(OSharedMonsterAttributes.d);
+
+                if (oattributeinstance.a(h) == null) {
+                    oattributeinstance.a(i);
+                }
+            }
+
+            this.j = null;
+            this.bp = 0;
+            return super.a(odamagesource, f);
         }
     }
 
     public float a(int i, int j, int k) {
-        return this.q.a(i, j - 1, k) == OBlock.y.cz ? 10.0F : this.q.q(i, j, k) - 0.5F;
+        return this.q.a(i, j - 1, k) == OBlock.z.cF ? 10.0F : this.q.q(i, j, k) - 0.5F;
     }
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("InLove", this.d);
+        onbttagcompound.a("InLove", this.bp);
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        this.d = onbttagcompound.e("InLove");
+        this.bp = onbttagcompound.e("InLove");
     }
 
-    protected OEntity j() {
-        if (this.c > 0) {
+    protected OEntity bH() {
+        if (this.bo > 0) {
             return null;
         } else {
             float f = 8.0F;
@@ -149,12 +156,12 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
             int i;
             OEntityAnimal oentityanimal;
 
-            if (this.d > 0) {
+            if (this.bp > 0) {
                 list = this.q.a(this.getClass(), this.E.b((double) f, (double) f, (double) f));
 
                 for (i = 0; i < list.size(); ++i) {
                     oentityanimal = (OEntityAnimal) list.get(i);
-                    if (oentityanimal != this && oentityanimal.d > 0) {
+                    if (oentityanimal != this && oentityanimal.bp > 0) {
                         return oentityanimal;
                     }
                 }
@@ -164,7 +171,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
                 for (i = 0; i < list.size(); ++i) {
                     OEntityPlayer oentityplayer = (OEntityPlayer) list.get(i);
 
-                    if (oentityplayer.cd() != null && this.c(oentityplayer.cd())) {
+                    if (oentityplayer.bt() != null && this.c(oentityplayer.bt())) {
                         return oentityplayer;
                     }
                 }
@@ -183,72 +190,63 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
         }
     }
 
-    public boolean bv() {
+    public boolean bo() {
         int i = OMathHelper.c(this.u);
         int j = OMathHelper.c(this.E.b);
         int k = OMathHelper.c(this.w);
 
-        return this.q.a(i, j - 1, k) == OBlock.y.cz && this.q.m(i, j, k) > 8 && super.bv();
+        return this.q.a(i, j - 1, k) == OBlock.z.cF && this.q.m(i, j, k) > 8 && super.bo();
     }
 
-    public int aQ() {
+    public int o() {
         return 120;
     }
 
-    protected boolean bm() {
+    protected boolean t() {
         return false;
     }
 
-    protected int d(OEntityPlayer oentityplayer) {
+    protected int e(OEntityPlayer oentityplayer) {
         return 1 + this.q.s.nextInt(3);
     }
 
     public boolean c(OItemStack oitemstack) {
-        return oitemstack.c == OItem.U.cp;
+        return oitemstack.d == OItem.V.cv;
     }
 
-    public boolean a_(OEntityPlayer oentityplayer) {
-        OItemStack oitemstack = oentityplayer.bK.h();
+    public boolean a(OEntityPlayer oentityplayer) {
+        OItemStack oitemstack = oentityplayer.bn.h();
 
-        if (oitemstack != null && this.c(oitemstack) && this.b() == 0 && this.d <= 0) {
-            if (!oentityplayer.ce.d) {
-                --oitemstack.a;
-                if (oitemstack.a <= 0) {
-                    oentityplayer.bK.a(oentityplayer.bK.c, (OItemStack) null);
+        if (oitemstack != null && this.c(oitemstack) && this.b() == 0 && this.bp <= 0) {
+            if (!oentityplayer.bG.d) {
+                --oitemstack.b;
+                if (oitemstack.b <= 0) {
+                    oentityplayer.bn.a(oentityplayer.bn.c, (OItemStack) null);
                 }
             }
 
-            this.d = 600;
-            this.a_ = null;
-
-            for (int i = 0; i < 7; ++i) {
-                double d0 = this.ab.nextGaussian() * 0.02D;
-                double d1 = this.ab.nextGaussian() * 0.02D;
-                double d2 = this.ab.nextGaussian() * 0.02D;
-
-                this.q.a("heart", this.u + (double) (this.ab.nextFloat() * this.O * 2.0F) - (double) this.O, this.v + 0.5D + (double) (this.ab.nextFloat() * this.P), this.w + (double) (this.ab.nextFloat() * this.O * 2.0F) - (double) this.O, d0, d1, d2);
-            }
-
+            this.bT();
             return true;
         } else {
-            return super.a_(oentityplayer);
+            return super.a(oentityplayer);
         }
     }
 
-    public boolean r() {
-        return this.d > 0;
+    public void bT() {
+        this.bp = 600;
+        this.j = null;
+        this.q.a((OEntity) this, (byte) 18);
     }
 
-    public void s() {
-        this.d = 0;
+    public boolean bU() {
+        return this.bp > 0;
+    }
+
+    public void bV() {
+        this.bp = 0;
     }
 
     public boolean a(OEntityAnimal oentityanimal) {
-        return oentityanimal == this ? false : (oentityanimal.getClass() != this.getClass() ? false : this.r() && oentityanimal.r());
+        return oentityanimal == this ? false : (oentityanimal.getClass() != this.getClass() ? false : this.bU() && oentityanimal.bU());
     }
-
-    @Override
-    public LivingEntity getEntity() {
-        return mob;
-    } //
 }

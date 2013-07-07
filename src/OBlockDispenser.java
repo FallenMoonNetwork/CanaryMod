@@ -27,19 +27,19 @@ public class OBlockDispenser extends OBlockContainer {
             int k1 = oworld.a(i + 1, j, k);
             byte b0 = 3;
 
-            if (OBlock.s[l] && !OBlock.s[i1]) {
+            if (OBlock.t[l] && !OBlock.t[i1]) {
                 b0 = 3;
             }
 
-            if (OBlock.s[i1] && !OBlock.s[l]) {
+            if (OBlock.t[i1] && !OBlock.t[l]) {
                 b0 = 2;
             }
 
-            if (OBlock.s[j1] && !OBlock.s[k1]) {
+            if (OBlock.t[j1] && !OBlock.t[k1]) {
                 b0 = 5;
             }
 
-            if (OBlock.s[k1] && !OBlock.s[j1]) {
+            if (OBlock.t[k1] && !OBlock.t[j1]) {
                 b0 = 4;
             }
 
@@ -79,7 +79,7 @@ public class OBlockDispenser extends OBlockContainer {
                 if (oibehaviordispenseitem != OIBehaviorDispenseItem.a) {
                     OItemStack oitemstack1 = oibehaviordispenseitem.a(oblocksourceimpl, oitemstack);
 
-                    otileentitydispenser.a(l, oitemstack1.a == 0 ? null : oitemstack1);
+                    otileentitydispenser.a(l, oitemstack1.b == 0 ? null : oitemstack1);
                 }
             }
         }
@@ -95,7 +95,7 @@ public class OBlockDispenser extends OBlockContainer {
         boolean flag1 = (i1 & 8) != 0;
 
         if (flag && !flag1) {
-            oworld.a(i, j, k, this.cz, this.a(oworld));
+            oworld.a(i, j, k, this.cF, this.a(oworld));
             oworld.b(i, j, k, i1 | 8, 4);
         } else if (!flag && flag1) {
             oworld.b(i, j, k, i1 & -9, 4);
@@ -112,11 +112,11 @@ public class OBlockDispenser extends OBlockContainer {
         return new OTileEntityDispenser();
     }
 
-    public void a(OWorld oworld, int i, int j, int k, OEntityLiving oentityliving, OItemStack oitemstack) {
-        int l = OBlockPistonBase.a(oworld, i, j, k, oentityliving);
+    public void a(OWorld oworld, int i, int j, int k, OEntityLivingBase oentitylivingbase, OItemStack oitemstack) {
+        int l = OBlockPistonBase.a(oworld, i, j, k, oentitylivingbase);
 
         oworld.b(i, j, k, l, 2);
-        if (oitemstack.t()) {
+        if (oitemstack.u()) {
             ((OTileEntityDispenser) oworld.r(i, j, k)).a(oitemstack.s());
         }
     }
@@ -133,15 +133,15 @@ public class OBlockDispenser extends OBlockContainer {
                     float f1 = this.b.nextFloat() * 0.8F + 0.1F;
                     float f2 = this.b.nextFloat() * 0.8F + 0.1F;
 
-                    while (oitemstack.a > 0) {
+                    while (oitemstack.b > 0) {
                         int k1 = this.b.nextInt(21) + 10;
 
-                        if (k1 > oitemstack.a) {
-                            k1 = oitemstack.a;
+                        if (k1 > oitemstack.b) {
+                            k1 = oitemstack.b;
                         }
 
-                        oitemstack.a -= k1;
-                        OEntityItem oentityitem = new OEntityItem(oworld, (double) ((float) i + f), (double) ((float) j + f1), (double) ((float) k + f2), new OItemStack(oitemstack.c, k1, oitemstack.k()));
+                        oitemstack.b -= k1;
+                        OEntityItem oentityitem = new OEntityItem(oworld, (double) ((float) i + f), (double) ((float) j + f1), (double) ((float) k + f2), new OItemStack(oitemstack.d, k1, oitemstack.k()));
 
                         if (oitemstack.p()) {
                             oentityitem.d().d((ONBTTagCompound) oitemstack.q().b());
@@ -164,7 +164,7 @@ public class OBlockDispenser extends OBlockContainer {
     }
 
     public static OIPosition a(OIBlockSource oiblocksource) {
-        OEnumFacing oenumfacing = j_(oiblocksource.h());
+        OEnumFacing oenumfacing = l_(oiblocksource.h());
         double d0 = oiblocksource.a() + 0.7D * (double) oenumfacing.c();
         double d1 = oiblocksource.b() + 0.7D * (double) oenumfacing.d();
         double d2 = oiblocksource.c() + 0.7D * (double) oenumfacing.e();
@@ -172,7 +172,7 @@ public class OBlockDispenser extends OBlockContainer {
         return new OPositionImpl(d0, d1, d2);
     }
 
-    public static OEnumFacing j_(int i) {
+    public static OEnumFacing l_(int i) {
         return OEnumFacing.a(i & 7);
     }
 

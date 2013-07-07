@@ -52,6 +52,6 @@ public class MobSpawner extends MobSpawnerLogic implements ComplexBlock {
     @Override
     public void update() {
         super.update();
-        this.spawner.k_();
+        this.spawner.h();
     }
 }

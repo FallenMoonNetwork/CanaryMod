@@ -2,7 +2,7 @@ public class OItemFlintAndSteel extends OItem {
 
     public OItemFlintAndSteel(int i) {
         super(i);
-        this.cq = 1;
+        this.cw = 1;
         this.e(64);
         this.a(OCreativeTabs.i);
     }
@@ -55,13 +55,11 @@ public class OItemFlintAndSteel extends OItem {
                     return false;
                 }
 
-                if (i1 == 0) {
-                    oworld.a((double) i + 0.5D, (double) j + 0.5D, (double) k + 0.5D, "fire.ignite", 1.0F, e.nextFloat() * 0.4F + 0.8F);
-                    oworld.c(i, j, k, OBlock.av.cz);
-                }
+                oworld.a((double) i + 0.5D, (double) j + 0.5D, (double) k + 0.5D, "fire.ignite", 1.0F, OItem.f.nextFloat() * 0.4F + 0.8F);
+                oworld.c(i, j, k, OBlock.aw.cF);
             }
 
-            oitemstack.a(1, (OEntityLiving) oentityplayer);
+            oitemstack.a(1, (OEntityLivingBase) oentityplayer);
             return true;
         }
     }

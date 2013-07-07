@@ -5,8 +5,8 @@ public class OEntitySmallFireball extends OEntityFireball {
         this.a(0.3125F, 0.3125F);
     }
 
-    public OEntitySmallFireball(OWorld oworld, OEntityLiving oentityliving, double d0, double d1, double d2) {
-        super(oworld, oentityliving, d0, d1, d2);
+    public OEntitySmallFireball(OWorld oworld, OEntityLivingBase oentitylivingbase, double d0, double d1, double d2) {
+        super(oworld, oentitylivingbase, d0, d1, d2);
         this.a(0.3125F, 0.3125F);
     }
 
@@ -18,7 +18,7 @@ public class OEntitySmallFireball extends OEntityFireball {
     protected void a(OMovingObjectPosition omovingobjectposition) {
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, new Projectile(this), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity()) && !this.q.I) {
             if (omovingobjectposition.g != null) {
-                if (!omovingobjectposition.g.E() && omovingobjectposition.g.a(ODamageSource.a((OEntityFireball) this, this.a), 5)) {
+                if (!omovingobjectposition.g.E() && omovingobjectposition.g.a(ODamageSource.a((OEntityFireball) this, this.a), 5.0F)) {
                     omovingobjectposition.g.d(5);
                 }
             } else {
@@ -56,7 +56,11 @@ public class OEntitySmallFireball extends OEntityFireball {
                     Block b = new Block(this.q.world, 0, i, j, k);
                     b.setStatus(7); // Fireball explosion
                     if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.IGNITE, b, null)) {
+<<<<<<< HEAD
                         this.q.c(i, j, k, OBlock.av.cz);
+=======
+                        this.q.c(i, j, k, OBlock.aw.cF);
+>>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
                     } // CanaryMod end
                 }
             }
@@ -69,7 +73,7 @@ public class OEntitySmallFireball extends OEntityFireball {
         return false;
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
+    public boolean a(ODamageSource odamagesource, float f) {
         return false;
     }
 }

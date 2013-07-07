@@ -354,7 +354,7 @@ public class Enchantment {
      * or -1 if the enchantment or entity is invalid.
      * @return
      */
-    public int getLiving(OEntityLiving entity)
+    public float getLivingFloat(OEntityLivingBase entity)
     {
         if (entity != null)
         {
@@ -367,12 +367,16 @@ public class Enchantment {
         return -1;
     }
 
+    public int getLiving(OEntityLivingBase entity) {
+        return (int) getLivingFloat(entity);
+    }
+
     /**
      * Gets the modified living for an enchantment for a given living entity or
      * -1 if the enchantment or entity is invalid.
      * @return
      */
-    public static int getLiving(Type type, int level, OEntityLiving entity)
+    public static float getLivingFloat(Type type, int level, OEntityLivingBase entity)
     {
         if (entity != null)
         {
@@ -383,6 +387,10 @@ public class Enchantment {
             }
         }
         return -1;
+    }
+
+    public static int getLiving(Type type, int level, OEntityLivingBase entity) {
+        return (int) getLivingFloat(type, level, entity);
     }
 
     /**

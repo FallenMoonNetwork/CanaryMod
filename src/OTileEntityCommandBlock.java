@@ -1,6 +1,6 @@
 public class OTileEntityCommandBlock extends OTileEntity implements OICommandSender {
 
-    private int a = 0;
+    private int a;
     private String b = "";
     private String c = "@";
 
@@ -8,21 +8,21 @@ public class OTileEntityCommandBlock extends OTileEntity implements OICommandSen
 
     public OTileEntityCommandBlock() {}
 
-    public void b(String s) {
+    public void a(String s) {
         this.b = s;
-        this.k_();
+        this.e();
     }
 
     public int a(OWorld oworld) {
         if (oworld.I) {
             return 0;
         } else {
-            OMinecraftServer ominecraftserver = OMinecraftServer.D();
+            OMinecraftServer ominecraftserver = OMinecraftServer.F();
 
-            if (ominecraftserver != null && ominecraftserver.Z()) {
-                OICommandManager oicommandmanager = ominecraftserver.E();
+            if (ominecraftserver != null && ominecraftserver.ab()) {
+                OICommandManager oicommandmanager = ominecraftserver.G();
 
-                if(!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND_BLOCK_COMMAND, new CommandBlock(this), this.b.split(" "))) {
+                if(!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.COMMAND_BLOCK_COMMAND, this.getComplexBlock(), this.b.split(" "))) {
                     return oicommandmanager.a(this, this.b);
                 }
             }
@@ -34,18 +34,14 @@ public class OTileEntityCommandBlock extends OTileEntity implements OICommandSen
         return this.c;
     }
 
-    public void c(String s) {
+    public void b(String s) {
         this.c = s;
     }
 
-    public void a(String s) {}
+    public void a(OChatMessageComponent ochatmessagecomponent) {}
 
     public boolean a(int i, String s) {
         return i <= 2;
-    }
-
-    public String a(String s, Object... aobject) {
-        return s;
     }
 
     public void b(ONBTTagCompound onbttagcompound) {
@@ -68,6 +64,10 @@ public class OTileEntityCommandBlock extends OTileEntity implements OICommandSen
         return new OChunkCoordinates(this.l, this.m, this.n);
     }
 
+    public OWorld f_() {
+        return this.ay();
+    }
+
     public OPacket m() {
         ONBTTagCompound onbttagcompound = new ONBTTagCompound();
 
@@ -75,7 +75,7 @@ public class OTileEntityCommandBlock extends OTileEntity implements OICommandSen
         return new OPacket132TileEntityData(this.l, this.m, this.n, 2, onbttagcompound);
     }
 
-    public int d() {
+    public int f() {
         return this.a;
     }
 

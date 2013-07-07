@@ -1,7 +1,7 @@
 public class OItemSkull extends OItem {
 
     private static final String[] b = new String[] { "skeleton", "wither", "zombie", "char", "creeper"};
-    public static final String[] a = new String[] { "skull_skeleton", "skull_wither", "skull_zombie", "skull_char", "skull_creeper"};
+    public static final String[] a = new String[] { "skeleton", "wither", "zombie", "steve", "creeper"};
 
     public OItemSkull(int i) {
         super(i);
@@ -42,10 +42,10 @@ public class OItemSkull extends OItem {
 
             if (!oentityplayer.a(i, j, k, l, oitemstack)) {
                 return false;
-            } else if (!OBlock.ck.c(oworld, i, j, k)) {
+            } else if (!OBlock.cl.c(oworld, i, j, k)) {
                 return false;
             } else {
-                oworld.f(i, j, k, OBlock.ck.cz, l, 2);
+                oworld.f(i, j, k, OBlock.cl.cF, l, 2);
                 int i1 = 0;
 
                 if (l == 1) {
@@ -63,10 +63,10 @@ public class OItemSkull extends OItem {
 
                     ((OTileEntitySkull) otileentity).a(oitemstack.k(), s);
                     ((OTileEntitySkull) otileentity).a(i1);
-                    ((OBlockSkull) OBlock.ck).a(oworld, i, j, k, (OTileEntitySkull) otileentity);
+                    ((OBlockSkull) OBlock.cl).a(oworld, i, j, k, (OTileEntitySkull) otileentity);
                 }
 
-                --oitemstack.a;
+                --oitemstack.b;
                 return true;
             }
         }

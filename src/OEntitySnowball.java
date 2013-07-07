@@ -1,11 +1,13 @@
 public class OEntitySnowball extends OEntityThrowable {
 
+    private Snowball entity = new Snowball(this);
+
     public OEntitySnowball(OWorld oworld) {
         super(oworld);
     }
 
-    public OEntitySnowball(OWorld oworld, OEntityLiving oentityliving) {
-        super(oworld, oentityliving);
+    public OEntitySnowball(OWorld oworld, OEntityLivingBase oentitylivingbase) {
+        super(oworld, oentitylivingbase);
     }
 
     public OEntitySnowball(OWorld oworld, double d0, double d1, double d2) {
@@ -21,7 +23,7 @@ public class OEntitySnowball extends OEntityThrowable {
                     b0 = 3;
                 }
 
-                omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), b0);
+            omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), (float) b0);
             }
 
             for (int i = 0; i < 8; ++i) {
@@ -33,4 +35,10 @@ public class OEntitySnowball extends OEntityThrowable {
             }
         }
     }
+
+    // CanaryMod start: add getEntity()
+    @Override
+    public Snowball getEntity() {
+        return entity;
+    } // CanaryMod end
 }

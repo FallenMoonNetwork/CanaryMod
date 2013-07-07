@@ -17,7 +17,6 @@ public abstract class OEntityMinecart extends OEntity {
 
     public OEntityMinecart(OWorld oworld) {
         super(oworld);
-        this.a = false;
         this.m = true;
         this.a(0.98F, 0.7F);
         this.N = this.P / 2.0F;
@@ -46,14 +45,14 @@ public abstract class OEntityMinecart extends OEntity {
         }
     }
 
-    protected boolean f_() {
+    protected boolean e_() {
         return false;
     }
 
     protected void a() {
         this.ah.a(17, new Integer(0));
         this.ah.a(18, new Integer(1));
-        this.ah.a(19, new Integer(0));
+        this.ah.a(19, new Float(0.0F));
         this.ah.a(20, new Integer(0));
         this.ah.a(21, new Integer(6));
         this.ah.a(22, Byte.valueOf((byte) 0));
@@ -73,7 +72,7 @@ public abstract class OEntityMinecart extends OEntity {
 
     public OEntityMinecart(OWorld oworld, double d0, double d1, double d2) {
         this(oworld);
-        this.b(d0, d1 + (double) this.N, d2);
+        this.b(d0, d1, d2);
         this.x = 0.0D;
         this.y = 0.0D;
         this.z = 0.0D;
@@ -87,29 +86,29 @@ public abstract class OEntityMinecart extends OEntity {
         return (double) this.P * 0.0D - 0.30000001192092896D;
     }
 
-    public boolean a(ODamageSource odamagesource, int i) {
+    public boolean a(ODamageSource odamagesource, float f) {
         // CanaryMod: Attack of the cart
         BaseEntity entity = null;
 
         if (odamagesource != null && odamagesource.h() != null) {
-            entity = new BaseEntity(odamagesource.h());
+            entity = odamagesource.h().getEntity();
         }
 
-        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, this.getEntity(), entity, i)) {
+        if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_DAMAGE, this.getEntity(), entity, f)) {
             return true;
         }
 
         if (!this.q.I && !this.M) {
-            if (this.aq()) {
+            if (this.ap()) {
                 return false;
             } else {
-                this.j(-this.k());
-                this.i(10);
+                this.h(-this.k());
+                this.c(10);
                 this.J();
-                this.h(this.i() + i * 10);
-                boolean flag = odamagesource.i() instanceof OEntityPlayer && ((OEntityPlayer) odamagesource.i()).ce.d;
+                this.a(this.i() + f * 10.0F);
+                boolean flag = odamagesource.i() instanceof OEntityPlayer && ((OEntityPlayer) odamagesource.i()).bG.d;
 
-                if (flag || this.i() > 40) {
+                if (flag || this.i() > 40.0F) {
                     if (this.n != null) {
                         this.n.a((OEntity) this);
                     }
@@ -131,7 +130,7 @@ public abstract class OEntityMinecart extends OEntity {
     public void a(ODamageSource odamagesource) {
         manager.callHook(PluginLoader.Hook.VEHICLE_DESTROYED, this.getEntity()); // CanaryMod: Destruction of the cart
         this.w();
-        OItemStack oitemstack = new OItemStack(OItem.aA, 1);
+        OItemStack oitemstack = new OItemStack(OItem.aB, 1);
 
         if (this.c != null) {
             oitemstack.c(this.c);
@@ -166,11 +165,11 @@ public abstract class OEntityMinecart extends OEntity {
         //CanaryMod: end
 
         if (this.j() > 0) {
-            this.i(this.j() - 1);
+            this.c(this.j() - 1);
         }
 
-        if (this.i() > 0) {
-            this.h(this.i() - 1);
+        if (this.i() > 0.0F) {
+            this.a(this.i() - 1.0F);
         }
 
         if (this.v < -64.0D) {
@@ -185,19 +184,19 @@ public abstract class OEntityMinecart extends OEntity {
 
             i = this.y();
             if (this.ap) {
-                if (ominecraftserver.s()) {
+                if (ominecraftserver.u()) {
                     if (this.o == null && this.aq++ >= i) {
                         this.aq = i;
                         this.ao = this.aa();
                         byte b0;
 
-                        if (this.q.t.h == -1) {
+                        if (this.q.t.i == -1) {
                             b0 = 0;
                         } else {
                             b0 = -1;
                         }
 
-                        this.c(b0);
+                        this.b(b0);
                     }
 
                     this.ap = false;
@@ -258,11 +257,11 @@ public abstract class OEntityMinecart extends OEntity {
             double d5 = 0.0078125D;
             int l = this.q.a(j, i, k);
 
-            if (OBlockRailBase.d_(l)) {
+            if (OBlockRailBase.e_(l)) {
                 int i1 = this.q.h(j, i, k);
 
                 this.a(j, i, k, d4, d5, l, i1);
-                if (l == OBlock.cx.cz) {
+                if (l == OBlock.cy.cF) {
                     // CanaryMod: call MINECART_ACTIVATE hook
                     if (!(Boolean) manager.callHook(PluginLoader.Hook.MINECART_ACTIVATE, this.getEntity(), (i1 & 8) != 0)) {
                         this.a(j, i, k, (i1 & 8) != 0);
@@ -354,12 +353,12 @@ public abstract class OEntityMinecart extends OEntity {
         boolean flag = false;
         boolean flag1 = false;
 
-        if (l == OBlock.X.cz) {
+        if (l == OBlock.Y.cF) {
             flag = (i1 & 8) != 0;
             flag1 = !flag;
         }
 
-        if (((OBlockRailBase) OBlock.r[l]).e()) {
+        if (((OBlockRailBase) OBlock.s[l]).e()) {
             i1 &= 7;
         }
 
@@ -404,14 +403,20 @@ public abstract class OEntityMinecart extends OEntity {
         this.z = d6 * d3 / d4;
         double d7;
         double d8;
+        double d9;
+        double d10;
 
-        if (this.n != null) {
-            d7 = this.n.x * this.n.x + this.n.z * this.n.z;
-            d8 = this.x * this.x + this.z * this.z;
-            if (d7 > 1.0E-4D && d8 < 0.01D) {
-                this.x += this.n.x * 0.1D;
-                this.z += this.n.z * 0.1D;
-                flag1 = false;
+        if (this.n != null && this.n instanceof OEntityLivingBase) {
+            d7 = (double) ((OEntityLivingBase) this.n).bf;
+            if (d7 > 0.0D) {
+                d8 = -Math.sin((double) (this.n.A * 3.1415927F / 180.0F));
+                d9 = Math.cos((double) (this.n.A * 3.1415927F / 180.0F));
+                d10 = this.x * this.x + this.z * this.z;
+                if (d10 < 0.01D) {
+                    this.x += d8 * 0.1D;
+                    this.z += d9 * 0.1D;
+                    flag1 = false;
+                }
             }
         }
 
@@ -430,8 +435,8 @@ public abstract class OEntityMinecart extends OEntity {
 
         d7 = 0.0D;
         d8 = (double) i + 0.5D + (double) aint[0][0] * 0.5D;
-        double d9 = (double) k + 0.5D + (double) aint[0][2] * 0.5D;
-        double d10 = (double) i + 0.5D + (double) aint[1][0] * 0.5D;
+        d9 = (double) k + 0.5D + (double) aint[0][2] * 0.5D;
+        d10 = (double) i + 0.5D + (double) aint[1][0] * 0.5D;
         double d11 = (double) k + 0.5D + (double) aint[1][2] * 0.5D;
 
         d2 = d10 - d8;
@@ -568,11 +573,11 @@ public abstract class OEntityMinecart extends OEntity {
 
         int l = this.q.a(i, j, k);
 
-        if (OBlockRailBase.d_(l)) {
+        if (OBlockRailBase.e_(l)) {
             int i1 = this.q.h(i, j, k);
 
             d1 = (double) j;
-            if (((OBlockRailBase) OBlock.r[l]).e()) {
+            if (((OBlockRailBase) OBlock.s[l]).e()) {
                 i1 &= 7;
             }
 
@@ -616,7 +621,7 @@ public abstract class OEntityMinecart extends OEntity {
                 d1 += 0.5D;
             }
 
-            return this.q.U().a(d0, d1, d2);
+            return this.q.V().a(d0, d1, d2);
         } else {
             return null;
         }
@@ -624,9 +629,9 @@ public abstract class OEntityMinecart extends OEntity {
 
     protected void a(ONBTTagCompound onbttagcompound) {
         if (onbttagcompound.n("CustomDisplayTile")) {
-            this.k(onbttagcompound.e("DisplayTile"));
-            this.l(onbttagcompound.e("DisplayData"));
-            this.m(onbttagcompound.e("DisplayOffset"));
+            this.i(onbttagcompound.e("DisplayTile"));
+            this.j(onbttagcompound.e("DisplayData"));
+            this.k(onbttagcompound.e("DisplayOffset"));
         }
 
         if (onbttagcompound.b("CustomName") && onbttagcompound.i("CustomName").length() > 0) {
@@ -637,7 +642,7 @@ public abstract class OEntityMinecart extends OEntity {
     protected void b(ONBTTagCompound onbttagcompound) {
         if (this.s()) {
             onbttagcompound.a("CustomDisplayTile", true);
-            onbttagcompound.a("DisplayTile", this.m() == null ? 0 : this.m().cz);
+            onbttagcompound.a("DisplayTile", this.m() == null ? 0 : this.m().cF);
             onbttagcompound.a("DisplayData", this.o());
             onbttagcompound.a("DisplayOffset", this.q());
         }
@@ -651,10 +656,10 @@ public abstract class OEntityMinecart extends OEntity {
         if (!this.q.I) {
             if (oentity != this.n) {
                 // CanaryMod: Collision of a cart
-                if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_COLLISION, this.getEntity(), oentity.entity)) {
+                if ((Boolean) manager.callHook(PluginLoader.Hook.VEHICLE_COLLISION, this.getEntity(), oentity.getEntity())) {
                     return;
                 }
-                if (oentity instanceof OEntityLiving && !(oentity instanceof OEntityPlayer) && !(oentity instanceof OEntityIronGolem) && this.l() == 0 && this.x * this.x + this.z * this.z > 0.01D && this.n == null && oentity.o == null) {
+                if (oentity instanceof OEntityLivingBase && !(oentity instanceof OEntityPlayer) && !(oentity instanceof OEntityIronGolem) && this.l() == 0 && this.x * this.x + this.z * this.z > 0.01D && this.n == null && oentity.o == null) {
                     oentity.a((OEntity) this);
                 }
 
@@ -683,8 +688,8 @@ public abstract class OEntityMinecart extends OEntity {
                     if (oentity instanceof OEntityMinecart) {
                         double d4 = oentity.u - this.u;
                         double d5 = oentity.w - this.w;
-                        OVec3 ovec3 = this.q.U().a(d4, 0.0D, d5).a();
-                        OVec3 ovec31 = this.q.U().a((double) OMathHelper.b(this.A * 3.1415927F / 180.0F), 0.0D, (double) OMathHelper.a(this.A * 3.1415927F / 180.0F)).a();
+                        OVec3 ovec3 = this.q.V().a(d4, 0.0D, d5).a();
+                        OVec3 ovec31 = this.q.V().a((double) OMathHelper.b(this.A * 3.1415927F / 180.0F), 0.0D, (double) OMathHelper.a(this.A * 3.1415927F / 180.0F)).a();
                         double d6 = Math.abs(ovec3.b(ovec31));
 
                         if (d6 < 0.800000011920929D) {
@@ -725,15 +730,15 @@ public abstract class OEntityMinecart extends OEntity {
         }
     }
 
-    public void h(int i) {
-        this.ah.b(19, Integer.valueOf(i));
+    public void a(float f) {
+        this.ah.b(19, Float.valueOf(f));
     }
 
-    public int i() {
-        return this.ah.c(19);
+    public float i() {
+        return this.ah.d(19);
     }
 
-    public void i(int i) {
+    public void c(int i) {
         this.ah.b(17, Integer.valueOf(i));
     }
 
@@ -741,7 +746,7 @@ public abstract class OEntityMinecart extends OEntity {
         return this.ah.c(17);
     }
 
-    public void j(int i) {
+    public void h(int i) {
         this.ah.b(18, Integer.valueOf(i));
     }
 
@@ -757,7 +762,7 @@ public abstract class OEntityMinecart extends OEntity {
         } else {
             int i = this.u().c(20) & '\uffff';
 
-            return i > 0 && i < OBlock.r.length ? OBlock.r[i] : null;
+            return i > 0 && i < OBlock.s.length ? OBlock.s[i] : null;
         }
     }
 
@@ -781,20 +786,20 @@ public abstract class OEntityMinecart extends OEntity {
         return 6;
     }
 
-    public void k(int i) {
+    public void i(int i) {
         this.u().b(20, Integer.valueOf(i & '\uffff' | this.o() << 16));
         this.a(true);
     }
 
-    public void l(int i) {
+    public void j(int i) {
         OBlock oblock = this.m();
-        int j = oblock == null ? 0 : oblock.cz;
+        int j = oblock == null ? 0 : oblock.cF;
 
         this.u().b(20, Integer.valueOf(j & '\uffff' | i << 16));
         this.a(true);
     }
 
-    public void m(int i) {
+    public void k(int i) {
         this.u().b(21, Integer.valueOf(i));
         this.a(true);
     }
@@ -811,8 +816,8 @@ public abstract class OEntityMinecart extends OEntity {
         this.c = s;
     }
 
-    public String am() {
-        return this.c != null ? this.c : super.am();
+    public String al() {
+        return this.c != null ? this.c : super.al();
     }
 
     public boolean c() {

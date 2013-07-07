@@ -68,7 +68,7 @@ public class SlotType {
             return Type.FURNACE;
         } else if(slot instanceof OSlotMerchantResult) {
             return Type.MERCHANT_RESULT;
-        } else if(slot instanceof OSlotRepair) {
+        } else if(slot instanceof OContainerRepairINNER2) { // @ TODO : this is probably wrong :/
             return Type.REPAIR;
         } else if(slot.getClass() != OSlot.class) {
             return Type.UNKNOWN_UPDATE_NEEDED;

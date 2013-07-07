@@ -61,19 +61,19 @@ public class OBlockLever extends OBlock {
         return b0 + j1;
     }
 
-    public void a(OWorld oworld, int i, int j, int k, OEntityLiving oentityliving, OItemStack oitemstack) {
+    public void a(OWorld oworld, int i, int j, int k, OEntityLivingBase oentitylivingbase, OItemStack oitemstack) {
         int l = oworld.h(i, j, k);
         int i1 = l & 7;
         int j1 = l & 8;
 
         if (i1 == d(1)) {
-            if ((OMathHelper.c((double) (oentityliving.A * 4.0F / 360.0F) + 0.5D) & 1) == 0) {
+            if ((OMathHelper.c((double) (oentitylivingbase.A * 4.0F / 360.0F) + 0.5D) & 1) == 0) {
                 oworld.b(i, j, k, 5 | j1, 2);
             } else {
                 oworld.b(i, j, k, 6 | j1, 2);
             }
         } else if (i1 == d(0)) {
-            if ((OMathHelper.c((double) (oentityliving.A * 4.0F / 360.0F) + 0.5D) & 1) == 0) {
+            if ((OMathHelper.c((double) (oentitylivingbase.A * 4.0F / 360.0F) + 0.5D) & 1) == 0) {
                 oworld.b(i, j, k, 7 | j1, 2);
             } else {
                 oworld.b(i, j, k, 0 | j1, 2);
@@ -194,26 +194,26 @@ public class OBlockLever extends OBlock {
             int old = (k1 != 8) ? 1 : 0;
             int current = (k1 == 8) ? 1 : 0;
 
-            current = ((Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, new Block(oworld.world, this.cz, i, j, k), old, current)).intValue();
+            current = ((Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, oworld.world.getBlockAt(i, j, k), old, current)).intValue();
             k1 = (current > 0) ? 8 : 0;
 
             oworld.b(i, j, k, j1 + k1, 3);
             oworld.a((double) i + 0.5D, (double) j + 0.5D, (double) k + 0.5D, "random.click", 0.3F, k1 > 0 ? 0.6F : 0.5F);
-            oworld.f(i, j, k, this.cz);
+            oworld.f(i, j, k, this.cF);
             if (j1 == 1) {
-                oworld.f(i - 1, j, k, this.cz);
+                oworld.f(i - 1, j, k, this.cF);
             } else if (j1 == 2) {
-                oworld.f(i + 1, j, k, this.cz);
+                oworld.f(i + 1, j, k, this.cF);
             } else if (j1 == 3) {
-                oworld.f(i, j, k - 1, this.cz);
+                oworld.f(i, j, k - 1, this.cF);
             } else if (j1 == 4) {
-                oworld.f(i, j, k + 1, this.cz);
+                oworld.f(i, j, k + 1, this.cF);
             } else if (j1 != 5 && j1 != 6) {
                 if (j1 == 0 || j1 == 7) {
-                    oworld.f(i, j + 1, k, this.cz);
+                    oworld.f(i, j + 1, k, this.cF);
                 }
             } else {
-                oworld.f(i, j - 1, k, this.cz);
+                oworld.f(i, j - 1, k, this.cF);
             }
 
             return true;
@@ -222,23 +222,23 @@ public class OBlockLever extends OBlock {
 
     public void a(OWorld oworld, int i, int j, int k, int l, int i1) {
         if ((i1 & 8) > 0) {
-            oworld.f(i, j, k, this.cz);
+            oworld.f(i, j, k, this.cF);
             int j1 = i1 & 7;
 
             if (j1 == 1) {
-                oworld.f(i - 1, j, k, this.cz);
+                oworld.f(i - 1, j, k, this.cF);
             } else if (j1 == 2) {
-                oworld.f(i + 1, j, k, this.cz);
+                oworld.f(i + 1, j, k, this.cF);
             } else if (j1 == 3) {
-                oworld.f(i, j, k - 1, this.cz);
+                oworld.f(i, j, k - 1, this.cF);
             } else if (j1 == 4) {
-                oworld.f(i, j, k + 1, this.cz);
+                oworld.f(i, j, k + 1, this.cF);
             } else if (j1 != 5 && j1 != 6) {
                 if (j1 == 0 || j1 == 7) {
-                    oworld.f(i, j + 1, k, this.cz);
+                    oworld.f(i, j + 1, k, this.cF);
                 }
             } else {
-                oworld.f(i, j - 1, k, this.cz);
+                oworld.f(i, j - 1, k, this.cF);
             }
         }
 

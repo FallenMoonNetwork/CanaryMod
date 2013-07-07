@@ -17,7 +17,7 @@ public class OEntityMinecartTNT extends OEntityMinecart {
     }
 
     public OBlock n() {
-        return OBlock.aq;
+        return OBlock.ar;
     }
 
     public void l_() {
@@ -43,7 +43,7 @@ public class OEntityMinecartTNT extends OEntityMinecart {
         double d0 = this.x * this.x + this.z * this.z;
 
         if (!odamagesource.c()) {
-            this.a(new OItemStack(OBlock.aq, 1), 0.0F);
+            this.a(new OItemStack(OBlock.ar, 1), 0.0F);
         }
 
         if (odamagesource.m() || odamagesource.c() || d0 >= 0.009999999776482582D) {
@@ -64,14 +64,14 @@ public class OEntityMinecartTNT extends OEntityMinecart {
         }
     }
 
-    protected void a(float f) {
+    protected void b(float f) {
         if (f >= 3.0F) {
             float f1 = f / 10.0F;
 
             this.c((double) (f1 * f1));
         }
 
-        super.a(f);
+        super.b(f);
     }
 
     public void a(int i, int j, int k, boolean flag) {
@@ -88,16 +88,16 @@ public class OEntityMinecartTNT extends OEntityMinecart {
         }
     }
 
-    public boolean ay() {
+    public boolean ax() {
         return this.a > -1;
     }
 
     public float a(OExplosion oexplosion, OWorld oworld, int i, int j, int k, OBlock oblock) {
-        return this.ay() && (OBlockRailBase.d_(oblock.cz) || OBlockRailBase.d_(oworld, i, j + 1, k)) ? 0.0F : super.a(oexplosion, oworld, i, j, k, oblock);
+        return this.ax() && (OBlockRailBase.e_(oblock.cF) || OBlockRailBase.d_(oworld, i, j + 1, k)) ? 0.0F : super.a(oexplosion, oworld, i, j, k, oblock);
     }
 
     public boolean a(OExplosion oexplosion, OWorld oworld, int i, int j, int k, int l, float f) {
-        return this.ay() && (OBlockRailBase.d_(l) || OBlockRailBase.d_(oworld, i, j + 1, k)) ? false : super.a(oexplosion, oworld, i, j, k, l, f);
+        return this.ax() && (OBlockRailBase.e_(l) || OBlockRailBase.d_(oworld, i, j + 1, k)) ? false : super.a(oexplosion, oworld, i, j, k, l, f);
     }
 
     protected void a(ONBTTagCompound onbttagcompound) {

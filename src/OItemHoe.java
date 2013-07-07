@@ -5,7 +5,7 @@ public class OItemHoe extends OItem {
     public OItemHoe(int i, OEnumToolMaterial oenumtoolmaterial) {
         super(i);
         this.a = oenumtoolmaterial;
-        this.cq = 1;
+        this.cw = 1;
         this.e(oenumtoolmaterial.a());
         this.a(OCreativeTabs.i);
     }
@@ -17,12 +17,10 @@ public class OItemHoe extends OItem {
             int i1 = oworld.a(i, j, k);
             int j1 = oworld.a(i, j + 1, k);
 
-            if ((l == 0 || j1 != 0 || i1 != OBlock.y.cz) && i1 != OBlock.z.cz) {
-                return false;
-            } else {
+            if (l != 0 && j1 == 0 && (i1 == OBlock.z.cF || i1 == OBlock.A.cF)) {
                 // CanaryMod: Hoes
                 Block blockClicked = this.getBlockInfo(oworld, i, j, k, l);
-                Block blockPlaced = oworld.world.getBlockAt(i, j+i, k);
+                Block blockPlaced = blockClicked.getFace(blockClicked.getFaceClicked());
 
                 // Call the hook
                 if (oentityplayer instanceof OEntityPlayerMP) {
@@ -33,16 +31,18 @@ public class OItemHoe extends OItem {
                     }
                 }
 
-                OBlock oblock = OBlock.aE;
+                OBlock oblock = OBlock.aF;
 
-                oworld.a((double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), oblock.cM.e(), (oblock.cM.c() + 1.0F) / 2.0F, oblock.cM.d() * 0.8F);
+                oworld.a((double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), oblock.cS.e(), (oblock.cS.c() + 1.0F) / 2.0F, oblock.cS.d() * 0.8F);
                 if (oworld.I) {
                     return true;
                 } else {
-                    oworld.c(i, j, k, oblock.cz);
-                    oitemstack.a(1, (OEntityLiving) oentityplayer);
+                    oworld.c(i, j, k, oblock.cF);
+                    oitemstack.a(1, (OEntityLivingBase) oentityplayer);
                     return true;
                 }
+            } else {
+                return false;
             }
         }
     }

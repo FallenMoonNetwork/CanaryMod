@@ -1,16 +1,17 @@
 import java.util.Iterator;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 
 public class OContainerRepair extends OContainer {
 
     private OIInventory f = new OInventoryCraftResult();
-    private OIInventory g = new OInventoryRepair(this, "Repair", true, 2);
+    private OIInventory g = new OContainerRepairINNER1(this, "Repair", true, 2);
     private OWorld h;
     private int i;
     private int j;
     private int k;
-    public int a = 0;
-    private int l = 0;
+    public int a;
+    private int l;
     private String m;
     private final OEntityPlayer n;
 
@@ -24,7 +25,7 @@ public class OContainerRepair extends OContainer {
         this.n = oentityplayer;
         this.a(new OSlot(this.g, 0, 27, 47));
         this.a(new OSlot(this.g, 1, 76, 47));
-        this.a((OSlot) (new OSlotRepair(this, this.f, 2, 134, 47, oworld, i, j, k)));
+        this.a((OSlot) (new OContainerRepairINNER2(this, this.f, 2, 134, 47, oworld, i, j, k)));
 
         int l;
 
@@ -62,7 +63,7 @@ public class OContainerRepair extends OContainer {
             OItemStack oitemstack2 = this.g.a(1);
             Map map = OEnchantmentHelper.a(oitemstack1);
             boolean flag = false;
-            int k = b0 + oitemstack.B() + (oitemstack2 == null ? 0 : oitemstack2.B());
+            int k = b0 + oitemstack.C() + (oitemstack2 == null ? 0 : oitemstack2.C());
 
             this.l = 0;
             int l;
@@ -74,8 +75,8 @@ public class OContainerRepair extends OContainer {
             OEnchantment oenchantment;
 
             if (oitemstack2 != null) {
-                flag = oitemstack2.c == OItem.bX.cp && OItem.bX.g(oitemstack2).c() > 0;
-                if (oitemstack1.g() && OItem.f[oitemstack1.c].a(oitemstack, oitemstack2)) {
+                flag = oitemstack2.d == OItem.bY.cv && OItem.bY.g(oitemstack2).c() > 0;
+                if (oitemstack1.g() && OItem.g[oitemstack1.d].a(oitemstack, oitemstack2)) {
                     l = Math.min(oitemstack1.j(), oitemstack1.l() / 4);
                     if (l <= 0) {
                         this.f.a(0, (OItemStack) null);
@@ -84,7 +85,7 @@ public class OContainerRepair extends OContainer {
                         return;
                     }
 
-                    for (i1 = 0; l > 0 && i1 < oitemstack2.a; ++i1) {
+                    for (i1 = 0; l > 0 && i1 < oitemstack2.b; ++i1) {
                         j1 = oitemstack1.j() - l;
                         oitemstack1.b(j1);
                         i += Math.max(1, l / 100) + map.size();
@@ -93,7 +94,7 @@ public class OContainerRepair extends OContainer {
 
                     this.l = i1;
                 } else {
-                    if (!flag && (oitemstack1.c != oitemstack2.c || !oitemstack1.g())) {
+                    if (!flag && (oitemstack1.d != oitemstack2.d || !oitemstack1.g())) {
                         this.f.a(0, (OItemStack) null);
                         this.a = 0;
                         etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new Object[] {new Anvil(this, this.f, RESULT_START_INDEX)}); //CanaryMod: call onAnvilUse
@@ -139,7 +140,7 @@ public class OContainerRepair extends OContainer {
                         int k2 = l1 - k1;
                         boolean flag1 = oenchantment.a(oitemstack);
 
-                        if (this.n.ce.d || oitemstack.c == OItemEnchantedBook.bX.cp) {
+                        if (this.n.bG.d || oitemstack.d == OItemEnchantedBook.bY.cv) {
                             flag1 = true;
                         }
 
@@ -197,10 +198,16 @@ public class OContainerRepair extends OContainer {
                 }
             }
 
-            if (this.m != null && this.m.length() > 0 && !this.m.equalsIgnoreCase(this.n.r().c(oitemstack.a())) && !this.m.equals(oitemstack.s())) {
-                j = oitemstack.g() ? 7 : oitemstack.a * 5;
+            if (StringUtils.isBlank(this.m)) {
+                if (oitemstack.u()) {
+                    j = oitemstack.g() ? 7 : oitemstack.b * 5;
+                    i += j;
+                    oitemstack1.t();
+                }
+            } else if (!this.m.equals(oitemstack.s())) {
+                j = oitemstack.g() ? 7 : oitemstack.b * 5;
                 i += j;
-                if (oitemstack.t()) {
+                if (oitemstack.u()) {
                     k += j / 2;
                 }
 
@@ -255,21 +262,20 @@ public class OContainerRepair extends OContainer {
             }
 
             if (j == i && j > 0 && this.a >= 40) {
-                this.h.X().a("Naming an item only, cost too high; giving discount to cap cost to 39 levels");
                 this.a = 39;
             }
 
-            if (this.a >= 40 && !this.n.ce.d) {
+            if (this.a >= 40 && !this.n.bG.d) {
                 oitemstack1 = null;
             }
 
             if (oitemstack1 != null) {
-                i1 = oitemstack1.B();
-                if (oitemstack2 != null && i1 < oitemstack2.B()) {
-                    i1 = oitemstack2.B();
+                i1 = oitemstack1.C();
+                if (oitemstack2 != null && i1 < oitemstack2.C()) {
+                    i1 = oitemstack2.C();
                 }
 
-                if (oitemstack1.t()) {
+                if (oitemstack1.u()) {
                     i1 -= 9;
                 }
 
@@ -286,36 +292,36 @@ public class OContainerRepair extends OContainer {
             this.b();
         }
 
-        //CanaryMod start
-        HookParametersAnvilUse hook = (HookParametersAnvilUse) etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new Object[] {new HookParametersAnvilUse(new Anvil(this, this.f, RESULT_START_INDEX), new Block(h.world, 145, i, j, k, l))}); //CanaryMod: call onAnvilUse
+        // CanaryMod start
+        HookParametersAnvilUse hook = (HookParametersAnvilUse) etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new HookParametersAnvilUse(this.getInventory(), new Block(h.world, 145, i, j, k, l))); // CanaryMod: call onAnvilUse
 
-        //update the input slots
+        // update the input slots
         setSlotWithoutUpdate(hook.slotOne, 0);
         setSlotWithoutUpdate(hook.slotTwo, 1);
 
-        //update the result slot
+        // update the result slot
         OInventoryCraftResult inv = ((OInventoryCraftResult) this.f);
-        if(hook.result == null) {
+        if (hook.result == null) {
             inv.a[0] = null;
         } else {
             OItemStack base = hook.result.getBaseItem();
             inv.a[0] = base;
-            if(base.a > inv.d()) {
-                base.a = inv.d();
+            if (base.b > inv.d()) {
+                base.b = inv.d();
             }
         }
 
-        //update the tool name
-        if (this.m != null && !this.m.equals(hook.toolName) && this.a(2).d()) {
+        // update the tool name
+        if (this.m != null && !this.m.equals(hook.toolName) && this.a(2).e()) {
             this.m = hook.toolName;
-            this.a(2).c().c(this.m);
+            this.a(2).d().c(this.m);
         }
 
-        //update the xp level
+        // update the xp level
         this.a = hook.xpLevel;
 
-        this.b(); //updates the client. kinda.
-        //CanaryMod end
+        this.b(); // updates the client. kinda.
+        // CanaryMod end
     }
 
     public void a(OICrafting oicrafting) {
@@ -327,25 +333,25 @@ public class OContainerRepair extends OContainer {
         super.b(oentityplayer);
         if (!this.h.I) {
             for (int i = 0; i < this.g.j_(); ++i) {
-                OItemStack oitemstack = this.g.b(i);
+                OItemStack oitemstack = this.g.a_(i);
 
                 if (oitemstack != null) {
-                    oentityplayer.c(oitemstack);
+                    oentityplayer.b(oitemstack);
                 }
             }
         }
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
-        return this.h.a(this.i, this.j, this.k) != OBlock.cl.cz ? false : oentityplayer.e((double) this.i + 0.5D, (double) this.j + 0.5D, (double) this.k + 0.5D) <= 64.0D;
+        return this.h.a(this.i, this.j, this.k) != OBlock.cm.cF ? false : oentityplayer.e((double) this.i + 0.5D, (double) this.j + 0.5D, (double) this.k + 0.5D) <= 64.0D;
     }
 
     public OItemStack b(OEntityPlayer oentityplayer, int i) {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if (i == 2) {
@@ -362,13 +368,13 @@ public class OContainerRepair extends OContainer {
                 return null;
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
 
-            if (oitemstack1.a == oitemstack.a) {
+            if (oitemstack1.b == oitemstack.b) {
                 return null;
             }
 
@@ -380,8 +386,14 @@ public class OContainerRepair extends OContainer {
 
     public void a(String s) {
         this.m = s;
-        if (this.a(2).d()) {
-            this.a(2).c().c(this.m);
+        if (this.a(2).e()) {
+            OItemStack oitemstack = this.a(2).d();
+
+            if (StringUtils.isBlank(s)) {
+                oitemstack.t();
+            } else {
+                oitemstack.c(this.m);
+            }
         }
 
         this.e();
@@ -409,14 +421,14 @@ public class OContainerRepair extends OContainer {
     }
 
     private void setSlotWithoutUpdate(Item item, int slot) {
-        OInventoryRepair inv = ((OInventoryRepair) OContainerRepair.a(this));
+        OContainerRepairINNER1 inv = ((OContainerRepairINNER1) OContainerRepair.a(this));
         if (item == null) {
             inv.c[slot] = null;
         } else {
             OItemStack base = item.getBaseItem();
             inv.c[slot] = base;
-            if (base.a > inv.d()) {
-                base.a = inv.d();
+            if (base.b > inv.d()) {
+                base.b = inv.d();
             }
         }
     }

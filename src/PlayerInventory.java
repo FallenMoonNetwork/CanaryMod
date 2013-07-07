@@ -14,7 +14,11 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> {
         this(null, human);
     }
     public PlayerInventory(OContainer oContainer, HumanEntity human) {
+<<<<<<< HEAD
         super(oContainer, human.getEntity().bK);
+=======
+        super(oContainer, human.getEntity().bn);
+>>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         user = human.getEntity();
     }
 

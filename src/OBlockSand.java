@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class OBlockSand extends OBlock {
 
-    public static boolean c = false;
+    public static boolean c;
 
     public OBlockSand(int i) {
         super(i, OMaterial.p);
@@ -16,14 +16,14 @@ public class OBlockSand extends OBlock {
     public void a(OWorld oworld, int i, int j, int k) {
         // CanaryMod: Physics
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, oworld.world.getBlockAt(i, j, k), true)) {
-            oworld.a(i, j, k, this.cz, this.a(oworld));
+            oworld.a(i, j, k, this.cF, this.a(oworld));
         }
     }
 
     public void a(OWorld oworld, int i, int j, int k, int l) {
         // CanaryMod: Physics
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.BLOCK_PHYSICS, oworld.world.getBlockAt(i, j, k), true)) {
-            oworld.a(i, j, k, this.cz, this.a(oworld));
+            oworld.a(i, j, k, this.cF, this.a(oworld));
         }
     }
 
@@ -39,7 +39,7 @@ public class OBlockSand extends OBlock {
 
             if (!c && oworld.e(i - b0, j - b0, k - b0, i + b0, j + b0, k + b0)) {
                 if (!oworld.I) {
-                    OEntityFallingSand oentityfallingsand = new OEntityFallingSand(oworld, (double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), this.cz, oworld.h(i, j, k));
+                    OEntityFallingSand oentityfallingsand = new OEntityFallingSand(oworld, (double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), this.cF, oworld.h(i, j, k));
 
                     this.a(oentityfallingsand);
                     oworld.d((OEntity) oentityfallingsand);
@@ -52,7 +52,7 @@ public class OBlockSand extends OBlock {
                 }
 
                 if (j > 0) {
-                    oworld.c(i, j, k, this.cz);
+                    oworld.c(i, j, k, this.cF);
                 }
             }
         }
@@ -69,10 +69,10 @@ public class OBlockSand extends OBlock {
 
         if (l == 0) {
             return true;
-        } else if (l == OBlock.av.cz) {
+        } else if (l == OBlock.aw.cF) {
             return true;
         } else {
-            OMaterial omaterial = OBlock.r[l].cO;
+            OMaterial omaterial = OBlock.s[l].cU;
 
             return omaterial == OMaterial.h ? true : omaterial == OMaterial.i;
         }

@@ -1,3 +1,4 @@
+import com.google.common.primitives.Doubles;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -5,7 +6,7 @@ import java.util.List;
 
 public abstract class OCommandBase implements OICommand {
 
-    private static OIAdminCommand a = null;
+    private static OIAdminCommand a;
 
     public OCommandBase() {}
 
@@ -13,15 +14,11 @@ public abstract class OCommandBase implements OICommand {
         return 4;
     }
 
-    public String a(OICommandSender oicommandsender) {
-        return "/" + this.c();
-    }
-
     public List b() {
         return null;
     }
 
-    public boolean b(OICommandSender oicommandsender) {
+    public boolean a(OICommandSender oicommandsender) {
         return oicommandsender.a(this.a(), this.c());
     }
 
@@ -55,13 +52,47 @@ public abstract class OCommandBase implements OICommand {
 
     public static double b(OICommandSender oicommandsender, String s) {
         try {
-            return Double.parseDouble(s);
+            double d0 = Double.parseDouble(s);
+
+            if (!Doubles.isFinite(d0)) {
+                throw new ONumberInvalidException("commands.generic.double.invalid", new Object[] { s});
+            } else {
+                return d0;
+            }
         } catch (NumberFormatException numberformatexception) {
             throw new ONumberInvalidException("commands.generic.double.invalid", new Object[] { s});
         }
     }
 
-    public static OEntityPlayerMP c(OICommandSender oicommandsender) {
+    public static double a(OICommandSender oicommandsender, String s, double d0) {
+        return a(oicommandsender, s, d0, Double.MAX_VALUE);
+    }
+
+    public static double a(OICommandSender oicommandsender, String s, double d0, double d1) {
+        double d2 = b(oicommandsender, s);
+
+        if (d2 < d0) {
+            throw new ONumberInvalidException("commands.generic.double.tooSmall", new Object[] { Double.valueOf(d2), Double.valueOf(d0)});
+        } else if (d2 > d1) {
+            throw new ONumberInvalidException("commands.generic.double.tooBig", new Object[] { Double.valueOf(d2), Double.valueOf(d1)});
+        } else {
+            return d2;
+        }
+    }
+
+    public static boolean c(OICommandSender oicommandsender, String s) {
+        if (!s.equals("true") && !s.equals("1")) {
+            if (!s.equals("false") && !s.equals("0")) {
+                throw new OCommandException("commands.generic.boolean.invalid", new Object[] { s});
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    public static OEntityPlayerMP b(OICommandSender oicommandsender) {
         if (oicommandsender instanceof OEntityPlayerMP) {
             return (OEntityPlayerMP) oicommandsender;
         } else {
@@ -69,13 +100,13 @@ public abstract class OCommandBase implements OICommand {
         }
     }
 
-    public static OEntityPlayerMP c(OICommandSender oicommandsender, String s) {
+    public static OEntityPlayerMP d(OICommandSender oicommandsender, String s) {
         OEntityPlayerMP oentityplayermp = OPlayerSelector.a(oicommandsender, s);
 
         if (oentityplayermp != null) {
             return oentityplayermp;
         } else {
-            oentityplayermp = OMinecraftServer.D().ad().f(s);
+            oentityplayermp = OMinecraftServer.F().af().f(s);
             if (oentityplayermp == null) {
                 throw new OPlayerNotFoundException();
             } else {
@@ -84,11 +115,11 @@ public abstract class OCommandBase implements OICommand {
         }
     }
 
-    public static String d(OICommandSender oicommandsender, String s) {
+    public static String e(OICommandSender oicommandsender, String s) {
         OEntityPlayerMP oentityplayermp = OPlayerSelector.a(oicommandsender, s);
 
         if (oentityplayermp != null) {
-            return oentityplayermp.am();
+            return oentityplayermp.al();
         } else if (OPlayerSelector.b(s)) {
             throw new OPlayerNotFoundException();
         } else {
@@ -126,6 +157,45 @@ public abstract class OCommandBase implements OICommand {
         return stringbuilder.toString();
     }
 
+    public static double a(OICommandSender oicommandsender, double d0, String s) {
+        return a(oicommandsender, d0, s, -30000000, 30000000);
+    }
+
+    public static double a(OICommandSender oicommandsender, double d0, String s, int i, int j) {
+        boolean flag = s.startsWith("~");
+
+        if (flag && Double.isNaN(d0)) {
+            throw new ONumberInvalidException("commands.generic.num.invalid", new Object[] { Double.valueOf(d0)});
+        } else {
+            double d1 = flag ? d0 : 0.0D;
+
+            if (!flag || s.length() > 1) {
+                boolean flag1 = s.contains(".");
+
+                if (flag) {
+                    s = s.substring(1);
+                }
+
+                d1 += b(oicommandsender, s);
+                if (!flag1 && !flag) {
+                    d1 += 0.5D;
+                }
+            }
+
+            if (i != 0 || j != 0) {
+                if (d1 < (double) i) {
+                    throw new ONumberInvalidException("commands.generic.double.tooSmall", new Object[] { Double.valueOf(d1), Integer.valueOf(i)});
+                }
+
+                if (d1 > (double) j) {
+                    throw new ONumberInvalidException("commands.generic.double.tooBig", new Object[] { Double.valueOf(d1), Integer.valueOf(j)});
+                }
+            }
+
+            return d1;
+        }
+    }
+
     public static String a(Object[] aobject) {
         StringBuilder stringbuilder = new StringBuilder();
 
@@ -147,7 +217,20 @@ public abstract class OCommandBase implements OICommand {
     }
 
     public static String a(Collection collection) {
-        return a(collection.toArray(new String[0]));
+        return a(collection.toArray(new String[collection.size()]));
+    }
+
+    public static String b(Collection collection) {
+        String[] astring = new String[collection.size()];
+        int i = 0;
+
+        OEntityLivingBase oentitylivingbase;
+
+        for (Iterator iterator = collection.iterator(); iterator.hasNext(); astring[i++] = oentitylivingbase.aw()) {
+            oentitylivingbase = (OEntityLivingBase) iterator.next();
+        }
+
+        return a((Object[]) astring);
     }
 
     public static boolean a(String s, String s1) {

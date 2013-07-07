@@ -61,7 +61,7 @@ public class ItemFrame extends HangingEntity {
      * @return
      */
     public Item getFramedItem() {
-        return new Item(getEntity().i());
+        return new Item(getEntity().h());
     }
 
     /**

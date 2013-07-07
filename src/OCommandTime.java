@@ -12,8 +12,8 @@ public class OCommandTime extends OCommandBase {
         return 2;
     }
 
-    public String a(OICommandSender oicommandsender) {
-        return oicommandsender.a("commands.time.usage", new Object[0]);
+    public String c(OICommandSender oicommandsender) {
+        return "commands.time.usage";
     }
 
     public void b(OICommandSender oicommandsender, String[] astring) {
@@ -50,7 +50,7 @@ public class OCommandTime extends OCommandBase {
     }
 
     protected void a(OICommandSender oicommandsender, int i) {
-        for (OWorldServer[] level : OMinecraftServer.D().worlds.values()) {
+        for (OWorldServer[] level : OMinecraftServer.F().worlds.values()) {
             for (int j = 0; j < level.length; ++j) {
                 level[j].b((long) i);
             }
@@ -58,11 +58,11 @@ public class OCommandTime extends OCommandBase {
     }
 
     protected void b(OICommandSender oicommandsender, int i) {
-        for (OWorldServer[] level : OMinecraftServer.D().worlds.values()) {
+        for (OWorldServer[] level : OMinecraftServer.F().worlds.values()) {
             for (int j = 0; j < level.length; ++j) {
                 OWorldServer oworldserver = level[j];
 
-                oworldserver.b(oworldserver.I() + (long) i);
+                oworldserver.b(oworldserver.J() + (long) i);
             }
         }
     }

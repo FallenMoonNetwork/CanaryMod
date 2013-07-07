@@ -1,17 +1,21 @@
-public class OCommandServerStop extends OCommandBase{
-    
-	public String c(){
-        return "stop";
-	}
+public class OCommandServerStop extends OCommandBase {
 
-    public int a(){
-    	return 4;
+    public OCommandServerStop() {}
+
+    public String c() {
+        return "stop";
     }
 
-    public void b(OICommandSender oicommandsender, String[] astring){
-    	a(oicommandsender, "commands.stop.start", new Object[0]);
+    public int a() {
+        return 4;
+    }
 
-    	// CanaryMod: add extra arguments as custom Stop message
-    	OMinecraftServer.D().stopServer(astring.length > 0 ? etc.combineSplit(0, astring, " ") : null);
+    public String c(OICommandSender oicommandsender) {
+        return "commands.stop.usage";
+    }
+
+    public void b(OICommandSender oicommandsender, String[] astring) {
+        a(oicommandsender, "commands.stop.start", new Object[0]);
+    	OMinecraftServer.F().stopServer(astring.length > 0 ? etc.combineSplit(0, astring, " ") : null); // CanaryMod: add extra arguments as custom Stop message
     }
 }

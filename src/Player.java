@@ -747,7 +747,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return true if blocking
      */
     public boolean isBlocking(){
-        return getEntity().bh();
+        return getEntity().bq();
     }
 
     /**
@@ -831,9 +831,9 @@ public class Player extends HumanEntity implements MessageReceiver {
             loc.world = world.getName(); // teleport to new world
             loc.dimension = world.getType().getId();
 
-            mcServer.ad().a(ent, loc.dimension, true, loc); // Respawn with location
+            mcServer.af().a(ent, loc.dimension, true, loc); // Respawn with location
         } else {
-            mcServer.ad().sendPlayerToOtherDimension(ent, world.getType().getId(), false);
+            mcServer.af().sendPlayerToOtherDimension(ent, world.getType().getId(), false);
             this.updateXP();
         }
     }
@@ -997,7 +997,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return {@code true} if the player is op.
      */
     public boolean isOp() {
-        return etc.getMCServer().ad().e(getName());
+        return etc.getMCServer().af().e(getName());
     }
 
     /**
@@ -1006,7 +1006,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return {@code true} if the player is op.
      */
     public static boolean isOp(String playerName) {
-        return etc.getMCServer().ad().e(playerName);
+        return etc.getMCServer().af().e(playerName);
     }
 
     private boolean checkSpam() {
@@ -1191,10 +1191,17 @@ public class Player extends HumanEntity implements MessageReceiver {
     @Override
     @SuppressWarnings(value = "unchecked")
     public void updateInventory() {
+<<<<<<< HEAD
         OContainer container = getEntity().bL;
         ArrayList<OItemStack> list = new ArrayList<OItemStack>();
         for (OSlot slot : (List<OSlot>) container.c) {
             list.add(slot.c());
+=======
+        OContainer container = getEntity().bo;
+        ArrayList<OItemStack> list = new ArrayList<OItemStack>();
+        for (OSlot slot : (List<OSlot>) container.c) {
+            list.add(slot.d());
+>>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
         }
         getEntity().a(container, list);
     }
@@ -1202,11 +1209,19 @@ public class Player extends HumanEntity implements MessageReceiver {
     @Override
     public void updateLevels() {
         OEntityPlayerMP entityMP = getEntity();
+<<<<<<< HEAD
         entityMP.a.b((OPacket) (new OPacket8UpdateHealth(getHealth(), getFoodLevel(), getFoodSaturationLevel())));
+=======
+        entityMP.a.b((OPacket) (new OPacket8UpdateHealth(this.getHealthFloat(), getFoodLevel(), getFoodSaturationLevel())));
+>>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 
     @Override
     public void updateXP() {
+<<<<<<< HEAD
         getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().ch, getEntity().cg, getEntity().cf)));
+=======
+        getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().bJ, getEntity().bH, getEntity().bI)));
+>>>>>>> 73d9f76... Update to 1.6.1, less MD5/Versioning.
     }
 }

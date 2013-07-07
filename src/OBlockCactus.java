@@ -3,7 +3,7 @@ import java.util.Random;
 public class OBlockCactus extends OBlock {
 
     protected OBlockCactus(int i) {
-        super(i, OMaterial.y);
+        super(i, OMaterial.z);
         this.b(true);
         this.a(OCreativeTabs.c);
     }
@@ -13,7 +13,7 @@ public class OBlockCactus extends OBlock {
         if (oworld.c(i, j + 1, k)) {
             int l;
 
-            for (l = 1; oworld.a(i, j - l, k) == this.cz; ++l) {
+            for (l = 1; oworld.a(i, j - l, k) == this.cF; ++l) {
                 ;
             }
 
@@ -21,9 +21,9 @@ public class OBlockCactus extends OBlock {
                 int i1 = oworld.h(i, j, k);
 
                 if (i1 == 15) {
-                    oworld.c(i, j + 1, k, this.cz);
+                    oworld.c(i, j + 1, k, this.cF);
                     oworld.b(i, j, k, 0, 4);
-                    this.a(oworld, i, j + 1, k, this.cz);
+                    this.a(oworld, i, j + 1, k, this.cF);
                 } else {
                     oworld.b(i, j, k, i1 + 1, 4);
                 }
@@ -78,17 +78,17 @@ public class OBlockCactus extends OBlock {
         } else {
             int l = oworld.a(i, j - 1, k);
 
-            return l == OBlock.aZ.cz || l == OBlock.I.cz;
+            return l == OBlock.ba.cF || l == OBlock.J.cF;
         }
     }
 
     @Override
     public void a(OWorld oworld, int i, int j, int k, OEntity oentity) {
         // CanaryMod Damage hook: Cactus
-        HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentity.getEntity(), DamageType.CACTUS.getDamageSource(), 1));
+        HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentity.getEntity(), DamageType.CACTUS.getDamageSource(), 1.0F));
         if (ev.isCanceled()) {
             return;
         }
-        oentity.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
+        oentity.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmountFloat());
     }
 }

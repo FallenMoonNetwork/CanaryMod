@@ -5,13 +5,15 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
     private int c = -1;
     private int d = -1;
     private int e = -1;
-    private int f = 0;
-    protected boolean a = false;
-    public int b = 0;
-    private OEntityLiving g;
-    private String h = null;
+    private int f;
+    protected boolean a;
+    public int b;
+    private OEntityLivingBase g;
+    private String h;
     private int i;
-    private int j = 0;
+    private int j;
+
+    private Projectile entity = new Projectile(this); // CanaryMod: reference to wrapper
 
     public OEntityThrowable(OWorld oworld) {
         super(oworld);
@@ -20,11 +22,11 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
 
     protected void a() {}
 
-    public OEntityThrowable(OWorld oworld, OEntityLiving oentityliving) {
+    public OEntityThrowable(OWorld oworld, OEntityLivingBase oentitylivingbase) {
         super(oworld);
-        this.g = oentityliving;
+        this.g = oentitylivingbase;
         this.a(0.25F, 0.25F);
-        this.b(oentityliving.u, oentityliving.v + (double) oentityliving.e(), oentityliving.w, oentityliving.A, oentityliving.B);
+        this.b(oentitylivingbase.u, oentitylivingbase.v + (double) oentitylivingbase.f(), oentitylivingbase.w, oentitylivingbase.A, oentitylivingbase.B);
         this.u -= (double) (OMathHelper.b(this.A / 180.0F * 3.1415927F) * 0.16F);
         this.v -= 0.10000000149011612D;
         this.w -= (double) (OMathHelper.a(this.A / 180.0F * 3.1415927F) * 0.16F);
@@ -107,26 +109,26 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
             ++this.j;
         }
 
-        OVec3 ovec3 = this.q.U().a(this.u, this.v, this.w);
-        OVec3 ovec31 = this.q.U().a(this.u + this.x, this.v + this.y, this.w + this.z);
+        OVec3 ovec3 = this.q.V().a(this.u, this.v, this.w);
+        OVec3 ovec31 = this.q.V().a(this.u + this.x, this.v + this.y, this.w + this.z);
         OMovingObjectPosition omovingobjectposition = this.q.a(ovec3, ovec31);
 
-        ovec3 = this.q.U().a(this.u, this.v, this.w);
-        ovec31 = this.q.U().a(this.u + this.x, this.v + this.y, this.w + this.z);
+        ovec3 = this.q.V().a(this.u, this.v, this.w);
+        ovec31 = this.q.V().a(this.u + this.x, this.v + this.y, this.w + this.z);
         if (omovingobjectposition != null) {
-            ovec31 = this.q.U().a(omovingobjectposition.f.c, omovingobjectposition.f.d, omovingobjectposition.f.e);
+            ovec31 = this.q.V().a(omovingobjectposition.f.c, omovingobjectposition.f.d, omovingobjectposition.f.e);
         }
 
         if (!this.q.I) {
             OEntity oentity = null;
             List list = this.q.b((OEntity) this, this.E.a(this.x, this.y, this.z).b(1.0D, 1.0D, 1.0D));
             double d0 = 0.0D;
-            OEntityLiving oentityliving = this.h();
+            OEntityLivingBase oentitylivingbase = this.h();
 
             for (int j = 0; j < list.size(); ++j) {
                 OEntity oentity1 = (OEntity) list.get(j);
 
-                if (oentity1.K() && (oentity1 != oentityliving || this.j >= 5)) {
+                if (oentity1.K() && (oentity1 != oentitylivingbase || this.j >= 5)) {
                     float f = 0.3F;
                     OAxisAlignedBB oaxisalignedbb = oentity1.E.b((double) f, (double) f, (double) f);
                     OMovingObjectPosition omovingobjectposition1 = oaxisalignedbb.a(ovec3, ovec31);
@@ -148,7 +150,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         }
 
         if (omovingobjectposition != null) {
-            if (omovingobjectposition.a == OEnumMovingObjectType.a && this.q.a(omovingobjectposition.b, omovingobjectposition.c, omovingobjectposition.d) == OBlock.bi.cz) {
+            if (omovingobjectposition.a == OEnumMovingObjectType.a && this.q.a(omovingobjectposition.b, omovingobjectposition.c, omovingobjectposition.d) == OBlock.bj.cF) {
                 this.Z();
             } else {
                 this.a(omovingobjectposition);
@@ -181,7 +183,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         this.B = this.D + (this.B - this.D) * 0.2F;
         this.A = this.C + (this.A - this.C) * 0.2F;
         float f2 = 0.99F;
-        float f3 = this.g();
+        float f3 = this.e();
 
         if (this.G()) {
             for (int k = 0; k < 4; ++k) {
@@ -200,7 +202,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         this.b(this.u, this.v, this.w);
     }
 
-    protected float g() {
+    protected float e() {
         return 0.03F;
     }
 
@@ -214,7 +216,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         onbttagcompound.a("shake", (byte) this.b);
         onbttagcompound.a("inGround", (byte) (this.a ? 1 : 0));
         if ((this.h == null || this.h.length() == 0) && this.g != null && this.g instanceof OEntityPlayer) {
-            this.h = this.g.am();
+            this.h = this.g.al();
         }
 
         onbttagcompound.a("ownerName", this.h == null ? "" : this.h);
@@ -233,7 +235,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         }
     }
 
-    public OEntityLiving h() {
+    public OEntityLivingBase h() {
         if (this.g == null && this.h != null && this.h.length() > 0) {
             this.g = this.q.a(this.h);
         }
@@ -241,10 +243,16 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         return this.g;
     }
 
-    public void setShooter(OEntityLiving shooter) { //CanaryMod: method for setting the shooter
+    // CanaryMod start
+    public void setShooter(OEntityLivingBase shooter) {
         this.g = shooter;
         if (shooter instanceof OEntityPlayer) {
             this.h = ((OEntityPlayer) shooter).getEntity().getName();
         }
     }
+
+    @Override
+    public Projectile getEntity() {
+        return entity;
+    } // CanaryMod end
 }

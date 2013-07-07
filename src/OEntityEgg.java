@@ -1,11 +1,13 @@
 public class OEntityEgg extends OEntityThrowable {
 
+    private Egg entity = new Egg(this); // CanaryMod: reference wrapper
+
     public OEntityEgg(OWorld oworld) {
         super(oworld);
     }
 
-    public OEntityEgg(OWorld oworld, OEntityLiving oentityliving) {
-        super(oworld, oentityliving);
+    public OEntityEgg(OWorld oworld, OEntityLivingBase oentitylivingbase) {
+        super(oworld, oentitylivingbase);
     }
 
     public OEntityEgg(OWorld oworld, double d0, double d1, double d2) {
@@ -15,7 +17,7 @@ public class OEntityEgg extends OEntityThrowable {
     protected void a(OMovingObjectPosition omovingobjectposition) {
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, new Egg(this), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
             if (omovingobjectposition.g != null) {
-                omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), 0);
+            omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), 0.0F);
             }
 
             if (!this.q.I && this.ab.nextInt(8) == 0) {
@@ -28,7 +30,7 @@ public class OEntityEgg extends OEntityThrowable {
                 for (int i = 0; i < b0; ++i) {
                     OEntityChicken oentitychicken = new OEntityChicken(this.q);
 
-                    oentitychicken.a(-24000);
+                oentitychicken.c(-24000);
                     oentitychicken.b(this.u, this.v, this.w, this.A, 0.0F);
                     this.q.d((OEntity) oentitychicken);
                 }
@@ -43,4 +45,10 @@ public class OEntityEgg extends OEntityThrowable {
             }
         }
     }
+
+    // CanaryMod start: add getEntity()
+    @Override
+    public Egg getEntity() {
+        return entity;
+    } // CanaryMod end
 }

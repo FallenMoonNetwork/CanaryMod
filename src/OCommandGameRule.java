@@ -12,8 +12,8 @@ public class OCommandGameRule extends OCommandBase {
         return 2;
     }
 
-    public String a(OICommandSender oicommandsender) {
-        return oicommandsender.a("commands.gamerule.usage", new Object[0]);
+    public String c(OICommandSender oicommandsender) {
+        return "commands.gamerule.usage";
     }
 
     public void b(OICommandSender oicommandsender, String[] astring) {
@@ -37,14 +37,14 @@ public class OCommandGameRule extends OCommandBase {
             if (ogamerules1.e(s)) {
                 String s2 = ogamerules1.a(s);
 
-                oicommandsender.a(s + " = " + s2);
+                oicommandsender.a(OChatMessageComponent.d(s).a(" = ").a(s2));
             } else {
                 a(oicommandsender, "commands.gamerule.norule", new Object[] { s});
             }
         } else if (astring.length == 0) {
             OGameRules ogamerules2 = this.d();
 
-            oicommandsender.a(a(ogamerules2.b()));
+            oicommandsender.a(OChatMessageComponent.d(a(ogamerules2.b())));
         } else {
             throw new OWrongUsageException("commands.gamerule.usage", new Object[0]);
         }
@@ -55,6 +55,6 @@ public class OCommandGameRule extends OCommandBase {
     }
 
     private OGameRules d() {
-        return OMinecraftServer.D().getWorld(OMinecraftServer.D().J(), 0).N();
+        return OMinecraftServer.F().getWorld(OMinecraftServer.F().L(), 0).O();
     }
 }

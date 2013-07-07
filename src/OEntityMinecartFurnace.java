@@ -1,6 +1,6 @@
 public class OEntityMinecartFurnace extends OEntityMinecart {
 
-    int c = 0; // CanaryMod: private -> package-private
+    int c; // CanaryMod: private -> package-private
     public double a;
     public double b;
 
@@ -40,7 +40,7 @@ public class OEntityMinecartFurnace extends OEntityMinecart {
     public void a(ODamageSource odamagesource) {
         super.a(odamagesource);
         if (!odamagesource.c()) {
-            this.a(new OItemStack(OBlock.aF, 1), 0.0F);
+            this.a(new OItemStack(OBlock.aG, 1), 0.0F);
         }
     }
 
@@ -85,12 +85,12 @@ public class OEntityMinecartFurnace extends OEntityMinecart {
         super.h();
     }
 
-    public boolean a_(OEntityPlayer oentityplayer) {
-        OItemStack oitemstack = oentityplayer.bK.h();
+    public boolean c(OEntityPlayer oentityplayer) {
+        OItemStack oitemstack = oentityplayer.bn.h();
 
-        if (oitemstack != null && oitemstack.c == OItem.n.cp) {
-            if (--oitemstack.a == 0) {
-                oentityplayer.bK.a(oentityplayer.bK.c, (OItemStack) null);
+        if (oitemstack != null && oitemstack.d == OItem.o.cv) {
+            if (!oentityplayer.bG.d && --oitemstack.b == 0) {
+                oentityplayer.bn.a(oentityplayer.bn.c, (OItemStack) null);
             }
 
             this.c += 3600;
@@ -128,7 +128,7 @@ public class OEntityMinecartFurnace extends OEntityMinecart {
     }
 
     public OBlock n() {
-        return OBlock.aG;
+        return OBlock.aH;
     }
 
     public int p() {

@@ -31,7 +31,7 @@ public class Sheep extends Mob {
      * @return If this sheep has wool.
      */
     public boolean isSheared(){
-        return getEntity().n();
+        return getEntity().bQ();
     }
 
     /**
@@ -40,7 +40,7 @@ public class Sheep extends Mob {
      * @param color int value of the new color.
      */
     public void setWoolColor(int color){
-        getEntity().s(color);
+        getEntity().p(color);
     }
 
     /**
@@ -49,7 +49,7 @@ public class Sheep extends Mob {
      * @return int value of wool color.
      */
     public int getColor(){
-        return getEntity().m();
+        return getEntity().bP();
     }
 
     /**

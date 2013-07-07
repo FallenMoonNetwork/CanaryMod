@@ -1,10 +1,10 @@
 public class OFoodStats {
 
-    // CanaryMod: made fields public
-    public int a = 20;
-    public float b = 5.0F;
-    public float c;
-    public int d = 0;
+    // CanaryMod: made fields package-private
+    int a = 20;
+    float b = 5.0F;
+    float c;
+    int d;
     private int e = 20;
     // CanaryMod: enitity
     private OEntityPlayer entity;
@@ -32,7 +32,7 @@ public class OFoodStats {
     }
 
     public void a(OItemFood oitemfood) {
-        this.a(oitemfood.g(), oitemfood.h());
+        this.a(oitemfood.g(), oitemfood.i());
     }
 
     public void a(OEntityPlayer oentityplayer) {
@@ -60,20 +60,21 @@ public class OFoodStats {
             }
         }
 
-        if (this.a >= 18 && oentityplayer.co()) {
+        if (oentityplayer.q.O().b("naturalRegeneration") && this.a >= 18 && oentityplayer.bE()) {
             ++this.d;
             if (this.d >= 80) {
-                oentityplayer.j(1);
+                oentityplayer.f(1.0F);
+                this.a(3.0F);
                 this.d = 0;
             }
         } else if (this.a <= 0) {
             ++this.d;
             if (this.d >= 80) {
-                if (oentityplayer.aX() > 10 || i >= 3 || oentityplayer.aX() > 1 && i >= 2) {
+                if (oentityplayer.aJ() > 10.0F || i >= 3 || oentityplayer.aJ() > 1.0F && i >= 2) {
                     // CanaryMod: DAMAGE From starvation
-                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentityplayer.getEntity(), DamageType.STARVATION.getDamageSource(), 1));
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentityplayer.getEntity(), DamageType.STARVATION.getDamageSource(), 1.0F));
                     if (!ev.isCanceled()) {
-                        oentityplayer.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmount());
+                        oentityplayer.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmountFloat());
                     }
                 }
 

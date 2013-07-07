@@ -35,7 +35,7 @@ public class Mob extends LivingEntity {
      */
     public Mob(String mob, World world) {
         this((OEntityLiving) OEntityList.a(mob, world.getWorld()));
-        this.getEntity().bJ(); // initCreature
+        this.getEntity().a(); // initCreature
     }
 
     /**
@@ -69,7 +69,7 @@ public class Mob extends LivingEntity {
 
             return ghast.getTarget();
         }
-        return ((OEntityCreature) getEntity()).a_;
+        return ((OEntityCreature) getEntity()).bu;
     }
 
     /**
@@ -84,7 +84,7 @@ public class Mob extends LivingEntity {
             ghast.setTarget(target);
             return;
         }
-        ((OEntityCreature) getEntity()).a_ = target;
+        ((OEntityCreature) getEntity()).bu = target;
     }
 
     @Override
@@ -123,7 +123,7 @@ public class Mob extends LivingEntity {
 
     public boolean isInLove(){
         if (getEntity() instanceof OEntityAnimal){
-            return ((OEntityAnimal) getEntity()).r();
+            return ((OEntityAnimal) getEntity()).bU();
         }
         return false;
     }

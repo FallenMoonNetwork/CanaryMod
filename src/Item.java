@@ -454,8 +454,8 @@ public class Item implements Cloneable, Metadatable {
      * @param itemStack
      */
     public Item(OItemStack itemStack) {
-        itemId = itemStack.c;
-        amount = itemStack.a;
+        itemId = itemStack.d;
+        amount = itemStack.b;
         damage = itemStack.j();
         itemType = Type.fromId(itemId);
         this.itemStack = itemStack;
@@ -477,8 +477,8 @@ public class Item implements Cloneable, Metadatable {
      */
     public void update() {
         if (this.itemStack != null) {
-            this.itemStack.c = itemId;
-            this.itemStack.a = amount;
+            this.itemStack.d = itemId;
+            this.itemStack.b = amount;
             this.itemStack.b(damage);
         }
     }
@@ -547,8 +547,8 @@ public class Item implements Cloneable, Metadatable {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < OItem.f.length) {
-            return OItem.f[itemId] != null;
+        if (itemId < OItem.g.length) {
+            return OItem.g[itemId] != null;
         }
         return false;
     }
@@ -958,7 +958,7 @@ public class Item implements Cloneable, Metadatable {
      * @param tag the data tag
      */
     public void setDataTag(NBTTagCompound tag) {
-        itemStack.d = tag == null ? null : tag.getBaseTag();
+        itemStack.e = tag == null ? null : tag.getBaseTag();
     }
 
     @Override

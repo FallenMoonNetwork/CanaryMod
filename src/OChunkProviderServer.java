@@ -31,7 +31,7 @@ public class OChunkProviderServer implements OIChunkProvider {
 
     public void b(int i, int j) {
         if (this.h.t.e()) {
-            OChunkCoordinates ochunkcoordinates = this.h.J();
+            OChunkCoordinates ochunkcoordinates = this.h.K();
             int k = i * 16 + 8 - ochunkcoordinates.a;
             int l = j * 16 + 8 - ochunkcoordinates.c;
             short short1 = 128;
@@ -128,7 +128,7 @@ public class OChunkProviderServer implements OIChunkProvider {
                 OChunk ochunk = this.e.a(this.h, i, j);
 
                 if (ochunk != null) {
-                    ochunk.n = this.h.H();
+                    ochunk.n = this.h.I();
                     if (this.d != null) {
                         this.d.e(i, j);
                     }
@@ -155,7 +155,7 @@ public class OChunkProviderServer implements OIChunkProvider {
     private void b(OChunk ochunk) {
         if (this.e != null) {
             try {
-                ochunk.n = this.h.H();
+                ochunk.n = this.h.I();
                 this.e.a(this.h, ochunk);
             } catch (IOException ioexception) {
                 ioexception.printStackTrace();

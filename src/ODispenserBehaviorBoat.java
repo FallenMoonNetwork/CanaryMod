@@ -5,7 +5,7 @@ final class ODispenserBehaviorBoat extends OBehaviorDefaultDispenseItem {
     ODispenserBehaviorBoat() {}
 
     public OItemStack b(OIBlockSource oiblocksource, OItemStack oitemstack) {
-        OEnumFacing oenumfacing = OBlockDispenser.j_(oiblocksource.h());
+        OEnumFacing oenumfacing = OBlockDispenser.l_(oiblocksource.h());
         OWorld oworld = oiblocksource.k();
         double d0 = oiblocksource.a() + (double) ((float) oenumfacing.c() * 1.125F);
         double d1 = oiblocksource.b() + (double) ((float) oenumfacing.d() * 1.125F);

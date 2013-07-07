@@ -17,7 +17,7 @@ public class OEntityMinecartMobSpawner extends OEntityMinecart {
     }
 
     public OBlock n() {
-        return OBlock.aw;
+        return OBlock.ax;
     }
 
     protected void a(ONBTTagCompound onbttagcompound) {

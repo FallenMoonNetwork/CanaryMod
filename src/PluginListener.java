@@ -573,9 +573,25 @@ public class PluginListener {
      *            entity that dealt the damage
      * @param damage
      * @return false to set damage
+     *
+     * @deprecated Damage is measured in floats now, use
+     * {@link #onVehicleDamage(BaseVehicle, BaseEntity, float)} instead.
      */
+    @Deprecated
     public boolean onVehicleDamage(BaseVehicle vehicle, BaseEntity attacker, int damage) {
         return false;
+    }
+
+    /**
+     * Called when a vehicle receives damage.
+     * @param vehicle The {@link BaseVehicle} receiving the damage
+     * @param attacker The {@link BaseEntity} attacing the vehicle
+     * @param damage The final amount of damage dealt
+     * @return <tt>true</tt> if the damage should be cancelled, <tt>false</tt>
+     * otherwise.
+     */
+    public boolean onVehicleDamage(BaseVehicle vehicle, BaseEntity attacker, float damage) {
+        return onVehicleDamage(vehicle, attacker, (int) damage);
     }
 
     /**

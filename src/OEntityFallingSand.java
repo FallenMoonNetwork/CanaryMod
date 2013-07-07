@@ -15,13 +15,9 @@ public class OEntityFallingSand extends OEntity {
 
     public OEntityFallingSand(OWorld oworld) {
         super(oworld);
-        this.c = 0;
         this.d = true;
-        this.f = false;
-        this.g = false;
         this.h = 40;
         this.i = 2.0F;
-        this.e = null;
     }
 
     public OEntityFallingSand(OWorld oworld, double d0, double d1, double d2, int i) {
@@ -30,13 +26,9 @@ public class OEntityFallingSand extends OEntity {
 
     public OEntityFallingSand(OWorld oworld, double d0, double d1, double d2, int i, int j) {
         super(oworld);
-        this.c = 0;
         this.d = true;
-        this.f = false;
-        this.g = false;
         this.h = 40;
         this.i = 2.0F;
-        this.e = null;
         this.a = i;
         this.b = j;
         this.m = true;
@@ -51,7 +43,7 @@ public class OEntityFallingSand extends OEntity {
         this.t = d2;
     }
 
-    protected boolean f_() {
+    protected boolean e_() {
         return false;
     }
 
@@ -92,14 +84,14 @@ public class OEntityFallingSand extends OEntity {
                     this.x *= 0.699999988079071D;
                     this.z *= 0.699999988079071D;
                     this.y *= -0.5D;
-                    if (this.q.a(i, j, k) != OBlock.ag.cz) {
+                    if (this.q.a(i, j, k) != OBlock.ah.cF) {
                         this.w();
                         if (!this.f && this.q.a(this.a, i, j, k, true, 1, (OEntity) null, (OItemStack) null) && !OBlockSand.a_(this.q, i, j - 1, k) && this.q.f(i, j, k, this.a, this.b, 3)) {
-                            if (OBlock.r[this.a] instanceof OBlockSand) {
-                                ((OBlockSand) OBlock.r[this.a]).a_(this.q, i, j, k, this.b);
+                            if (OBlock.s[this.a] instanceof OBlockSand) {
+                                ((OBlockSand) OBlock.s[this.a]).a_(this.q, i, j, k, this.b);
                             }
 
-                            if (this.e != null && OBlock.r[this.a] instanceof OITileEntityProvider) {
+                            if (this.e != null && OBlock.s[this.a] instanceof OITileEntityProvider) {
                                 OTileEntity otileentity = this.q.r(i, j, k);
 
                                 if (otileentity != null) {
@@ -117,16 +109,16 @@ public class OEntityFallingSand extends OEntity {
                                     }
 
                                     otileentity.a(onbttagcompound);
-                                    otileentity.k_();
+                                    otileentity.e();
                                 }
                             }
                         } else if (this.d && !this.f) {
-                            this.a(new OItemStack(this.a, 1, OBlock.r[this.a].a(this.b)), 0.0F);
+                            this.a(new OItemStack(this.a, 1, OBlock.s[this.a].a(this.b)), 0.0F);
                         }
                     }
                 } else if (this.c > 100 && !this.q.I && (j < 1 || j > 256) || this.c > 600) {
                     if (this.d) {
-                        this.a(new OItemStack(this.a, 1, OBlock.r[this.a].a(this.b)), 0.0F);
+                        this.a(new OItemStack(this.a, 1, OBlock.s[this.a].a(this.b)), 0.0F);
                     }
 
                     this.w();
@@ -135,24 +127,24 @@ public class OEntityFallingSand extends OEntity {
         }
     }
 
-    protected void a(float f) {
+    protected void b(float f) {
         if (this.g) {
             int i = OMathHelper.f(f - 1.0F);
 
             if (i > 0) {
                 ArrayList arraylist = new ArrayList(this.q.b((OEntity) this, this.E));
-                ODamageSource odamagesource = this.a == OBlock.cl.cz ? ODamageSource.m : ODamageSource.n;
+                ODamageSource odamagesource = this.a == OBlock.cm.cF ? ODamageSource.m : ODamageSource.n;
                 Iterator iterator = arraylist.iterator();
 
                 while (iterator.hasNext()) {
                     OEntity oentity = (OEntity) iterator.next();
-                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(this.getEntity(), oentity.getEntity(), odamagesource.damageSource, this.h));
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(this.getEntity(), oentity.getEntity(), odamagesource.damageSource, (float) Math.min(OMathHelper.d((float) i * this.i), this.h)));
                     if (!ev.isCanceled()) {
-                         oentity.a(ev.getDamageSource().getDamageSource(), Math.min(OMathHelper.d((float) i * this.i), ev.getDamageAmount()));
+                         oentity.a(ev.getDamageSource().getDamageSource(), ev.getDamageAmountFloat());
                     }
                 }
 
-                if (this.a == OBlock.cl.cz && (double) this.ab.nextFloat() < 0.05000000074505806D + (double) i * 0.05D) {
+                if (this.a == OBlock.cm.cF && (double) this.ab.nextFloat() < 0.05000000074505806D + (double) i * 0.05D) {
                     int j = this.b >> 2;
                     int k = this.b & 3;
 
@@ -194,7 +186,7 @@ public class OEntityFallingSand extends OEntity {
             this.g = onbttagcompound.n("HurtEntities");
             this.i = onbttagcompound.g("FallHurtAmount");
             this.h = onbttagcompound.e("FallHurtMax");
-        } else if (this.a == OBlock.cl.cz) {
+        } else if (this.a == OBlock.cm.cF) {
             this.g = true;
         }
 
@@ -207,7 +199,7 @@ public class OEntityFallingSand extends OEntity {
         }
 
         if (this.a == 0) {
-            this.a = OBlock.I.cz;
+            this.a = OBlock.J.cF;
         }
     }
 

@@ -7,7 +7,7 @@ public abstract class ContainerMinecart extends Minecart implements Inventory {
 
             @Override
             public void update() {
-                container.k_();
+                container.e();
             }
 
             @Override

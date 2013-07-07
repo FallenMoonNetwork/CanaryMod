@@ -17,8 +17,8 @@ public class OSlotMerchantResult extends OSlot {
     }
 
     public OItemStack a(int i) {
-        if (this.d()) {
-            this.c += Math.min(i, this.c().a);
+        if (this.e()) {
+            this.c += Math.min(i, this.d().b);
         }
 
         return super.a(i);
@@ -41,11 +41,11 @@ public class OSlotMerchantResult extends OSlot {
     public boolean a(OEntityPlayer oentityplayer, OItemStack oitemstack, boolean heldShift) { // CanaryMod: add heldShift parameter
         OMerchantRecipe omerchantrecipe = this.a.i();
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.VILLAGER_TRADE, ((OEntityPlayerMP) oentityplayer).getPlayer(),
-                    new Villager((OEntityVillager) this.d), new VillagerTrade(omerchantrecipe))) {
+                    ((OEntityVillager) this.d).getEntity(), omerchantrecipe.getVillagerTrade())) {
             if (heldShift) {
                 ((OEntityPlayerMP) oentityplayer).getPlayer().getInventory().removeItemOverStacks(new Item(omerchantrecipe.d()));
             } else {
-                oentityplayer.bK.b((OItemStack) null);
+                oentityplayer.bn.b((OItemStack) null);
             }
             return true;
         }
@@ -56,17 +56,17 @@ public class OSlotMerchantResult extends OSlot {
             OItemStack oitemstack2 = this.a.a(1);
 
             if (this.a(omerchantrecipe, oitemstack1, oitemstack2) || this.a(omerchantrecipe, oitemstack2, oitemstack1)) {
-                if (oitemstack1 != null && oitemstack1.a <= 0) {
+                this.d.a(omerchantrecipe);
+                if (oitemstack1 != null && oitemstack1.b <= 0) {
                     oitemstack1 = null;
                 }
 
-                if (oitemstack2 != null && oitemstack2.a <= 0) {
+                if (oitemstack2 != null && oitemstack2.b <= 0) {
                     oitemstack2 = null;
                 }
 
                 this.a.a(0, oitemstack1);
                 this.a.a(1, oitemstack2);
-                this.d.a(omerchantrecipe);
             }
         }
         return false;
@@ -76,15 +76,15 @@ public class OSlotMerchantResult extends OSlot {
         OItemStack oitemstack2 = omerchantrecipe.a();
         OItemStack oitemstack3 = omerchantrecipe.b();
 
-        if (oitemstack != null && oitemstack.c == oitemstack2.c) {
-            if (oitemstack3 != null && oitemstack1 != null && oitemstack3.c == oitemstack1.c) {
-                oitemstack.a -= oitemstack2.a;
-                oitemstack1.a -= oitemstack3.a;
+        if (oitemstack != null && oitemstack.d == oitemstack2.d) {
+            if (oitemstack3 != null && oitemstack1 != null && oitemstack3.d == oitemstack1.d) {
+                oitemstack.b -= oitemstack2.b;
+                oitemstack1.b -= oitemstack3.b;
                 return true;
             }
 
             if (oitemstack3 == null && oitemstack1 == null) {
-                oitemstack.a -= oitemstack2.a;
+                oitemstack.b -= oitemstack2.b;
                 return true;
             }
         }

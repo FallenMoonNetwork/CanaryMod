@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class OBlockRedstoneTorch extends OBlockTorch {
 
-    private boolean a = false;
+    private boolean a;
     private static Map b = new HashMap();
 
     private boolean a(OWorld oworld, int i, int j, int k, boolean flag) {
@@ -17,7 +17,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         List list = (List) b.get(oworld);
 
         if (flag) {
-            list.add(new ORedstoneUpdateInfo(i, j, k, oworld.H()));
+            list.add(new ORedstoneUpdateInfo(i, j, k, oworld.I()));
         }
 
         int l = 0;
@@ -53,23 +53,23 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         }
 
         if (this.a) {
-            oworld.f(i, j - 1, k, this.cz);
-            oworld.f(i, j + 1, k, this.cz);
-            oworld.f(i - 1, j, k, this.cz);
-            oworld.f(i + 1, j, k, this.cz);
-            oworld.f(i, j, k - 1, this.cz);
-            oworld.f(i, j, k + 1, this.cz);
+            oworld.f(i, j - 1, k, this.cF);
+            oworld.f(i, j + 1, k, this.cF);
+            oworld.f(i - 1, j, k, this.cF);
+            oworld.f(i + 1, j, k, this.cF);
+            oworld.f(i, j, k - 1, this.cF);
+            oworld.f(i, j, k + 1, this.cF);
         }
     }
 
     public void a(OWorld oworld, int i, int j, int k, int l, int i1) {
         if (this.a) {
-            oworld.f(i, j - 1, k, this.cz);
-            oworld.f(i, j + 1, k, this.cz);
-            oworld.f(i - 1, j, k, this.cz);
-            oworld.f(i + 1, j, k, this.cz);
-            oworld.f(i, j, k - 1, this.cz);
-            oworld.f(i, j, k + 1, this.cz);
+            oworld.f(i, j - 1, k, this.cF);
+            oworld.f(i, j + 1, k, this.cF);
+            oworld.f(i - 1, j, k, this.cF);
+            oworld.f(i + 1, j, k, this.cF);
+            oworld.f(i, j, k - 1, this.cF);
+            oworld.f(i, j, k + 1, this.cF);
         }
     }
 
@@ -93,7 +93,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
         boolean flag = this.m(oworld, i, j, k);
         List list = (List) b.get(oworld);
 
-        while (list != null && !list.isEmpty() && oworld.H() - ((ORedstoneUpdateInfo) list.get(0)).d > 60L) {
+        while (list != null && !list.isEmpty() && oworld.I() - ((ORedstoneUpdateInfo) list.get(0)).d > 60L) {
             list.remove(0);
         }
 
@@ -101,7 +101,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
             if (flag) {
                 // CanaryMod: Allow redstone torches to provide power
                 if ((Integer) etc.getLoader().callHook(PluginLoader.Hook.REDSTONE_CHANGE, oworld.world.getBlockAt(i, j, k), 1, 0) == 0) {
-                    oworld.f(i, j, k, OBlock.aT.cz, oworld.h(i, j, k), 3);
+                    oworld.f(i, j, k, OBlock.aU.cF, oworld.h(i, j, k), 3);
                     if (this.a(oworld, i, j, k, true)) {
                     oworld.a((double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), "random.fizz", 0.5F, 2.6F + (oworld.s.nextFloat() - oworld.s.nextFloat()) * 0.8F);
 
@@ -116,7 +116,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
                 } //
             }
         } else if (!flag && !this.a(oworld, i, j, k, false)) {
-            oworld.f(i, j, k, OBlock.aU.cz, oworld.h(i, j, k), 3);
+            oworld.f(i, j, k, OBlock.aV.cF, oworld.h(i, j, k), 3);
         }
     }
 
@@ -125,7 +125,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
             boolean flag = this.m(oworld, i, j, k);
 
             if (this.a && flag || !this.a && !flag) {
-                oworld.a(i, j, k, this.cz, this.a(oworld));
+                oworld.a(i, j, k, this.cF, this.a(oworld));
             }
         }
     }
@@ -135,7 +135,7 @@ public class OBlockRedstoneTorch extends OBlockTorch {
     }
 
     public int a(int i, Random random, int j) {
-        return OBlock.aU.cz;
+        return OBlock.aV.cF;
     }
 
     public boolean f() {
@@ -143,6 +143,6 @@ public class OBlockRedstoneTorch extends OBlockTorch {
     }
 
     public boolean i(int i) {
-        return i == OBlock.aT.cz || i == OBlock.aU.cz;
+        return i == OBlock.aU.cF || i == OBlock.aV.cF;
     }
 }

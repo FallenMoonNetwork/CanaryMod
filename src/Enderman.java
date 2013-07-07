@@ -34,7 +34,7 @@ public class Enderman extends Mob {
      */
     @SuppressWarnings("deprecation")
     public Block getBlockInHand() {
-        return new Block(Block.Type.fromId(getEntity().o()), getEntity().p());
+        return new Block(Block.Type.fromId(getEntity().bR()), getEntity().bS());
     }
 
     /**
@@ -46,7 +46,7 @@ public class Enderman extends Mob {
     public boolean setBlockInHand(int blockID, int blockData) {
         if (OEntityEnderman.canHoldItem(blockID)) {
             getEntity().a(blockID);
-            getEntity().s(blockData);
+            getEntity().c(blockData);
             return true;
         }
         return false;

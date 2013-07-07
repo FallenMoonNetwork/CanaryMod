@@ -8,6 +8,7 @@ class OPlayerInstance {
     private short[] d;
     private int e;
     private int f;
+    private long g;
 
     final OPlayerManager a;
 
@@ -15,7 +16,6 @@ class OPlayerInstance {
         this.a = oplayermanager;
         this.b = new ArrayList();
         this.d = new short[64];
-        this.e = 0;
         this.c = new OChunkCoordIntPair(i, j);
         oplayermanager.a().b.c(i, j);
     }
@@ -24,6 +24,10 @@ class OPlayerInstance {
         if (this.b.contains(oentityplayermp)) {
             throw new IllegalStateException("Failed to add player. " + oentityplayermp + " already is in chunk " + this.c.a + ", " + this.c.b);
         } else {
+            if (this.b.isEmpty()) {
+                this.g = OPlayerManager.a(this.a).I();
+            }
+
             this.b.add(oentityplayermp);
             oentityplayermp.f.add(this.c);
         }
@@ -31,15 +35,19 @@ class OPlayerInstance {
 
     public void b(OEntityPlayerMP oentityplayermp) {
         if (this.b.contains(oentityplayermp)) {
-            oentityplayermp.a.b(new OPacket51MapChunk(OPlayerManager.a(this.a).e(this.c.a, this.c.b), true, 0));
+            OChunk ochunk = OPlayerManager.a(this.a).e(this.c.a, this.c.b);
+
+            oentityplayermp.a.b(new OPacket51MapChunk(ochunk, true, 0));
             this.b.remove(oentityplayermp);
             oentityplayermp.f.remove(this.c);
             if (this.b.isEmpty()) {
                 long i = (long) this.c.a + 2147483647L | (long) this.c.b + 2147483647L << 32;
 
+                this.a(ochunk);
                 OPlayerManager.b(this.a).d(i);
+                OPlayerManager.c(this.a).remove(this);
                 if (this.e > 0) {
-                    OPlayerManager.c(this.a).remove(this);
+                    OPlayerManager.d(this.a).remove(this);
                 }
 
                 this.a.a().b.b(this.c.a, this.c.b);
@@ -47,9 +55,18 @@ class OPlayerInstance {
         }
     }
 
+    public void a() {
+        this.a(OPlayerManager.a(this.a).e(this.c.a, this.c.b));
+    }
+
+    private void a(OChunk ochunk) {
+        ochunk.q += OPlayerManager.a(this.a).I() - this.g;
+        this.g = OPlayerManager.a(this.a).I();
+    }
+
     public void a(int i, int j, int k) {
         if (this.e == 0) {
-            OPlayerManager.c(this.a).add(this);
+            OPlayerManager.d(this.a).add(this);
         }
 
         this.f |= 1 << (j >> 4);
@@ -76,7 +93,7 @@ class OPlayerInstance {
         }
     }
 
-    public void a() {
+    public void b() {
         if (this.e != 0) {
             int i;
             int j;

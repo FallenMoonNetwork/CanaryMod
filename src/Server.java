@@ -32,7 +32,7 @@ public class Server {
      * @param msg Message text to send
      */
     public void messageAll(String msg) {
-        server.ad().a(new OPacket3Chat(msg));
+        server.af().a(new OPacket3Chat(OChatMessageComponent.e(msg)));
     }
 
     /**
@@ -53,7 +53,7 @@ public class Server {
      *
      */
     public void unban(String player) {
-        server.ad().e().b(player);
+        server.af().e().b(player);
         etc.getDataSource().expireBan(new Ban(player));
     }
 
@@ -172,7 +172,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
-        OEntityPlayerMP user = server.ad().f(name);
+        OEntityPlayerMP user = server.af().f(name);
 
         return user == null ? null : user.getPlayer();
     }
@@ -185,7 +185,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
 
-        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.ad().a) {
+        for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.af().a) {
             toRet.add(oepmp.getPlayer());
         }
         return toRet;
@@ -197,7 +197,7 @@ public class Server {
      * @return list of player names
      */
     public String getPlayerNames() {
-        return server.ad().c();
+        return server.af().c();
     }
 
     /**
@@ -556,7 +556,7 @@ public class Server {
      * Saves all player inventories to file
      */
     public void saveInventories() {
-        server.ad().g();
+        server.af().g();
     }
 
     /**
@@ -773,7 +773,7 @@ public class Server {
      * @return the default dimension
      */
     public World getDefaultWorld() {
-        OWorld oworld = server.getWorld(server.J(), 0);
+        OWorld oworld = server.getWorld(server.L(), 0);
 
         return oworld != null ? oworld.world : null;
     }
@@ -793,7 +793,7 @@ public class Server {
      * </code></blockquote>
      */
     public World getWorld(int dimension) {
-        OWorld oworld = server.getWorld(server.J(), dimension);
+        OWorld oworld = server.getWorld(server.L(), dimension);
         return oworld != null ? oworld.world : null;
     }
 
@@ -832,9 +832,9 @@ public class Server {
     public void addRecipe(Item item, Object... recipe) {
         for (int i = 0; i < recipe.length; i++) {
             if (recipe[i] instanceof Block.Type) {
-                recipe[i] = OBlock.r[((Block.Type) recipe[i]).getType()];
+                recipe[i] = OBlock.s[((Block.Type) recipe[i]).getType()];
             } else if (recipe[i] instanceof Item.Type) {
-                recipe[i] = OItem.f[((Item.Type) recipe[i]).getId()];
+                recipe[i] = OItem.g[((Item.Type) recipe[i]).getId()];
             } else if (recipe[i] instanceof Item) {
                 recipe[i] = ((Item) recipe[i]).getBaseItem();
             }
@@ -859,9 +859,9 @@ public class Server {
     public void addShapelessRecipe(Item item, Object... recipe) {
         for (int i = 0; i < recipe.length; i++) {
             if (recipe[i] instanceof Block.Type) {
-                recipe[i] = OBlock.r[((Block.Type) recipe[i]).getType()];
+                recipe[i] = OBlock.s[((Block.Type) recipe[i]).getType()];
             } else if (recipe[i] instanceof Item.Type) {
-                recipe[i] = OItem.f[((Item.Type) recipe[i]).getId()];
+                recipe[i] = OItem.g[((Item.Type) recipe[i]).getId()];
             } else if (recipe[i] instanceof Item) {
                 recipe[i] = ((Item) recipe[i]).getBaseItem();
             }
@@ -1016,7 +1016,7 @@ public class Server {
      * @return String of the version in the format major.minor[.build]
      */
     public String getMCVersion() {
-        return server.x();
+        return server.y();
     }
 
     /**

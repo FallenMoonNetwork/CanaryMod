@@ -2,7 +2,7 @@ public class OContainerPlayer extends OContainer {
 
     public OInventoryCrafting a = new OInventoryCrafting(this, 2, 2);
     public OIInventory f = new OInventoryCraftResult();
-    public boolean g = false;
+    public boolean g;
     private final OEntityPlayer h;
 
     public OContainerPlayer(OInventoryPlayer oinventoryplayer, boolean flag, OEntityPlayer oentityplayer) {
@@ -46,7 +46,7 @@ public class OContainerPlayer extends OContainer {
         } //
         OEntityPlayerMP player = (OEntityPlayerMP) this.e.get(0);
 
-        player.a.b(new OPacket103SetSlot(player.bK.c, 0, craftresult));
+        player.a.b(new OPacket103SetSlot(player.bn.c, 0, craftresult));
 
         this.f.a(0, craftresult);
     }
@@ -55,10 +55,10 @@ public class OContainerPlayer extends OContainer {
         super.b(oentityplayer);
 
         for (int i = 0; i < 4; ++i) {
-            OItemStack oitemstack = this.a.b(i);
+            OItemStack oitemstack = this.a.a_(i);
 
             if (oitemstack != null) {
-                oentityplayer.c(oitemstack);
+                oentityplayer.b(oitemstack);
             }
         }
 
@@ -73,8 +73,8 @@ public class OContainerPlayer extends OContainer {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if (i == 0) {
@@ -91,7 +91,7 @@ public class OContainerPlayer extends OContainer {
                 if (!this.a(oitemstack1, 9, 45, false)) {
                     return null;
                 }
-            } else if (oitemstack.b() instanceof OItemArmor && !((OSlot) this.c.get(5 + ((OItemArmor) oitemstack.b()).b)).d()) {
+            } else if (oitemstack.b() instanceof OItemArmor && !((OSlot) this.c.get(5 + ((OItemArmor) oitemstack.b()).b)).e()) {
                 int j = 5 + ((OItemArmor) oitemstack.b()).b;
 
                 if (!this.a(oitemstack1, j, j + 1, false)) {
@@ -109,13 +109,13 @@ public class OContainerPlayer extends OContainer {
                 return null;
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
 
-            if (oitemstack1.a == oitemstack.a) {
+            if (oitemstack1.b == oitemstack.b) {
                 return null;
             }
 

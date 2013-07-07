@@ -56,10 +56,6 @@ public class OPotionEffect {
         return this.c;
     }
 
-    public boolean d() {
-        return this.d;
-    }
-
     public void a(boolean flag) {
         this.d = flag;
     }
@@ -68,10 +64,10 @@ public class OPotionEffect {
         return this.e;
     }
 
-    public boolean a(OEntityLiving oentityliving) {
+    public boolean a(OEntityLivingBase oentitylivingbase) {
         if (this.b > 0) {
             if (OPotion.a[this.a].a(this.b, this.c)) {
-                this.b(oentityliving);
+                this.b(oentitylivingbase);
             }
 
             this.h();
@@ -84,9 +80,9 @@ public class OPotionEffect {
         return this.permanent ? this.b : --this.b; // CanaryMod
     }
 
-    public void b(OEntityLiving oentityliving) {
+    public void b(OEntityLivingBase oentitylivingbase) {
         if (this.b > 0) {
-            OPotion.a[this.a].a(oentityliving, this.c);
+            OPotion.a[this.a].a(oentitylivingbase, this.c);
         }
     }
 

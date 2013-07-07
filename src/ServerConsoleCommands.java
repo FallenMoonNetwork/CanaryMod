@@ -447,9 +447,9 @@ public class ServerConsoleCommands extends CommandHandler {
             boolean ips = split.length == 2 && split[1].equalsIgnoreCase("ips");
 
             if (!ips) {
-                caller.notify(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().ad().getBans());
+                caller.notify(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().af().getBans());
             } else {
-                caller.notify(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().ad().getIpBans());
+                caller.notify(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().af().getIpBans());
             }
         }
 
@@ -555,7 +555,7 @@ public class ServerConsoleCommands extends CommandHandler {
                     }
                 }
 
-                bannedPlayerNames.addAll(Arrays.asList(etc.getMCServer().ad().getBans().split(" ,")));
+                bannedPlayerNames.addAll(Arrays.asList(etc.getMCServer().af().getBans().split(" ,")));
 
                 return etc.autoComplete(split[1], bannedPlayerNames.toArray(new String[bannedPlayerNames.size()]));
             }
@@ -569,7 +569,7 @@ public class ServerConsoleCommands extends CommandHandler {
             caller.notify("This command is going to be phased out.");
             caller.notify("For new bans, you must use /unban to unban IPs.");
             etc.getDataSource().expireBan(new Ban(parameters[1]));
-            etc.getMCServer().ad().f().b(parameters[1]);
+            etc.getMCServer().af().f().b(parameters[1]);
             caller.notify("Unbanned " + parameters[1]);
         }
 
@@ -577,7 +577,7 @@ public class ServerConsoleCommands extends CommandHandler {
         public List<String> autoComplete(MessageReceiver caller, String currentText) {
             String[] split = currentText.split(" ", -1);
             if (split.length == 2) {
-                return etc.autoComplete(split[1], etc.getMCServer().ad().getIpBans().split(" ,"));
+                return etc.autoComplete(split[1], etc.getMCServer().af().getIpBans().split(" ,"));
             }
             return null;
         }

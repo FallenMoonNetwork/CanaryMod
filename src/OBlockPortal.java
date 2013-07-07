@@ -3,7 +3,7 @@ import java.util.Random;
 public class OBlockPortal extends OBlockBreakable {
 
     public OBlockPortal(int i) {
-        super(i, "portal", OMaterial.C, false);
+        super(i, "portal", OMaterial.D, false);
         this.b(true);
     }
 
@@ -34,7 +34,7 @@ public class OBlockPortal extends OBlockBreakable {
         float f;
         float f1;
 
-        if (oiblockaccess.a(i - 1, j, k) != this.cz && oiblockaccess.a(i + 1, j, k) != this.cz) {
+        if (oiblockaccess.a(i - 1, j, k) != this.cF && oiblockaccess.a(i + 1, j, k) != this.cF) {
             f = 0.125F;
             f1 = 0.5F;
             this.a(0.5F - f, 0.0F, 0.5F - f1, 0.5F + f, 1.0F, 0.5F + f1);
@@ -53,15 +53,15 @@ public class OBlockPortal extends OBlockBreakable {
         return false;
     }
 
-    public boolean n_(OWorld oworld, int i, int j, int k) {
+    public boolean o_(OWorld oworld, int i, int j, int k) {
         byte b0 = 0;
         byte b1 = 0;
 
-        if (oworld.a(i - 1, j, k) == OBlock.at.cz || oworld.a(i + 1, j, k) == OBlock.at.cz) {
+        if (oworld.a(i - 1, j, k) == OBlock.au.cF || oworld.a(i + 1, j, k) == OBlock.au.cF) {
             b0 = 1;
         }
 
-        if (oworld.a(i, j, k - 1) == OBlock.at.cz || oworld.a(i, j, k + 1) == OBlock.at.cz) {
+        if (oworld.a(i, j, k - 1) == OBlock.au.cF || oworld.a(i, j, k + 1) == OBlock.au.cF) {
             b1 = 1;
         }
 
@@ -84,10 +84,10 @@ public class OBlockPortal extends OBlockBreakable {
                         int j1 = oworld.a(i + b0 * l, j + i1, k + b1 * l);
 
                         if (flag) {
-                            if (j1 != OBlock.at.cz) {
+                            if (j1 != OBlock.au.cF) {
                                 return false;
                             }
-                        } else if (j1 != 0 && j1 != OBlock.av.cz) {
+                        } else if (j1 != 0 && j1 != OBlock.aw.cF) {
                             return false;
                         }
                     }
@@ -105,7 +105,7 @@ public class OBlockPortal extends OBlockBreakable {
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PORTAL_CREATE, (Object) portalBlocks)) { // Cast to make single argument
                 for (l = 0; l < 2; ++l) {
                     for (i1 = 0; i1 < 3; ++i1) {
-                        oworld.f(i + b0 * l, j + i1, k + b1 * l, OBlock.bi.cz, 0, 2);
+                        oworld.f(i + b0 * l, j + i1, k + b1 * l, OBlock.bj.cF, 0, 2);
                     }
                 }
 
@@ -119,34 +119,34 @@ public class OBlockPortal extends OBlockBreakable {
         byte b0 = 0;
         byte b1 = 1;
 
-        if (oworld.a(i - 1, j, k) == this.cz || oworld.a(i + 1, j, k) == this.cz) {
+        if (oworld.a(i - 1, j, k) == this.cF || oworld.a(i + 1, j, k) == this.cF) {
             b0 = 1;
             b1 = 0;
         }
 
         int i1;
 
-        for (i1 = j; oworld.a(i, i1 - 1, k) == this.cz; --i1) {
+        for (i1 = j; oworld.a(i, i1 - 1, k) == this.cF; --i1) {
             ;
         }
 
-        if (oworld.a(i, i1 - 1, k) != OBlock.at.cz) {
+        if (oworld.a(i, i1 - 1, k) != OBlock.au.cF) {
             oworld.i(i, j, k);
         } else {
             int j1;
 
-            for (j1 = 1; j1 < 4 && oworld.a(i, i1 + j1, k) == this.cz; ++j1) {
+            for (j1 = 1; j1 < 4 && oworld.a(i, i1 + j1, k) == this.cF; ++j1) {
                 ;
             }
 
-            if (j1 == 3 && oworld.a(i, i1 + j1, k) == OBlock.at.cz) {
-                boolean flag = oworld.a(i - 1, j, k) == this.cz || oworld.a(i + 1, j, k) == this.cz;
-                boolean flag1 = oworld.a(i, j, k - 1) == this.cz || oworld.a(i, j, k + 1) == this.cz;
+            if (j1 == 3 && oworld.a(i, i1 + j1, k) == OBlock.au.cF) {
+                boolean flag = oworld.a(i - 1, j, k) == this.cF || oworld.a(i + 1, j, k) == this.cF;
+                boolean flag1 = oworld.a(i, j, k - 1) == this.cF || oworld.a(i, j, k + 1) == this.cF;
 
                 if (flag && flag1) {
                     oworld.i(i, j, k);
                 } else {
-                    if ((oworld.a(i + b0, j, k + b1) != OBlock.at.cz || oworld.a(i - b0, j, k - b1) != this.cz) && (oworld.a(i - b0, j, k - b1) != OBlock.at.cz || oworld.a(i + b0, j, k + b1) != this.cz)) {
+                    if ((oworld.a(i + b0, j, k + b1) != OBlock.au.cF || oworld.a(i - b0, j, k - b1) != this.cF) && (oworld.a(i - b0, j, k - b1) != OBlock.au.cF || oworld.a(i + b0, j, k + b1) != this.cF)) {
                         oworld.i(i, j, k);
                     }
                 }

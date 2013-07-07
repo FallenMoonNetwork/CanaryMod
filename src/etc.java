@@ -191,11 +191,11 @@ public class etc {
             }
             validateMobGroup(animals, "natural-animals", new String[] { "Sheep", "Pig", "Chicken", "Cow", "Wolf", "MushroomCow", "Ozelot" });
 
-            monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper,Slime,Enderman,CaveSpider,Silverfish,PigZombie,Ghast,Blaze,LavaSlime,EnderDragon").split(",");
+            monsters = properties.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper,Slime,Enderman,CaveSpider,Silverfish,PigZombie,Ghast,Blaze,LavaSlime,EnderDragon,Horse").split(",");
             if (monsters.length == 1 && (monsters[0].equals(" ") || monsters[0].equals(""))) {
                 monsters = new String[] {};
             }
-            validateMobGroup(monsters, "natural-monsters", new String[] { "PigZombie", "Ghast", "Blaze", "LavaSlime", "Slime", "Giant", "Spider", "Zombie", "Skeleton", "Creeper", "Enderman", "CaveSpider", "Silverfish", "EnderDragon" });
+            validateMobGroup(monsters, "natural-monsters", new String[] { "PigZombie", "Ghast", "Blaze", "LavaSlime", "Slime", "Giant", "Spider", "Zombie", "Skeleton", "Creeper", "Enderman", "CaveSpider", "Silverfish", "EnderDragon", "Horse" });
 
             waterAnimals = properties.getString("natural-wateranimals", "Squid").split(",");
             if (waterAnimals.length == 1 && (waterAnimals[0].equals(" ") || waterAnimals[0].equals(""))) {
@@ -347,7 +347,7 @@ public class etc {
      */
     public static OMinecraftServer getMCServer() {
         if (server == null) {
-            server = OMinecraftServer.D();
+            server = OMinecraftServer.F();
         }
         return server;
     }

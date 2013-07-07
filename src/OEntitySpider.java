@@ -2,9 +2,7 @@ public class OEntitySpider extends OEntityMob {
 
     public OEntitySpider(OWorld oworld) {
         super(oworld);
-        this.aH = "/mob/spider.png";
         this.a(1.4F, 0.9F);
-        this.bI = 0.8F;
     }
 
     protected void a() {
@@ -19,17 +17,14 @@ public class OEntitySpider extends OEntityMob {
         }
     }
 
-    public int aW() {
-        //CanaryMod: set max health here, but check for uninitialized value.
-        return this.maxHealth == 0 ? 16 : this.maxHealth;
+    protected void ax() {
+        super.ax();
+        this.a(OSharedMonsterAttributes.a).a(16.0D);
+        this.a(OSharedMonsterAttributes.d).a(0.800000011920929D);
     }
 
-    public double W() {
-        return (double) this.P * 0.75D - 0.5D;
-    }
-
-    protected OEntity j() {
-        float f = this.c(1.0F);
+    protected OEntity bH() {
+        float f = this.d(1.0F);
 
         if (f < 0.5F) {
             double d0 = 16.0D;
@@ -40,15 +35,15 @@ public class OEntitySpider extends OEntityMob {
         }
     }
 
-    protected String bb() {
+    protected String r() {
         return "mob.spider.say";
     }
 
-    protected String bc() {
+    protected String aK() {
         return "mob.spider.say";
     }
 
-    protected String bd() {
+    protected String aL() {
         return "mob.spider.death";
     }
 
@@ -57,10 +52,10 @@ public class OEntitySpider extends OEntityMob {
     }
 
     protected void a(OEntity oentity, float f) {
-        float f1 = this.c(1.0F);
+        float f1 = this.d(1.0F);
 
         if (f1 > 0.5F && this.ab.nextInt(100) == 0) {
-            this.a_ = null;
+            this.j = null;
         } else {
             if (f > 2.0F && f < 6.0F && this.ab.nextInt(10) == 0) {
                 if (this.F) {
@@ -78,24 +73,24 @@ public class OEntitySpider extends OEntityMob {
         }
     }
 
-    protected int be() {
-        return OItem.L.cp;
+    protected int s() {
+        return OItem.M.cv;
     }
 
-    protected void a(boolean flag, int i) {
-        super.a(flag, i);
+    protected void b(boolean flag, int i) {
+        super.b(flag, i);
         if (flag && (this.ab.nextInt(3) == 0 || this.ab.nextInt(1 + i) > 0)) {
-            this.b(OItem.bv.cp, 1);
+            this.b(OItem.bw.cv, 1);
         }
     }
 
-    public boolean g_() {
-        return this.o();
+    public boolean e() {
+        return this.bP();
     }
 
-    public void al() {}
+    public void ak() {}
 
-    public OEnumCreatureAttribute bF() {
+    public OEnumCreatureAttribute aU() {
         return OEnumCreatureAttribute.c;
     }
 
@@ -103,7 +98,7 @@ public class OEntitySpider extends OEntityMob {
         return opotioneffect.a() == OPotion.u.H ? false : super.e(opotioneffect);
     }
 
-    public boolean o() {
+    public boolean bP() {
         return (this.ah.a(16) & 1) != 0;
     }
 
@@ -119,14 +114,33 @@ public class OEntitySpider extends OEntityMob {
         this.ah.b(16, Byte.valueOf(b0));
     }
 
-    public void bJ() {
+    public OEntityLivingData a(OEntityLivingData oentitylivingdata) {
+        Object object = super.a(oentitylivingdata);
+
         if (this.q.s.nextInt(100) == 0) {
             OEntitySkeleton oentityskeleton = new OEntitySkeleton(this.q);
 
             oentityskeleton.b(this.u, this.v, this.w, this.A, 0.0F);
-            oentityskeleton.bJ();
+            oentityskeleton.a((OEntityLivingData) null);
             this.q.d((OEntity) oentityskeleton);
             oentityskeleton.a((OEntity) this);
         }
+
+        if (object == null) {
+            object = new OSpiderEffectsGroupData();
+            if (this.q.r > 2 && this.q.s.nextFloat() < 0.1F * this.q.b(this.u, this.v, this.w)) {
+                ((OSpiderEffectsGroupData) object).a(this.q.s);
+            }
+        }
+
+        if (object instanceof OSpiderEffectsGroupData) {
+            int i = ((OSpiderEffectsGroupData) object).a;
+
+            if (i > 0 && OPotion.a[i] != null) {
+                this.d(new OPotionEffect(i, Integer.MAX_VALUE));
+            }
+        }
+
+        return (OEntityLivingData) object;
     }
 }

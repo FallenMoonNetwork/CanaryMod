@@ -10,7 +10,7 @@ public class OContainerChest extends OContainer {
         this.f = oiinventory1.j_() / 9;
         this.silenced = flag;
         if (!this.silenced) {
-            oiinventory1.f();
+            oiinventory1.k_();
         }
 
         int i = (this.f - 4) * 18;
@@ -45,8 +45,8 @@ public class OContainerChest extends OContainer {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if (i < this.f * 9) {
@@ -57,10 +57,10 @@ public class OContainerChest extends OContainer {
                 return null;
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
         }
 

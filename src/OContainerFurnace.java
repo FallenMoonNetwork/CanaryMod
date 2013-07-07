@@ -1,9 +1,9 @@
 public class OContainerFurnace extends OContainer {
 
     private OTileEntityFurnace a;
-    private int f = 0;
-    private int g = 0;
-    private int h = 0;
+    private int f;
+    private int g;
+    private int h;
 
     public OContainerFurnace(OInventoryPlayer oinventoryplayer, OTileEntityFurnace otileentityfurnace) {
         this.a = otileentityfurnace;
@@ -67,8 +67,8 @@ public class OContainerFurnace extends OContainer {
         OItemStack oitemstack = null;
         OSlot oslot = (OSlot) this.c.get(i);
 
-        if (oslot != null && oslot.d()) {
-            OItemStack oitemstack1 = oslot.c();
+        if (oslot != null && oslot.e()) {
+            OItemStack oitemstack1 = oslot.d();
 
             oitemstack = oitemstack1.m();
             if (i == 2) {
@@ -78,7 +78,7 @@ public class OContainerFurnace extends OContainer {
 
                 oslot.a(oitemstack1, oitemstack);
             } else if (i != 1 && i != 0) {
-                if (OFurnaceRecipes.a().b(oitemstack1.b().cp) != null) {
+                if (OFurnaceRecipes.a().b(oitemstack1.b().cv) != null) {
                     if (!this.a(oitemstack1, 0, 1, false)) {
                         return null;
                     }
@@ -97,13 +97,13 @@ public class OContainerFurnace extends OContainer {
                 return null;
             }
 
-            if (oitemstack1.a == 0) {
+            if (oitemstack1.b == 0) {
                 oslot.c((OItemStack) null);
             } else {
-                oslot.e();
+                oslot.f();
             }
 
-            if (oitemstack1.a == oitemstack.a) {
+            if (oitemstack1.b == oitemstack.b) {
                 return null;
             }
 

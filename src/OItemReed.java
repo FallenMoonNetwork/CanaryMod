@@ -4,7 +4,7 @@ public class OItemReed extends OItem {
 
     public OItemReed(int i, OBlock oblock) {
         super(i);
-        this.a = oblock.cz;
+        this.a = oblock.cF;
     }
 
     public boolean a(OItemStack oitemstack, OEntityPlayer oentityplayer, OWorld oworld, int i, int j, int k, int l, float f, float f1, float f2) {
@@ -12,9 +12,9 @@ public class OItemReed extends OItem {
         Block blockClicked = this.getBlockInfo(oworld, i, j, k, l);
         int i1 = oworld.a(i, j, k);
 
-        if (i1 == OBlock.aW.cz && (oworld.h(i, j, k) & 7) < 1) {
+        if (i1 == OBlock.aX.cF && (oworld.h(i, j, k) & 7) < 1) {
             l = 1;
-        } else if (i1 != OBlock.by.cz && i1 != OBlock.ab.cz && i1 != OBlock.ac.cz) {
+        } else if (i1 != OBlock.bz.cF && i1 != OBlock.ac.cF && i1 != OBlock.ad.cF) {
             if (l == 0) {
                 --j;
             }
@@ -42,7 +42,7 @@ public class OItemReed extends OItem {
 
         if (!oentityplayer.a(i, j, k, l, oitemstack)) {
             return false;
-        } else if (oitemstack.a == 0) {
+        } else if (oitemstack.b == 0) {
             return false;
         } else {
             if (oworld.a(this.a, i, j, k, false, l, (OEntity) null, oitemstack)) {
@@ -55,17 +55,17 @@ public class OItemReed extends OItem {
                     return false;
                 }
 
-                OBlock oblock = OBlock.r[this.a];
+                OBlock oblock = OBlock.s[this.a];
                 int j1 = oblock.a(oworld, i, j, k, l, f, f1, f2, 0);
 
                 if (oworld.f(i, j, k, this.a, j1, 3)) {
                     if (oworld.a(i, j, k) == this.a) {
-                        OBlock.r[this.a].a(oworld, i, j, k, (OEntityLiving) oentityplayer, oitemstack);
-                        OBlock.r[this.a].k(oworld, i, j, k, j1);
+                        OBlock.s[this.a].a(oworld, i, j, k, (OEntityLivingBase) oentityplayer, oitemstack);
+                        OBlock.s[this.a].k(oworld, i, j, k, j1);
                     }
 
-                    oworld.a((double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), oblock.cM.b(), (oblock.cM.c() + 1.0F) / 2.0F, oblock.cM.d() * 0.8F);
-                    --oitemstack.a;
+                    oworld.a((double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), oblock.cS.b(), (oblock.cS.c() + 1.0F) / 2.0F, oblock.cS.d() * 0.8F);
+                    --oitemstack.b;
                 }
             }
 

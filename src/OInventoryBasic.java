@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OInventoryBasic implements OIInventory, Container<OItemStack> {
@@ -16,6 +17,18 @@ public class OInventoryBasic implements OIInventory, Container<OItemStack> {
         this.c = new OItemStack[i];
     }
 
+    public void a(OIInvBasic oiinvbasic) {
+        if (this.d == null) {
+            this.d = new ArrayList();
+        }
+
+        this.d.add(oiinvbasic);
+    }
+
+    public void b(OIInvBasic oiinvbasic) {
+        this.d.remove(oiinvbasic);
+    }
+
     public OItemStack a(int i) {
         return this.c[i];
     }
@@ -24,18 +37,18 @@ public class OInventoryBasic implements OIInventory, Container<OItemStack> {
         if (this.c[i] != null) {
             OItemStack oitemstack;
 
-            if (this.c[i].a <= j) {
+            if (this.c[i].b <= j) {
                 oitemstack = this.c[i];
                 this.c[i] = null;
-                this.k_();
+                this.e();
                 return oitemstack;
             } else {
                 oitemstack = this.c[i].a(j);
-                if (this.c[i].a == 0) {
+                if (this.c[i].b == 0) {
                     this.c[i] = null;
                 }
 
-                this.k_();
+                this.e();
                 return oitemstack;
             }
         } else {
@@ -43,7 +56,7 @@ public class OInventoryBasic implements OIInventory, Container<OItemStack> {
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.c[i] != null) {
             OItemStack oitemstack = this.c[i];
 
@@ -56,11 +69,11 @@ public class OInventoryBasic implements OIInventory, Container<OItemStack> {
 
     public void a(int i, OItemStack oitemstack) {
         this.c[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.d()) {
-            oitemstack.a = this.d();
+        if (oitemstack != null && oitemstack.b > this.d()) {
+            oitemstack.b = this.d();
         }
 
-        this.k_();
+        this.e();
     }
 
     public int j_() {
@@ -75,11 +88,16 @@ public class OInventoryBasic implements OIInventory, Container<OItemStack> {
         return this.e;
     }
 
+    public void a(String s) {
+        this.e = true;
+        this.a = s;
+    }
+
     public int d() {
         return 64;
     }
 
-    public void k_() {
+    public void e() {
         if (this.d != null) {
             for (int i = 0; i < this.d.size(); ++i) {
                 ((OIInvBasic) this.d.get(i)).a(this);
@@ -91,9 +109,9 @@ public class OInventoryBasic implements OIInventory, Container<OItemStack> {
         return true;
     }
 
-    public void g() {}
+    public void k_() {}
 
-    public void f() {}
+    public void g() {}
 
     public boolean b(int i, OItemStack oitemstack) {
         return true;

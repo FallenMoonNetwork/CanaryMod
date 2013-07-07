@@ -36,17 +36,17 @@ public class OTileEntityBrewingStand extends OTileEntity implements OISidedInven
             --this.d;
             if (this.d == 0) {
                 this.u();
-                this.k_();
+                this.e();
             } else if (!this.l()) {
                 this.d = 0;
-                this.k_();
-            } else if (this.f != this.c[3].c) {
+                this.e();
+            } else if (this.f != this.c[3].d) {
                 this.d = 0;
-                this.k_();
+                this.e();
             }
         } else if (this.l()) {
             this.d = 400;
-            this.f = this.c[3].c;
+            this.f = this.c[3].d;
         }
 
         int i = this.j();
@@ -64,16 +64,16 @@ public class OTileEntityBrewingStand extends OTileEntity implements OISidedInven
     }
 
     private boolean l() {
-        if (this.c[3] != null && this.c[3].a > 0) {
+        if (this.c[3] != null && this.c[3].b > 0) {
             OItemStack oitemstack = this.c[3];
 
-            if (!OItem.f[oitemstack.c].w()) {
+            if (!OItem.g[oitemstack.d].x()) {
                 return false;
             } else {
                 boolean flag = false;
 
                 for (int i = 0; i < 3; ++i) {
-                    if (this.c[i] != null && this.c[i].c == OItem.bt.cp) {
+                    if (this.c[i] != null && this.c[i].d == OItem.bu.cv) {
                         int j = this.c[i].k();
                         int k = this.c(j, oitemstack);
 
@@ -82,8 +82,8 @@ public class OTileEntityBrewingStand extends OTileEntity implements OISidedInven
                             break;
                         }
 
-                        List list = OItem.bt.c(j);
-                        List list1 = OItem.bt.c(k);
+                        List list = OItem.bu.c(j);
+                        List list1 = OItem.bu.c(k);
 
                         if ((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null) && j != k) {
                             flag = true;
@@ -104,11 +104,11 @@ public class OTileEntityBrewingStand extends OTileEntity implements OISidedInven
             OItemStack oitemstack = this.c[3];
 
             for (int i = 0; i < 3; ++i) {
-                if (this.c[i] != null && this.c[i].c == OItem.bt.cp) {
+                if (this.c[i] != null && this.c[i].d == OItem.bu.cv) {
                     int j = this.c[i].k();
                     int k = this.c(j, oitemstack);
-                    List list = OItem.bt.c(j);
-                    List list1 = OItem.bt.c(k);
+                    List list = OItem.bu.c(j);
+                    List list1 = OItem.bu.c(k);
 
                     if ((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null)) {
                         if (j != k) {
@@ -120,11 +120,11 @@ public class OTileEntityBrewingStand extends OTileEntity implements OISidedInven
                 }
             }
 
-            if (OItem.f[oitemstack.c].t()) {
-                this.c[3] = new OItemStack(OItem.f[oitemstack.c].s());
+            if (OItem.g[oitemstack.d].u()) {
+                this.c[3] = new OItemStack(OItem.g[oitemstack.d].t());
             } else {
-                --this.c[3].a;
-                if (this.c[3].a <= 0) {
+                --this.c[3].b;
+                if (this.c[3].b <= 0) {
                     this.c[3] = null;
                 }
             }
@@ -132,7 +132,7 @@ public class OTileEntityBrewingStand extends OTileEntity implements OISidedInven
     }
 
     private int c(int i, OItemStack oitemstack) {
-        return oitemstack == null ? i : (OItem.f[oitemstack.c].w() ? OPotionHelper.a(i, OItem.f[oitemstack.c].v()) : i);
+        return oitemstack == null ? i : (OItem.g[oitemstack.d].x() ? OPotionHelper.a(i, OItem.g[oitemstack.d].w()) : i);
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
@@ -192,7 +192,7 @@ public class OTileEntityBrewingStand extends OTileEntity implements OISidedInven
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (i >= 0 && i < this.c.length) {
             OItemStack oitemstack = this.c[i];
 
@@ -217,12 +217,12 @@ public class OTileEntityBrewingStand extends OTileEntity implements OISidedInven
         return this.k.r(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 
     public boolean b(int i, OItemStack oitemstack) {
-        return i == 3 ? OItem.f[oitemstack.c].w() : oitemstack.c == OItem.bt.cp || oitemstack.c == OItem.bu.cp;
+        return i == 3 ? OItem.g[oitemstack.d].x() : oitemstack.d == OItem.bu.cv || oitemstack.d == OItem.bv.cv;
     }
 
     public int j() {

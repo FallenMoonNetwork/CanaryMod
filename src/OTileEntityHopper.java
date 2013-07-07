@@ -53,8 +53,8 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
         }
     }
 
-    public void k_() {
-        super.k_();
+    public void e() {
+        super.e();
     }
 
     public int j_() {
@@ -69,13 +69,13 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
         if (this.a[i] != null) {
             OItemStack oitemstack;
 
-            if (this.a[i].a <= j) {
+            if (this.a[i].b <= j) {
                 oitemstack = this.a[i];
                 this.a[i] = null;
                 return oitemstack;
             } else {
                 oitemstack = this.a[i].a(j);
-                if (this.a[i].a == 0) {
+                if (this.a[i].b == 0) {
                     this.a[i] = null;
                 }
 
@@ -86,7 +86,7 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
         }
     }
 
-    public OItemStack b(int i) {
+    public OItemStack a_(int i) {
         if (this.a[i] != null) {
             OItemStack oitemstack = this.a[i];
 
@@ -99,8 +99,8 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
 
     public void a(int i, OItemStack oitemstack) {
         this.a[i] = oitemstack;
-        if (oitemstack != null && oitemstack.a > this.d()) {
-            oitemstack.a = this.d();
+        if (oitemstack != null && oitemstack.b > this.d()) {
+            oitemstack.b = this.d();
         }
     }
 
@@ -124,7 +124,7 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
         return this.k.r(this.l, this.m, this.n) != this ? false : oentityplayer.e((double) this.l + 0.5D, (double) this.m + 0.5D, (double) this.n + 0.5D) <= 64.0D;
     }
 
-    public void f() {}
+    public void k_() {}
 
     public void g() {}
 
@@ -145,11 +145,12 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
     public boolean j() {
         if (this.k != null && !this.k.I) {
             if (!this.l() && OBlockHopper.d(this.p())) {
-                boolean flag = this.u() | a((OHopper) this);
+                boolean flag = this.u();
 
+                flag = a((OHopper) this) || flag;
                 if (flag) {
                     this.c(8);
-                    this.k_();
+                    this.e();
                     return true;
                 }
             }
@@ -175,8 +176,8 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
                     } //
                     OItemStack oitemstack1 = a(oiinventory, this.a(i, 1), OFacing.a[OBlockHopper.c(this.p())]);
 
-                    if (oitemstack1 == null || oitemstack1.a == 0) {
-                        oiinventory.k_();
+                    if (oitemstack1 == null || oitemstack1.b == 0) {
+                        oiinventory.e();
                         return true;
                     }
 
@@ -213,7 +214,7 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
                 }
             }
         } else {
-            OEntityItem oentityitem = a(ohopper.az(), ohopper.aA(), ohopper.aB() + 1.0D, ohopper.aC());
+            OEntityItem oentityitem = a(ohopper.ay(), ohopper.az(), ohopper.aA() + 1.0D, ohopper.aB());
 
             if (oentityitem != null) {
                 return a((OIInventory) ohopper, oentityitem);
@@ -233,15 +234,15 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
             if (ohopper instanceof OTileEntityHopper) {
                 hopper = ((OTileEntityHopper) ohopper).hopper;
             } else if (ohopper instanceof OEntityMinecartHopper) {
-                hopper = ((OEntityMinecartHopper) ohopper).hopper;
+                hopper = ((OEntityMinecartHopper) ohopper).getEntity();
             }
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.HOPPER_TRANSFER, hopper, new Item(oitemstack), true)) {
                 return false;
             } //
             OItemStack oitemstack2 = a(ohopper, oiinventory.a(i, 1), -1);
 
-            if (oitemstack2 == null || oitemstack2.a == 0) {
-                oiinventory.k_();
+            if (oitemstack2 == null || oitemstack2.b == 0) {
+                oiinventory.e();
                 return true;
             }
 
@@ -260,7 +261,7 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
             OItemStack oitemstack = oentityitem.d().m();
             OItemStack oitemstack1 = a(oiinventory, oitemstack, -1);
 
-            if (oitemstack1 != null && oitemstack1.a != 0) {
+            if (oitemstack1 != null && oitemstack1.b != 0) {
                 oentityitem.a(oitemstack1);
             } else {
                 flag = true;
@@ -276,18 +277,18 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
             OISidedInventory oisidedinventory = (OISidedInventory) oiinventory;
             int[] aint = oisidedinventory.c(i);
 
-            for (int j = 0; j < aint.length && oitemstack != null && oitemstack.a > 0; ++j) {
+            for (int j = 0; j < aint.length && oitemstack != null && oitemstack.b > 0; ++j) {
                 oitemstack = c(oiinventory, oitemstack, aint[j], i);
             }
         } else {
             int k = oiinventory.j_();
 
-            for (int l = 0; l < k && oitemstack != null && oitemstack.a > 0; ++l) {
+            for (int l = 0; l < k && oitemstack != null && oitemstack.b > 0; ++l) {
                 oitemstack = c(oiinventory, oitemstack, l, i);
             }
         }
 
-        if (oitemstack != null && oitemstack.a == 0) {
+        if (oitemstack != null && oitemstack.b == 0) {
             oitemstack = null;
         }
 
@@ -313,20 +314,21 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
                 oitemstack = null;
                 flag = true;
             } else if (a(oitemstack1, oitemstack)) {
-                int k = oitemstack.e() - oitemstack1.a;
-                int l = Math.min(oitemstack.a, k);
+                int k = oitemstack.e() - oitemstack1.b;
+                int l = Math.min(oitemstack.b, k);
 
-                oitemstack.a -= l;
-                oitemstack1.a += l;
+                oitemstack.b -= l;
+                oitemstack1.b += l;
                 flag = l > 0;
             }
 
             if (flag) {
                 if (oiinventory instanceof OTileEntityHopper) {
                     ((OTileEntityHopper) oiinventory).c(8);
+                    oiinventory.e();
                 }
 
-                oiinventory.k_();
+                oiinventory.e();
             }
         }
 
@@ -336,11 +338,11 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
     private OIInventory v() {
         int i = OBlockHopper.c(this.p());
 
-        return b(this.az(), (double) (this.l + OFacing.b[i]), (double) (this.m + OFacing.c[i]), (double) (this.n + OFacing.d[i]));
+        return b(this.ay(), (double) (this.l + OFacing.b[i]), (double) (this.m + OFacing.c[i]), (double) (this.n + OFacing.d[i]));
     }
 
     public static OIInventory b(OHopper ohopper) {
-        return b(ohopper.az(), ohopper.aA(), ohopper.aB() + 1.0D, ohopper.aC());
+        return b(ohopper.ay(), ohopper.az(), ohopper.aA() + 1.0D, ohopper.aB());
     }
 
     public static OEntityItem a(OWorld oworld, double d0, double d1, double d2) {
@@ -360,7 +362,7 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
             oiinventory = (OIInventory) otileentity;
             if (oiinventory instanceof OTileEntityChest) {
                 int l = oworld.a(i, j, k);
-                OBlock oblock = OBlock.r[l];
+                OBlock oblock = OBlock.s[l];
 
                 if (oblock instanceof OBlockChest) {
                     oiinventory = ((OBlockChest) oblock).g_(oworld, i, j, k);
@@ -380,18 +382,18 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
     }
 
     private static boolean a(OItemStack oitemstack, OItemStack oitemstack1) {
-        return oitemstack.c != oitemstack1.c ? false : (oitemstack.k() != oitemstack1.k() ? false : (oitemstack.a > oitemstack.e() ? false : OItemStack.a(oitemstack, oitemstack1)));
+        return oitemstack.d != oitemstack1.d ? false : (oitemstack.k() != oitemstack1.k() ? false : (oitemstack.b > oitemstack.e() ? false : OItemStack.a(oitemstack, oitemstack1)));
     }
 
-    public double aA() {
+    public double az() {
         return (double) this.l;
     }
 
-    public double aB() {
+    public double aA() {
         return (double) this.m;
     }
 
-    public double aC() {
+    public double aB() {
         return (double) this.n;
     }
 

@@ -169,7 +169,11 @@ public class Block {
         QuartzStairs(156),//
         ActivatorRail(157),//
         Dropper(158), //
-        MinecartHopper(408);
+        StainedClay(159), //
+        HayBale(170), //
+        Carpet(171), //
+        HardenedClay(172), //
+        CoalBlock(173);
 
         private int                       id;
         private static Map<Integer, Type> map;
@@ -814,7 +818,7 @@ public class Block {
      * @return Whether or not the block responded.
      */
     public boolean rightClick(Player clicker) {
-        return OBlock.r[getType()].a(getWorld().getWorld(), getX(), getY(), getZ(), clicker != null ? clicker.getEntity() : null, 0, 0, 0, 0); // last four parameters aren't even used by lever or button
+        return OBlock.s[getType()].a(getWorld().getWorld(), getX(), getY(), getZ(), clicker != null ? clicker.getEntity() : null, 0, 0, 0, 0); // last four parameters aren't even used by lever or button
     }
 
     /**

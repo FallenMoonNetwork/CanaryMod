@@ -4,22 +4,24 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
-public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant {
+public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc {
 
-    private int e;
-    private boolean f;
-    private boolean g;
-    OVillage d;
-    private OEntityPlayer h;
-    private OMerchantRecipeList i;
-    private int j;
-    private boolean bK;
-    private int bL;
-    private String bM;
-    private boolean bN;
-    private float bO;
-    private static final Map bP = new HashMap();
-    private static final Map bQ = new HashMap();
+    private int bq;
+    private boolean br;
+    private boolean bs;
+    OVillage bp;
+    private OEntityPlayer bt;
+    private OMerchantRecipeList bu;
+    private int bv;
+    private boolean bw;
+    private int bx;
+    private String by;
+    private boolean bz;
+    private float bA;
+    private static final Map bB = new HashMap();
+    private static final Map bC = new HashMap();
+
+    private Villager villager = new Villager(this);
 
     public OEntityVillager(OWorld oworld) {
         this(oworld, 0);
@@ -27,61 +29,60 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
 
     public OEntityVillager(OWorld oworld, int i) {
         super(oworld);
-        this.e = 0;
-        this.f = false;
-        this.g = false;
-        this.d = null;
-        this.s(i);
-        this.aH = "/mob/villager/villager.png";
-        this.bI = 0.5F;
+        this.p(i);
         this.a(0.6F, 1.8F);
-        this.aC().b(true);
-        this.aC().a(true);
-        this.bo.a(0, new OEntityAISwimming(this));
-        this.bo.a(1, new OEntityAIAvoidEntity(this, OEntityZombie.class, 8.0F, 0.3F, 0.35F));
-        this.bo.a(1, new OEntityAITradePlayer(this));
-        this.bo.a(1, new OEntityAILookAtTradePlayer(this));
-        this.bo.a(2, new OEntityAIMoveIndoors(this));
-        this.bo.a(3, new OEntityAIRestrictOpenDoor(this));
-        this.bo.a(4, new OEntityAIOpenDoor(this, true));
-        this.bo.a(5, new OEntityAIMoveTwardsRestriction(this, 0.3F));
-        this.bo.a(6, new OEntityAIVillagerMate(this));
-        this.bo.a(7, new OEntityAIFollowGolem(this));
-        this.bo.a(8, new OEntityAIPlay(this, 0.32F));
-        this.bo.a(9, new OEntityAIWatchClosest2(this, OEntityPlayer.class, 3.0F, 1.0F));
-        this.bo.a(9, new OEntityAIWatchClosest2(this, OEntityVillager.class, 5.0F, 0.02F));
-        this.bo.a(9, new OEntityAIWander(this, 0.3F));
-        this.bo.a(10, new OEntityAIWatchClosest(this, OEntityLiving.class, 8.0F));
+        this.k().b(true);
+        this.k().a(true);
+        this.c.a(0, new OEntityAISwimming(this));
+        this.c.a(1, new OEntityAIAvoidEntity(this, OEntityZombie.class, 8.0F, 0.6D, 0.6D));
+        this.c.a(1, new OEntityAITradePlayer(this));
+        this.c.a(1, new OEntityAILookAtTradePlayer(this));
+        this.c.a(2, new OEntityAIMoveIndoors(this));
+        this.c.a(3, new OEntityAIRestrictOpenDoor(this));
+        this.c.a(4, new OEntityAIOpenDoor(this, true));
+        this.c.a(5, new OEntityAIMoveTwardsRestriction(this, 0.6D));
+        this.c.a(6, new OEntityAIVillagerMate(this));
+        this.c.a(7, new OEntityAIFollowGolem(this));
+        this.c.a(8, new OEntityAIPlay(this, 0.32D));
+        this.c.a(9, new OEntityAIWatchClosest2(this, OEntityPlayer.class, 3.0F, 1.0F));
+        this.c.a(9, new OEntityAIWatchClosest2(this, OEntityVillager.class, 5.0F, 0.02F));
+        this.c.a(9, new OEntityAIWander(this, 0.6D));
+        this.c.a(10, new OEntityAIWatchClosest(this, OEntityLiving.class, 8.0F));
     }
 
-    public boolean bh() {
+    protected void ax() {
+        super.ax();
+        this.a(OSharedMonsterAttributes.d).a(0.5D);
+    }
+
+    public boolean bb() {
         return true;
     }
 
-    protected void bp() {
-        if (--this.e <= 0) {
+    protected void bg() {
+        if (--this.bq <= 0) {
             this.q.A.a(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w));
-            this.e = 70 + this.ab.nextInt(50);
-            this.d = this.q.A.a(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w), 32);
-            if (this.d == null) {
-                this.aO();
+            this.bq = 70 + this.ab.nextInt(50);
+            this.bp = this.q.A.a(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w), 32);
+            if (this.bp == null) {
+                this.bN();
             } else {
-                OChunkCoordinates ochunkcoordinates = this.d.a();
+                OChunkCoordinates ochunkcoordinates = this.bp.a();
 
-                this.b(ochunkcoordinates.a, ochunkcoordinates.b, ochunkcoordinates.c, (int) ((float) this.d.b() * 0.6F));
-                if (this.bN) {
-                    this.bN = false;
-                    this.d.b(5);
+                this.b(ochunkcoordinates.a, ochunkcoordinates.b, ochunkcoordinates.c, (int) ((float) this.bp.b() * 0.6F));
+                if (this.bz) {
+                    this.bz = false;
+                    this.bp.b(5);
                 }
             }
         }
 
-        if (!this.p() && this.j > 0) {
-            --this.j;
-            if (this.j <= 0) {
-                if (this.bK) {
-                    if (this.i.size() > 1) {
-                        Iterator iterator = this.i.iterator();
+        if (!this.bS() && this.bv > 0) {
+            --this.bv;
+            if (this.bv <= 0) {
+                if (this.bw) {
+                    if (this.bu.size() > 1) {
+                        Iterator iterator = this.bu.iterator();
 
                         while (iterator.hasNext()) {
                             OMerchantRecipe omerchantrecipe = (OMerchantRecipe) iterator.next();
@@ -92,11 +93,11 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
                         }
                     }
 
-                    this.t(1);
-                    this.bK = false;
-                    if (this.d != null && this.bM != null) {
+                    this.q(1);
+                    this.bw = false;
+                    if (this.bp != null && this.by != null) {
                         this.q.a((OEntity) this, (byte) 14);
-                        this.d.a(this.bM, 1);
+                        this.bp.a(this.by, 1);
                     }
                 }
 
@@ -104,27 +105,27 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
             }
         }
 
-        super.bp();
+        super.bg();
     }
 
-    public boolean a_(OEntityPlayer oentityplayer) {
-        OItemStack oitemstack = oentityplayer.bK.h();
+    public boolean a(OEntityPlayer oentityplayer) {
+        OItemStack oitemstack = oentityplayer.bn.h();
         if ((PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.ENTITY_RIGHTCLICKED,
-                ((OEntityPlayerMP) oentityplayer).getPlayer(), new Villager(this),
+                ((OEntityPlayerMP) oentityplayer).getPlayer(), this.getEntity(),
                 oitemstack == null ? null : new Item(oitemstack)) == PluginLoader.HookResult.PREVENT_ACTION) {
             return false;
         }
-        boolean flag = oitemstack != null && oitemstack.c == OItem.bD.cp;
+        boolean flag = oitemstack != null && oitemstack.d == OItem.bE.cv;
 
-        if (!flag && this.R() && !this.p() && !this.h_()) {
+        if (!flag && this.R() && !this.bS() && !this.g_()) {
             if (!this.q.I) {
-                this.a(oentityplayer);
-                oentityplayer.a((OIMerchant) this, this.bP());
+                this.a_(oentityplayer);
+                oentityplayer.a((OIMerchant) this, this.bw());
             }
 
             return true;
         } else {
-            return super.a_(oentityplayer);
+            return super.a(oentityplayer);
         }
     }
 
@@ -133,82 +134,78 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
         this.ah.a(16, Integer.valueOf(0));
     }
 
-    public int aW() {
-        return 20;
-    }
-
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("Profession", this.m());
-        onbttagcompound.a("Riches", this.bL);
-        if (this.i != null) {
-            onbttagcompound.a("Offers", this.i.a());
+        onbttagcompound.a("Profession", this.bP());
+        onbttagcompound.a("Riches", this.bx);
+        if (this.bu != null) {
+            onbttagcompound.a("Offers", this.bu.a());
         }
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        this.s(onbttagcompound.e("Profession"));
-        this.bL = onbttagcompound.e("Riches");
+        this.p(onbttagcompound.e("Profession"));
+        this.bx = onbttagcompound.e("Riches");
         if (onbttagcompound.b("Offers")) {
             ONBTTagCompound onbttagcompound1 = onbttagcompound.l("Offers");
 
-            this.i = new OMerchantRecipeList(onbttagcompound1);
+            this.bu = new OMerchantRecipeList(onbttagcompound1);
         }
     }
 
-    protected boolean bm() {
+    protected boolean t() {
         return false;
     }
 
-    protected String bb() {
-        return "mob.villager.default";
+    protected String r() {
+        return this.bS() ? "mob.villager.haggle" : "mob.villager.idle";
     }
 
-    protected String bc() {
-        return "mob.villager.defaulthurt";
+    protected String aK() {
+        return "mob.villager.hit";
     }
 
-    protected String bd() {
-        return "mob.villager.defaultdeath";
+    protected String aL() {
+        return "mob.villager.death";
     }
 
-    public void s(int i) {
+    public void p(int i) {
         this.ah.b(16, Integer.valueOf(i));
     }
 
-    public int m() {
+    public int bP() {
         return this.ah.c(16);
     }
 
-    public boolean n() {
-        return this.f;
-    }
-
-    public void i(boolean flag) {
-        this.f = flag;
+    public boolean bQ() {
+        return this.br;
     }
 
     public void j(boolean flag) {
-        this.g = flag;
+        this.br = flag;
     }
 
-    public boolean o() {
-        return this.g;
+    public void k(boolean flag) {
+        this.bs = flag;
     }
 
-    public void c(OEntityLiving oentityliving) {
-        super.c(oentityliving);
-        if (this.d != null && oentityliving != null) {
-            this.d.a(oentityliving);
-            if (oentityliving instanceof OEntityPlayer) {
+    public boolean bR() {
+        return this.bs;
+    }
+
+    public void b(OEntityLivingBase oentitylivingbase) {
+        super.b(oentitylivingbase);
+        if (this.bp != null && oentitylivingbase != null) {
+            this.bp.a(oentitylivingbase);
+            if (oentitylivingbase instanceof OEntityPlayer) {
                 byte b0 = -1;
 
-                if (this.h_()) {
+                if (this.g_()) {
                     b0 = -3;
                 }
 
-                this.d.a(((OEntityPlayer) oentityliving).c_(), b0);
+                this.bp.a(((OEntityPlayer) oentitylivingbase).c_(), b0);
                 if (this.R()) {
                     this.q.a((OEntity) this, (byte) 13);
                 }
@@ -217,20 +214,20 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
     }
 
     public void a(ODamageSource odamagesource) {
-        if (this.d != null) {
+        if (this.bp != null) {
             OEntity oentity = odamagesource.i();
 
             if (oentity != null) {
                 if (oentity instanceof OEntityPlayer) {
-                    this.d.a(((OEntityPlayer) oentity).c_(), -2);
+                    this.bp.a(((OEntityPlayer) oentity).c_(), -2);
                 } else if (oentity instanceof OIMob) {
-                    this.d.h();
+                    this.bp.h();
                 }
             } else if (oentity == null) {
                 OEntityPlayer oentityplayer = this.q.a(this, 16.0D);
 
                 if (oentityplayer != null) {
-                    this.d.h();
+                    this.bp.h();
                 }
             }
         }
@@ -238,54 +235,67 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
         super.a(odamagesource);
     }
 
-    public void a(OEntityPlayer oentityplayer) {
-        this.h = oentityplayer;
+    public void a_(OEntityPlayer oentityplayer) {
+        this.bt = oentityplayer;
     }
 
     public OEntityPlayer m_() {
-        return this.h;
+        return this.bt;
     }
 
-    public boolean p() {
-        return this.h != null;
+    public boolean bS() {
+        return this.bt != null;
     }
 
     public void a(OMerchantRecipe omerchantrecipe) {
         omerchantrecipe.f();
-        if (omerchantrecipe.a((OMerchantRecipe) this.i.get(this.i.size() - 1))) {
-            this.j = 40;
-            this.bK = true;
-            if (this.h != null) {
-                this.bM = this.h.c_();
+        this.a_ = -this.o();
+        this.a("mob.villager.yes", this.aW(), this.aX());
+        if (omerchantrecipe.a((OMerchantRecipe) this.bu.get(this.bu.size() - 1))) {
+            this.bv = 40;
+            this.bw = true;
+            if (this.bt != null) {
+                this.by = this.bt.c_();
             } else {
-                this.bM = null;
+                this.by = null;
             }
         }
 
-        if (omerchantrecipe.a().c == OItem.bI.cp) {
-            this.bL += omerchantrecipe.a().a;
+        if (omerchantrecipe.a().d == OItem.bJ.cv) {
+            this.bx += omerchantrecipe.a().b;
+        }
+    }
+
+    public void a_(OItemStack oitemstack) {
+        if (!this.q.I && this.a_ > -this.o() + 20) {
+            this.a_ = -this.o();
+            if (oitemstack != null) {
+                this.a("mob.villager.yes", this.aW(), this.aX());
+            } else {
+                this.a("mob.villager.no", this.aW(), this.aX());
+            }
         }
     }
 
     public OMerchantRecipeList b(OEntityPlayer oentityplayer) {
-        if (this.i == null) {
-            this.t(1);
+        if (this.bu == null) {
+            this.q(1);
         }
 
-        return this.i;
+        return this.bu;
     }
 
-    private float j(float f) {
-        float f1 = f + this.bO;
+    private float o(float f) {
+        float f1 = f + this.bA;
 
         return f1 > 0.9F ? 0.9F - (f1 - 0.9F) : f1;
     }
 
-    private void t(int i) {
-        if (this.i != null) {
-            this.bO = OMathHelper.c((float) this.i.size()) * 0.2F;
+    private void q(int i) {
+        if (this.bu != null) {
+            this.bA = OMathHelper.c((float) this.bu.size()) * 0.2F;
         } else {
-            this.bO = 0.0F;
+            this.bA = 0.0F;
         }
 
         OMerchantRecipeList omerchantrecipelist;
@@ -294,49 +304,49 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
         int j;
 
         label50:
-        switch (this.m()) {
+        switch (this.bP()) {
             case 0:
-                a(omerchantrecipelist, OItem.U.cp, this.ab, this.j(0.9F));
-                a(omerchantrecipelist, OBlock.af.cz, this.ab, this.j(0.5F));
-                a(omerchantrecipelist, OItem.bl.cp, this.ab, this.j(0.5F));
-                a(omerchantrecipelist, OItem.aW.cp, this.ab, this.j(0.4F));
-                b(omerchantrecipelist, OItem.V.cp, this.ab, this.j(0.9F));
-                b(omerchantrecipelist, OItem.bg.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.k.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.bd.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.bf.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.j.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.bm.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.m.cp, this.ab, this.j(0.5F));
-                if (this.ab.nextFloat() < this.j(0.5F)) {
-                    omerchantrecipelist.add(new OMerchantRecipe(new OItemStack(OBlock.J, 10), new OItemStack(OItem.bI), new OItemStack(OItem.aq.cp, 4 + this.ab.nextInt(2), 0)));
+                a(omerchantrecipelist, OItem.V.cv, this.ab, this.o(0.9F));
+                a(omerchantrecipelist, OBlock.ag.cF, this.ab, this.o(0.5F));
+                a(omerchantrecipelist, OItem.bm.cv, this.ab, this.o(0.5F));
+                a(omerchantrecipelist, OItem.aX.cv, this.ab, this.o(0.4F));
+                b(omerchantrecipelist, OItem.W.cv, this.ab, this.o(0.9F));
+                b(omerchantrecipelist, OItem.bh.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.l.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.be.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.bg.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.k.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.bn.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.n.cv, this.ab, this.o(0.5F));
+                if (this.ab.nextFloat() < this.o(0.5F)) {
+                    omerchantrecipelist.add(new OMerchantRecipe(new OItemStack(OBlock.K, 10), new OItemStack(OItem.bJ), new OItemStack(OItem.ar.cv, 4 + this.ab.nextInt(2), 0)));
                 }
                 break;
 
             case 1:
-                a(omerchantrecipelist, OItem.aL.cp, this.ab, this.j(0.8F));
-                a(omerchantrecipelist, OItem.aM.cp, this.ab, this.j(0.8F));
-                a(omerchantrecipelist, OItem.bH.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OBlock.ar.cz, this.ab, this.j(0.8F));
-                b(omerchantrecipelist, OBlock.Q.cz, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.aR.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.aT.cp, this.ab, this.j(0.2F));
-                if (this.ab.nextFloat() < this.j(0.07F)) {
+                a(omerchantrecipelist, OItem.aM.cv, this.ab, this.o(0.8F));
+                a(omerchantrecipelist, OItem.aN.cv, this.ab, this.o(0.8F));
+                a(omerchantrecipelist, OItem.bI.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OBlock.as.cF, this.ab, this.o(0.8F));
+                b(omerchantrecipelist, OBlock.R.cF, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.aS.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.aU.cv, this.ab, this.o(0.2F));
+                if (this.ab.nextFloat() < this.o(0.07F)) {
                     OEnchantment oenchantment = OEnchantment.c[this.ab.nextInt(OEnchantment.c.length)];
                     int k = OMathHelper.a(this.ab, oenchantment.d(), oenchantment.b());
-                    OItemStack oitemstack = OItem.bX.a(new OEnchantmentData(oenchantment, k));
+                    OItemStack oitemstack = OItem.bY.a(new OEnchantmentData(oenchantment, k));
 
                     j = 2 + this.ab.nextInt(5 + k * 10) + 3 * k;
-                    omerchantrecipelist.add(new OMerchantRecipe(new OItemStack(OItem.aM), new OItemStack(OItem.bI, j), oitemstack));
+                    omerchantrecipelist.add(new OMerchantRecipe(new OItemStack(OItem.aN), new OItemStack(OItem.bJ, j), oitemstack));
                 }
                 break;
 
             case 2:
-                b(omerchantrecipelist, OItem.bB.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.bE.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.aD.cp, this.ab, this.j(0.4F));
-                b(omerchantrecipelist, OBlock.bh.cz, this.ab, this.j(0.3F));
-                int[] aint = new int[] { OItem.r.cp, OItem.A.cp, OItem.af.cp, OItem.aj.cp, OItem.i.cp, OItem.D.cp, OItem.h.cp, OItem.C.cp};
+                b(omerchantrecipelist, OItem.bC.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.bF.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.aE.cv, this.ab, this.o(0.4F));
+                b(omerchantrecipelist, OBlock.bi.cF, this.ab, this.o(0.3F));
+                int[] aint = new int[] { OItem.s.cv, OItem.B.cv, OItem.ag.cv, OItem.ak.cv, OItem.j.cv, OItem.E.cv, OItem.i.cv, OItem.D.cv};
                 int[] aint1 = aint;
                 int l = aint.length;
 
@@ -349,76 +359,76 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
 
                     int i1 = aint1[j];
 
-                    if (this.ab.nextFloat() < this.j(0.05F)) {
-                        omerchantrecipelist.add(new OMerchantRecipe(new OItemStack(i1, 1, 0), new OItemStack(OItem.bI, 2 + this.ab.nextInt(3), 0), OEnchantmentHelper.a(this.ab, new OItemStack(i1, 1, 0), 5 + this.ab.nextInt(15))));
+                    if (this.ab.nextFloat() < this.o(0.05F)) {
+                        omerchantrecipelist.add(new OMerchantRecipe(new OItemStack(i1, 1, 0), new OItemStack(OItem.bJ, 2 + this.ab.nextInt(3), 0), OEnchantmentHelper.a(this.ab, new OItemStack(i1, 1, 0), 5 + this.ab.nextInt(15))));
                     }
 
                     ++j;
                 }
 
             case 3:
-                a(omerchantrecipelist, OItem.n.cp, this.ab, this.j(0.7F));
-                a(omerchantrecipelist, OItem.p.cp, this.ab, this.j(0.5F));
-                a(omerchantrecipelist, OItem.q.cp, this.ab, this.j(0.5F));
-                a(omerchantrecipelist, OItem.o.cp, this.ab, this.j(0.5F));
-                b(omerchantrecipelist, OItem.r.cp, this.ab, this.j(0.5F));
-                b(omerchantrecipelist, OItem.A.cp, this.ab, this.j(0.5F));
-                b(omerchantrecipelist, OItem.i.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.D.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.h.cp, this.ab, this.j(0.5F));
-                b(omerchantrecipelist, OItem.C.cp, this.ab, this.j(0.5F));
-                b(omerchantrecipelist, OItem.g.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.B.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.Q.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.R.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.ah.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.al.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.ae.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.ai.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.af.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.aj.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.ag.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.ak.cp, this.ab, this.j(0.2F));
-                b(omerchantrecipelist, OItem.ad.cp, this.ab, this.j(0.1F));
-                b(omerchantrecipelist, OItem.aa.cp, this.ab, this.j(0.1F));
-                b(omerchantrecipelist, OItem.ab.cp, this.ab, this.j(0.1F));
-                b(omerchantrecipelist, OItem.ac.cp, this.ab, this.j(0.1F));
+                a(omerchantrecipelist, OItem.o.cv, this.ab, this.o(0.7F));
+                a(omerchantrecipelist, OItem.q.cv, this.ab, this.o(0.5F));
+                a(omerchantrecipelist, OItem.r.cv, this.ab, this.o(0.5F));
+                a(omerchantrecipelist, OItem.p.cv, this.ab, this.o(0.5F));
+                b(omerchantrecipelist, OItem.s.cv, this.ab, this.o(0.5F));
+                b(omerchantrecipelist, OItem.B.cv, this.ab, this.o(0.5F));
+                b(omerchantrecipelist, OItem.j.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.E.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.i.cv, this.ab, this.o(0.5F));
+                b(omerchantrecipelist, OItem.D.cv, this.ab, this.o(0.5F));
+                b(omerchantrecipelist, OItem.h.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.C.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.R.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.S.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.ai.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.am.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.af.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.aj.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.ag.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.ak.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.ah.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.al.cv, this.ab, this.o(0.2F));
+                b(omerchantrecipelist, OItem.ae.cv, this.ab, this.o(0.1F));
+                b(omerchantrecipelist, OItem.ab.cv, this.ab, this.o(0.1F));
+                b(omerchantrecipelist, OItem.ac.cv, this.ab, this.o(0.1F));
+                b(omerchantrecipelist, OItem.ad.cv, this.ab, this.o(0.1F));
                 break;
 
             case 4:
-                a(omerchantrecipelist, OItem.n.cp, this.ab, this.j(0.7F));
-                a(omerchantrecipelist, OItem.ar.cp, this.ab, this.j(0.5F));
-                a(omerchantrecipelist, OItem.bj.cp, this.ab, this.j(0.5F));
-                b(omerchantrecipelist, OItem.aB.cp, this.ab, this.j(0.1F));
-                b(omerchantrecipelist, OItem.X.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.Z.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.W.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.Y.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.as.cp, this.ab, this.j(0.3F));
-                b(omerchantrecipelist, OItem.bk.cp, this.ab, this.j(0.3F));
+                a(omerchantrecipelist, OItem.o.cv, this.ab, this.o(0.7F));
+                a(omerchantrecipelist, OItem.as.cv, this.ab, this.o(0.5F));
+                a(omerchantrecipelist, OItem.bk.cv, this.ab, this.o(0.5F));
+                b(omerchantrecipelist, OItem.aC.cv, this.ab, this.o(0.1F));
+                b(omerchantrecipelist, OItem.Y.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.aa.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.X.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.Z.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.at.cv, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.bl.cv, this.ab, this.o(0.3F));
         }
 
         if (omerchantrecipelist.isEmpty()) {
-            a(omerchantrecipelist, OItem.q.cp, this.ab, 1.0F);
+            a(omerchantrecipelist, OItem.r.cv, this.ab, 1.0F);
         }
 
         Collections.shuffle(omerchantrecipelist);
-        if (this.i == null) {
-            this.i = new OMerchantRecipeList();
+        if (this.bu == null) {
+            this.bu = new OMerchantRecipeList();
         }
 
         for (int j1 = 0; j1 < i && j1 < omerchantrecipelist.size(); ++j1) {
             //CanaryMod
             OMerchantRecipe recipe = (OMerchantRecipe) omerchantrecipelist.get(j1);
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.VILLAGER_TRADE_UNLOCK, new Villager(this), new VillagerTrade(recipe))) {
-                this.i.a((OMerchantRecipe) omerchantrecipelist.get(j1));
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.VILLAGER_TRADE_UNLOCK, this.getEntity(), recipe.getVillagerTrade())) {
+                this.bu.a((OMerchantRecipe) omerchantrecipelist.get(j1));
             }
         }
     }
 
     private static void a(OMerchantRecipeList omerchantrecipelist, int i, Random random, float f) {
         if (random.nextFloat() < f) {
-            omerchantrecipelist.add(new OMerchantRecipe(a(i, random), OItem.bI));
+            omerchantrecipelist.add(new OMerchantRecipe(a(i, random), OItem.bJ));
         }
     }
 
@@ -427,7 +437,7 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
     }
 
     private static int b(int i, Random random) {
-        OTuple otuple = (OTuple) bP.get(Integer.valueOf(i));
+        OTuple otuple = (OTuple) bB.get(Integer.valueOf(i));
 
         return otuple == null ? 1 : (((Integer) otuple.a()).intValue() >= ((Integer) otuple.b()).intValue() ? ((Integer) otuple.a()).intValue() : ((Integer) otuple.a()).intValue() + random.nextInt(((Integer) otuple.b()).intValue() - ((Integer) otuple.a()).intValue()));
     }
@@ -439,10 +449,10 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
             OItemStack oitemstack1;
 
             if (j < 0) {
-                oitemstack = new OItemStack(OItem.bI.cp, 1, 0);
+                oitemstack = new OItemStack(OItem.bJ.cv, 1, 0);
                 oitemstack1 = new OItemStack(i, -j, 0);
             } else {
-                oitemstack = new OItemStack(OItem.bI.cp, j, 0);
+                oitemstack = new OItemStack(OItem.bJ.cv, j, 0);
                 oitemstack1 = new OItemStack(i, 1, 0);
             }
 
@@ -451,94 +461,106 @@ public class OEntityVillager extends OEntityAgeable implements OINpc, OIMerchant
     }
 
     private static int c(int i, Random random) {
-        OTuple otuple = (OTuple) bQ.get(Integer.valueOf(i));
+        OTuple otuple = (OTuple) bC.get(Integer.valueOf(i));
 
         return otuple == null ? 1 : (((Integer) otuple.a()).intValue() >= ((Integer) otuple.b()).intValue() ? ((Integer) otuple.a()).intValue() : ((Integer) otuple.a()).intValue() + random.nextInt(((Integer) otuple.b()).intValue() - ((Integer) otuple.a()).intValue()));
     }
 
-    public void bJ() {
-        this.s(this.q.s.nextInt(5));
+    public OEntityLivingData a(OEntityLivingData oentitylivingdata) {
+        oentitylivingdata = super.a(oentitylivingdata);
+        this.p(this.q.s.nextInt(5));
+        return oentitylivingdata;
     }
 
-    public void q() {
-        this.bN = true;
+    public void bT() {
+        this.bz = true;
     }
 
     public OEntityVillager b(OEntityAgeable oentityageable) {
         OEntityVillager oentityvillager = new OEntityVillager(this.q);
 
-        oentityvillager.bJ();
+        oentityvillager.a((OEntityLivingData) null);
         return oentityvillager;
+    }
+
+    public boolean bC() {
+        return false;
     }
 
     public OEntityAgeable a(OEntityAgeable oentityageable) {
         return this.b(oentityageable);
     }
 
+    // CanaryMod start: add getEntity
+    @Override
+    public Villager getEntity() {
+        return villager;
+    } // CanaryMod end
+
     static {
-        bP.put(Integer.valueOf(OItem.n.cp), new OTuple(Integer.valueOf(16), Integer.valueOf(24)));
-        bP.put(Integer.valueOf(OItem.p.cp), new OTuple(Integer.valueOf(8), Integer.valueOf(10)));
-        bP.put(Integer.valueOf(OItem.q.cp), new OTuple(Integer.valueOf(8), Integer.valueOf(10)));
-        bP.put(Integer.valueOf(OItem.o.cp), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
-        bP.put(Integer.valueOf(OItem.aL.cp), new OTuple(Integer.valueOf(24), Integer.valueOf(36)));
-        bP.put(Integer.valueOf(OItem.aM.cp), new OTuple(Integer.valueOf(11), Integer.valueOf(13)));
-        bP.put(Integer.valueOf(OItem.bH.cp), new OTuple(Integer.valueOf(1), Integer.valueOf(1)));
-        bP.put(Integer.valueOf(OItem.bo.cp), new OTuple(Integer.valueOf(3), Integer.valueOf(4)));
-        bP.put(Integer.valueOf(OItem.bB.cp), new OTuple(Integer.valueOf(2), Integer.valueOf(3)));
-        bP.put(Integer.valueOf(OItem.ar.cp), new OTuple(Integer.valueOf(14), Integer.valueOf(18)));
-        bP.put(Integer.valueOf(OItem.bj.cp), new OTuple(Integer.valueOf(14), Integer.valueOf(18)));
-        bP.put(Integer.valueOf(OItem.bl.cp), new OTuple(Integer.valueOf(14), Integer.valueOf(18)));
-        bP.put(Integer.valueOf(OItem.aW.cp), new OTuple(Integer.valueOf(9), Integer.valueOf(13)));
-        bP.put(Integer.valueOf(OItem.T.cp), new OTuple(Integer.valueOf(34), Integer.valueOf(48)));
-        bP.put(Integer.valueOf(OItem.bi.cp), new OTuple(Integer.valueOf(30), Integer.valueOf(38)));
-        bP.put(Integer.valueOf(OItem.bh.cp), new OTuple(Integer.valueOf(30), Integer.valueOf(38)));
-        bP.put(Integer.valueOf(OItem.U.cp), new OTuple(Integer.valueOf(18), Integer.valueOf(22)));
-        bP.put(Integer.valueOf(OBlock.af.cz), new OTuple(Integer.valueOf(14), Integer.valueOf(22)));
-        bP.put(Integer.valueOf(OItem.bn.cp), new OTuple(Integer.valueOf(36), Integer.valueOf(64)));
-        bQ.put(Integer.valueOf(OItem.j.cp), new OTuple(Integer.valueOf(3), Integer.valueOf(4)));
-        bQ.put(Integer.valueOf(OItem.bf.cp), new OTuple(Integer.valueOf(3), Integer.valueOf(4)));
-        bQ.put(Integer.valueOf(OItem.r.cp), new OTuple(Integer.valueOf(7), Integer.valueOf(11)));
-        bQ.put(Integer.valueOf(OItem.A.cp), new OTuple(Integer.valueOf(12), Integer.valueOf(14)));
-        bQ.put(Integer.valueOf(OItem.i.cp), new OTuple(Integer.valueOf(6), Integer.valueOf(8)));
-        bQ.put(Integer.valueOf(OItem.D.cp), new OTuple(Integer.valueOf(9), Integer.valueOf(12)));
-        bQ.put(Integer.valueOf(OItem.h.cp), new OTuple(Integer.valueOf(7), Integer.valueOf(9)));
-        bQ.put(Integer.valueOf(OItem.C.cp), new OTuple(Integer.valueOf(10), Integer.valueOf(12)));
-        bQ.put(Integer.valueOf(OItem.g.cp), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
-        bQ.put(Integer.valueOf(OItem.B.cp), new OTuple(Integer.valueOf(7), Integer.valueOf(8)));
-        bQ.put(Integer.valueOf(OItem.Q.cp), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
-        bQ.put(Integer.valueOf(OItem.R.cp), new OTuple(Integer.valueOf(7), Integer.valueOf(8)));
-        bQ.put(Integer.valueOf(OItem.ah.cp), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
-        bQ.put(Integer.valueOf(OItem.al.cp), new OTuple(Integer.valueOf(7), Integer.valueOf(8)));
-        bQ.put(Integer.valueOf(OItem.ae.cp), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
-        bQ.put(Integer.valueOf(OItem.ai.cp), new OTuple(Integer.valueOf(7), Integer.valueOf(8)));
-        bQ.put(Integer.valueOf(OItem.af.cp), new OTuple(Integer.valueOf(10), Integer.valueOf(14)));
-        bQ.put(Integer.valueOf(OItem.aj.cp), new OTuple(Integer.valueOf(16), Integer.valueOf(19)));
-        bQ.put(Integer.valueOf(OItem.ag.cp), new OTuple(Integer.valueOf(8), Integer.valueOf(10)));
-        bQ.put(Integer.valueOf(OItem.ak.cp), new OTuple(Integer.valueOf(11), Integer.valueOf(14)));
-        bQ.put(Integer.valueOf(OItem.ad.cp), new OTuple(Integer.valueOf(5), Integer.valueOf(7)));
-        bQ.put(Integer.valueOf(OItem.aa.cp), new OTuple(Integer.valueOf(5), Integer.valueOf(7)));
-        bQ.put(Integer.valueOf(OItem.ab.cp), new OTuple(Integer.valueOf(11), Integer.valueOf(15)));
-        bQ.put(Integer.valueOf(OItem.ac.cp), new OTuple(Integer.valueOf(9), Integer.valueOf(11)));
-        bQ.put(Integer.valueOf(OItem.V.cp), new OTuple(Integer.valueOf(-4), Integer.valueOf(-2)));
-        bQ.put(Integer.valueOf(OItem.bg.cp), new OTuple(Integer.valueOf(-8), Integer.valueOf(-4)));
-        bQ.put(Integer.valueOf(OItem.k.cp), new OTuple(Integer.valueOf(-8), Integer.valueOf(-4)));
-        bQ.put(Integer.valueOf(OItem.bd.cp), new OTuple(Integer.valueOf(-10), Integer.valueOf(-7)));
-        bQ.put(Integer.valueOf(OBlock.Q.cz), new OTuple(Integer.valueOf(-5), Integer.valueOf(-3)));
-        bQ.put(Integer.valueOf(OBlock.ar.cz), new OTuple(Integer.valueOf(3), Integer.valueOf(4)));
-        bQ.put(Integer.valueOf(OItem.X.cp), new OTuple(Integer.valueOf(4), Integer.valueOf(5)));
-        bQ.put(Integer.valueOf(OItem.Z.cp), new OTuple(Integer.valueOf(2), Integer.valueOf(4)));
-        bQ.put(Integer.valueOf(OItem.W.cp), new OTuple(Integer.valueOf(2), Integer.valueOf(4)));
-        bQ.put(Integer.valueOf(OItem.Y.cp), new OTuple(Integer.valueOf(2), Integer.valueOf(4)));
-        bQ.put(Integer.valueOf(OItem.aB.cp), new OTuple(Integer.valueOf(6), Integer.valueOf(8)));
-        bQ.put(Integer.valueOf(OItem.bE.cp), new OTuple(Integer.valueOf(-4), Integer.valueOf(-1)));
-        bQ.put(Integer.valueOf(OItem.aD.cp), new OTuple(Integer.valueOf(-4), Integer.valueOf(-1)));
-        bQ.put(Integer.valueOf(OItem.aR.cp), new OTuple(Integer.valueOf(10), Integer.valueOf(12)));
-        bQ.put(Integer.valueOf(OItem.aT.cp), new OTuple(Integer.valueOf(10), Integer.valueOf(12)));
-        bQ.put(Integer.valueOf(OBlock.bh.cz), new OTuple(Integer.valueOf(-3), Integer.valueOf(-1)));
-        bQ.put(Integer.valueOf(OItem.as.cp), new OTuple(Integer.valueOf(-7), Integer.valueOf(-5)));
-        bQ.put(Integer.valueOf(OItem.bk.cp), new OTuple(Integer.valueOf(-7), Integer.valueOf(-5)));
-        bQ.put(Integer.valueOf(OItem.bm.cp), new OTuple(Integer.valueOf(-8), Integer.valueOf(-6)));
-        bQ.put(Integer.valueOf(OItem.bB.cp), new OTuple(Integer.valueOf(7), Integer.valueOf(11)));
-        bQ.put(Integer.valueOf(OItem.m.cp), new OTuple(Integer.valueOf(-12), Integer.valueOf(-8)));
+        bB.put(Integer.valueOf(OItem.o.cv), new OTuple(Integer.valueOf(16), Integer.valueOf(24)));
+        bB.put(Integer.valueOf(OItem.q.cv), new OTuple(Integer.valueOf(8), Integer.valueOf(10)));
+        bB.put(Integer.valueOf(OItem.r.cv), new OTuple(Integer.valueOf(8), Integer.valueOf(10)));
+        bB.put(Integer.valueOf(OItem.p.cv), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
+        bB.put(Integer.valueOf(OItem.aM.cv), new OTuple(Integer.valueOf(24), Integer.valueOf(36)));
+        bB.put(Integer.valueOf(OItem.aN.cv), new OTuple(Integer.valueOf(11), Integer.valueOf(13)));
+        bB.put(Integer.valueOf(OItem.bI.cv), new OTuple(Integer.valueOf(1), Integer.valueOf(1)));
+        bB.put(Integer.valueOf(OItem.bp.cv), new OTuple(Integer.valueOf(3), Integer.valueOf(4)));
+        bB.put(Integer.valueOf(OItem.bC.cv), new OTuple(Integer.valueOf(2), Integer.valueOf(3)));
+        bB.put(Integer.valueOf(OItem.as.cv), new OTuple(Integer.valueOf(14), Integer.valueOf(18)));
+        bB.put(Integer.valueOf(OItem.bk.cv), new OTuple(Integer.valueOf(14), Integer.valueOf(18)));
+        bB.put(Integer.valueOf(OItem.bm.cv), new OTuple(Integer.valueOf(14), Integer.valueOf(18)));
+        bB.put(Integer.valueOf(OItem.aX.cv), new OTuple(Integer.valueOf(9), Integer.valueOf(13)));
+        bB.put(Integer.valueOf(OItem.U.cv), new OTuple(Integer.valueOf(34), Integer.valueOf(48)));
+        bB.put(Integer.valueOf(OItem.bj.cv), new OTuple(Integer.valueOf(30), Integer.valueOf(38)));
+        bB.put(Integer.valueOf(OItem.bi.cv), new OTuple(Integer.valueOf(30), Integer.valueOf(38)));
+        bB.put(Integer.valueOf(OItem.V.cv), new OTuple(Integer.valueOf(18), Integer.valueOf(22)));
+        bB.put(Integer.valueOf(OBlock.ag.cF), new OTuple(Integer.valueOf(14), Integer.valueOf(22)));
+        bB.put(Integer.valueOf(OItem.bo.cv), new OTuple(Integer.valueOf(36), Integer.valueOf(64)));
+        bC.put(Integer.valueOf(OItem.k.cv), new OTuple(Integer.valueOf(3), Integer.valueOf(4)));
+        bC.put(Integer.valueOf(OItem.bg.cv), new OTuple(Integer.valueOf(3), Integer.valueOf(4)));
+        bC.put(Integer.valueOf(OItem.s.cv), new OTuple(Integer.valueOf(7), Integer.valueOf(11)));
+        bC.put(Integer.valueOf(OItem.B.cv), new OTuple(Integer.valueOf(12), Integer.valueOf(14)));
+        bC.put(Integer.valueOf(OItem.j.cv), new OTuple(Integer.valueOf(6), Integer.valueOf(8)));
+        bC.put(Integer.valueOf(OItem.E.cv), new OTuple(Integer.valueOf(9), Integer.valueOf(12)));
+        bC.put(Integer.valueOf(OItem.i.cv), new OTuple(Integer.valueOf(7), Integer.valueOf(9)));
+        bC.put(Integer.valueOf(OItem.D.cv), new OTuple(Integer.valueOf(10), Integer.valueOf(12)));
+        bC.put(Integer.valueOf(OItem.h.cv), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
+        bC.put(Integer.valueOf(OItem.C.cv), new OTuple(Integer.valueOf(7), Integer.valueOf(8)));
+        bC.put(Integer.valueOf(OItem.R.cv), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
+        bC.put(Integer.valueOf(OItem.S.cv), new OTuple(Integer.valueOf(7), Integer.valueOf(8)));
+        bC.put(Integer.valueOf(OItem.ai.cv), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
+        bC.put(Integer.valueOf(OItem.am.cv), new OTuple(Integer.valueOf(7), Integer.valueOf(8)));
+        bC.put(Integer.valueOf(OItem.af.cv), new OTuple(Integer.valueOf(4), Integer.valueOf(6)));
+        bC.put(Integer.valueOf(OItem.aj.cv), new OTuple(Integer.valueOf(7), Integer.valueOf(8)));
+        bC.put(Integer.valueOf(OItem.ag.cv), new OTuple(Integer.valueOf(10), Integer.valueOf(14)));
+        bC.put(Integer.valueOf(OItem.ak.cv), new OTuple(Integer.valueOf(16), Integer.valueOf(19)));
+        bC.put(Integer.valueOf(OItem.ah.cv), new OTuple(Integer.valueOf(8), Integer.valueOf(10)));
+        bC.put(Integer.valueOf(OItem.al.cv), new OTuple(Integer.valueOf(11), Integer.valueOf(14)));
+        bC.put(Integer.valueOf(OItem.ae.cv), new OTuple(Integer.valueOf(5), Integer.valueOf(7)));
+        bC.put(Integer.valueOf(OItem.ab.cv), new OTuple(Integer.valueOf(5), Integer.valueOf(7)));
+        bC.put(Integer.valueOf(OItem.ac.cv), new OTuple(Integer.valueOf(11), Integer.valueOf(15)));
+        bC.put(Integer.valueOf(OItem.ad.cv), new OTuple(Integer.valueOf(9), Integer.valueOf(11)));
+        bC.put(Integer.valueOf(OItem.W.cv), new OTuple(Integer.valueOf(-4), Integer.valueOf(-2)));
+        bC.put(Integer.valueOf(OItem.bh.cv), new OTuple(Integer.valueOf(-8), Integer.valueOf(-4)));
+        bC.put(Integer.valueOf(OItem.l.cv), new OTuple(Integer.valueOf(-8), Integer.valueOf(-4)));
+        bC.put(Integer.valueOf(OItem.be.cv), new OTuple(Integer.valueOf(-10), Integer.valueOf(-7)));
+        bC.put(Integer.valueOf(OBlock.R.cF), new OTuple(Integer.valueOf(-5), Integer.valueOf(-3)));
+        bC.put(Integer.valueOf(OBlock.as.cF), new OTuple(Integer.valueOf(3), Integer.valueOf(4)));
+        bC.put(Integer.valueOf(OItem.Y.cv), new OTuple(Integer.valueOf(4), Integer.valueOf(5)));
+        bC.put(Integer.valueOf(OItem.aa.cv), new OTuple(Integer.valueOf(2), Integer.valueOf(4)));
+        bC.put(Integer.valueOf(OItem.X.cv), new OTuple(Integer.valueOf(2), Integer.valueOf(4)));
+        bC.put(Integer.valueOf(OItem.Z.cv), new OTuple(Integer.valueOf(2), Integer.valueOf(4)));
+        bC.put(Integer.valueOf(OItem.aC.cv), new OTuple(Integer.valueOf(6), Integer.valueOf(8)));
+        bC.put(Integer.valueOf(OItem.bF.cv), new OTuple(Integer.valueOf(-4), Integer.valueOf(-1)));
+        bC.put(Integer.valueOf(OItem.aE.cv), new OTuple(Integer.valueOf(-4), Integer.valueOf(-1)));
+        bC.put(Integer.valueOf(OItem.aS.cv), new OTuple(Integer.valueOf(10), Integer.valueOf(12)));
+        bC.put(Integer.valueOf(OItem.aU.cv), new OTuple(Integer.valueOf(10), Integer.valueOf(12)));
+        bC.put(Integer.valueOf(OBlock.bi.cF), new OTuple(Integer.valueOf(-3), Integer.valueOf(-1)));
+        bC.put(Integer.valueOf(OItem.at.cv), new OTuple(Integer.valueOf(-7), Integer.valueOf(-5)));
+        bC.put(Integer.valueOf(OItem.bl.cv), new OTuple(Integer.valueOf(-7), Integer.valueOf(-5)));
+        bC.put(Integer.valueOf(OItem.bn.cv), new OTuple(Integer.valueOf(-8), Integer.valueOf(-6)));
+        bC.put(Integer.valueOf(OItem.bC.cv), new OTuple(Integer.valueOf(7), Integer.valueOf(11)));
+        bC.put(Integer.valueOf(OItem.n.cv), new OTuple(Integer.valueOf(-12), Integer.valueOf(-8)));
     }
 }

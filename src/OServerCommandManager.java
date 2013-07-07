@@ -25,8 +25,10 @@ public class OServerCommandManager extends OCommandHandler implements OIAdminCom
         this.a(new OCommandGameRule());
         this.a(new OCommandClearInventory());
         this.a(new OServerCommandTestFor());
+        this.a(new OCommandSpreadPlayers());
+        this.a(new OCommandPlaySound());
         this.a(new OServerCommandScoreboard());
-        if (OMinecraftServer.D().T()) {
+        if (OMinecraftServer.F().V()) {
             this.a(new OCommandServerOp());
             this.a(new OCommandServerDeop());
             this.a(new OCommandServerStop());
@@ -51,28 +53,32 @@ public class OServerCommandManager extends OCommandHandler implements OIAdminCom
     public void a(OICommandSender oicommandsender, int i, String s, Object... aobject) {
         boolean flag = true;
 
-        if (oicommandsender instanceof OTileEntityCommandBlock && !OMinecraftServer.D().worlds.get(etc.getServer().getDefaultWorld().getName())[0].N().b("commandBlockOutput")) { // CanaryMod - multiworld fix
+        if (oicommandsender instanceof OTileEntityCommandBlock && !OMinecraftServer.F().worlds.get(etc.getServer().getDefaultWorld().getName())[0].O().b("commandBlockOutput")) { // CanaryMod - multiworld fix
             flag = false;
         }
 
+        OChatMessageComponent ochatmessagecomponent = OChatMessageComponent.b("chat.type.admin", new Object[] { oicommandsender.c_(), OChatMessageComponent.b(s, aobject)});
+
+        ochatmessagecomponent.a(OEnumChatFormatting.h);
+        ochatmessagecomponent.b(Boolean.valueOf(true));
         if (flag) {
-            Iterator iterator = OMinecraftServer.D().ad().a.iterator();
+            Iterator iterator = OMinecraftServer.F().af().a.iterator();
 
             while (iterator.hasNext()) {
                 OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) iterator.next();
 
-                if (oentityplayermp != oicommandsender && OMinecraftServer.D().ad().e(oentityplayermp.bS)) {
-                    oentityplayermp.a("" + OEnumChatFormatting.h + "" + OEnumChatFormatting.u + "[" + oicommandsender.c_() + ": " + oentityplayermp.a(s, aobject) + "]");
+                if (oentityplayermp != oicommandsender && OMinecraftServer.F().af().e(oentityplayermp.c_())) {
+                    oentityplayermp.a(ochatmessagecomponent);
                 }
             }
         }
 
-        if (oicommandsender != OMinecraftServer.D()) {
-            OMinecraftServer.D().al().a("[" + oicommandsender.c_() + ": " + OMinecraftServer.D().a(s, aobject) + "]");
+        if (oicommandsender != OMinecraftServer.F()) {
+            OMinecraftServer.F().a(ochatmessagecomponent);
         }
 
         if ((i & 1) != 1) {
-            oicommandsender.a(oicommandsender.a(s, aobject));
+            oicommandsender.a(OChatMessageComponent.b(s, aobject));
         }
     }
 }

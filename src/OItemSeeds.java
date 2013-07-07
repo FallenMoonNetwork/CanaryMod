@@ -30,7 +30,7 @@ public class OItemSeeds extends OItem {
                 }
 
                 oworld.c(i, j + 1, k, this.a);
-                --oitemstack.a;
+                --oitemstack.b;
                 return true;
             } else {
                 return false;

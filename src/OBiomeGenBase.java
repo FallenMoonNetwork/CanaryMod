@@ -52,8 +52,8 @@ public abstract class OBiomeGenBase {
     protected OWorldGenSwamp R;
 
     protected OBiomeGenBase(int i) {
-        this.A = (byte) OBlock.y.cz;
-        this.B = (byte) OBlock.z.cz;
+        this.A = (byte) OBlock.z.cF;
+        this.B = (byte) OBlock.A.cF;
         this.C = 5169201;
         this.D = 0.1F;
         this.E = 0.3F;
@@ -116,7 +116,7 @@ public abstract class OBiomeGenBase {
     }
 
     public OWorldGenerator b(Random random) {
-        return new OWorldGenTallGrass(OBlock.ab.cz, 1);
+        return new OWorldGenTallGrass(OBlock.ac.cF, 1);
     }
 
     protected OBiomeGenBase b() {

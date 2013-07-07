@@ -6,49 +6,54 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.Timer;
 
-public class OGuiStatsComponent extends JComponent {
+public class OStatsComponent extends JComponent {
 
     private static final DecimalFormat a = new DecimalFormat("########0.000");
     private int[] b = new int[256];
-    private int c = 0;
+    private int c;
     private String[] d = new String[11];
     private final OMinecraftServer e;
 
-    public OGuiStatsComponent(OMinecraftServer ominecraftserver) {
+    public OStatsComponent(OMinecraftServer ominecraftserver) {
         this.e = ominecraftserver;
         this.setPreferredSize(new Dimension(456, 246));
         this.setMinimumSize(new Dimension(456, 246));
         this.setMaximumSize(new Dimension(456, 246));
-        (new Timer(500, new OGuiStatsListener(this))).start();
+        (new Timer(500, new OStatsComponentINNER1(this))).start();
         this.setBackground(Color.BLACK);
     }
 
     private void a() {
-        long i = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        long l = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
         System.gc();
-        this.d[0] = "Memory use: " + i / 1024L / 1024L + " mb (" + Runtime.getRuntime().freeMemory() * 100L / Runtime.getRuntime().maxMemory() + "% free)";
+        this.d[0] = "Memory use: " + l / 1024L / 1024L + " mb (" + Runtime.getRuntime().freeMemory() * 100L / Runtime.getRuntime().maxMemory() + "% free)";
         this.d[1] = "Threads: " + OTcpConnection.a.get() + " + " + OTcpConnection.b.get();
-        this.d[2] = "Avg tick: " + a.format(this.a(this.e.i) * 1.0E-6D) + " ms";
-        this.d[3] = "Avg sent: " + (int) this.a(this.e.e) + ", Avg size: " + (int) this.a(this.e.f);
-        this.d[4] = "Avg rec: " + (int) this.a(this.e.g) + ", Avg size: " + (int) this.a(this.e.h);
+        this.d[2] = "Avg tick: " + a.format(this.a(this.e.j) * 1.0E-6D) + " ms";
+        this.d[3] = "Avg sent: " + (int) this.a(this.e.f) + ", Avg size: " + (int) this.a(this.e.g);
+        this.d[4] = "Avg rec: " + (int) this.a(this.e.h) + ", Avg size: " + (int) this.a(this.e.i);
         if (this.e.worlds != null) {
             // CanaryMod start: Multiworld
+            int i = 5;
             for (Map.Entry<String, OWorldServer[]> entry : this.e.worlds.entrySet()) {
                 String worldName = entry.getKey();
                 OWorldServer[] level = entry.getValue();
+                this.d[i++] = "World " + worldName + ":";
 
                 for (int j = 0; j < level.length; ++j) {
-                    this.d[5 + j] = "Lvl " + j + " tick: " + a.format(this.a(this.e.worldTickNanos.get(worldName)[j]) * 1.0E-6D) + " ms";
+                    this.d[i + j] = "  Lvl " + j + " tick: " + a.format(this.a(this.e.worldTickNanos.get(worldName)[j]) * 1.0E-6D) + " ms";
                     if (level[j] != null && level[j].b != null) {
-                        this.d[5 + j] = this.d[5 + j] + ", " + level[j].b.e();
-                        this.d[5 + j] = this.d[5 + j] + ", Vec3: " + level[j].U().d() + " / " + level[j].U().c();
+                        this.d[i + j] = this.d[i + j] + ", " + level[j].b.e();
+                        this.d[i + j] = this.d[i + j] + ", Vec3: " + level[j].V().d() + " / " + level[j].V().c();
                     }
                 }
+                i += level.length;
             } // CanaryMod end
         }
 
-        this.b[this.c++ & 255] = (int) (this.a(this.e.f) * 100.0D / 12500.0D);
+        double d0 = 12500.0D;
+
+        this.b[this.c++ & 255] = (int) (this.a(this.e.g) * 100.0D / 12500.0D);
         this.repaint();
     }
 
@@ -86,7 +91,7 @@ public class OGuiStatsComponent extends JComponent {
         }
     }
 
-    static void a(OGuiStatsComponent oguistatscomponent) {
-        oguistatscomponent.a();
+    static void a(OStatsComponent ostatscomponent) {
+        ostatscomponent.a();
     }
 }

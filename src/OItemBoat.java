@@ -4,7 +4,7 @@ public class OItemBoat extends OItem {
 
     public OItemBoat(int i) {
         super(i);
-        this.cq = 1;
+        this.cw = 1;
         this.a(OCreativeTabs.e);
     }
 
@@ -15,7 +15,7 @@ public class OItemBoat extends OItem {
         double d0 = oentityplayer.r + (oentityplayer.u - oentityplayer.r) * (double) f;
         double d1 = oentityplayer.s + (oentityplayer.v - oentityplayer.s) * (double) f + 1.62D - (double) oentityplayer.N;
         double d2 = oentityplayer.t + (oentityplayer.w - oentityplayer.t) * (double) f;
-        OVec3 ovec3 = oworld.U().a(d0, d1, d2);
+        OVec3 ovec3 = oworld.V().a(d0, d1, d2);
         float f3 = OMathHelper.b(-f2 * 0.017453292F - 3.1415927F);
         float f4 = OMathHelper.a(-f2 * 0.017453292F - 3.1415927F);
         float f5 = -OMathHelper.b(-f1 * 0.017453292F);
@@ -29,7 +29,7 @@ public class OItemBoat extends OItem {
         if (omovingobjectposition == null) {
             return oitemstack;
         } else {
-            OVec3 ovec32 = oentityplayer.i(f);
+            OVec3 ovec32 = oentityplayer.j(f);
             boolean flag = false;
             float f9 = 1.0F;
             List list = oworld.b((OEntity) oentityplayer, oentityplayer.E.a(ovec32.c * d3, ovec32.d * d3, ovec32.e * d3).b((double) f9, (double) f9, (double) f9));
@@ -57,7 +57,7 @@ public class OItemBoat extends OItem {
                     int j = omovingobjectposition.c;
                     int k = omovingobjectposition.d;
 
-                    if (oworld.a(i, j, k) == OBlock.aW.cz) {
+                    if (oworld.a(i, j, k) == OBlock.aX.cF) {
                         --j;
                     }
 
@@ -80,8 +80,8 @@ public class OItemBoat extends OItem {
                         oworld.d((OEntity) oentityboat);
                     }
 
-                    if (!oentityplayer.ce.d) {
-                        --oitemstack.a;
+                    if (!oentityplayer.bG.d) {
+                        --oitemstack.b;
                     }
                 }
 
