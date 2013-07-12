@@ -4,11 +4,9 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
-import org.apache.commons.lang3.StringUtils;
 
 public class ONetServerHandler extends ONetHandler {
 
@@ -76,7 +74,7 @@ public class ONetServerHandler extends ONetHandler {
 
             hookResult = (HookParametersDisconnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_DISCONNECT, this.c.getPlayer(), hookResult);
             if (!hookResult.isHidden()) {
-                this.d.af().a((OPacket) (new OPacket3Chat(hookResult.getLeaveMessage())));
+                this.d.af().a((OPacket) (new OPacket3Chat(OChatMessageComponent.d(hookResult.getLeaveMessage()))));
             }
 
             this.d.af().e(this.c);
@@ -554,7 +552,7 @@ public class ONetServerHandler extends ONetHandler {
 
         hookResult = (HookParametersDisconnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_DISCONNECT, this.getPlayer(), hookResult);
         if (!hookResult.isHidden()) {
-            this.d.af().a((OPacket) (new OPacket3Chat(hookResult.getLeaveMessage())));
+            this.d.af().a((OPacket) (new OPacket3Chat(OChatMessageComponent.d(hookResult.getLeaveMessage()))));
         }
         this.d.af().e(this.c);
         this.b = true;
@@ -1106,10 +1104,10 @@ public class ONetServerHandler extends ONetHandler {
             String subCut = cutMsg.substring(0, finalCut);
             String newMsg = msg.substring(finalCut);
 
-            b(new OPacket3Chat(OChatMessageComponent.e(subCut)));
+            b(new OPacket3Chat(OChatMessageComponent.d(subCut)));
             msg(newMsg);
         } else {
-            b(new OPacket3Chat(OChatMessageComponent.e(msg)));
+            b(new OPacket3Chat(OChatMessageComponent.d(msg)));
         }
     }
 

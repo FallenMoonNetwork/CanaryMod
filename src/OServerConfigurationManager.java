@@ -79,7 +79,7 @@ public abstract class OServerConfigurationManager {
 
         hookResult = (HookParametersConnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_CONNECT, oentityplayermp.getPlayer(), hookResult);
         if (!hookResult.isHidden()) {
-            this.a((OPacket) (new OPacket3Chat(hookResult.getJoinMessage())));
+            this.a((OPacket) (new OPacket3Chat(OChatMessageComponent.d(hookResult.getJoinMessage()))));
         }
 
         // CanaryMod - Check if player is listed as muted, and mute him
