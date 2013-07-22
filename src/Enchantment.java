@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Enchantment - a class used to access all enchantment related stuff
@@ -40,7 +39,7 @@ public class Enchantment {
         ArrowFire(50), //
         ArrowInfinite(51);
 
-        private int                       id;
+        private int id;
         private static Map<Integer, Type> map;
 
         private Type(int id) {
@@ -66,7 +65,7 @@ public class Enchantment {
     }
 
     private Type type;
-    private int  level;
+    private int level;
 
     /**
      * Creates a new enchantment
@@ -80,16 +79,16 @@ public class Enchantment {
     }
 
     /**
-     * Returns the OEnchantment object for this enchantment.
-     * Notice this isnt the enchantment data, but the enchantment description.
+     * Returns the OEnchantment object for this enchantment. Notice this isnt
+     * the enchantment data, but the enchantment description.
+     *
      * @return Returns the OEnchantment object for this enchantment
      */
-    public OEnchantment getEnchantment()
-    {
+    public OEnchantment getEnchantment() {
         if (this.type.getType() >= 0 && this.type.getType() < OEnchantment.b.length) {
+            // SRG OEnchantment enchantmentType = OEnchantment.field_77331_b[this.type.getType()];
             OEnchantment enchantmentType = OEnchantment.b[this.type.getType()];
-            if (enchantmentType != null)
-            {
+            if (enchantmentType != null) {
                 return enchantmentType;
             }
         }
@@ -97,18 +96,18 @@ public class Enchantment {
     }
 
     /**
-     * Returns an OEnchantment object for a given enchantment type.
-     * Notice this isnt the enchantment data, but the enchantment description.
+     * Returns an OEnchantment object for a given enchantment type. Notice this
+     * isnt the enchantment data, but the enchantment description.
+     *
      * @return Returns the OEnchantment object for a given enchantment type
      */
-    public static OEnchantment getEnchantment(Type type)
-    {
-        if (type != null)
-        {
+    public static OEnchantment getEnchantment(Type type) {
+        if (type != null) {
+            // SRG if (type.getType() >= 0 && type.getType() < OEnchantment.field_77331_b.length) {
             if (type.getType() >= 0 && type.getType() < OEnchantment.b.length) {
+                // SRG OEnchantment enchantmentType = OEnchantment.field_77331_b[type.getType()];
                 OEnchantment enchantmentType = OEnchantment.b[type.getType()];
-                if (enchantmentType != null)
-                {
+                if (enchantmentType != null) {
                     return enchantmentType;
                 }
             }
@@ -126,8 +125,8 @@ public class Enchantment {
     }
 
     /**
-     * Set type of enchantment.
-     * Note that it does NOT check for validity of the enchantment!!!
+     * Set type of enchantment. Note that it does NOT check for validity of the
+     * enchantment!!!
      *
      * @param type
      */
@@ -136,8 +135,8 @@ public class Enchantment {
     }
 
     /**
-     * Set type of enchantment.
-     * Note that it does NOT check for validity of the enchantment!!!
+     * Set type of enchantment. Note that it does NOT check for validity of the
+     * enchantment!!!
      *
      * @param type
      */
@@ -155,8 +154,8 @@ public class Enchantment {
     }
 
     /**
-     * Sets level of enchantment.
-     * Note that it does NOT check for validity of the enchantment!!!
+     * Sets level of enchantment. Note that it does NOT check for validity of
+     * the enchantment!!!
      *
      * @param level
      */
@@ -166,28 +165,28 @@ public class Enchantment {
 
     /**
      * Gets the weight of the enchantment or -1 if the enchantment is invalid.
+     *
      * @return
      */
-    public int getWeight()
-    {
+    public int getWeight() {
         OEnchantment enchantment = getEnchantment();
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77324_c();
             return enchantment.c();
         }
         return -1;
     }
 
     /**
-     * Gets the weight of an enchantment given its type or -1 if the
-     * enchantment is invalid.
+     * Gets the weight of an enchantment given its type or -1 if the enchantment
+     * is invalid.
+     *
      * @return
      */
-    public static int getWeight(Type type)
-    {
+    public static int getWeight(Type type) {
         OEnchantment enchantment = getEnchantment(type);
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77324_c();
             return enchantment.c();
         }
         return -1;
@@ -196,13 +195,13 @@ public class Enchantment {
     /**
      * Gets the minimum level of the enchantment or -1 if the enchantment is
      * invalid.
+     *
      * @return
      */
-    public int getMinLevel()
-    {
+    public int getMinLevel() {
         OEnchantment enchantment = getEnchantment();
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77319_d();
             return enchantment.d();
         }
         return -1;
@@ -211,13 +210,13 @@ public class Enchantment {
     /**
      * Gets the minimum level of an enchantment given its type or -1 if the
      * enchantment is invalid.
+     *
      * @return
      */
-    public static int getMinLevel(Type type)
-    {
+    public static int getMinLevel(Type type) {
         OEnchantment enchantment = getEnchantment(type);
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77319_d();
             return enchantment.d();
         }
         return -1;
@@ -226,13 +225,13 @@ public class Enchantment {
     /**
      * Gets the maximum level of the enchantment or -1 if the enchantment is
      * invalid.
+     *
      * @return
      */
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         OEnchantment enchantment = getEnchantment();
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77325_b();
             return enchantment.b();
         }
         return -1;
@@ -241,90 +240,89 @@ public class Enchantment {
     /**
      * Gets the maximum level of an enchantment given its type or -1 if the
      * enchantment is invalid.
+     *
      * @return
      */
-    public static int getMaxLevel(Type type)
-    {
+    public static int getMaxLevel(Type type) {
         OEnchantment enchantment = getEnchantment(type);
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77325_b();
             return enchantment.b();
         }
         return -1;
     }
 
     /**
-     * Gets the minimum enchantability strength needed for the enchantment or
-     * -1 if the enchantment is invalid.
+     * Gets the minimum enchantability strength needed for the enchantment or -1
+     * if the enchantment is invalid.
+     *
      * @return
      */
-    public int getMinEnchantability()
-    {
+    public int getMinEnchantability() {
         OEnchantment enchantment = getEnchantment();
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77321_a(this.level);
             return enchantment.a(this.level);
         }
         return -1;
     }
 
     /**
-     * Gets the minimum enchantability strength needed for the enchantment
-     * given its type or -1 if the enchantment is invalid.
+     * Gets the minimum enchantability strength needed for the enchantment given
+     * its type or -1 if the enchantment is invalid.
+     *
      * @return
      */
-    public static int getMinEnchantability(Type type, int level)
-    {
+    public static int getMinEnchantability(Type type, int level) {
         OEnchantment enchantment = getEnchantment(type);
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77321_a(level);
             return enchantment.a(level);
         }
         return -1;
     }
 
     /**
-     * Gets the maximum enchantability strength needed for the enchantment or
-     * -1 if the enchantment is invalid.
+     * Gets the maximum enchantability strength needed for the enchantment or -1
+     * if the enchantment is invalid.
+     *
      * @return
      */
-    public int getMaxEnchantability()
-    {
+    public int getMaxEnchantability() {
         OEnchantment enchantment = getEnchantment();
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77317_b(this.level);
             return enchantment.b(this.level);
         }
         return -1;
     }
 
     /**
-     * Gets the maximum enchantability strength needed for the enchantment
-     * given its type or -1 if the enchantment is invalid.
+     * Gets the maximum enchantability strength needed for the enchantment given
+     * its type or -1 if the enchantment is invalid.
+     *
      * @return
      */
-    public static int getMaxEnchantability(Type type, int level)
-    {
+    public static int getMaxEnchantability(Type type, int level) {
         OEnchantment enchantment = getEnchantment(type);
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
+            // SRG return enchantment.func_77317_b(level);
             return enchantment.b(level);
         }
         return -1;
     }
 
     /**
-     * Gets the modified damage for the enchantment for a given damage source
-     * or -1 if the enchantment or damage source is invalid.
+     * Gets the modified damage for the enchantment for a given damage source or
+     * -1 if the enchantment or damage source is invalid.
+     *
      * @return
      */
-    public int getDamage(ODamageSource damageSource)
-    {
-        if (damageSource != null)
-        {
+    public int getDamage(ODamageSource damageSource) {
+        if (damageSource != null) {
             OEnchantment enchantment = getEnchantment();
-            if (enchantment != null)
-            {
+            if (enchantment != null) {
+                // SRG return enchantment.func_77318_a(this.level, damageSource);
                 return enchantment.a(this.level, damageSource);
             }
         }
@@ -334,15 +332,14 @@ public class Enchantment {
     /**
      * Gets the modified damage for an enchantment for a given damage source or
      * -1 if the enchantment or damage source is invalid.
+     *
      * @return
      */
-    public static int getDamage(Type type, int level, ODamageSource damageSource)
-    {
-        if (damageSource != null)
-        {
+    public static int getDamage(Type type, int level, ODamageSource damageSource) {
+        if (damageSource != null) {
             OEnchantment enchantment = getEnchantment(type);
-            if (enchantment != null)
-            {
+            if (enchantment != null) {
+                // SRG return enchantment.func_77318_a(level, damageSource);
                 return enchantment.a(level, damageSource);
             }
         }
@@ -350,17 +347,16 @@ public class Enchantment {
     }
 
     /**
-     * Gets the modified living for the enchantment for a given living entity
-     * or -1 if the enchantment or entity is invalid.
+     * Gets the modified living for the enchantment for a given living entity or
+     * -1 if the enchantment or entity is invalid.
+     *
      * @return
      */
-    public float getLivingFloat(OEntityLivingBase entity)
-    {
-        if (entity != null)
-        {
+    public float getLivingFloat(OEntityLivingBase entity) {
+        if (entity != null) {
             OEnchantment enchantment = getEnchantment();
-            if (enchantment != null)
-            {
+            if (enchantment != null) {
+                // SRG return enchantment.func_77323_a(this.level, entity);
                 return enchantment.a(this.level, entity);
             }
         }
@@ -374,15 +370,14 @@ public class Enchantment {
     /**
      * Gets the modified living for an enchantment for a given living entity or
      * -1 if the enchantment or entity is invalid.
+     *
      * @return
      */
-    public static float getLivingFloat(Type type, int level, OEntityLivingBase entity)
-    {
-        if (entity != null)
-        {
+    public static float getLivingFloat(Type type, int level, OEntityLivingBase entity) {
+        if (entity != null) {
             OEnchantment enchantment = getEnchantment(type);
-            if (enchantment != null)
-            {
+            if (enchantment != null) {
+                // SRG return enchantment.func_77323_a(level, entity);
                 return enchantment.a(level, entity);
             }
         }
@@ -395,27 +390,26 @@ public class Enchantment {
 
     /**
      * Returns true if this enchantment can stack with another enchantment.
+     *
      * @param enchantment The other enchantment
      * @return true if enchantments can stack
      */
-    public boolean canStack(Enchantment enchantment)
-    {
+    public boolean canStack(Enchantment enchantment) {
         return canStack(enchantment.getType());
     }
 
     /**
      * Returns true if this enchantment can stack with another enchantment.
+     *
      * @param type The other enchantment type
      * @return true if enchantments can stack
      */
-    public boolean canStack(Type type)
-    {
-        OEnchantment enchantment = getEnchantment(this.type);
-        if (enchantment != null)
-        {
+    public boolean canStack(Type type) {
+        OEnchantment enchantment = getEnchantment();
+        if (enchantment != null) {
             OEnchantment otherEnchantment = getEnchantment(type);
-            if (otherEnchantment != null)
-            {
+            if (otherEnchantment != null) {
+                // SRG return enchantment.func_77326_a(otherEnchantment);
                 return enchantment.a(otherEnchantment);
             }
         }
@@ -424,18 +418,17 @@ public class Enchantment {
 
     /**
      * Returns true if two enchantments can stack with each other.
+     *
      * @param type1
      * @param type2
      * @return true if enchantments can stack
      */
-    public static boolean canStack(Type type1, Type type2)
-    {
+    public static boolean canStack(Type type1, Type type2) {
         OEnchantment enchantment = getEnchantment(type1);
-        if (enchantment != null)
-        {
+        if (enchantment != null) {
             OEnchantment otherEnchantment = getEnchantment(type2);
-            if (otherEnchantment != null)
-            {
+            if (otherEnchantment != null) {
+                // SRG return enchantment.func_77326_a(otherEnchantment);
                 return enchantment.a(otherEnchantment);
             }
         }
@@ -454,18 +447,14 @@ public class Enchantment {
     /**
      * Checks if an enchantment is valid.
      *
-     * @param type
-     *            The type of the enchantment
-     * @param level
-     *            The level of the enchantment
+     * @param type The type of the enchantment
+     * @param level The level of the enchantment
      * @return true if valid
      */
     public static boolean isValid(Type type, int level) {
-        if (type != null)
-        {
+        if (type != null) {
             OEnchantment enchantmentType = getEnchantment(type);
-            if (enchantmentType != null)
-            {
+            if (enchantmentType != null) {
                 return (level >= getMinLevel(type) && level <= getMaxLevel(type));
             }
         }
@@ -474,7 +463,7 @@ public class Enchantment {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Enchantment) {
+        if (obj instanceof Enchantment) {
             Enchantment other = (Enchantment) obj;
             return other.getType() == getType() && other.getLevel() == getLevel();
         }

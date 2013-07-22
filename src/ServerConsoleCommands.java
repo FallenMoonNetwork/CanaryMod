@@ -447,8 +447,10 @@ public class ServerConsoleCommands extends CommandHandler {
             boolean ips = split.length == 2 && split[1].equalsIgnoreCase("ips");
 
             if (!ips) {
+                // SRG caller.notify(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().func_71203_ab().getBans());
                 caller.notify(Colors.Blue + "Ban list:" + Colors.White + " " + etc.getMCServer().af().getBans());
             } else {
+                // SRG caller.notify(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().func_71203_ab().getIpBans());
                 caller.notify(Colors.Blue + "IP Ban list:" + Colors.White + " " + etc.getMCServer().af().getIpBans());
             }
         }
@@ -555,6 +557,7 @@ public class ServerConsoleCommands extends CommandHandler {
                     }
                 }
 
+                // SRG bannedPlayerNames.addAll(Arrays.asList(etc.getMCServer().func_71203_ab().getBans().split(" ,")));
                 bannedPlayerNames.addAll(Arrays.asList(etc.getMCServer().af().getBans().split(" ,")));
 
                 return etc.autoComplete(split[1], bannedPlayerNames.toArray(new String[bannedPlayerNames.size()]));
@@ -577,6 +580,7 @@ public class ServerConsoleCommands extends CommandHandler {
         public List<String> autoComplete(MessageReceiver caller, String currentText) {
             String[] split = currentText.split(" ", -1);
             if (split.length == 2) {
+                // SRG return etc.autoComplete(split[1], etc.getMCServer().func_71203_ab().getIpBans().split(" ,"));
                 return etc.autoComplete(split[1], etc.getMCServer().af().getIpBans().split(" ,"));
             }
             return null;
@@ -717,7 +721,7 @@ public class ServerConsoleCommands extends CommandHandler {
                     return;
                 }
 
-                etc.getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{(caller instanceof Player) ? (Player) caller : null, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
+                etc.getLoader().callHook(PluginLoader.Hook.KICK, caller instanceof Player ? (Player) caller : null, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : "");
 
                 if (split.length > 2) {
                     player.kick("Kicked by " + caller.getName() + ": " + etc.combineSplit(2, split, " "));
@@ -736,11 +740,9 @@ public class ServerConsoleCommands extends CommandHandler {
         @Override
         protected void execute(MessageReceiver caller, String[] split) {
             log.info("Kicking all players.");
-            Object[] playerObjects = etc.getServer().getPlayerList().toArray();
-            for (Object playerObject : playerObjects) {
-                Player player = (Player) playerObject;
+            for (Player player : etc.getServer().getPlayerList()) {
                 if (player != null && player.isConnected()) {
-                    etc.getLoader().callHook(PluginLoader.Hook.KICK, new Object[]{(caller instanceof Player) ? (Player) caller : null, player, split.length >= 2 ? etc.combineSplit(1, split, " ") : ""});
+                    etc.getLoader().callHook(PluginLoader.Hook.KICK, caller instanceof Player ? (Player) caller : null, player, split.length >= 2 ? etc.combineSplit(1, split, " ") : "");
 
                     if (split.length > 1) {
                         player.kick("Kicked by " + caller.getName() + ": " + etc.combineSplit(1, split, " "));

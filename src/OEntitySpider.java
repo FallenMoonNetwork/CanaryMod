@@ -17,13 +17,13 @@ public class OEntitySpider extends OEntityMob {
         }
     }
 
-    protected void ax() {
-        super.ax();
+    protected void ay() {
+        super.ay();
         this.a(OSharedMonsterAttributes.a).a(16.0D);
         this.a(OSharedMonsterAttributes.d).a(0.800000011920929D);
     }
 
-    protected OEntity bH() {
+    protected OEntity bL() {
         float f = this.d(1.0F);
 
         if (f < 0.5F) {
@@ -39,11 +39,11 @@ public class OEntitySpider extends OEntityMob {
         return "mob.spider.say";
     }
 
-    protected String aK() {
+    protected String aN() {
         return "mob.spider.say";
     }
 
-    protected String aL() {
+    protected String aO() {
         return "mob.spider.death";
     }
 
@@ -85,20 +85,20 @@ public class OEntitySpider extends OEntityMob {
     }
 
     public boolean e() {
-        return this.bP();
+        return this.bT();
     }
 
-    public void ak() {}
+    public void al() {}
 
-    public OEnumCreatureAttribute aU() {
+    public OEnumCreatureAttribute aX() {
         return OEnumCreatureAttribute.c;
     }
 
-    public boolean e(OPotionEffect opotioneffect) {
-        return opotioneffect.a() == OPotion.u.H ? false : super.e(opotioneffect);
+    public boolean d(OPotionEffect opotioneffect) {
+        return opotioneffect.a() == OPotion.u.H ? false : super.d(opotioneffect);
     }
 
-    public boolean bP() {
+    public boolean bT() {
         return (this.ah.a(16) & 1) != 0;
     }
 
@@ -137,7 +137,7 @@ public class OEntitySpider extends OEntityMob {
             int i = ((OSpiderEffectsGroupData) object).a;
 
             if (i > 0 && OPotion.a[i] != null) {
-                this.d(new OPotionEffect(i, Integer.MAX_VALUE));
+                this.c(new OPotionEffect(i, Integer.MAX_VALUE));
             }
         }
 

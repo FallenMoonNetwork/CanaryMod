@@ -65,6 +65,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return
      */
     public boolean isConnected() {
+        // SRG return !getEntity().field_71135_a.field_72576_c;
         return !getEntity().a.b;
     }
 
@@ -74,6 +75,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param reason
      */
     public void kick(String reason) {
+        // SRG getEntity().field_71135_a.func_72565_c(reason);
         getEntity().a.c(reason);
     }
 
@@ -98,6 +100,7 @@ public class Player extends HumanEntity implements MessageReceiver {
         if (!etc.getInstance().isColorForced() && this.wantsColorDisabled()) {
             message = Colors.strip(message);
         }
+        // SRG getEntity().field_71135_a.msg(message);
         getEntity().a.msg(message);
     }
 
@@ -376,6 +379,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return
      */
     public String getIP() {
+        // SRG String ip = getEntity().field_71135_a.field_72575_b.func_74430_c().toString();
         String ip = getEntity().a.a.c().toString();
         return ip.substring(1,ip.lastIndexOf(":"));
     }
@@ -673,6 +677,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return The ping
      */
     public int getPing() {
+        // SRG return this.getEntity().field_71138_i;
         return this.getEntity().i;
     }
 
@@ -699,13 +704,12 @@ public class Player extends HumanEntity implements MessageReceiver {
 
     @Override
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
-        OEntityPlayerMP player = getEntity();
-
         // If player is in vehicle - eject them before they are teleported.
-        if (player.o != null) {
-            player.a(player.o);
+        if (this.getRidingEntity() != null) {
+            this.dismount();
         }
-        player.a.a(x, y, z, rotation, pitch);
+
+        super.teleportTo(x, y, z, rotation, pitch);
     }
 
     /**
@@ -743,10 +747,13 @@ public class Player extends HumanEntity implements MessageReceiver {
     }
 
     /**
-     * Returns whether or not this entity is blocking with the item in their hand.
+     * Returns whether or not this entity is blocking with/using the item in
+     * their hand. (e.g. sword, bow, food)
      * @return true if blocking
      */
-    public boolean isBlocking(){
+    // TODO pull up
+    public boolean isBlocking() {
+        // SRG return getEntity().func_71039_bw();
         return getEntity().bq();
     }
 
@@ -806,20 +813,23 @@ public class Player extends HumanEntity implements MessageReceiver {
         OEntityPlayerMP ent = this.getEntity();
 
         // Nether is not allowed, so shush
+        // SRG if (world.getType() == World.Dimension.NETHER && !mcServer.func_71332_a("allow-nether", true)) {
         if (world.getType() == World.Dimension.NETHER && !mcServer.a("allow-nether", true)) {
             return;
         }
         // The End is not allowed, so shush
+        // SRG if (world.getType() == World.Dimension.END && !mcServer.func_71332_a("allow-end", true)) {
         if (world.getType() == World.Dimension.END && !mcServer.a("allow-end", true)) {
             return;
         }
         // Dismount first or get buggy
-        if (ent.o != null) {
-            ent.a(ent.o);
+        if (this.getRidingEntity() != null) {
+            this.dismount();
         }
 
         // Collect world switch achievement ?
         if (world.getType() != World.Dimension.NORMAL) {
+            // SRG ent.func_71029_a((OStatBase) (world.getType() == World.Dimension.END ? OAchievementList.field_76002_B : OAchievementList.field_76029_x));
             ent.a((OStatBase) (world.getType() == World.Dimension.END ? OAchievementList.B : OAchievementList.x));
         }
 
@@ -831,28 +841,13 @@ public class Player extends HumanEntity implements MessageReceiver {
             loc.world = world.getName(); // teleport to new world
             loc.dimension = world.getType().getId();
 
+            // SRG mcServer.func_71203_ab().func_72368_a(ent, loc.dimension, true, loc); // Respawn with location
             mcServer.af().a(ent, loc.dimension, true, loc); // Respawn with location
         } else {
+            // SRG mcServer.func_71203_ab().sendPlayerToOtherDimension(ent, world.getType().getId(), false);
             mcServer.af().sendPlayerToOtherDimension(ent, world.getType().getId(), false);
             this.updateXP();
         }
-    }
-
-    @Override
-    public void teleportTo(BaseEntity ent) {
-        if (!getWorld().equals(ent.getWorld())) {
-            switchWorlds(ent.getWorld());
-        }
-        super.teleportTo(ent);
-    }
-
-    @Override
-    public void teleportTo(Location location) {
-
-        if (!getWorld().equals(location.getWorld())) {
-            switchWorlds(location.getWorld());
-        }
-        super.teleportTo(location);
     }
 
     @Override
@@ -884,9 +879,13 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @param i
      */
     public void setCreativeMode(int i) {
+        // SRG OEnumGameType gameType = OEnumGameType.func_77146_a(i);
         OEnumGameType gameType = OEnumGameType.a(i);
+        // SRG if (getEntity().field_71134_c.func_73081_b() != gameType) {
         if (getEntity().c.b() != gameType) {
+            // SRG getEntity().field_71134_c.func_73076_a(gameType);
             getEntity().c.a(gameType);
+            // SRG getEntity().field_71135_a.func_72567_b((OPacket) (new OPacket70GameEvent(3, gameType.field_77154_e)));
             getEntity().a.b((OPacket) (new OPacket70GameEvent(3, gameType.e)));
         }
     }
@@ -897,6 +896,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return i
      */
     public int getCreativeMode() {
+        // SRG return this.getEntity().field_71134_c.func_73081_b().field_77154_e;
         return this.getEntity().c.b().e;
     }
 
@@ -933,7 +933,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      */
     @Deprecated
     public boolean getMode() {
-        if (getEntity().c.b().e == 1) {
+        if (this.getCreativeMode() == 1) {
             return true;
         } else {
             return false;
@@ -948,7 +948,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      */
     @Deprecated
     public void refreshCreativeMode() {
-        this.getEntity().c.a(this.getWorld().getWorld().x.r());
+        this.setCreativeMode(this.getWorld().getGameMode());
     }
 
     /**
@@ -997,7 +997,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return {@code true} if the player is op.
      */
     public boolean isOp() {
-        return etc.getMCServer().af().e(getName());
+        return isOp(getName());
     }
 
     /**
@@ -1006,7 +1006,8 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @return {@code true} if the player is op.
      */
     public static boolean isOp(String playerName) {
-        return etc.getMCServer().af().e(playerName);
+        // SRG return etc.getMCServer().func_71203_ab().func_72376_i().contains(playerName);
+        return etc.getMCServer().af().i().contains(playerName);
     }
 
     private boolean checkSpam() {
@@ -1154,6 +1155,7 @@ public class Player extends HumanEntity implements MessageReceiver {
      * @see #hasChatDisabled()
      */
     public int getChatPreference() {
+        // SRG return this.getEntity().func_71126_v();
         return this.getEntity().t();
     }
 
@@ -1185,28 +1187,34 @@ public class Player extends HumanEntity implements MessageReceiver {
     public void setInventoryCursorItem(Item item) {
         super.setInventoryCursorItem(item);
         // Update client
-        getEntity().a.b(new OPacket103SetSlot(-1, -1, item.getBaseItem()));
+        // SRG getEntity().field_71135_a.func_72567_b((OPacket) new OPacket103SetSlot(-1, -1, item.getBaseItem()));
+        getEntity().a.b((OPacket) new OPacket103SetSlot(-1, -1, item.getBaseItem()));
     }
 
     @Override
-    @SuppressWarnings(value = "unchecked")
+    @SuppressWarnings("unchecked")
     public void updateInventory() {
+        // SRG OContainer container = getEntity().field_71069_bz;
         OContainer container = getEntity().bo;
         ArrayList<OItemStack> list = new ArrayList<OItemStack>();
+        // SRG for (OSlot slot : (List<OSlot>) container.field_75151_b) {
         for (OSlot slot : (List<OSlot>) container.c) {
+            // SRG list.add(slot.func_75211_c());
             list.add(slot.d());
         }
+        // SRG getEntity().func_71110_a(container, list);
         getEntity().a(container, list);
     }
 
     @Override
     public void updateLevels() {
-        OEntityPlayerMP entityMP = getEntity();
-        entityMP.a.b((OPacket) (new OPacket8UpdateHealth(this.getHealthFloat(), getFoodLevel(), getFoodSaturationLevel())));
+        // SRG getEntity().field_71135_a.func_72567_b((OPacket) new OPacket8UpdateHealth(this.getHealthFloat(), getFoodLevel(), getFoodSaturationLevel()));
+        getEntity().a.b((OPacket) new OPacket8UpdateHealth(this.getHealthFloat(), getFoodLevel(), getFoodSaturationLevel()));
     }
 
     @Override
     public void updateXP() {
-        getEntity().a.b((OPacket) (new OPacket43Experience(getEntity().bJ, getEntity().bH, getEntity().bI)));
+        // SRG getEntity().field_71135_a.func_72567_b((OPacket) new OPacket43Experience(getEntity().field_71106_cc, getEntity().field_71068_ca, getEntity().field_71067_cb));
+        getEntity().a.b((OPacket) new OPacket43Experience(getEntity().bJ, getEntity().bH, getEntity().bI));
     }
 }

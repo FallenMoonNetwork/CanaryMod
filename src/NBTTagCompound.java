@@ -45,10 +45,11 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public Collection<NBTBase> getValues() {
-        Collection<?> base = this.getBaseTag().c();
+        // SRG Collection<ONBTBase> base = this.getBaseTag().func_74758_c();
+        Collection<ONBTBase> base = this.getBaseTag().c();
         Collection<NBTBase> rt = new ArrayList<NBTBase>(base.size());
-        for(Object o : base) {
-            rt.add(NBTBase.wrap((ONBTBase) o));
+        for(ONBTBase o : base) {
+            rt.add(NBTBase.wrap(o));
         }
         return rt;
     }
@@ -60,6 +61,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public NBTBase getValue(String name) {
+        // SRG return new NBTBase(this.getBaseTag().func_74781_a(name));
         return new NBTBase(this.getBaseTag().a(name));
     }
 
@@ -70,6 +72,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public boolean hasTag(String name) {
+        // SRG return this.getBaseTag().func_74764_b(name);
         return this.getBaseTag().b(name);
     }
 
@@ -80,6 +83,7 @@ public class NBTTagCompound extends NBTBase {
      * @param tag the tag to add
      */
     public void add(String name, NBTBase tag) {
+        // SRG this.getBaseTag().func_74782_a(name, tag.getBaseTag());
         this.getBaseTag().a(name, tag.getBaseTag());
     }
 
@@ -90,6 +94,7 @@ public class NBTTagCompound extends NBTBase {
      * @param b the value of the NBTByteTag
      */
     public void add(String name, byte b) {
+        // SRG this.getBaseTag().func_74774_a(name, b);
         this.getBaseTag().a(name, b);
     }
 
@@ -100,6 +105,7 @@ public class NBTTagCompound extends NBTBase {
      * @param s the value of the NBTTagShort
      */
     public void add(String name, short s) {
+        // SRG this.getBaseTag().func_74777_a(name, s);
         this.getBaseTag().a(name, s);
     }
 
@@ -110,6 +116,7 @@ public class NBTTagCompound extends NBTBase {
      * @param i the value of the NBTTagInt
      */
     public void add(String name, int i) {
+        // SRG this.getBaseTag().func_74768_a(name, i);
         this.getBaseTag().a(name, i);
     }
 
@@ -120,6 +127,7 @@ public class NBTTagCompound extends NBTBase {
      * @param l the value of the new NBTTagLong
      */
     public void add(String name, long l) {
+        // SRG this.getBaseTag().func_74772_a(name, l);
         this.getBaseTag().a(name, l);
     }
 
@@ -130,6 +138,7 @@ public class NBTTagCompound extends NBTBase {
      * @param f the value of the new NBTTagFloat
      */
     public void add(String name, float f) {
+        // SRG this.getBaseTag().func_74776_a(name, f);
         this.getBaseTag().a(name, f);
     }
 
@@ -140,6 +149,7 @@ public class NBTTagCompound extends NBTBase {
      * @param d the value of the new NBTTagDouble
      */
     public void add(String name, double d) {
+        // SRG this.getBaseTag().func_74780_a(name, d);
         this.getBaseTag().a(name, d);
     }
 
@@ -150,6 +160,7 @@ public class NBTTagCompound extends NBTBase {
      * @param s the value of the new NBTTagString
      */
     public void add(String name, String s) {
+        // SRG this.getBaseTag().func_74778_a(name, s);
         this.getBaseTag().a(name, s);
     }
 
@@ -160,6 +171,7 @@ public class NBTTagCompound extends NBTBase {
      * @param b the value of the new NBTTagByteArray
      */
     public void add(String name, byte[] b) {
+        // SRG this.getBaseTag().func_74773_a(name, b);
         this.getBaseTag().a(name, b);
     }
 
@@ -170,6 +182,7 @@ public class NBTTagCompound extends NBTBase {
      * @param i the value of the new NBTTagIntArray
      */
     public void add(String name, int[] i) {
+        // SRG this.getBaseTag().func_74783_a(name, i);
         this.getBaseTag().a(name, i);
     }
 
@@ -180,6 +193,7 @@ public class NBTTagCompound extends NBTBase {
      * @param b determines the value of the new NBTTagInt (true=1, false=0)
      */
     public void add(String name, boolean b) {
+        // SRG this.getBaseTag().func_74757_a(name, b);
         this.getBaseTag().a(name, b);
     }
 
@@ -190,6 +204,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public byte getByte(String tagName) {
+        // SRG return this.getBaseTag().func_74771_c(tagName);
         return this.getBaseTag().c(tagName);
     }
 
@@ -200,6 +215,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public short getShort(String tagName) {
+        // SRG return this.getBaseTag().func_74765_d(tagName);
         return this.getBaseTag().d(tagName);
     }
 
@@ -210,6 +226,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public int getInt(String tagName) {
+        // SRG return this.getBaseTag().func_74762_e(tagName);
         return this.getBaseTag().e(tagName);
     }
 
@@ -220,6 +237,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public long getLong(String tagName) {
+        // SRG return this.getBaseTag().func_74763_f(tagName);
         return this.getBaseTag().f(tagName);
     }
 
@@ -230,6 +248,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public float getFloat(String tagName) {
+        // SRG return this.getBaseTag().func_74760_g(tagName);
         return this.getBaseTag().g(tagName);
     }
 
@@ -240,6 +259,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public double getDouble(String tagName) {
+        // SRG return this.getBaseTag().func_74769_h(tagName);
         return this.getBaseTag().h(tagName);
     }
 
@@ -250,6 +270,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public String getString(String tagName) {
+        // SRG return this.getBaseTag().func_74779_i(tagName);
         return this.getBaseTag().i(tagName);
     }
 
@@ -260,6 +281,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public byte[] getByteArray(String tagName) {
+        // SRG return this.getBaseTag().func_74770_j(tagName);
         return this.getBaseTag().j(tagName);
     }
 
@@ -270,6 +292,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public int[] getIntArray(String tagName) {
+        // SRG return this.getBaseTag().func_74759_k(tagName);
         return this.getBaseTag().k(tagName);
     }
 
@@ -280,10 +303,12 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public NBTTagCompound getNBTTagCompound(String tagName) {
+        // SRG return new NBTTagCompound(this.getBaseTag().func_74775_l(tagName));
         return new NBTTagCompound(this.getBaseTag().l(tagName));
     }
 
     public NBTTagList getNBTTagList(String tagName) {
+        // SRG return new NBTTagList(this.getBaseTag().func_74761_m(tagName));
         return new NBTTagList(this.getBaseTag().m(tagName));
     }
 
@@ -294,6 +319,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public boolean getBoolean(String tagName) {
+        // SRG return this.getBaseTag().func_74767_n(tagName);
         return this.getBaseTag().n(tagName);
     }
 
@@ -303,6 +329,7 @@ public class NBTTagCompound extends NBTBase {
      * @param name the name of the tag to remove
      */
     public void removeTag(String name) {
+        // SRG this.getBaseTag().func_82580_o(name);
         this.getBaseTag().o(name);
     }
 
@@ -312,6 +339,7 @@ public class NBTTagCompound extends NBTBase {
      * @return
      */
     public boolean isEmpty() {
+        // SRG return this.getBaseTag().func_82582_d();
         return this.getBaseTag().d();
     }
 

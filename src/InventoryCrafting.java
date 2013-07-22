@@ -1,6 +1,5 @@
 import java.util.Arrays;
 
-
 public class InventoryCrafting<C extends Container<OItemStack>> extends ItemArray<C> {
     public OInventoryCraftResult result;
 
@@ -36,6 +35,7 @@ public class InventoryCrafting<C extends Container<OItemStack>> extends ItemArra
     public Item getItemFromSlot(int slot) {
         OSlot oslot = getOContainer().getSlot(slot);
         if(oslot != null) {
+            // SRG OItemStack oitem = oslot.func_75211_c();
             OItemStack oitem = oslot.d();
             return oitem == null ? null : new Item(oitem);
         }
@@ -49,6 +49,7 @@ public class InventoryCrafting<C extends Container<OItemStack>> extends ItemArra
 
         for (int i = 0; size > i; i++) {
             OSlot oslot = getOContainer().getSlot(i);
+            // SRG if (oslot != null && oslot.func_75211_c() != null) {
             if (oslot != null && oslot.d() != null) {
                 continue;
             }
@@ -148,8 +149,7 @@ public class InventoryCrafting<C extends Container<OItemStack>> extends ItemArra
 
     @Override
     public String toString() {
-        return String.format("CraftMatrix[size=%d, contents=%s]", container.getContentsSize(), Arrays.toString(getCraftMatrixContents()))
-                + String.format(" Result[size=%d, contents=%s]", getResultSize(), Arrays.toString(getResultContents()))
-                ;
+        return String.format("CraftMatrix[size=%d, contents=%s] Result[size=%d, contents=%s]",
+                container.getContentsSize(), Arrays.toString(getCraftMatrixContents()), getResultSize(), Arrays.toString(getResultContents()));
     }
 }

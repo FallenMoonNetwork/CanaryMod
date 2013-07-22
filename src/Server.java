@@ -32,7 +32,8 @@ public class Server {
      * @param msg Message text to send
      */
     public void messageAll(String msg) {
-        server.af().a(new OPacket3Chat(OChatMessageComponent.e(msg)));
+        // SRG server.func_71203_ab().func_72384_a((OPacket) new OPacket3Chat(OChatMessageComponent.func_111066_d(msg)));
+        server.af().a((OPacket) new OPacket3Chat(OChatMessageComponent.d(msg)));
     }
 
     /**
@@ -53,6 +54,7 @@ public class Server {
      *
      */
     public void unban(String player) {
+        // SRG server.func_71203_ab().func_72390_e().func_73709_b(player);
         server.af().e().b(player);
         etc.getDataSource().expireBan(new Ban(player));
     }
@@ -64,6 +66,7 @@ public class Server {
      * @throws OCommandNotFoundException if the command was not found.
      */
     public void useConsoleCommand(String command) {
+        // SRG server.func_71331_a(command, server);
         server.a(command, server);
     }
 
@@ -75,11 +78,12 @@ public class Server {
      * @throws OCommandNotFoundException if the command was not found.
      */
     public void useConsoleCommand(String command, Player player) {
+        // SRG server.func_71331_a(command, player.getEntity());
         server.a(command, player.getEntity());
     }
 
     /**
-     * Returns actual server time (-2^63 to 2^63-1)
+     * Returns actual server time (-2^63 to 2^63-1).
      *
      * @deprecated Use {@link World#getTime()} instead.
      * @return time server time
@@ -172,6 +176,7 @@ public class Server {
      * @return
      */
     public Player getPlayer(String name) {
+        // SRG OEntityPlayerMP user = server.func_71203_ab().func_72361_f(name);
         OEntityPlayerMP user = server.af().f(name);
 
         return user == null ? null : user.getPlayer();
@@ -185,6 +190,7 @@ public class Server {
     public List<Player> getPlayerList() {
         List<Player> toRet = new ArrayList<Player>();
 
+        // SRG for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.func_71203_ab().field_72404_b) {
         for (OEntityPlayerMP oepmp : (List<OEntityPlayerMP>) server.af().a) {
             toRet.add(oepmp.getPlayer());
         }
@@ -197,6 +203,7 @@ public class Server {
      * @return list of player names
      */
     public String getPlayerNames() {
+        // SRG return server.func_71203_ab().func_72398_c();
         return server.af().c();
     }
 
@@ -556,6 +563,7 @@ public class Server {
      * Saves all player inventories to file
      */
     public void saveInventories() {
+        // SRG server.func_71203_ab().func_72389_g();
         server.af().g();
     }
 
@@ -773,6 +781,7 @@ public class Server {
      * @return the default dimension
      */
     public World getDefaultWorld() {
+        // SRG OWorld oworld = server.getWorld(server.func_71270_I(), 0);
         OWorld oworld = server.getWorld(server.L(), 0);
 
         return oworld != null ? oworld.world : null;
@@ -793,6 +802,7 @@ public class Server {
      * </code></blockquote>
      */
     public World getWorld(int dimension) {
+        // SRG OWorld oworld = server.getWorld(server.func_71270_I(), dimension);
         OWorld oworld = server.getWorld(server.L(), dimension);
         return oworld != null ? oworld.world : null;
     }
@@ -832,13 +842,16 @@ public class Server {
     public void addRecipe(Item item, Object... recipe) {
         for (int i = 0; i < recipe.length; i++) {
             if (recipe[i] instanceof Block.Type) {
+                // SRG recipe[i] = OBlock.field_71973_m[((Block.Type) recipe[i]).getType()];
                 recipe[i] = OBlock.s[((Block.Type) recipe[i]).getType()];
             } else if (recipe[i] instanceof Item.Type) {
+                // SRG recipe[i] = OItem.field_77698_e[((Item.Type) recipe[i]).getId()];
                 recipe[i] = OItem.g[((Item.Type) recipe[i]).getId()];
             } else if (recipe[i] instanceof Item) {
                 recipe[i] = ((Item) recipe[i]).getBaseItem();
             }
         }
+        // SRG OCraftingManager.func_77594_a().func_92103_a(item.getBaseItem(), recipe);
         OCraftingManager.a().a(item.getBaseItem(), recipe);
     }
 
@@ -859,13 +872,16 @@ public class Server {
     public void addShapelessRecipe(Item item, Object... recipe) {
         for (int i = 0; i < recipe.length; i++) {
             if (recipe[i] instanceof Block.Type) {
+                // SRG recipe[i] = OBlock.field_71973_m[((Block.Type) recipe[i]).getType()];
                 recipe[i] = OBlock.s[((Block.Type) recipe[i]).getType()];
             } else if (recipe[i] instanceof Item.Type) {
+                // SRG recipe[i] = OItem.field_77698_e[((Item.Type) recipe[i]).getId()];
                 recipe[i] = OItem.g[((Item.Type) recipe[i]).getId()];
             } else if (recipe[i] instanceof Item) {
                 recipe[i] = ((Item) recipe[i]).getBaseItem();
             }
         }
+        // SRG OCraftingManager.func_77594_a().func_77596_b(item.getBaseItem(), recipe);
         OCraftingManager.a().b(item.getBaseItem(), recipe);
     }
 
@@ -898,6 +914,7 @@ public class Server {
         if (from.getAmount() != 1) {
             throw new IllegalArgumentException("The 'from' amount should be 1");
         }
+        // SRG OFurnaceRecipes.func_77602_a().func_77600_a(from.getItemId(), to.getBaseItem(), xp);
         OFurnaceRecipes.a().a(from.getItemId(), to.getBaseItem(), xp);
     }
 
@@ -906,8 +923,8 @@ public class Server {
      *
      * @return a list containing {@code OIRecipe} instances.
      */
-    @SuppressWarnings("unchecked")
     public List<OIRecipe> getRecipeList() {
+        // SRG return OCraftingManager.func_77594_a().func_77592_b();
         return OCraftingManager.a().b();
     }
 
@@ -973,6 +990,7 @@ public class Server {
      */
     public World[] loadWorld(String name, World.Type type, long seed, String generatorSettings) {
         if (!server.worlds.containsKey(name)) {
+            // SRG server.func_71247_a(name, name, seed, type.getNative(), generatorSettings);
             server.a(name, name, seed, type.getNative(), generatorSettings);
         }
 
@@ -1016,7 +1034,8 @@ public class Server {
      * @return String of the version in the format major.minor[.build]
      */
     public String getMCVersion() {
-        return server.y();
+        // SRG return server.func_71249_w();
+        return server.z();
     }
 
     /**

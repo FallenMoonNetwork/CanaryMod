@@ -41,7 +41,7 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
 
             while (iterator.hasNext()) {
                 oentityplayer = (OEntityPlayer) iterator.next();
-                oentityplayer.d(new OPotionEffect(this.f, 180, b0, true));
+                oentityplayer.c(new OPotionEffect(this.f, 180, b0, true));
             }
 
             if (this.e >= 4 && this.f != this.g && this.g > 0) {
@@ -49,7 +49,7 @@ public class OTileEntityBeacon extends OTileEntity implements OIInventory, Conta
 
                 while (iterator.hasNext()) {
                     oentityplayer = (OEntityPlayer) iterator.next();
-                    oentityplayer.d(new OPotionEffect(this.g, 180, 0, true));
+                    oentityplayer.c(new OPotionEffect(this.g, 180, 0, true));
                 }
             }
         }

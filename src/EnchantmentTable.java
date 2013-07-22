@@ -6,12 +6,14 @@ public class EnchantmentTable extends ItemArray<OInventoryBasic> {
     private final OContainerEnchantment enchantTable;
 
     public EnchantmentTable(OContainerEnchantment block) {
+        // SRG super(block, (OInventoryBasic) block.field_75168_e);
         super(block, (OInventoryBasic) block.a);
         enchantTable = block;
     }
 
     @Override
     public void update() {
+        // SRG enchantTable.func_75142_b();
         enchantTable.b();
     }
 
@@ -47,6 +49,7 @@ public class EnchantmentTable extends ItemArray<OInventoryBasic> {
      * @return an int[3] containing the levels of the slots
      */
     public int[] getEnchantLevels() {
+        // SRG return enchantTable.field_75167_g;
         return enchantTable.g;
     }
 

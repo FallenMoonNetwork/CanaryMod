@@ -2,7 +2,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * Item.java - Item stuff.
  *
@@ -171,6 +170,11 @@ public class Item implements Cloneable, Metadatable {
         QuartzStairs(156),//
         ActivatorRail(157),//
         Dropper(158),//
+        StainedClay(159), //
+        HayBale(170), //
+        Carpet(171), //
+        HardenedClay(172), //
+        CoalBlock(173), //
         IronSpade(256), //
         IronPickaxe(257), //
         IronAxe(258), //
@@ -324,6 +328,11 @@ public class Item implements Cloneable, Metadatable {
         NetherQuartz(406),//
         MinecartTNT(407),//
         MinecartHopper(408),//
+        IronHorseArmour(417), //
+        GoldHorseArmour(418), //
+        DiamondHorseArmour(419), //
+        Lead(420), //
+        NameTag(421), //
         GoldRecord(2256), //
         GreenRecord(2257), //
         BlocksRecord(2258), //
@@ -454,9 +463,12 @@ public class Item implements Cloneable, Metadatable {
      * @param itemStack
      */
     public Item(OItemStack itemStack) {
+        // SRG itemId = itemStack.field_77993_c;
         itemId = itemStack.d;
+        // SRG amount = itemStack.field_77994_a;
         amount = itemStack.b;
-        damage = itemStack.j();
+        // SRG damage = itemStack.func_77960_j();
+        damage = itemStack.k();
         itemType = Type.fromId(itemId);
         this.itemStack = itemStack;
     }
@@ -477,9 +489,26 @@ public class Item implements Cloneable, Metadatable {
      */
     public void update() {
         if (this.itemStack != null) {
+            // SRG this.itemStack.field_77993_c = itemId;
             this.itemStack.d = itemId;
+            // SRG this.itemStack.field_77994_a = amount;
             this.itemStack.b = amount;
+            // SRG this.itemStack.func_77964_b(damage);
             this.itemStack.b(damage);
+        }
+    }
+
+    /**
+     * Refreshes this wrapper's state with the native item stack's values.
+     */
+    public void refresh() {
+        if (this.itemStack != null) {
+            // SRG this.itemId = itemStack.field_77993_c;
+            this.itemId = itemStack.d;
+            // SRG this.amount = itemStack.field_77994_a;
+            this.amount = itemStack.b;
+            // SRG this.damage = itemStack.func_77960_j();
+            this.damage = itemStack.k();
         }
     }
 
@@ -528,6 +557,7 @@ public class Item implements Cloneable, Metadatable {
      * @return amount
      */
     public int getMaxAmount() {
+        // SRG return this.itemStack.func_77976_d();
         return this.itemStack.e();
     }
 
@@ -537,7 +567,8 @@ public class Item implements Cloneable, Metadatable {
      * @param amount
      */
     public void setMaxAmount(int amount) {
-        this.itemStack.b().e(amount);
+        // SRG this.itemStack.func_77973_b().func_77625_d(amount);
+        this.itemStack.b().d(amount);
     }
 
     /**
@@ -547,10 +578,8 @@ public class Item implements Cloneable, Metadatable {
      * @return
      */
     public static boolean isValidItem(int itemId) {
-        if (itemId < OItem.g.length) {
-            return OItem.g[itemId] != null;
-        }
-        return false;
+        // SRG return itemId < OItem.field_77698_e.length ? OItem.field_77698_e[itemId] != null : false;
+        return itemId < OItem.g.length ? OItem.g[itemId] != null : false;
     }
 
     /**
@@ -609,9 +638,8 @@ public class Item implements Cloneable, Metadatable {
      */
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof OItemStack) {
-            return OItemStack.b(itemStack, (OItemStack) obj);
-        } else if(obj instanceof Item) {
+        if (obj instanceof Item) {
+            // SRG return OItemStack.func_77989_b(itemStack, ((Item) obj).getBaseItem());
             return OItemStack.b(itemStack, ((Item) obj).getBaseItem());
         }
         return false;
@@ -687,70 +715,65 @@ public class Item implements Cloneable, Metadatable {
 
     public OItemStack getBaseItem() {
         if (this.itemStack == null) {
-            return new OItemStack(itemId, amount, damage);
-        } else {
-            return this.itemStack;
+            this.itemStack = new OItemStack(itemId, amount, damage);
         }
+        return this.itemStack;
     }
 
     /**
-     * Sets an enchantment on the item
+     * Sets an enchantment on the item.
      *
      * @param id
      * @param level
      */
     public void addEnchantment(int id, int level) {
-        Enchantment enchantment = new Enchantment(Enchantment.Type.fromId(id), level);
-        if (enchantment.getEnchantment() != null && itemStack != null) {
-            itemStack.a(enchantment.getEnchantment(), enchantment.getLevel());
-        }
+        addEnchantment(new Enchantment(Enchantment.Type.fromId(id), level));
     }
 
     /**
-     * Sets an enchantment on the item
+     * Sets an enchantment on the item.
      *
      * @param type
      *            the enchantment type
      * @param level
      */
     public void addEnchantment(Enchantment.Type type, int level) {
-        Enchantment enchantment = new Enchantment(type, level);
-        if (enchantment.getEnchantment() != null && itemStack != null) {
-            itemStack.a(enchantment.getEnchantment(), enchantment.getLevel());
-        }
+        addEnchantment(new Enchantment(type, level));
     }
 
     /**
-     * Sets an enchantment on the item
+     * Sets an enchantment on the item.
      *
      * @param enchantment
      */
     public void addEnchantment(Enchantment enchantment) {
         if (enchantment.getEnchantment() != null && itemStack != null) {
+            // SRG itemStack.func_77966_a(enchantment.getEnchantment(), enchantment.getLevel());
             itemStack.a(enchantment.getEnchantment(), enchantment.getLevel());
         }
     }
 
     /**
-     * Removes item enchantments
+     * Removes item enchantments.
      */
     public void removeEnchantments() {
-        if (itemStack != null) {
-            itemStack.d(null);
-        }
+        NBTTagCompound tag = this.getDataTag();
+        tag.removeTag("ench");
+        this.setDataTag(tag);
     }
 
     /**
-     * Gets a list of enchantments
+     * Gets a list of enchantments.
      *
-     * @return Enchantment[]
+     * @return An {@link Enchantment}-array containing all enchantments.
      */
     public Enchantment[] getEnchantments() {
         Enchantment[] enchantments = null;
-        if (itemStack != null && itemStack.x()) {
-            int size = itemStack.r().c();
-            enchantments = new Enchantment[size];
+        if (itemStack != null && this.isEnchantable()) {
+            // SRG NBTTagList nbtTagList = new NBTTagList(itemStack.func_77986_q());
             NBTTagList nbtTagList = new NBTTagList(itemStack.r());
+            int size = nbtTagList.size();
+            enchantments = new Enchantment[size];
             for (int i = 0; i < size; i++) {
                 NBTTagCompound tag = (NBTTagCompound) nbtTagList.get(i);
                 enchantments[i] = new Enchantment(Enchantment.Type.fromId(tag.getShort("id")), tag.getShort("lvl"));
@@ -766,15 +789,12 @@ public class Item implements Cloneable, Metadatable {
      * @return enchantment
      */
     public Enchantment getEnchantment(int index) {
-        if (itemStack != null && itemStack.x()) {
-            int size = itemStack.r().c();
-            if (index >= size) {
-                index = 0;
-            }
-            NBTTagCompound tag = (NBTTagCompound) new NBTTagList(itemStack.r()).get(index);
-            return new Enchantment(Enchantment.Type.fromId(tag.getShort("id")), tag.getShort("lvl"));
+        Enchantment[] enchs = getEnchantments();
+        if (index >= enchs.length || index < 0) {
+            return null;
+        } else {
+            return enchs[index];
         }
-        return null;
     }
 
     /**
@@ -787,11 +807,22 @@ public class Item implements Cloneable, Metadatable {
     }
 
     /**
+     * Returns whether this item is enchantable.
+     * @return <tt>true</tt> if this item is enchantable, <tt>false</tt>
+     * otherwise.
+     */
+    public boolean isEnchantable() {
+        // SRG return itemStack.func_77956_u();
+        return itemStack.x();
+    }
+
+    /**
      * Gets the visible name of this item.
      * Names can be set using an anvil or {@link #setName(java.lang.String)}.
      * @return The item name
      */
     public String getName() {
+        // SRG return itemStack.func_82833_r();
         return itemStack.s();
     }
 
@@ -801,6 +832,7 @@ public class Item implements Cloneable, Metadatable {
      * @param name The item's new name
      */
     public void setName(String name) {
+        // SRG itemStack.func_82834_c(name);
         itemStack.c(name);
     }
 
@@ -815,21 +847,18 @@ public class Item implements Cloneable, Metadatable {
             return null;
         }
 
-        OItemStack base = getBaseItem();
-
-        if(!base.p()) {
-            return null;
-        }
-
-        NBTTagCompound tag = new NBTTagCompound(base.q());
-        if(!tag.hasTag("CustomPotionEffects")) {
+        NBTTagCompound tag = this.getDataTag();
+        if (tag == null || !tag.hasTag("CustomPotionEffects")) {
             return null;
         }
 
         NBTTagList potionEffects = tag.getNBTTagList("CustomPotionEffects");
         PotionEffect[] rt = new PotionEffect[potionEffects.size()];
-        if(rt.length <= 0) {return null;}
-        for(int i=0; i<rt.length; i++) {
+        if (rt.length <= 0) {
+            return null;
+        }
+        for (int i = 0; i < rt.length; i++) {
+            // SRG rt[i] = new PotionEffect(OPotionEffect.func_82722_b((ONBTTagCompound) potionEffects.get(i).getBaseTag()));
             rt[i] = new PotionEffect(OPotionEffect.b((ONBTTagCompound) potionEffects.get(i).getBaseTag()));
         }
 
@@ -842,7 +871,7 @@ public class Item implements Cloneable, Metadatable {
      * @param effect The potion effect to add
      */
     public void addPotionEffect(PotionEffect effect) {
-        addPotionEffects(new PotionEffect[] {effect});
+        addPotionEffects(new PotionEffect[]{effect});
     }
 
     /**
@@ -855,12 +884,10 @@ public class Item implements Cloneable, Metadatable {
             return;
         }
 
-        OItemStack base = getBaseItem();
-
-        NBTTagList potionEffects = null;
-        if(base.p()) {
-            NBTTagCompound tag = new NBTTagCompound(base.q());
-            if(tag.hasTag("CustomPotionEffects")) {
+        NBTTagList potionEffects;
+        if (this.hasDataTag()) {
+            NBTTagCompound tag = getDataTag();
+            if (tag.hasTag("CustomPotionEffects")) {
                 potionEffects = tag.getNBTTagList("CustomPotionEffects");
             } else {
                 potionEffects = new NBTTagList();
@@ -870,13 +897,13 @@ public class Item implements Cloneable, Metadatable {
             potionEffects = new NBTTagList();
             NBTTagCompound tag = new NBTTagCompound();
             tag.add("CustomPotionEffects", potionEffects);
-            base.d(tag.getBaseTag());
+            this.setDataTag(tag);
         }
 
         NBTTagCompound[] e = new NBTTagCompound[effects.length];
-        for(int i = 0; i < e.length; i++) {
+        for (int i = 0; i < e.length; i++) {
             e[i] = new NBTTagCompound();
-            effects[i].potionEffect.a(e[i].getBaseTag());
+            effects[i].writeToTag(e[i]);
             potionEffects.add(e[i]);
         }
     }
@@ -905,15 +932,21 @@ public class Item implements Cloneable, Metadatable {
      *
      * @return The lore, each string in the array is a new line
      */
-    public String[] getLore() { // WWOL: I don't think we need this now with the new NBT API do we?
+    public String[] getLore() {
         NBTTagCompound tag = getDataTag();
-        if(tag == null) {return null;}
-        if(!tag.hasTag("display")) {return null;}
+        if (tag == null) {
+            return null;
+        }
+        if (!tag.hasTag("display")) {
+            return null;
+        }
         NBTTagCompound display = tag.getNBTTagCompound("display");
-        if(!display.hasTag("Lore")) {return null;}
+        if (!display.hasTag("Lore")) {
+            return null;
+        }
         NBTTagList lore = display.getNBTTagList("Lore");
         String[] rt = new String[lore.size()];
-        for(int i=0; i<rt.length; i++) {
+        for (int i = 0; i < rt.length; i++) {
             rt[i] = lore.get(i).toPlainString();
         }
         return rt;
@@ -947,7 +980,7 @@ public class Item implements Cloneable, Metadatable {
      * @return
      */
     public NBTTagCompound getDataTag() {
-        return itemStack.p() ? new NBTTagCompound(itemStack.q()) : null;
+        return this.hasDataTag() ? new NBTTagCompound(itemStack.q()) : null;
     }
 
     /**
@@ -958,7 +991,18 @@ public class Item implements Cloneable, Metadatable {
      * @param tag the data tag
      */
     public void setDataTag(NBTTagCompound tag) {
-        itemStack.e = tag == null ? null : tag.getBaseTag();
+        // SRG itemStack.func_77982_d(tag == null ? null : tag.getBaseTag());
+        itemStack.d(tag == null ? null : tag.getBaseTag());
+    }
+
+    /**
+     * Returns whether this item has a data tag.
+     * @return <tt>true</tt> if the item has a data tag, <tt>false</tt>
+     * otherwise.
+     */
+    public boolean hasDataTag() {
+        // SRG return itemStack.func_77942_o();
+        return itemStack.p();
     }
 
     @Override
@@ -977,6 +1021,7 @@ public class Item implements Cloneable, Metadatable {
      * @return NBTTagCompound
      */
     public NBTTagCompound writeToTag(NBTTagCompound tag) {
+        // SRG return new NBTTagCompound(itemStack.func_77955_b(tag.getBaseTag()));
         return new NBTTagCompound(itemStack.b(tag.getBaseTag()));
     }
 
@@ -986,6 +1031,19 @@ public class Item implements Cloneable, Metadatable {
      * @param tag The tag to read from
      */
     public void readFromTag(NBTTagCompound tag) {
+        // SRG itemStack.func_77963_c(tag.getBaseTag());
         itemStack.c(tag.getBaseTag());
+    }
+
+    /**
+     * Splits this item into two stacks. Returns the stack of size
+     * <tt>amount</tt>. This stack will be updated to the remaining size.
+     * @param amount The size of the new stack.
+     * @return The newly split stack of size <tt>amount</tt>
+     */
+    public Item split(int amount) {
+        Item split = new Item(this.getBaseItem().a(amount));
+        this.refresh();
+        return split;
     }
 }

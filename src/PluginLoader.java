@@ -437,70 +437,87 @@ public class PluginLoader {
         /**
          * Creeper explosion
          */
+        // SRG CREEPER_EXPLOSION(new OEntityDamageSource("explosion.player", new OEntityCreeper(null)).func_76351_m().func_94540_d()), //
         CREEPER_EXPLOSION(new OEntityDamageSource("explosion.player", new OEntityCreeper(null)).o().d()), //
         /**
          * Damage dealt by another entity
          */
-        ENTITY(ODamageSource.a((OEntityLiving) null)), //
+        // SRG ENTITY(ODamageSource.func_76358_a((OEntityLivingBase) null)), //
+        ENTITY(ODamageSource.a((OEntityLivingBase) null)), //
         /**
          * Damage caused by explosion
          */
+        // SRG EXPLOSION(new ODamageSource("explosion").func_76351_m().func_94540_d()), //
         EXPLOSION(new ODamageSource("explosion").o().d()), //
         /**
          * Damage caused from falling (fall distance - 3.0)
          */
+        // SRG FALL(ODamageSource.field_76379_h), //
         FALL(ODamageSource.h), //
         /**
          * Damage caused by fire (1)
          */
+        // SRG FIRE(ODamageSource.field_76372_a), //
         FIRE(ODamageSource.a), //
         /**
          * Low periodic damage caused by burning (1)
          */
+        // SRG FIRE_TICK(ODamageSource.field_76370_b), //
         FIRE_TICK(ODamageSource.b), //
         /**
          * Damage caused from lava (4)
          */
+        // SRG LAVA(ODamageSource.field_76371_c), //
         LAVA(ODamageSource.c), //
         /**
          * Damage caused from drowning (2)
          */
+        // SRG WATER(ODamageSource.field_76369_e), //
         WATER(ODamageSource.e), //
         /**
          * Damage caused by cactus (1)
          */
+        // SRG CACTUS(ODamageSource.field_76367_g), //
         CACTUS(ODamageSource.g), //
         /**
          * Damage caused by suffocating(1)
          */
+        // SRG SUFFOCATION(ODamageSource.field_76368_d), //
         SUFFOCATION(ODamageSource.d), //
         /**
          * Damage caused by lightning (5)
          */
+        // SRG LIGHTNING(ODamageSource.field_76372_a), //
         LIGHTNING(ODamageSource.a), //
         /**
          * Damage caused by starvation (1)
          */
+        // SRG STARVATION(ODamageSource.field_76366_f), //
         STARVATION(ODamageSource.f), //
         /**
          * Damage caused by poison (1) (Potions, Poison)
          */
+        // SRG POTION(ODamageSource.field_76376_m), //
         POTION(ODamageSource.k), //
         /**
          * Damage caused by the "Wither" effect (1)
          */
+        // SRG WITHER(ODamageSource.field_82727_n), //
         WITHER(ODamageSource.l), //
         /**
          * Damage caused by throwing an enderpearl (5)
          */
+        // SRG ENDERPEARL(ODamageSource.field_76379_h), //
         ENDERPEARL(ODamageSource.h), //
         /**
          * Damage caused by falling anvil
          */
+        // SRG ANVIL(ODamageSource.field_82728_o), //
         ANVIL(ODamageSource.m), //
         /**
          * Damage caused by falling block
          */
+        // SRG FALLING_BLOCK(ODamageSource.field_82729_p);
         FALLING_BLOCK(ODamageSource.n);
 
         private final ODamageSource source;
@@ -523,48 +540,30 @@ public class PluginLoader {
             return source.b((OEntityLivingBase) died.getEntity()).toString();
         }
 
-         public static DamageType fromDamageSource(ODamageSource source) {
-             if (source == ODamageSource.a)
-                 return FIRE; // Can also be lightning
-             else if (source == ODamageSource.b)
-                 return FIRE_TICK;
-             else if (source == ODamageSource.c)
-                 return LAVA;
-             else if (source == ODamageSource.d)
-                 return SUFFOCATION;
-             else if (source == ODamageSource.e)
-                 return WATER;
-             else if (source == ODamageSource.f)
-                 return STARVATION;
-             else if (source == ODamageSource.g)
-                 return CACTUS;
-             else if (source == ODamageSource.h)
-                 return FALL;
-             else if (source == ODamageSource.i)
-                 return FALL; // Out of world
-             else if (source == ODamageSource.j)
-                 return null; // Vanilla's /kill, we don't have this.
-             else if (source.c()) {
-                 if (source instanceof OEntityDamageSource && source.h() instanceof OEntityCreeper) {
-                     return CREEPER_EXPLOSION;
-                 } else {
-                     return EXPLOSION;
-                 }
-             } else if (source == ODamageSource.k)
-                 return POTION;
-             else if (source == ODamageSource.l)
-                 return WITHER;
-             else if (source == ODamageSource.m)
-                 return ANVIL;
-             else if (source == ODamageSource.n)
-                 return FALLING_BLOCK;
-             else if (source instanceof OEntityDamageSource)
-                 return ENTITY;
-             else if (source instanceof OEntityDamageSourceIndirect)
-                 return ENTITY; // Still an entity, albeit indirect.
-             else
-                 return null; // Not a valid ODamageSource
-         }
+        public static DamageType fromDamageSource(ODamageSource osource) {
+            DamageSource source = osource.damageSource;
+
+            if (source.isExplosionDamage()) {
+                if (source.isEntityDamageSource()
+                        && source.getDamagingEntity().getEntity() instanceof OEntityCreeper) {
+                    return CREEPER_EXPLOSION;
+                } else {
+                    return EXPLOSION;
+                }
+            } else {
+                for (DamageType type : DamageType.values()) {
+                    if (type.source == osource) {
+                        return type;
+                    }
+                }
+            }
+
+            if (source.isEntityDamageSource() || source.isIndirectDamageSource()) {
+                return ENTITY;
+            }
+
+            return null;
+        }
     }
 
     private static final Logger log = Logger.getLogger("Minecraft");

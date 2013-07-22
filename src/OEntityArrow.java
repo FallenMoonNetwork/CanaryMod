@@ -219,7 +219,7 @@ public class OEntityArrow extends OEntity implements OIProjectile {
                             odamagesource = ODamageSource.a(this, this.c);
                         }
 
-                    if (this.ad() && !(omovingobjectposition.g instanceof OEntityEnderman)) {
+                    if (this.ae() && !(omovingobjectposition.g instanceof OEntityEnderman)) {
                         omovingobjectposition.g.d(5);
                         }
 
@@ -228,7 +228,7 @@ public class OEntityArrow extends OEntity implements OIProjectile {
                             OEntityLivingBase oentitylivingbase = (OEntityLivingBase) omovingobjectposition.g;
 
                             if (!this.q.I) {
-                                oentitylivingbase.m(oentitylivingbase.aQ() + 1);
+                                oentitylivingbase.m(oentitylivingbase.aT() + 1);
                                 }
 
                             if (this.aw > 0) {
@@ -396,7 +396,7 @@ public class OEntityArrow extends OEntity implements OIProjectile {
         this.aw = i;
     }
 
-    public boolean ao() {
+    public boolean ap() {
         return false;
     }
 

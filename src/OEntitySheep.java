@@ -26,13 +26,13 @@ public class OEntitySheep extends OEntityAnimal {
         this.bq.a(1, new OItemStack(OItem.aY, 1, 0));
     }
 
-    protected boolean bb() {
+    protected boolean be() {
         return true;
     }
 
-    protected void be() {
+    protected void bh() {
         this.br = this.bs.f();
-        super.be();
+        super.bh();
     }
 
     public void c() {
@@ -43,8 +43,8 @@ public class OEntitySheep extends OEntityAnimal {
         super.c();
     }
 
-    protected void ax() {
-        super.ax();
+    protected void ay() {
+        super.ay();
         this.a(OSharedMonsterAttributes.a).a(8.0D);
         this.a(OSharedMonsterAttributes.d).a(0.23000000417232513D);
     }
@@ -55,8 +55,8 @@ public class OEntitySheep extends OEntityAnimal {
     }
 
     protected void b(boolean flag, int i) {
-        if (!this.bQ()) {
-            this.a(new OItemStack(OBlock.ag.cF, 1, this.bP()), 0.0F);
+        if (!this.bU()) {
+            this.a(new OItemStack(OBlock.ag.cF, 1, this.bT()), 0.0F);
         }
     }
 
@@ -67,13 +67,13 @@ public class OEntitySheep extends OEntityAnimal {
     public boolean a(OEntityPlayer oentityplayer) {
         OItemStack oitemstack = oentityplayer.bn.h();
 
-        if (oitemstack != null && oitemstack.d == OItem.bg.cv && !this.bQ() && !this.g_()) {
+        if (oitemstack != null && oitemstack.d == OItem.bg.cv && !this.bU() && !this.g_()) {
             if (!this.q.I) {
-                this.j(true);
+                this.i(true);
                 int i = 1 + this.ab.nextInt(3);
 
                 for (int j = 0; j < i; ++j) {
-                    OEntityItem oentityitem = this.a(new OItemStack(OBlock.ag.cF, 1, this.bP()), 1.0F);
+                    OEntityItem oentityitem = this.a(new OItemStack(OBlock.ag.cF, 1, this.bT()), 1.0F);
 
                     oentityitem.y += (double) (this.ab.nextFloat() * 0.05F);
                     oentityitem.x += (double) ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.1F);
@@ -90,13 +90,13 @@ public class OEntitySheep extends OEntityAnimal {
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("Sheared", this.bQ());
-        onbttagcompound.a("Color", (byte) this.bP());
+        onbttagcompound.a("Sheared", this.bU());
+        onbttagcompound.a("Color", (byte) this.bT());
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        this.j(onbttagcompound.n("Sheared"));
+        this.i(onbttagcompound.n("Sheared"));
         this.p(onbttagcompound.c("Color"));
     }
 
@@ -104,11 +104,11 @@ public class OEntitySheep extends OEntityAnimal {
         return "mob.sheep.say";
     }
 
-    protected String aK() {
+    protected String aN() {
         return "mob.sheep.say";
     }
 
-    protected String aL() {
+    protected String aO() {
         return "mob.sheep.say";
     }
 
@@ -116,7 +116,7 @@ public class OEntitySheep extends OEntityAnimal {
         this.a("mob.sheep.step", 0.15F, 1.0F);
     }
 
-    public int bP() {
+    public int bT() {
         return this.ah.a(16) & 15;
     }
 
@@ -126,11 +126,11 @@ public class OEntitySheep extends OEntityAnimal {
         this.ah.b(16, Byte.valueOf((byte) (b0 & 240 | i & 15)));
     }
 
-    public boolean bQ() {
+    public boolean bU() {
         return (this.ah.a(16) & 16) != 0;
     }
 
-    public void j(boolean flag) {
+    public void i(boolean flag) {
         byte b0 = this.ah.a(16);
 
         if (flag) {
@@ -156,7 +156,7 @@ public class OEntitySheep extends OEntityAnimal {
     }
 
     public void n() {
-        this.j(false);
+        this.i(false);
         if (this.g_()) {
             this.a(60);
         }
@@ -187,7 +187,7 @@ public class OEntitySheep extends OEntityAnimal {
     }
 
     private int b(OEntityAnimal oentityanimal) {
-        return 15 - ((OEntitySheep) oentityanimal).bP();
+        return 15 - ((OEntitySheep) oentityanimal).bT();
     }
 
     public OEntityAgeable a(OEntityAgeable oentityageable) {

@@ -55,6 +55,7 @@ public class Firework extends Projectile {
      * @return The firework item.
      */
     public Item getItem() {
+        // SRG return new Item(getEntity().field_70180_af.func_82710_f(8));
         return new Item(getEntity().ah.f(8));
     }
 
@@ -64,6 +65,7 @@ public class Firework extends Projectile {
      * @param item The firework item.
      */
     public void setItem(Item item) {
+        // SRG getEntity().field_70180_af.func_75692_b(8, item.getBaseItem());
         getEntity().ah.b(8, item.getBaseItem());
     }
 
@@ -78,6 +80,7 @@ public class Firework extends Projectile {
      * @return The distance in blocks.
      */
     public int getFlightDistance() {
+        // SRG return getEntity().field_92055_b;
         return getEntity().b;
     }
 
@@ -87,6 +90,7 @@ public class Firework extends Projectile {
      * @param blocks The number of blocks this firework will fly before exploding.
      */
     public void setFlightDistance(int blocks) {
+        // SRG getEntity().field_92055_b = blocks;
         getEntity().b = blocks;
     }
 
@@ -155,6 +159,7 @@ public class Firework extends Projectile {
      * @param life Probably ticks.
      */
     public void setRemainingLife(int life) {
+        // SRG getEntity().field_92056_a = life;
         getEntity().a = life;
     }
 
@@ -164,6 +169,7 @@ public class Firework extends Projectile {
      * @return int
      */
     public int getRemainingLife() {
+        // SRG return getEntity().field_92056_a;
         return getEntity().a;
     }
 

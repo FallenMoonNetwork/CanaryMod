@@ -14,14 +14,14 @@ public class OEntityPigZombie extends OEntityZombie {
         this.ag = true;
     }
 
-    protected void ax() {
-        super.ax();
+    protected void ay() {
+        super.ay();
         this.a(bp).a(0.0D);
         this.a(OSharedMonsterAttributes.d).a(0.5D);
         this.a(OSharedMonsterAttributes.e).a(5.0D);
     }
 
-    protected boolean bb() {
+    protected boolean be() {
         return false;
     }
 
@@ -37,13 +37,13 @@ public class OEntityPigZombie extends OEntityZombie {
 
         this.bu = this.j;
         if (this.bt > 0 && --this.bt == 0) {
-            this.a("mob.zombiepig.zpigangry", this.aW() * 2.0F, ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) * 1.8F);
+            this.a("mob.zombiepig.zpigangry", this.aZ() * 2.0F, ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) * 1.8F);
         }
 
         super.l_();
     }
 
-    public boolean bo() {
+    public boolean bs() {
         return this.q.r > 0 && this.q.b(this.E) && this.q.a((OEntity) this, this.E).isEmpty() && !this.q.d(this.E);
     }
 
@@ -57,12 +57,12 @@ public class OEntityPigZombie extends OEntityZombie {
         this.bs = onbttagcompound.d("Anger");
     }
 
-    protected OEntity bH() {
-        return this.bs == 0 ? null : super.bH();
+    protected OEntity bL() {
+        return this.bs == 0 ? null : super.bL();
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.ap()) {
+        if (this.aq()) {
             return false;
         } else {
             OEntity oentity = odamagesource.i();
@@ -99,11 +99,11 @@ public class OEntityPigZombie extends OEntityZombie {
         return "mob.zombiepig.zpig";
     }
 
-    protected String aK() {
+    protected String aN() {
         return "mob.zombiepig.zpighurt";
     }
 
-    protected String aL() {
+    protected String aO() {
         return "mob.zombiepig.zpigdeath";
     }
 
@@ -135,13 +135,13 @@ public class OEntityPigZombie extends OEntityZombie {
         return OItem.bo.cv;
     }
 
-    protected void bs() {
+    protected void bw() {
         this.c(0, new OItemStack(OItem.I));
     }
 
     public OEntityLivingData a(OEntityLivingData oentitylivingdata) {
         super.a(oentitylivingdata);
-        this.j(false);
+        this.i(false);
         return oentitylivingdata;
     }
 }

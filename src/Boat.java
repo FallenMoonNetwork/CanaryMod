@@ -37,7 +37,7 @@ public class Boat extends BaseVehicle {
      */
     public Boat(World world, double x, double y, double z) {
         super(new OEntityBoat(world.getWorld(), x, y, z));
-        world.getWorld().d(this.entity);
+        this.spawn();
     }
 
     /**

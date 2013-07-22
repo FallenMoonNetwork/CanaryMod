@@ -4,41 +4,10 @@
  * @author gregthegeek
  *
  */
-public class Skull implements ComplexBlock {
-    private final OTileEntitySkull skullBase;
+public class Skull extends ComplexBlockBase<OTileEntitySkull> implements ComplexBlock {
 
     public Skull(OTileEntitySkull skullBase) {
-        this.skullBase = skullBase;
-    }
-
-    @Override
-    public int getX() {
-        return skullBase.l;
-    }
-
-    @Override
-    public int getY() {
-        return skullBase.m;
-    }
-
-    @Override
-    public int getZ() {
-        return skullBase.n;
-    }
-
-    @Override
-    public void update() {
-        skullBase.h();
-    }
-
-    @Override
-    public Block getBlock() {
-        return getWorld().getBlockAt(getX(), getY(), getZ());
-    }
-
-    @Override
-    public World getWorld() {
-        return skullBase.k.world;
+        super(skullBase);
     }
 
     /**
@@ -47,7 +16,8 @@ public class Skull implements ComplexBlock {
      * @return
      */
     public String getPlayerName() {
-        return skullBase.c();
+        // SRG return tileEntity.func_82120_c();
+        return tileEntity.c();
     }
 
     /**
@@ -57,7 +27,8 @@ public class Skull implements ComplexBlock {
      * @param playerName determines the skin of this head if it's a player head
      */
     public void setType(int type, String playerName) {
-        skullBase.a(type, playerName);
+        // SRG tileEntity.func_82118_a(type, playerName);
+        tileEntity.a(type, playerName);
     }
 
     /**
@@ -66,25 +37,11 @@ public class Skull implements ComplexBlock {
      * @param rot
      */
     public void setOrientation(int rot) {
-        skullBase.a(rot);
+        // SRG tileEntity.func_82116_a(rot);
+        tileEntity.a(rot);
     }
 
     public OTileEntitySkull getBaseSkull() {
-        return skullBase;
-    }
-
-    @Override
-    public NBTTagCompound getMetaTag() {
-        return skullBase.metadata;
-    }
-
-    @Override
-    public void writeToTag(NBTTagCompound tag) {
-        skullBase.b(tag.getBaseTag());
-    }
-
-    @Override
-    public void readFromTag(NBTTagCompound tag) {
-        skullBase.a(tag.getBaseTag());
+        return tileEntity;
     }
 }

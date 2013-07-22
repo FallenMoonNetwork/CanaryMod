@@ -1,4 +1,3 @@
-
 /**
  * Interface for item frames
  *
@@ -61,6 +60,7 @@ public class ItemFrame extends HangingEntity {
      * @return
      */
     public Item getFramedItem() {
+        // SRG return new Item(getEntity().func_82335_i());
         return new Item(getEntity().h());
     }
 
@@ -70,12 +70,13 @@ public class ItemFrame extends HangingEntity {
      * @param item The item to be displayed
      */
     public void setFramedItem(Item item) {
+        // SRG getEntity().func_82334_a(item.getBaseItem());
         getEntity().a(item.getBaseItem());
     }
 
     @Override
     public void setPosition(Position position) {
-        if(position.ordinal() > 3) {
+        if (position.ordinal() > 3) {
             throw new IllegalArgumentException("You cannot set item frames to center positions");
         }
         super.setPosition(position);

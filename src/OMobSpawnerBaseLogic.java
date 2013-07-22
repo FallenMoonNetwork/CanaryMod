@@ -92,7 +92,7 @@ public abstract class OMobSpawnerBaseLogic {
                     OEntityLiving oentityliving = oentity instanceof OEntityLiving ? (OEntityLiving) oentity : null;
 
                     oentity.b(d0, d3, d4, this.a().s.nextFloat() * 360.0F, 0.0F);
-                    if (oentityliving == null || oentityliving.bo()) {
+                    if (oentityliving == null || oentityliving.bs()) {
                         this.a(oentity);
                         this.a().e(2004, this.b(), this.c(), this.d(), 0);
                         if (oentityliving != null) {

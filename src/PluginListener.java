@@ -755,8 +755,7 @@ public class PluginListener {
      * @return true if to disable open inventory
      */
     public boolean onOpenInventory(HookParametersOpenInventory openInventory) {
-        if (onOpenInventory(openInventory.getPlayer(), openInventory.getInventory()))
-        {
+        if (onOpenInventory(openInventory.getPlayer(), openInventory.getInventory())) {
             return true;
         }
         return false;
@@ -1026,8 +1025,7 @@ public class PluginListener {
      * @param spawnLocation
      *          Location the player will spawn at
      */
-    public void onPlayerRespawn(Player player, Location spawnLocation)
-    {
+    public void onPlayerRespawn(Player player, Location spawnLocation) {
         onPlayerRespawn(player);
     }
 
@@ -1326,14 +1324,14 @@ public class PluginListener {
     public void onLightChange(int xcord, int ycord, int zcord, int level) {
 
     }
-        /**
+
+    /**
      * Called when a LivingEntity dies.
      *
      * @param entity
      *            - Entity that has died.
      */
     public void onDeath(LivingEntity entity) {
-
     }
 
     /**

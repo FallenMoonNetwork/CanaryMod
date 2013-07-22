@@ -67,7 +67,7 @@ public class OItemPotion extends OItem {
                 while (iterator.hasNext()) {
                     OPotionEffect opotioneffect = (OPotionEffect) iterator.next();
 
-                    oentityplayer.d(new OPotionEffect(opotioneffect));
+                    oentityplayer.c(new OPotionEffect(opotioneffect));
                 }
             }
         }

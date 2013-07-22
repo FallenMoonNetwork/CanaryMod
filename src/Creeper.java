@@ -40,7 +40,8 @@ public class Creeper extends Mob {
      * @return
      */
     public boolean isCharged() {
-        return getEntity().bP();
+        // SRG return getEntity().func_70830_n();
+        return getEntity().bT();
     }
 
     /**
@@ -49,6 +50,7 @@ public class Creeper extends Mob {
      * @param charged
      */
     public void setCharged(boolean charged) {
+        // SRG getEntity().field_70180_af.func_75692_b(17, (byte) (charged ? 1 : 0));
         getEntity().ah.b(17, (byte) (charged ? 1 : 0));
     }
 

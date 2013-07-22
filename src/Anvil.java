@@ -6,23 +6,15 @@ public class Anvil extends InventoryCrafting<OContainerRepairINNER1> {
     private final OContainerRepair anvil;
 
     public Anvil(OContainerRepair container, OIInventory result, int resultStartIndex) {
+        // SRG super(container, (OContainerRepairINNER1) OContainerRepair.func_82851_a(container), result, resultStartIndex);
         super(container, (OContainerRepairINNER1) OContainerRepair.a(container), result, resultStartIndex);
         this.anvil = container;
     }
 
     @Override
     public void update() {
-        anvil.a(anvil.getPlayer());
-    }
-
-    @Override
-    public String getName() {
-        return container.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        container.setName(name);
+        // SRG anvil.func_75130_a((OIInventory) anvil.getPlayer());
+        anvil.a((OIInventory) anvil.getPlayer());
     }
 
     public String getToolName() {
@@ -30,6 +22,7 @@ public class Anvil extends InventoryCrafting<OContainerRepairINNER1> {
     }
 
     public void setToolName(String name) {
+        // SRG anvil.func_82850_a(name);
         anvil.a(name);
     }
 
@@ -41,7 +34,8 @@ public class Anvil extends InventoryCrafting<OContainerRepairINNER1> {
     public void setResult(Item item) {
         anvil.getCraftResult().setContentsAt(0xCAFEBABE, item.getBaseItem());
         // Update client
-        ((OEntityPlayerMP) anvil.getPlayer()).a.b(new OPacket103SetSlot(anvil.d, 2, item.getBaseItem()));
+        // SRG ((OEntityPlayerMP) anvil.getPlayer()).field_71135_a.func_72567_b((OPacket) new OPacket103SetSlot(anvil.field_75152_c, 2, item.getBaseItem()));
+        ((OEntityPlayerMP) anvil.getPlayer()).a.b((OPacket) new OPacket103SetSlot(anvil.d, 2, item.getBaseItem()));
     }
 
     /**
@@ -50,6 +44,7 @@ public class Anvil extends InventoryCrafting<OContainerRepairINNER1> {
      * @return
      */
     public int getXPCost() {
+        // SRG return anvil.field_82854_e;
         return anvil.a;
     }
 
@@ -59,6 +54,7 @@ public class Anvil extends InventoryCrafting<OContainerRepairINNER1> {
      * @param level The XP level the repair/rename should cost.
      */
     public void setXPCost(int level) {
+        // SRG anvil.field_82854_e = level;
         anvil.a = level;
     }
 }

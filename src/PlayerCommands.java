@@ -1078,7 +1078,6 @@ public class PlayerCommands extends CommandHandler {
                     try {
                         int mode = Integer.parseInt(args[1]);
 
-                        mode = OEnumGameType.a(mode).e;
                         if (player.getCreativeMode() != mode) {
                             caller.notify(Colors.Yellow + "Setting " + player.getName() + " to game mode " + mode);
                             player.setCreativeMode(mode);
@@ -1095,7 +1094,6 @@ public class PlayerCommands extends CommandHandler {
                         Player player = ((Player) caller);
                         int mode = Integer.parseInt(args[1]);
 
-                        mode = OEnumGameType.a(mode).e;
                         if (player.getCreativeMode() != mode) {
                             player.notify(Colors.Yellow + "Setting your game mode to " + mode);
                             player.setCreativeMode(mode);
@@ -1213,9 +1211,7 @@ public class PlayerCommands extends CommandHandler {
             if (t == null) {
                 loc = p.getLocation();
             } else {
-                loc = new Location(t.getX() + .5D, t.getY() + 1.5D, t.getZ() + .5D);
-                loc.dimension = p.getWorld().getType().getId();
-                loc.world = p.getWorld().getName();
+                loc = new Location(t.getWorld(), t.getX() + .5D, t.getY() + 1.5D, t.getZ() + .5D);
             }
 
             if (args.length == 2) {
@@ -1268,6 +1264,7 @@ public class PlayerCommands extends CommandHandler {
                 // Ugly hack, but it works;
                 // Monsters start at 50, Animals are in the range 90-99
                 for (int i = 50; i < 100; i++) {
+                    // SRG Class mobClass = OEntityList.func_90035_a(i);
                     Class mobClass = OEntityList.a(i);
                     if (OIMob.class.isAssignableFrom(mobClass) || OIAnimals.class.isAssignableFrom(mobClass)) {
                         mobNames.add(OEntityList.b(i));
@@ -1369,7 +1366,7 @@ public class PlayerCommands extends CommandHandler {
             Player player = (Player) caller;
 
             if (args.length == 3) {
-                if (!args[1].toLowerCase().matches("(?i)add|remove")) {
+                if (!args[1].matches("(?i)add|remove")) {
                     Player p = etc.getServer().matchPlayer(args[2]);
 
                     if (p == null) {
@@ -1427,11 +1424,11 @@ public class PlayerCommands extends CommandHandler {
                 player.sendMessage("User: " + Colors.Yellow + player.getName() + Colors.White);
                 player.sendMessage("Lvl: " + Colors.Yellow + player.getLevel() + Colors.White);
                 player.sendMessage(String.format("Exp:%s %.0f %s/%s %d %s(%s%.2f%%%s)", // Exp: xx / yy (zz.zz%)
-                        Colors.Yellow, ent.bJ * ent.bC(), Colors.White,
-                        Colors.Yellow, ent.bC(), Colors.White,
-                        Colors.Yellow, ent.bJ * 100, Colors.White));
+                        Colors.Yellow, player.getXPBarProgress() * player.getXPBarMax(), Colors.White,
+                        Colors.Yellow, player.getXPBarMax(), Colors.White,
+                        Colors.Yellow, player.getXPBarProgress() * 100, Colors.White));
 
-                if(player.isAdmin()) {
+                if (player.isAdmin()) {
                     player.sendMessage(Colors.Yellow + (etc.getInstance().isOldExperience() ? "Pre-":"Post ") + "1.3.2 Experience System" + Colors.White);
                 }
             }

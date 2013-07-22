@@ -4,41 +4,16 @@
  * @author gregthegeek
  *
  */
-public class CommandBlock implements ComplexBlock, MessageReceiver {
-    private final OTileEntityCommandBlock base;
+public class CommandBlock extends ComplexBlockBase<OTileEntityCommandBlock> implements MessageReceiver {
 
     public CommandBlock(OTileEntityCommandBlock base) {
-        this.base = base;
-    }
-
-    @Override
-    public int getX() {
-        return base.l;
-    }
-
-    @Override
-    public int getY() {
-        return base.m;
-    }
-
-    @Override
-    public int getZ() {
-        return base.n;
+        super(base);
     }
 
     @Override
     public void update() {
-        base.e();
-    }
-
-    @Override
-    public Block getBlock() {
-        return getWorld().getBlockAt(getX(), getY(), getZ());
-    }
-
-    @Override
-    public World getWorld() {
-        return base.k.world;
+        // SRG tileEntity.func_70296_d();
+        tileEntity.e();
     }
 
     /**
@@ -47,7 +22,8 @@ public class CommandBlock implements ComplexBlock, MessageReceiver {
      * @param command the command to execute when this block is activated
      */
     public void setCommand(String command) {
-        base.a(command);
+        // SRG tileEntity.func_82352_b(command);
+        tileEntity.a(command);
     }
 
     /**
@@ -56,24 +32,26 @@ public class CommandBlock implements ComplexBlock, MessageReceiver {
      * @return
      */
     public String getCommand() {
-        return base.getCommand();
+        return tileEntity.getCommand();
     }
 
     /**
      * Run this command block's command
      */
     public void runCommand() {
-        base.a(getWorld().getWorld());
+        // SRG tileEntity.func_82351_a(getWorld().getWorld());
+        tileEntity.a(getWorld().getWorld());
     }
 
     /**
-     * Sets the text that appears before a command block's command in chat
+     * Sets the text that appears before a command block's command in chat.
      * Default is '@'
      *
      * @param prefix
      */
     public void setPrefix(String prefix) {
-        base.b(prefix);
+        // SRG tileEntity.func_96104_c(prefix);
+        tileEntity.b(prefix);
     }
 
     /**
@@ -83,31 +61,18 @@ public class CommandBlock implements ComplexBlock, MessageReceiver {
      * @return
      */
     public String getPrefix() {
-        return base.c_();
-    }
-
-    @Override
-    public NBTTagCompound getMetaTag() {
-        return base.metadata;
-    }
-
-    @Override
-    public void writeToTag(NBTTagCompound tag) {
-        base.b(tag.getBaseTag());
-    }
-
-    @Override
-    public void readFromTag(NBTTagCompound tag) {
-        base.a(tag.getBaseTag());
+        // SRG return tileEntity.func_70005_c_();
+        return tileEntity.c_();
     }
 
     @Override
     public String getName() {
-        return base.c_();
+        return getPrefix();
     }
 
     @Override
     public void notify(String message) {
-        base.a(OChatMessageComponent.d(message));
+        // SRG tileEntity.func_70006_a(OChatMessageComponent.func_111066_d(message));
+        tileEntity.a(OChatMessageComponent.d(message));
     }
 }

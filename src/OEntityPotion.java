@@ -85,7 +85,7 @@ public class OEntityPotion extends OEntityThrowable {
                                     int j = (int) (d1 * (double) opotioneffect.b() + 0.5D);
 
                                     if (j > 20) {
-                                        oentitylivingbase.d(new OPotionEffect(i, j, opotioneffect.c()));
+                                        oentitylivingbase.c(new OPotionEffect(i, j, opotioneffect.c()));
                                     }
                                 }
                             }

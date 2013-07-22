@@ -44,6 +44,7 @@ public class NBTTagShort extends NBTBase {
      * @return
      */
     public short getValue() {
+        // SRG return this.getBaseTag().field_74752_a;
         return this.getBaseTag().a;
     }
 
@@ -53,6 +54,7 @@ public class NBTTagShort extends NBTBase {
      * @param value the new value
      */
     public void setValue(short value) {
+        // SRG this.getBaseTag().field_74752_a = value;
         this.getBaseTag().a = value;
     }
 

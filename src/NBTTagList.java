@@ -43,6 +43,7 @@ public class NBTTagList extends NBTBase {
      * @return
      */
     public int size() {
+        // SRG return this.getBaseTag().func_74745_c();
         return this.getBaseTag().c();
     }
 
@@ -52,6 +53,7 @@ public class NBTTagList extends NBTBase {
      * @param tag
      */
     public void add(NBTBase tag) {
+        // SRG this.getBaseTag().func_74742_a(tag.getBaseTag());
         this.getBaseTag().a(tag.getBaseTag());
     }
 
@@ -62,6 +64,7 @@ public class NBTTagList extends NBTBase {
      * @return
      */
     public NBTBase get(int index) {
+        // SRG return NBTBase.wrap(getBaseTag().func_74743_b(index));
         return NBTBase.wrap(getBaseTag().b(index));
     }
 
@@ -89,6 +92,7 @@ public class NBTTagList extends NBTBase {
      * @param index The index of the tag to remove.
      */
     public void remove(int index) {
+        // SRG getBaseTag().field_74747_a.remove(index);
         getBaseTag().a.remove(index);
     }
 }

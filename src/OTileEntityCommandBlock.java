@@ -65,7 +65,7 @@ public class OTileEntityCommandBlock extends OTileEntity implements OICommandSen
     }
 
     public OWorld f_() {
-        return this.ay();
+        return this.az();
     }
 
     public OPacket m() {

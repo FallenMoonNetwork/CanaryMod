@@ -1,21 +1,19 @@
 
 
 /**
- * Sign.java - Interface to signs
+ * Sign.java - Interface to tileEntitys
  *
  * @author James
  */
-public class Sign implements ComplexBlock {
-
-    private OTileEntitySign sign;
+public class Sign extends ComplexBlockBase<OTileEntitySign> {
 
     /**
-     * Creates a sign interface
+     * Creates a tileEntity interface
      *
      * @param localSign
      */
     public Sign(OTileEntitySign localSign) {
-        sign = localSign;
+        super(localSign);
     }
 
     /**
@@ -27,8 +25,10 @@ public class Sign implements ComplexBlock {
      *            text
      */
     public void setText(int index, String text) {
-        if (index >= 0 && sign.a.length > index) {
-            sign.a[index] = text;
+        // SRG if (index >= 0 && tileEntity.field_70412_a.length > index) {
+        if (index >= 0 && tileEntity.a.length > index) {
+            // SRG tileEntity.field_70412_a[index] = text;
+            tileEntity.a[index] = text;
         }
     }
 
@@ -40,39 +40,17 @@ public class Sign implements ComplexBlock {
      * @return text
      */
     public String getText(int index) {
-        if (index >= 0 && sign.a.length > index) {
-            return sign.a[index];
+        // SRG if (index >= 0 && tileEntity.field_70412_a.length > index) {
+        if (index >= 0 && tileEntity.a.length > index) {
+            // SRG return tileEntity.field_70412_a[index];
+            return tileEntity.a[index];
         }
         return "";
     }
 
     @Override
-    public int getX() {
-        return sign.l;
-    }
-
-    @Override
-    public int getY() {
-        return sign.m;
-    }
-
-    @Override
-    public int getZ() {
-        return sign.n;
-    }
-
-    @Override
-    public Block getBlock() {
-        return getWorld().getBlockAt(getX(), getY(), getZ());
-    }
-
-    @Override
-    public World getWorld() {
-        return this.sign.k.world;
-    }
-
-    @Override
     public void update() {
+        // SRG getWorld().getWorld().func_72845_h(getX(), getY(), getZ());
         getWorld().getWorld().j(getX(), getY(), getZ());
     }
 
@@ -112,6 +90,9 @@ public class Sign implements ComplexBlock {
         if (getZ() != other.getZ()) {
             return false;
         }
+        if (!getWorld().equals(other.getWorld())) {
+            return false;
+        }
         return true;
     }
 
@@ -127,21 +108,7 @@ public class Sign implements ComplexBlock {
         hash = 97 * hash + getX();
         hash = 97 * hash + getY();
         hash = 97 * hash + getZ();
+        hash = 97 * hash + getWorld().hashCode();
         return hash;
-    }
-
-    @Override
-    public NBTTagCompound getMetaTag() {
-        return sign.metadata;
-    }
-
-    @Override
-    public void writeToTag(NBTTagCompound tag) {
-        sign.b(tag.getBaseTag());
-    }
-
-    @Override
-    public void readFromTag(NBTTagCompound tag) {
-        sign.a(tag.getBaseTag());
     }
 }

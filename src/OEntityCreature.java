@@ -10,18 +10,18 @@ public abstract class OEntityCreature extends OEntityLiving {
     protected int bo;
     private OChunkCoordinates bq = new OChunkCoordinates(0, 0, 0);
     private float br = -1.0F;
-    private OEntityAIBase bs = new OEntityAIMoveTwardsRestriction(this, 1.0D);
+    private OEntityAIBase bs = new OEntityAIMoveTowardsRestriction(this, 1.0D);
     private boolean bt;
 
     public OEntityCreature(OWorld oworld) {
         super(oworld);
     }
 
-    protected boolean bF() {
+    protected boolean bJ() {
         return false;
     }
 
-    protected void bh() {
+    protected void bk() {
         this.q.C.a("ai");
         if (this.bo > 0 && --this.bo == 0) {
             OAttributeInstance oattributeinstance = this.a(OSharedMonsterAttributes.d);
@@ -29,18 +29,18 @@ public abstract class OEntityCreature extends OEntityLiving {
             oattributeinstance.b(i);
         }
 
-        this.bn = this.bF();
+        this.bn = this.bJ();
         float f11 = 16.0F;
 
         if (this.j == null) {
-            OEntity target = this.bH(); // CanaryMod: invoke once
+            OEntity target = this.bL(); // CanaryMod: invoke once
             if (target == null || !(Boolean) manager.callHook(PluginLoader.Hook.MOB_TARGET, target.getEntity(), this.getEntity())) { // CanaryMod: call hook
                 this.j = target;
             } //
             if (this.j != null) {
                 this.bp = this.q.a(this, this.j, f11, true, false, false, true);
             }
-        } else if (this.j.R()) {
+        } else if (this.j.S()) {
             float f1 = this.j.d((OEntity) this);
 
             if (this.o(this.j)) {
@@ -54,7 +54,7 @@ public abstract class OEntityCreature extends OEntityLiving {
         if (!this.bn && this.j != null && (this.bp == null || this.ab.nextInt(20) == 0)) {
             this.bp = this.q.a(this, this.j, f11, true, false, false, true);
         } else if (!this.bn && (this.bp == null && this.ab.nextInt(180) == 0 || this.ab.nextInt(120) == 0 || this.bo > 0) && this.aV < 100) {
-            this.bG();
+            this.bK();
         }
 
         int i = OMathHelper.c(this.E.b + 0.5D);
@@ -115,7 +115,7 @@ public abstract class OEntityCreature extends OEntityLiving {
                 this.a(this.j, 30.0F, 30.0F);
             }
 
-            if (this.G && !this.bI()) {
+            if (this.G && !this.bM()) {
                 this.bd = true;
             }
 
@@ -125,12 +125,12 @@ public abstract class OEntityCreature extends OEntityLiving {
 
             this.q.C.b();
         } else {
-            super.bh();
+            super.bk();
             this.bp = null;
         }
     }
 
-    protected void bG() {
+    protected void bK() {
         this.q.C.a("stroll");
         boolean flag = false;
         int i = -1;
@@ -166,19 +166,19 @@ public abstract class OEntityCreature extends OEntityLiving {
         return 0.0F;
     }
 
-    protected OEntity bH() {
+    protected OEntity bL() {
         return null;
     }
 
-    public boolean bo() {
+    public boolean bs() {
         int i = OMathHelper.c(this.u);
         int j = OMathHelper.c(this.E.b);
         int k = OMathHelper.c(this.w);
 
-        return super.bo() && this.a(i, j, k) >= 0.0F;
+        return super.bs() && this.a(i, j, k) >= 0.0F;
     }
 
-    public boolean bI() {
+    public boolean bM() {
         return this.bp != null;
     }
 
@@ -186,7 +186,7 @@ public abstract class OEntityCreature extends OEntityLiving {
         this.bp = opathentity;
     }
 
-    public OEntity bJ() {
+    public OEntity bN() {
         return this.j;
     }
 
@@ -194,7 +194,7 @@ public abstract class OEntityCreature extends OEntityLiving {
         this.j = oentity;
     }
 
-    public boolean bK() {
+    public boolean bO() {
         return this.b(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w));
     }
 
@@ -207,33 +207,33 @@ public abstract class OEntityCreature extends OEntityLiving {
         this.br = (float) l;
     }
 
-    public OChunkCoordinates bL() {
+    public OChunkCoordinates bP() {
         return this.bq;
     }
 
-    public float bM() {
+    public float bQ() {
         return this.br;
     }
 
-    public void bN() {
+    public void bR() {
         this.br = -1.0F;
     }
 
-    public boolean bO() {
+    public boolean bS() {
         return this.br != -1.0F;
     }
 
-    protected void bB() {
-        super.bB();
-        if (this.bD() && this.bE() != null && this.bE().q == this.q) {
-            OEntity oentity = this.bE();
+    protected void bF() {
+        super.bF();
+        if (this.bH() && this.bI() != null && this.bI().q == this.q) {
+            OEntity oentity = this.bI();
 
             this.b((int) oentity.u, (int) oentity.v, (int) oentity.w, 5);
             float f = this.d(oentity);
 
-            if (this instanceof OEntityTameable && ((OEntityTameable) this).bQ()) {
+            if (this instanceof OEntityTameable && ((OEntityTameable) this).bU()) {
                 if (f > 10.0F) {
-                    this.i(true);
+                    this.a(true, true);
                 }
 
                 return;
@@ -245,6 +245,7 @@ public abstract class OEntityCreature extends OEntityLiving {
                 this.bt = true;
             }
 
+            this.o(f);
             if (f > 4.0F) {
                 this.k().a(oentity, 1.0D);
             }
@@ -260,13 +261,15 @@ public abstract class OEntityCreature extends OEntityLiving {
             }
 
             if (f > 10.0F) {
-                this.i(true);
+                this.a(true, true);
             }
-        } else if (!this.bD() && this.bt) {
+        } else if (!this.bH() && this.bt) {
             this.bt = false;
             this.c.a(this.bs);
             this.k().a(true);
-            this.bN();
+            this.bR();
         }
     }
+
+    protected void o(float f) {}
 }

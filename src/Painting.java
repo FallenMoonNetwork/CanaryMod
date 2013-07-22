@@ -137,6 +137,7 @@ public class Painting extends HangingEntity {
          * @return
          */
         public int getWidth() {
+            // SRG return this.base.field_75703_B;
             return this.base.C;
         }
 
@@ -146,12 +147,13 @@ public class Painting extends HangingEntity {
          * @return
          */
         public int getHeight() {
+            // SRG return this.base.field_75704_C;
             return this.base.D;
         }
 
         @SuppressWarnings("MapReplaceableByEnumMap") // Doesn't work on the .class
         private static void add(OEnumArt base, Type type) {
-            if(map == null) {
+            if (map == null) {
                 map = new HashMap<OEnumArt, Type>();
             }
             map.put(base, type);
@@ -221,6 +223,7 @@ public class Painting extends HangingEntity {
      * @return
      */
     public Type getType() {
+        // SRG return Type.fromBase(getEntity().field_70522_e);
         return Type.fromBase(getEntity().e);
     }
 
@@ -230,6 +233,7 @@ public class Painting extends HangingEntity {
      * @param type
      */
     public void setType(Type type) {
+        // SRG getEntity().field_70522_e = type.getBase();
         getEntity().e = type.getBase();
     }
 
@@ -239,6 +243,7 @@ public class Painting extends HangingEntity {
      * @return
      */
     public int getWidth() {
+        // SRG return getEntity().func_82329_d();
         return getEntity().d();
     }
 
@@ -248,6 +253,7 @@ public class Painting extends HangingEntity {
      * @return
      */
     public int getHeight() {
+        // SRG return getEntity().func_82330_g();
         return getEntity().e();
     }
 }

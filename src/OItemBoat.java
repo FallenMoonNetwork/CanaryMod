@@ -40,7 +40,7 @@ public class OItemBoat extends OItem {
                 OEntity oentity = (OEntity) list.get(i);
 
                 if (oentity.K()) {
-                    float f10 = oentity.X();
+                    float f10 = oentity.Y();
                     OAxisAlignedBB oaxisalignedbb = oentity.E.b((double) f10, (double) f10, (double) f10);
 
                     if (oaxisalignedbb.a(ovec3)) {

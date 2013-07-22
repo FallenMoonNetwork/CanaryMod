@@ -122,7 +122,7 @@ public class OEntityItem extends OEntity {
     public boolean a(OEntityItem oentityitem) {
         if (oentityitem == this) {
             return false;
-        } else if (oentityitem.R() && this.R()) {
+        } else if (oentityitem.S() && this.S()) {
             OItemStack oitemstack = this.d();
             OItemStack oitemstack1 = oentityitem.d();
 
@@ -164,7 +164,7 @@ public class OEntityItem extends OEntity {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.ap()) {
+        if (this.aq()) {
             return false;
         } else if (this.d() != null && this.d().d == OItem.bU.cv && odamagesource.c()) {
             return false;
@@ -232,11 +232,11 @@ public class OEntityItem extends OEntity {
         }
     }
 
-    public String al() {
+    public String am() {
         return OStatCollector.a("item." + this.d().a());
     }
 
-    public boolean ao() {
+    public boolean ap() {
         return false;
     }
 

@@ -14,12 +14,12 @@ public class OEntityCow extends OEntityAnimal {
         this.c.a(7, new OEntityAILookIdle(this));
     }
 
-    public boolean bb() {
+    public boolean be() {
         return true;
     }
 
-    protected void ax() {
-        super.ax();
+    protected void ay() {
+        super.ay();
         this.a(OSharedMonsterAttributes.a).a(10.0D);
         this.a(OSharedMonsterAttributes.d).a(0.20000000298023224D);
     }
@@ -28,11 +28,11 @@ public class OEntityCow extends OEntityAnimal {
         return "mob.cow.say";
     }
 
-    protected String aK() {
+    protected String aN() {
         return "mob.cow.hurt";
     }
 
-    protected String aL() {
+    protected String aO() {
         return "mob.cow.hurt";
     }
 
@@ -40,7 +40,7 @@ public class OEntityCow extends OEntityAnimal {
         this.a("mob.cow.step", 0.15F, 1.0F);
     }
 
-    protected float aW() {
+    protected float aZ() {
         return 0.4F;
     }
 
@@ -60,7 +60,7 @@ public class OEntityCow extends OEntityAnimal {
         j = this.ab.nextInt(3) + 1 + this.ab.nextInt(1 + i);
 
         for (k = 0; k < j; ++k) {
-            if (this.ad()) {
+            if (this.ae()) {
                 this.b(OItem.bl.cv, 1);
             } else {
                 this.b(OItem.bk.cv, 1);

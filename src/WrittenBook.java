@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class WrittenBook {
 
-    OItemStack book;
+    Item book;
     NBTTagCompound nbtTag;
 
     /**
@@ -18,8 +18,12 @@ public class WrittenBook {
      * like a book, although this does not occur "naturally".
      * @param item An instance of a book and quill or a written book.
      */
-    public WrittenBook(Item item) {
-        this(item.getBaseItem());
+    public WrittenBook(Item book) {
+        this.book = book;
+        if (!book.hasDataTag()) {
+            book.setDataTag(new NBTTagCompound());
+        }
+        this.nbtTag = book.getDataTag();
     }
 
     /**
@@ -27,11 +31,7 @@ public class WrittenBook {
      * @param book The book's OItemStack
      */
     public WrittenBook(OItemStack book) {
-        this.book = book;
-        if (book.e == null) {
-            book.d(new ONBTTagCompound());
-        }
-        this.nbtTag = new NBTTagCompound(book.e);
+        this(new Item(book));
     }
 
     /**
@@ -104,7 +104,7 @@ public class WrittenBook {
      * @return <tt>true</tt> when this is really a book, <tt>false</tt> otherwise.
      */
     public boolean isValid() {
-        if (book.c == 386 || book.c == 387) {
+        if (book.getType() == Item.Type.BookAndQuill || book.getType() == Item.Type.WrittenBook) {
             return true;
         }
         return false;
@@ -117,5 +117,14 @@ public class WrittenBook {
             return getTitle().equals(other.getTitle()) && getAuthor().equals(other.getAuthor()) && getPages().equals(other.getPages());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + (this.getTitle() != null ? this.getTitle().hashCode() : 0);
+        hash = 37 * hash + (this.getAuthor() != null ? this.getAuthor().hashCode() : 0);
+        hash = 37 * hash + (this.getPages() != null ? this.getPages().hashCode() : 0);
+        return hash;
     }
 }

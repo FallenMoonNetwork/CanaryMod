@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,7 +25,8 @@ public class LivingEntityBase extends BaseEntity {
      * @return This entity's health.
      */
     public float getHealthFloat() {
-        return getEntity().aJ();
+        // SRG return getEntity().func_110143_aJ();
+        return getEntity().aM();
     }
 
     /**
@@ -35,6 +35,7 @@ public class LivingEntityBase extends BaseEntity {
      * @param health The entity's new health.
      */
     public void setHealth(float health) {
+        // SRG getEntity().func_70606_j(health);
         getEntity().g(health);
     }
 
@@ -45,6 +46,7 @@ public class LivingEntityBase extends BaseEntity {
      *            amount of health to increase the players health with.
      */
     public void increaseHealth(float health) {
+        // SRG getEntity().func_70691_i(health);
         getEntity().f(health);
     }
 
@@ -53,7 +55,8 @@ public class LivingEntityBase extends BaseEntity {
      * @return max health
      */
     public double getMaxHealthDouble() {
-        return getEntity().aP();
+        // SRG return getEntity().func_110138_aP();
+        return getEntity().aS();
     }
 
     /**
@@ -62,6 +65,7 @@ public class LivingEntityBase extends BaseEntity {
      */
     public void setMaxHealth(double maxHealth) {
         if (maxHealth > 0) {
+            // SRG getEntity().func_110148_a(OSharedMonsterAttributes.field_111267_a).func_111128_a(maxHealth);
             getEntity().a(OSharedMonsterAttributes.a).a(maxHealth);
         }
     }
@@ -73,6 +77,7 @@ public class LivingEntityBase extends BaseEntity {
      * @param ticks
      */
     public void setBaseNoDamageTicks(int ticks) {
+        // SRG getEntity().field_70771_an = ticks;
         getEntity().aI = ticks;
     }
 
@@ -82,6 +87,7 @@ public class LivingEntityBase extends BaseEntity {
      * @return
      */
     public float getLastDamageFloat() {
+        // SRG return getEntity().field_110153_bc;
         return getEntity().bc;
     }
 
@@ -92,6 +98,7 @@ public class LivingEntityBase extends BaseEntity {
      * @param amount
      */
     public void setLastDamage(float amount) {
+        // SRG getEntity().field_110153_bc = amount;
         getEntity().bc = amount;
     }
 
@@ -101,7 +108,8 @@ public class LivingEntityBase extends BaseEntity {
      * @param effect the effect to add.
      */
     public void addPotionEffect(PotionEffect effect) {
-        getEntity().d(effect.potionEffect);
+        // SRG getEntity().func_70690_d(effect.potionEffect);
+        getEntity().c(effect.potionEffect);
     }
 
     /**
@@ -110,6 +118,7 @@ public class LivingEntityBase extends BaseEntity {
      * @param effect The potion effect to remove
      */
     public void removePotionEffect(PotionEffect effect) {
+        // SRG getEntity().func_82170_o(effect.getType().getId());
         getEntity().k(effect.getType().getId());
     }
 
@@ -119,6 +128,7 @@ public class LivingEntityBase extends BaseEntity {
      * @return whether this entity has a potion effect of the specified type
      */
     public boolean hasPotionEffect(PotionEffect.Type effectType) {
+        // SRG return getEntity().func_82165_m(effectType.getId());
         return getEntity().i(effectType.getId());
     }
 
@@ -129,7 +139,8 @@ public class LivingEntityBase extends BaseEntity {
      */
     @SuppressWarnings("unchecked")
     public List<PotionEffect> getPotionEffects() {
-        Collection<OPotionEffect> potionEffects = getEntity().aH();
+        // SRG Collection<OPotionEffect> potionEffects = getEntity().func_70651_bq();
+        Collection<OPotionEffect> potionEffects = getEntity().aK();
         ArrayList<PotionEffect> list = new ArrayList<PotionEffect>();
 
         for (OPotionEffect potionEffect : potionEffects) {
@@ -144,6 +155,7 @@ public class LivingEntityBase extends BaseEntity {
      * @param amount
      */
     public void applyDamage(DamageType type, float amount) {
+        // SRG getEntity().func_70665_d(type.getDamageSource().getDamageSource(), amount);
         getEntity().d(type.getDamageSource().getDamageSource(), amount);
     }
 }

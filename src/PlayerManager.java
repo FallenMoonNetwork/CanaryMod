@@ -16,6 +16,7 @@ public class PlayerManager {
      * @param player
      */
     public void updateMountedMovingPlayer(OEntityPlayerMP player) {
+        // SRG pm.func_72685_d(player);
         pm.d(player);
     }
 
@@ -32,6 +33,7 @@ public class PlayerManager {
      * @param player
      */
     public void addPlayer(OEntityPlayerMP player) {
+        // SRG pm.func_72683_a(player);
         pm.a(player);
     }
 
@@ -40,10 +42,12 @@ public class PlayerManager {
      * @param player
      */
     public void removePlayer(OEntityPlayerMP player) {
+        // SRG pm.func_72695_c(player);
         pm.c(player);
     }
 
     public void markBlockNeedsUpdate(int x, int y, int z) {
+        // SRG pm.func_72687_a(x, y, z);
         pm.a(x, y, z);
     }
 }

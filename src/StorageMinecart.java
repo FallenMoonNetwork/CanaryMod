@@ -31,16 +31,19 @@ public class StorageMinecart implements Inventory {
 
                 @Override
                 public void update() {
-                    this.container.k_();
+                    // SRG this.container.func_70071_h_();
+                    this.container.l_();
                 }
 
                 @Override
                 public void setName(String name) {
+                    // SRG this.container.func_96094_a(name);
                     this.container.a(name);
                 }
 
                 @Override
                 public String getName() {
+                    // SRG return this.container.func_70303_b();
                     return this.container.b();
                 }
             };
@@ -70,6 +73,7 @@ public class StorageMinecart implements Inventory {
      * @return int
      */
     public int getFuel() {
+        // SRG return this.ia == null ? ((OEntityMinecartFurnace) container).field_94110_c : 0;
         return this.ia == null ? ((OEntityMinecartFurnace) container).c : 0;
     }
 
@@ -81,6 +85,7 @@ public class StorageMinecart implements Inventory {
      */
     public void setFuel(int fuel) {
         if (this.ia == null) {
+            // SRG ((OEntityMinecartFurnace) container).field_94110_c = fuel;
             ((OEntityMinecartFurnace) container).c = fuel;
         }
     }

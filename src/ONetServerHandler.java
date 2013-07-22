@@ -37,7 +37,7 @@ public class ONetServerHandler extends ONetHandler {
         oentityplayermp.a = this;
     }
 
-    public void d() {
+    public void e() {
         this.g = false;
         ++this.e;
         this.d.a.a("packetflow");
@@ -70,7 +70,7 @@ public class ONetServerHandler extends ONetHandler {
             this.b(new OPacket255KickDisconnect(s));
             this.a.d();
             // CanaryMod - onPlayerDisconnect Hook
-            HookParametersDisconnect hookResult = new HookParametersDisconnect(OChatMessageComponent.b("multiplayer.player.left", new Object[] { this.c.aw()}).a(OEnumChatFormatting.o).i(), s);
+            HookParametersDisconnect hookResult = new HookParametersDisconnect(OChatMessageComponent.b("multiplayer.player.left", new Object[] { this.c.ax()}).a(OEnumChatFormatting.o).i(), s);
 
             hookResult = (HookParametersDisconnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_DISCONNECT, this.c.getPlayer(), hookResult);
             if (!hookResult.isHidden()) {
@@ -115,47 +115,26 @@ public class ONetServerHandler extends ONetHandler {
                 double d1;
                 double d2;
                 double d3;
-                double d4;
 
                 if (this.c.o != null) {
                     float f = this.c.A;
                     float f1 = this.c.B;
 
-                    this.c.o.U();
+                    this.c.o.V();
                     d1 = this.c.u;
                     d2 = this.c.v;
                     d3 = this.c.w;
-                    double d5 = 0.0D;
-
-                    d4 = 0.0D;
                     if (opacket10flying.i) {
                         f = opacket10flying.e;
                         f1 = opacket10flying.f;
                     }
 
-                    if (opacket10flying.h && opacket10flying.b == -999.0D && opacket10flying.d == -999.0D) {
-                        if (Math.abs(opacket10flying.a) > 1.0D || Math.abs(opacket10flying.c) > 1.0D) {
-                            System.err.println(this.c.c_() + " was caught trying to crash the server with an invalid position.");
-                            this.c("Nope!");
-                            return;
-                        }
-
-                        d5 = opacket10flying.a;
-                        d4 = opacket10flying.c;
-                    }
-
                     this.c.F = opacket10flying.g;
                     this.c.h();
-                    this.c.d(d5, 0.0D, d4);
+                    this.c.X = 0.0F;
                     this.c.a(d1, d2, d3, f, f1);
-                    this.c.x = d5;
-                    this.c.z = d4;
                     if (this.c.o != null) {
-                        oworldserver.b(this.c.o, true);
-                    }
-
-                    if (this.c.o != null) {
-                        this.c.o.U();
+                        this.c.o.V();
                     }
 
                     this.d.af().d(this.c);
@@ -169,7 +148,7 @@ public class ONetServerHandler extends ONetHandler {
                     return;
                 }
 
-                if (this.c.bd()) {
+                if (this.c.bg()) {
                     this.c.h();
                     this.c.a(this.n, this.o, this.p, this.c.A, this.c.B);
                     oworldserver.g(this.c);
@@ -190,12 +169,14 @@ public class ONetServerHandler extends ONetHandler {
                     opacket10flying.h = false;
                 }
 
+                double d4;
+
                 if (opacket10flying.h) {
                     d1 = opacket10flying.a;
                     d2 = opacket10flying.b;
                     d3 = opacket10flying.c;
                     d4 = opacket10flying.d - opacket10flying.b;
-                    if (!this.c.bd() && (d4 > 1.65D || d4 < 0.1D)) {
+                    if (!this.c.bg() && (d4 > 1.65D || d4 < 0.1D)) {
                         this.c("Illegal stance");
                         this.d.an().b(this.c.c_() + " had an illegal stance: " + d4);
                         return;
@@ -220,15 +201,15 @@ public class ONetServerHandler extends ONetHandler {
                 }
 
                 d4 = d1 - this.c.u;
-                double d6 = d2 - this.c.v;
-                double d7 = d3 - this.c.w;
-                double d8 = Math.min(Math.abs(d4), Math.abs(this.c.x));
-                double d9 = Math.min(Math.abs(d6), Math.abs(this.c.y));
-                double d10 = Math.min(Math.abs(d7), Math.abs(this.c.z));
-                double d11 = d8 * d8 + d9 * d9 + d10 * d10;
+                double d5 = d2 - this.c.v;
+                double d6 = d3 - this.c.w;
+                double d7 = Math.min(Math.abs(d4), Math.abs(this.c.x));
+                double d8 = Math.min(Math.abs(d5), Math.abs(this.c.y));
+                double d9 = Math.min(Math.abs(d6), Math.abs(this.c.z));
+                double d10 = d7 * d7 + d8 * d8 + d9 * d9;
 
-                if (d11 > 100.0D && (!this.d.K() || !this.d.J().equals(this.c.c_()))) {
-                    this.d.an().b(this.c.c_() + " moved too quickly! " + d4 + "," + d6 + "," + d7 + " (" + d8 + ", " + d9 + ", " + d10 + ")");
+                if (d10 > 100.0D && (!this.d.K() || !this.d.J().equals(this.c.c_()))) {
+                    this.d.an().b(this.c.c_() + " moved too quickly! " + d4 + "," + d5 + "," + d6 + " (" + d7 + ", " + d8 + ", " + d9 + ")");
                     this.a(this.n, this.o, this.p, this.c.A, this.c.B);
                     return;
                 }
@@ -236,26 +217,26 @@ public class ONetServerHandler extends ONetHandler {
                 float f4 = 0.0625F;
                 boolean flag = oworldserver.a(this.c, this.c.E.c().e((double) f4, (double) f4, (double) f4)).isEmpty();
 
-                if (this.c.F && !opacket10flying.g && d6 > 0.0D) {
+                if (this.c.F && !opacket10flying.g && d5 > 0.0D) {
                     this.c.a(0.2F);
                 }
 
-                this.c.d(d4, d6, d7);
+                this.c.d(d4, d5, d6);
                 this.c.F = opacket10flying.g;
-                this.c.j(d4, d6, d7);
-                double d12 = d6;
+                this.c.j(d4, d5, d6);
+                double d11 = d5;
 
                 d4 = d1 - this.c.u;
-                d6 = d2 - this.c.v;
-                if (d6 > -0.5D || d6 < 0.5D) {
-                    d6 = 0.0D;
+                d5 = d2 - this.c.v;
+                if (d5 > -0.5D || d5 < 0.5D) {
+                    d5 = 0.0D;
                 }
 
-                d7 = d3 - this.c.w;
-                d11 = d4 * d4 + d6 * d6 + d7 * d7;
+                d6 = d3 - this.c.w;
+                d10 = d4 * d4 + d5 * d5 + d6 * d6;
                 boolean flag1 = false;
 
-                if (d11 > 0.0625D && !this.c.bd() && !this.c.c.d()) {
+                if (d10 > 0.0625D && !this.c.bg() && !this.c.c.d()) {
                     flag1 = true;
                     this.d.an().b(this.c.c_() + " moved wrongly!");
                 }
@@ -263,7 +244,7 @@ public class ONetServerHandler extends ONetHandler {
                 this.c.a(d1, d2, d3, f2, f3);
                 boolean flag2 = oworldserver.a(this.c, this.c.E.c().e((double) f4, (double) f4, (double) f4)).isEmpty();
 
-                if (flag && (flag1 || !flag2) && !this.c.bd()) {
+                if (flag && (flag1 || !flag2) && !this.c.bg()) {
                     this.a(this.n, this.o, this.p, f2, f3);
                     return;
                 }
@@ -271,7 +252,7 @@ public class ONetServerHandler extends ONetHandler {
                 OAxisAlignedBB oaxisalignedbb = this.c.E.c().b((double) f4, (double) f4, (double) f4).a(0.0D, -0.55D, 0.0D);
 
                 if (!this.d.aa() && !this.c.bG.c && !oworldserver.c(oaxisalignedbb)) { // CanaryMod: check on flying capability instead of mode
-                    if (d12 >= -0.03125D) {
+                    if (d11 >= -0.03125D) {
                         ++this.f;
                         if (this.f > 80) {
                             this.d.an().b(this.c.c_() + " was kicked for floating too long!");
@@ -328,7 +309,7 @@ public class ONetServerHandler extends ONetHandler {
         } else if (opacket14blockdig.e == 3) {
             this.c.a(true);
         } else if (opacket14blockdig.e == 5) {
-            this.c.bo();
+            this.c.bs();
         } else {
             boolean flag = false;
 
@@ -548,7 +529,7 @@ public class ONetServerHandler extends ONetHandler {
         this.d.an().a(this.c.c_() + " lost connection: " + s);
 
         // CanaryMod - onPlayerDisconnect Hook
-        HookParametersDisconnect hookResult = new HookParametersDisconnect(OChatMessageComponent.b("multiplayer.player.left", new Object[] { this.c.aw()}).a(OEnumChatFormatting.o).i(), s);
+        HookParametersDisconnect hookResult = new HookParametersDisconnect(OChatMessageComponent.b("multiplayer.player.left", new Object[] { this.c.ax()}).a(OEnumChatFormatting.o).i(), s);
 
         hookResult = (HookParametersDisconnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_DISCONNECT, this.getPlayer(), hookResult);
         if (!hookResult.isHidden()) {
@@ -628,7 +609,7 @@ public class ONetServerHandler extends ONetHandler {
                         return;
                     }
 
-                    OChatMessageComponent ochatmessagecomponent = OChatMessageComponent.b("chat.type.text", new Object[] { this.c.aw(), s});
+                    OChatMessageComponent ochatmessagecomponent = OChatMessageComponent.b("chat.type.text", new Object[] { this.c.ax(), s});
 
                     this.d.af().a(ochatmessagecomponent, false);
                 }
@@ -654,7 +635,7 @@ public class ONetServerHandler extends ONetHandler {
         if (opacket18animation.b == 1) {
             // CanaryMod: Swing the arm!
             OEntity.manager.callHook(PluginLoader.Hook.ARM_SWING, getPlayer());
-            this.c.aR();
+            this.c.aU();
         }
     }
 
@@ -683,7 +664,7 @@ public class ONetServerHandler extends ONetHandler {
         this.a.a("disconnect.quitting", new Object[0]);
     }
 
-    public int e() {
+    public int f() {
         return this.a.e();
     }
 
@@ -703,6 +684,12 @@ public class ONetServerHandler extends ONetHandler {
                 if (opacket7useentity.c == 0) {
                     this.c.p(oentity);
                 } else if (opacket7useentity.c == 1) {
+                    if (oentity instanceof OEntityItem || oentity instanceof OEntityXPOrb || oentity instanceof OEntityArrow || oentity == this.c) {
+                        this.c("Attempting to attack an invalid entity");
+                        this.d.f("Player " + this.c.c_() + " tried to attack an invalid entity");
+                        return;
+                    }
+
                     this.c.q(oentity);
                 }
             }
@@ -725,7 +712,7 @@ public class ONetServerHandler extends ONetHandler {
                     this.c.a.c("You have died. Game over, man, it\'s game over!");
                 }
             } else {
-                if (this.c.aJ() > 0.0F) {
+                if (this.c.aM() > 0.0F) {
                     return;
                 }
 
@@ -844,7 +831,7 @@ public class ONetServerHandler extends ONetHandler {
             if (otileentity instanceof OTileEntitySign) {
                 OTileEntitySign otileentitysign = (OTileEntitySign) otileentity;
 
-                if (!otileentitysign.a()) {
+                if (!otileentitysign.a() || otileentitysign.b() != this.c) {
                     this.d.f("Player " + this.c.c_() + " just tried to change non-editable sign");
                     return;
                 }
@@ -1053,6 +1040,10 @@ public class ONetServerHandler extends ONetHandler {
                 }
             }
         }
+    }
+
+    public boolean c() {
+        return this.b;
     }
 
     /**

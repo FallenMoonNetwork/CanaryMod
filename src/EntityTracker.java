@@ -24,6 +24,7 @@ public class EntityTracker {
      * @param entity
      */
     public void trackEntity(OEntity entity) {
+        // SRG tracker.func_72786_a(entity);
         tracker.a(entity);
     }
 
@@ -36,18 +37,22 @@ public class EntityTracker {
     }
 
     public void untrackEntity(OEntity entity) {
+        // SRG tracker.func_72790_b(entity);
         tracker.b(entity);
     }
 
     public void untrackPlayerSymmetrics(OEntityPlayerMP player) {
+        // SRG tracker.func_72787_a(player);
         tracker.a(player);
     }
 
     public void updateTrackedEntities() {
+        // SRG tracker.func_72788_a();
         tracker.a();
     }
 
     public void sendPacketToPlayersAndEntity(OEntity entity, OPacket packet) {
+        // SRG tracker.func_72789_b(entity, packet);
         tracker.b(entity, packet);
     }
 

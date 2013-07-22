@@ -31,6 +31,7 @@ public class EnderChestInventory extends ItemArray<OInventoryEnderChest> {
      * @return
      */
     public NBTTagList writeToTag() {
+        // SRG return new NBTTagList(container.func_70487_g());
         return new NBTTagList(container.h());
     }
 
@@ -40,11 +41,13 @@ public class EnderChestInventory extends ItemArray<OInventoryEnderChest> {
      * @param tag the tag to read data from
      */
     public void readFromTag(NBTTagList tag) {
+        // SRG container.func_70486_a(tag.getBaseTag());
         container.a(tag.getBaseTag());
     }
 
     @Override
     public void update() {
+        // SRG owner.getEntity().func_70071_h_();
         owner.getEntity().l_();
     }
 

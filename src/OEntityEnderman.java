@@ -21,8 +21,8 @@ public class OEntityEnderman extends OEntityMob {
         this.Y = 1.0F;
     }
 
-    protected void ax() {
-        super.ax();
+    protected void ay() {
+        super.ay();
         this.a(OSharedMonsterAttributes.a).a(40.0D);
         this.a(OSharedMonsterAttributes.d).a(0.30000001192092896D);
         this.a(OSharedMonsterAttributes.e).a(7.0D);
@@ -37,8 +37,8 @@ public class OEntityEnderman extends OEntityMob {
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("carried", (short) this.bR());
-        onbttagcompound.a("carriedData", (short) this.bS());
+        onbttagcompound.a("carried", (short) this.bV());
+        onbttagcompound.a("carriedData", (short) this.bW());
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
@@ -47,7 +47,7 @@ public class OEntityEnderman extends OEntityMob {
         this.c(onbttagcompound.d("carriedData"));
     }
 
-    protected OEntity bH() {
+    protected OEntity bL() {
         OEntityPlayer oentityplayer = this.q.b(this, 64.0D);
 
         if (oentityplayer != null) {
@@ -109,7 +109,7 @@ public class OEntityEnderman extends OEntityMob {
             int k;
             int l;
 
-            if (this.bR() == 0) {
+            if (this.bV() == 0) {
                 if (this.ab.nextInt(20) == 0) {
                     i = OMathHelper.c(this.u - 2.0D + this.ab.nextDouble() * 4.0D);
                     j = OMathHelper.c(this.v + this.ab.nextDouble() * 3.0D);
@@ -128,8 +128,8 @@ public class OEntityEnderman extends OEntityMob {
                 l = this.q.a(i, j, k);
                 int i1 = this.q.a(i, j - 1, k);
 
-                if (l == 0 && i1 > 0 && OBlock.s[i1].b() && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ENDERMAN_DROP, entity, new Block(entity.getWorld(), this.bR(), i, j, k, this.bS()))) {
-                    this.q.f(i, j, k, this.bR(), this.bS(), 3);
+                if (l == 0 && i1 > 0 && OBlock.s[i1].b() && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ENDERMAN_DROP, entity, new Block(entity.getWorld(), this.bV(), i, j, k, this.bW()))) {
+                    this.q.f(i, j, k, this.bV(), this.bW(), 3);
                     this.a(0);
                 }
             }
@@ -146,18 +146,18 @@ public class OEntityEnderman extends OEntityMob {
                 this.j = null;
                 this.a(false);
                 this.bv = false;
-                this.bP();
+                this.bT();
             }
         }
 
-        if (this.F() || this.ad()) {
+        if (this.F() || this.ae()) {
             this.j = null;
             this.a(false);
             this.bv = false;
-            this.bP();
+            this.bT();
         }
 
-        if (this.bT() && !this.bv && this.ab.nextInt(100) == 0) {
+        if (this.bX() && !this.bv && this.ab.nextInt(100) == 0) {
             this.a(false);
         }
 
@@ -166,11 +166,11 @@ public class OEntityEnderman extends OEntityMob {
             this.a(this.j, 100.0F, 100.0F);
         }
 
-        if (!this.q.I && this.R()) {
+        if (!this.q.I && this.S()) {
             if (this.j != null) {
                 if (this.j instanceof OEntityPlayer && this.f((OEntityPlayer) this.j)) {
                     if (this.j.e((OEntity) this) < 16.0D) {
-                        this.bP();
+                        this.bT();
                     }
 
                     this.bs = 0;
@@ -186,7 +186,7 @@ public class OEntityEnderman extends OEntityMob {
         super.c();
     }
 
-    protected boolean bP() {
+    protected boolean bT() {
         double d0 = this.u + (this.ab.nextDouble() - 0.5D) * 64.0D;
         double d1 = this.v + (double) (this.ab.nextInt(64) - 32);
         double d2 = this.w + (this.ab.nextDouble() - 0.5D) * 64.0D;
@@ -266,14 +266,14 @@ public class OEntityEnderman extends OEntityMob {
     }
 
     protected String r() {
-        return this.bT() ? "mob.endermen.scream" : "mob.endermen.idle";
+        return this.bX() ? "mob.endermen.scream" : "mob.endermen.idle";
     }
 
-    protected String aK() {
+    protected String aN() {
         return "mob.endermen.hit";
     }
 
-    protected String aL() {
+    protected String aO() {
         return "mob.endermen.death";
     }
 
@@ -297,7 +297,7 @@ public class OEntityEnderman extends OEntityMob {
         this.ah.b(16, Byte.valueOf((byte) (i & 255)));
     }
 
-    public int bR() {
+    public int bV() {
         return this.ah.a(16);
     }
 
@@ -305,12 +305,12 @@ public class OEntityEnderman extends OEntityMob {
         this.ah.b(17, Byte.valueOf((byte) (i & 255)));
     }
 
-    public int bS() {
+    public int bW() {
         return this.ah.a(17);
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.ap()) {
+        if (this.aq()) {
             return false;
         } else {
             this.a(true);
@@ -322,7 +322,7 @@ public class OEntityEnderman extends OEntityMob {
                 this.bv = false;
 
                 for (int i = 0; i < 64; ++i) {
-                    if (this.bP()) {
+                    if (this.bT()) {
                         return true;
                     }
                 }
@@ -334,7 +334,7 @@ public class OEntityEnderman extends OEntityMob {
         }
     }
 
-    public boolean bT() {
+    public boolean bX() {
         return this.ah.a(18) > 0;
     }
 

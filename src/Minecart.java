@@ -132,8 +132,27 @@ public class Minecart extends BaseVehicle {
      *
      * @param damage This minecart's new damage value
      */
+    public void setDamage(float damage) {
+        // SRG getEntity().func_70492_c(damage);
+        getEntity().a(damage);
+    }
+
+    @Deprecated
     public void setDamage(int damage) {
-        getEntity().h(damage);
+        this.setDamage((float) damage);
+    }
+
+    /**
+     * Gets the current amount of damage the minecart has taken.
+     * Decreases over time. The cart breaks when this is over 40.
+     *
+     * @return This minecart's current damage value
+     * @deprecated Minecraft now measures damage in floats. Use
+     * {@link #getDamageFloat()} instead.
+     */
+    @Deprecated
+    public int getDamage() {
+        return (int) this.getDamageFloat();
     }
 
     /**
@@ -142,8 +161,9 @@ public class Minecart extends BaseVehicle {
      *
      * @return This minecart's current damage value
      */
-    public int getDamage() {
-        return (int)getEntity().i(); // @ TODO : Why did this change in 1.6.1?
+    public float getDamageFloat() {
+        // SRG return getEntity().func_70491_i();
+        return getEntity().i();
     }
 
     /**
@@ -152,6 +172,7 @@ public class Minecart extends BaseVehicle {
      * @return type
      */
     public Type getType() {
+        // SRG return Type.fromId(getEntity().func_94087_l());
         return Type.fromId(getEntity().l());
     }
 
@@ -163,6 +184,7 @@ public class Minecart extends BaseVehicle {
      * @deprecated The minecart system has had an overhaul. Use an appropriate
      * subclass.
      */
+    @Deprecated
     public StorageMinecart getStorage() {
         if (getType() == Type.StorageCart || getType() == Type.PoweredMinecart) {
             return new StorageMinecart(getEntity());
@@ -181,6 +203,7 @@ public class Minecart extends BaseVehicle {
      * @return A new minecart of the specified type.
      */
     public static Minecart fromType(World world, double x, double y, double z, Type type) {
+        // SRG return OEntityMinecart.func_94090_a(world.getWorld(), x, y, z, type.getType()).getEntity();
         return OEntityMinecart.a(world.getWorld(), x, y, z, type.getType()).getEntity();
     }
 }

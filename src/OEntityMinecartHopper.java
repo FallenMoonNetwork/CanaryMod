@@ -40,12 +40,12 @@ public class OEntityMinecartHopper extends OEntityMinecartContainer implements O
     public void a(int i, int j, int k, boolean flag) {
         boolean flag1 = !flag;
 
-        if (flag1 != this.ax()) {
+        if (flag1 != this.ay()) {
             this.f(flag1);
         }
     }
 
-    public boolean ax() {
+    public boolean ay() {
         return this.a;
     }
 
@@ -53,29 +53,29 @@ public class OEntityMinecartHopper extends OEntityMinecartContainer implements O
         this.a = flag;
     }
 
-    public OWorld ay() {
+    public OWorld az() {
         return this.q;
     }
 
-    public double az() {
+    public double aA() {
         return this.u;
     }
 
-    public double aA() {
+    public double aB() {
         return this.v;
     }
 
-    public double aB() {
+    public double aC() {
         return this.w;
     }
 
     public void l_() {
         super.l_();
-        if (!this.q.I && this.R() && this.ax()) {
+        if (!this.q.I && this.S() && this.ay()) {
             --this.b;
-            if (!this.aD()) {
+            if (!this.aE()) {
                 this.l(0);
-                if (this.aC()) {
+                if (this.aD()) {
                     this.l(4);
                     this.e();
                 }
@@ -83,7 +83,7 @@ public class OEntityMinecartHopper extends OEntityMinecartContainer implements O
         }
     }
 
-    public boolean aC() {
+    public boolean aD() {
         if (OTileEntityHopper.a((OHopper) this)) {
             return true;
         } else {
@@ -116,7 +116,7 @@ public class OEntityMinecartHopper extends OEntityMinecartContainer implements O
         this.b = i;
     }
 
-    public boolean aD() {
+    public boolean aE() {
         return this.b > 0;
     }
 

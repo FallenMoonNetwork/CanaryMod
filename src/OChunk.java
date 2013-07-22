@@ -753,7 +753,7 @@ public class OChunk {
             while (iterator.hasNext()) {
                 OEntity oentity = (OEntity) iterator.next();
 
-                oentity.P();
+                oentity.Q();
             }
 
             this.e.a(this.j[i]);
@@ -801,7 +801,7 @@ public class OChunk {
 
                 if (oentity1 != oentity && oentity1.E.b(oaxisalignedbb) && (oientityselector == null || oientityselector.a(oentity1))) {
                     list.add(oentity1);
-                    OEntity[] aoentity = oentity1.am();
+                    OEntity[] aoentity = oentity1.an();
 
                     if (aoentity != null) {
                         for (int i1 = 0; i1 < aoentity.length; ++i1) {

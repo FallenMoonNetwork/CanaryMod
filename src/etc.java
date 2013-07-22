@@ -1,3 +1,4 @@
+import com.google.common.primitives.Ints;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -913,11 +914,7 @@ public class etc {
      */
     public void setAllowedItems(int[] allowedItems) {
         this.allowedItems.clear();
-        // this.allowedItems.addAll(Arrays.asList(allowedItems)); <-- if only
-        // java was smart >.>
-        for (int item : allowedItems) {
-            this.allowedItems.add(item);
-        }
+        this.allowedItems.addAll(Ints.asList(allowedItems));
     }
 
     /**
@@ -927,11 +924,7 @@ public class etc {
      */
     public void setDisallowedItems(int[] disallowedItems) {
         this.disallowedItems.clear();
-        // this.allowedItems.addAll(Arrays.asList(allowedItems)); <-- if only
-        // java was smart >.>
-        for (int item : disallowedItems) {
-            this.disallowedItems.add(item);
-        }
+        this.disallowedItems.addAll(Ints.asList(disallowedItems));
     }
 
     /**
@@ -968,11 +961,7 @@ public class etc {
      */
     public void setItemSpawnBlacklist(int[] itemSpawnBlacklist) {
         this.itemSpawnBlacklist.clear();
-        // this.allowedItems.addAll(Arrays.asList(allowedItems)); <-- if only
-        // java was smart >.>
-        for (int item : itemSpawnBlacklist) {
-            this.itemSpawnBlacklist.add(item);
-        }
+        this.itemSpawnBlacklist.addAll(Ints.asList(itemSpawnBlacklist));
     }
 
     /**
@@ -1213,6 +1202,7 @@ public class etc {
     }
 
     public List getMonstersClass(OBiomeGenBase biomeGen) {
+        // SRG List<OSpawnListEntry> toRet = biomeGen.field_76761_J;
         List<OSpawnListEntry> toRet = biomeGen.J;
         List<String> allowed = Arrays.asList(getMonsters());
 
@@ -1220,6 +1210,7 @@ public class etc {
         if (!it.hasNext())
             return toRet;
         for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
+            // SRG if (!allowed.contains(OEntityList.getName(en.field_76300_b)))
             if (!allowed.contains(OEntityList.getName(en.b)))
                 it.remove();
         }
@@ -1228,6 +1219,7 @@ public class etc {
     }
 
     public List getAnimalsClass(OBiomeGenBase biomeGen) {
+        // SRG List<OSpawnListEntry> toRet = biomeGen.field_76762_K;
         List<OSpawnListEntry> toRet = biomeGen.K;
         List<String> allowed = Arrays.asList(getAnimals());
 
@@ -1235,21 +1227,7 @@ public class etc {
         if (!it.hasNext())
             return toRet;
         for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
-            if (!allowed.contains(OEntityList.getName(en.b)))
-                it.remove();
-        }
-
-        return toRet;
-    }
-
-    public List getAmbientAnimalsClass(OBiomeGenBase biomeGen) {
-        List<OSpawnListEntry> toRet = biomeGen.M;
-        List<String> allowed = Arrays.asList(getAnimals());
-
-        Iterator<OSpawnListEntry> it = toRet.iterator();
-        if (!it.hasNext())
-            return toRet;
-        for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
+            // SRG if (!allowed.contains(OEntityList.getName(en.field_76300_b)))
             if (!allowed.contains(OEntityList.getName(en.b)))
                 it.remove();
         }
@@ -1258,6 +1236,7 @@ public class etc {
     }
 
     public List getWaterAnimalsClass(OBiomeGenBase biomeGen) {
+        // SRG List<OSpawnListEntry> toRet = biomeGen.field_76755_L;
         List<OSpawnListEntry> toRet = biomeGen.L;
         List<String> allowed = Arrays.asList(getWaterAnimals());
 
@@ -1265,6 +1244,24 @@ public class etc {
         if (!it.hasNext())
             return toRet;
         for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
+            // SRG if (!allowed.contains(OEntityList.getName(en.field_76300_b)))
+            if (!allowed.contains(OEntityList.getName(en.b)))
+                it.remove();
+        }
+
+        return toRet;
+    }
+
+    public List getAmbientAnimalsClass(OBiomeGenBase biomeGen) {
+        // SRG List<OSpawnListEntry> toRet = biomeGen.field_82914_M;
+        List<OSpawnListEntry> toRet = biomeGen.M;
+        List<String> allowed = Arrays.asList(getAnimals());
+
+        Iterator<OSpawnListEntry> it = toRet.iterator();
+        if (!it.hasNext())
+            return toRet;
+        for (OSpawnListEntry en = it.next(); it.hasNext(); en = it.next()) {
+            // SRG if (!allowed.contains(OEntityList.getName(en.field_76300_b)))
             if (!allowed.contains(OEntityList.getName(en.b)))
                 it.remove();
         }

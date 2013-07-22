@@ -21,7 +21,8 @@ public class Wolf extends TamableEntity {
      * @return Boolean of if this wolf is angry.
      */
     public boolean isAngry() {
-        return getEntity().bU();
+        // SRG return getEntity().func_70919_bu();
+        return getEntity().cc();
     }
 
     /**
@@ -30,6 +31,7 @@ public class Wolf extends TamableEntity {
      * @param angry New angry state of the wolf.
      */
     public void setAngry(boolean angry) {
+        // SRG getEntity().func_70916_h(angry);
         getEntity().l(angry);
     }
 
@@ -39,7 +41,8 @@ public class Wolf extends TamableEntity {
      * @return collar colour as an int
      */
     public int getCollarColour() {
-        return getEntity().bZ();
+        // SRG return getEntity().func_82186_bH();
+        return getEntity().cd();
     }
 
     /**
@@ -48,9 +51,11 @@ public class Wolf extends TamableEntity {
      * @param colour new collar colour
      */
     public void setCollarColour(int colour) {
+        // SRG getEntity().func_82185_r(colour);
         getEntity().p(colour);
     }
 
+    @Override
     public OEntityWolf getEntity() {
         return (OEntityWolf) entity;
     }

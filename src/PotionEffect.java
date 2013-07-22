@@ -83,30 +83,37 @@ public class PotionEffect {
      * @return
      */
     public static PotionEffect getNewPotionEffect(NBTTagCompound tag) {
+        // SRG return OPotionEffect.func_82722_b(tag.getBaseTag()).potionEffect;
         return OPotionEffect.b(tag.getBaseTag()).potionEffect;
     }
 
     public PotionEffect.Type getType() {
+        // SRG return PotionEffect.Type.fromId(potionEffect.func_76456_a());
         return PotionEffect.Type.fromId(potionEffect.a());
     }
 
     public int getAmplifier() {
+        // SRG return potionEffect.func_76458_c();
         return potionEffect.c();
     }
 
     public int getDuration() {
+        // SRG return potionEffect.func_76459_b();
         return potionEffect.b();
     }
 
     public void setType(Type effect) {
+        // SRG potionEffect.field_76462_a = effect.getId();
         potionEffect.a = effect.getId();
     }
 
     public void setDuration(int duration) {
+        // SRG potionEffect.field_76460_b = duration;
         potionEffect.b = duration;
     }
 
     public void setAmplifier(int amplifier) {
+        // SRG potionEffect.field_76461_c = amplifier;
         potionEffect.c = amplifier;
     }
 
@@ -117,6 +124,7 @@ public class PotionEffect {
      * @return the same tag that was passed in, but rewrapped
      */
     public NBTTagCompound writeToTag(NBTTagCompound tag) {
+        // SRG return new NBTTagCompound(potionEffect.func_82719_a(tag.getBaseTag()));
         return new NBTTagCompound(potionEffect.a(tag.getBaseTag()));
     }
 

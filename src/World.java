@@ -83,9 +83,13 @@ public class World {
 
     public enum Type {
 
+        // SRG DEFAULT(OWorldType.field_77137_b),
         DEFAULT(OWorldType.b),
+        // SRG FLAT(OWorldType.field_77138_c),
         FLAT(OWorldType.c),
+        // SRG LARGE_BIOMES(OWorldType.field_77135_d),
         LARGE_BIOMES(OWorldType.d),
+        // SRG DEFAULT_1_1(OWorldType.field_77136_e);
         DEFAULT_1_1(OWorldType.e);
         private OWorldType nativeType;
 
@@ -122,6 +126,7 @@ public class World {
      * @return the dimension type
      */
     public Dimension getType() {
+        // SRG return Dimension.fromId(world.field_73011_w.field_76574_g);
         return Dimension.fromId(world.t.i);
     }
 
@@ -131,7 +136,8 @@ public class World {
      * @return time server time
      */
     public long getTime() { // XXX: Don't forget to update me!!!
-        return world.H();
+        // SRG return world.func_82737_E();
+        return world.I();
     }
 
     /**
@@ -140,7 +146,8 @@ public class World {
      * @return time server time
      */
     public long getRelativeTime() {
-        return world.I();
+        // SRG return world.func_72820_D();
+        return world.J();
     }
 
     /**
@@ -152,6 +159,7 @@ public class World {
         // World info for each world overwrites the other on save,
         // make sure they're the same. (Like you see it in the nether or end)
         for (World w : etc.getServer().getWorld(this.getName()))
+            // SRG w.getWorld().field_72986_A.func_82572_b(time);
             w.getWorld().x.b(time);
     }
 
@@ -164,6 +172,7 @@ public class World {
         // World info for each world overwrites the other on save,
         // make sure they're the same.
         for (World w : etc.getServer().getWorld(this.getName()))
+            // SRG w.getWorld().field_72986_A.func_76068_b(time);
             w.getWorld().x.c(time);
     }
 
@@ -175,9 +184,10 @@ public class World {
     public List<Mob> getMobList() {
         List<Mob> toRet = new ArrayList<Mob>();
 
-        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
-            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntitySlime || o instanceof OEntityDragon) {
-                toRet.add(new Mob((OEntityLiving) o));
+        // SRG for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.field_72996_f).clone()) {
+        for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.e).clone()) {
+            if (oent instanceof OEntityMob || oent instanceof OEntityGhast || oent instanceof OEntitySlime || oent instanceof OEntityDragon) {
+                toRet.add(new Mob((OEntityLiving) oent));
             }
         }
         return toRet;
@@ -191,9 +201,10 @@ public class World {
     public List<Mob> getAnimalList() {
         List<Mob> toRet = new ArrayList<Mob>();
 
-        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
-            if (o instanceof OEntityAnimal || o instanceof OEntitySquid || o instanceof OEntitySnowman || o instanceof OEntityBat) {
-                toRet.add(new Mob((OEntityLiving) o));
+        // SRG for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.field_72996_f).clone()) {
+        for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.e).clone()) {
+            if (oent instanceof OEntityAnimal || oent instanceof OEntitySquid || oent instanceof OEntitySnowman || oent instanceof OEntityBat) {
+                toRet.add(new Mob((OEntityLiving) oent));
             }
         }
         return toRet;
@@ -207,9 +218,10 @@ public class World {
     public List<Minecart> getMinecartList() {
         List<Minecart> toRet = new ArrayList<Minecart>();
 
-        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
-            if (o instanceof OEntityMinecart) {
-                toRet.add(((OEntityMinecart) o).cart);
+        // SRG for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.field_72996_f).clone()) {
+        for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.e).clone()) {
+            if (oent instanceof OEntityMinecart) {
+                toRet.add(((OEntityMinecart) oent).cart);
             }
         }
         return toRet;
@@ -223,9 +235,10 @@ public class World {
     public List<Boat> getBoatList() {
         List<Boat> toRet = new ArrayList<Boat>();
 
-        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
-            if (o instanceof OEntityBoat) {
-                toRet.add(((OEntityBoat) o).boat);
+        // SRG for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.field_72996_f).clone()) {
+        for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.e).clone()) {
+            if (oent instanceof OEntityBoat) {
+                toRet.add(((OEntityBoat) oent).boat);
             }
         }
         return toRet;
@@ -239,19 +252,12 @@ public class World {
     public List<BaseEntity> getEntityList() {
         List<BaseEntity> toRet = new ArrayList<BaseEntity>();
 
-        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
-            if (o instanceof OEntityMob || o instanceof OEntityGhast || o instanceof OEntityAnimal || o instanceof OEntitySlime || o instanceof OEntityDragon || o instanceof OEntityMagmaCube || o instanceof OEntityVillager || o instanceof OEntitySquid || o instanceof OEntitySnowman) {
-                toRet.add(new Mob((OEntityLiving) o));
-            } else if (o instanceof OEntityMinecart) {
-                toRet.add(((OEntityMinecart) o).cart);
-            } else if (o instanceof OEntityBoat) {
-                toRet.add(((OEntityBoat) o).boat);
-            } else if (o instanceof OEntityPlayerMP) {
-                toRet.add(((OEntityPlayerMP) o).getPlayer());
-            } else if (o instanceof OEntityItem) {
-                toRet.add(((OEntityItem) o).item);
+        // SRG for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.field_72996_f).clone()) {
+        for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.e).clone()) {
+            if (oent instanceof OEntityMob || oent instanceof OEntityGhast || oent instanceof OEntityAnimal || oent instanceof OEntitySlime || oent instanceof OEntityDragon || oent instanceof OEntityMagmaCube || oent instanceof OEntityVillager || oent instanceof OEntitySquid || oent instanceof OEntitySnowman) {
+                toRet.add(new Mob((OEntityLiving) oent));
             } else {
-                toRet.add(((OEntity) o).getEntity());
+                toRet.add(oent.getEntity());
             }
         }
         return toRet;
@@ -265,9 +271,10 @@ public class World {
     public List<ItemEntity> getItemList() {
         List<ItemEntity> toRet = new ArrayList<ItemEntity>();
 
-        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
-            if (o instanceof OEntityItem) {
-                toRet.add(((OEntityItem) o).item);
+        // SRG for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.field_72996_f).clone()) {
+        for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.e).clone()) {
+            if (oent instanceof OEntityItem) {
+                toRet.add(((OEntityItem) oent).item);
             }
         }
         return toRet;
@@ -282,9 +289,10 @@ public class World {
     public List<LivingEntity> getLivingEntityList() {
         List<LivingEntity> toRet = new ArrayList<LivingEntity>();
 
-        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
-            if (o instanceof OEntityLiving) {
-                toRet.add(((OEntityLiving) o).getEntity());
+        // SRG for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.field_72996_f).clone()) {
+        for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.e).clone()) {
+            if (oent instanceof OEntityLiving) {
+                toRet.add(((OEntityLiving) oent).getEntity());
             }
         }
         return toRet;
@@ -298,11 +306,10 @@ public class World {
     public List<BaseVehicle> getVehicleEntityList() {
         List<BaseVehicle> toRet = new ArrayList<BaseVehicle>();
 
-        for (Object o : (ArrayList) ((ArrayList) world.e).clone()) {
-            if (o instanceof OEntityMinecart) {
-                toRet.add(((OEntityMinecart) o).cart);
-            } else if (o instanceof OEntityBoat) {
-                toRet.add(((OEntityBoat) o).boat);
+        // SRG for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.field_72996_f).clone()) {
+        for (OEntity oent : (ArrayList<OEntity>) ((ArrayList<OEntity>) world.e).clone()) {
+            if (oent instanceof OEntityMinecart || oent instanceof OEntityBoat) {
+                toRet.add((BaseVehicle) oent.getEntity());
             }
         }
         return toRet;
@@ -314,7 +321,7 @@ public class World {
      * @return Location object for spawn
      */
     public Location getSpawnLocation() {
-        // More structure ftw
+        // SRG OWorldInfo info = world.field_72986_A;
         OWorldInfo info = world.x;
         Location spawn = new Location();
 
@@ -322,8 +329,8 @@ public class World {
         spawn.y = info.d();
         spawn.z = info.e() + 0.5D;
         // set y to first free position above actual spawn.
-        while (!world.c((int) spawn.x, (int) spawn.y, (int) spawn.z)
-                && !world.c((int) spawn.x, (int) spawn.y + 1, (int) spawn.z)) {
+        while (getBlockIdAt((int) spawn.x, (int) spawn.y, (int) spawn.z) != 0
+                || getBlockIdAt((int) spawn.x, (int) spawn.y + 1, (int) spawn.z) != 0) {
             spawn.y++;
         }
         spawn.rotX = 0.0F;
@@ -340,6 +347,7 @@ public class World {
      * @param z The spawn's new z location
      */
     public void setSpawnLocation(int x, int y, int z) {
+        // SRG this.getWorld().func_72912_H().func_76081_a(x, y, z);
         this.getWorld().N().a(x, y, z);
     }
 
@@ -382,6 +390,7 @@ public class World {
      * @return block data
      */
     public int getBlockData(int x, int y, int z) {
+        // SRG return world.func_72805_g(x, y, z);
         return world.h(x, y, z);
     }
 
@@ -395,6 +404,7 @@ public class World {
      * @return true if it was successful
      */
     public boolean setBlockData(int x, int y, int z, int data) {
+        // SRG return world.func_72921_c(x, y, z, data, 3);
         return world.b(x, y, z, data, 3);
     }
 
@@ -408,6 +418,7 @@ public class World {
      * @return true if successful
      */
     public boolean setBlockAt(int blockType, int x, int y, int z) {
+        // SRG return world.func_94575_c(x, y, z, blockType);
         return world.c(x, y, z, blockType);
     }
 
@@ -419,6 +430,7 @@ public class World {
      * @return highest block altitude
      */
     public int getHighestBlockY(int x, int z) {
+        // SRG return world.func_72976_f(x, z);
         return world.f(x, z);
     }
 
@@ -431,6 +443,7 @@ public class World {
      * @return block type
      */
     public int getBlockIdAt(int x, int y, int z) {
+        // SRG return world.func_72798_a(x, y, z);
         return world.a(x, y, z);
     }
 
@@ -509,6 +522,7 @@ public class World {
      * @return complex block
      */
     public ComplexBlock getOnlyComplexBlock(int x, int y, int z) {
+        // SRG OTileEntity localav = world.func_72796_p(x, y, z);
         OTileEntity localav = world.r(x, y, z);
 
         if (localav != null) {
@@ -636,13 +650,18 @@ public class World {
      * @return returns the ItemEntity that was dropped
      */
     public ItemEntity dropItem(double x, double y, double z, Item item) {
+        // SRG double d1 = world.field_73012_v.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double d1 = world.s.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        // SRG double d2 = world.field_73012_v.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double d2 = world.s.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        // SRG double d3 = world.field_73012_v.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double d3 = world.s.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
 
         OEntityItem oei = new OEntityItem(world, x + d1, y + d2, z + d3, item.getBaseItem() != null ? item.getBaseItem() : new OItemStack(item.getItemId(), item.getAmount(), item.getDamage()));
 
-        oei.c = 10;
+        // SRG oei.field_70293_c = 10;
+        oei.b = 10;
+        // SRG world.func_72838_d(oei);
         world.d(oei);
         return oei.item;
     }
@@ -665,7 +684,7 @@ public class World {
      * @param data the new data for the block
      */
     public void updateBlockPhysics(int x, int y, int z, int data) {
-        world.b(x, y, z, data, 3);
+        this.setBlockData(x, y, z, data);
     }
 
     /**
@@ -701,6 +720,7 @@ public class World {
      * @return true if the chunk is loaded
      */
     public boolean isChunkLoaded(int x, int z) {
+        // SRG return world.field_73059_b.func_73149_a(x, z);
         return world.b.a(x, z);
     }
 
@@ -737,6 +757,7 @@ public class World {
      * @return chunk
      */
     public Chunk loadChunk(int x, int z) {
+        // SRG return world.field_73059_b.func_73154_d(x, z).chunk;
         return world.b.d(x, z).chunk;
     }
 
@@ -774,7 +795,7 @@ public class World {
      */
     public Chunk getChunk(int x, int z) {
         if (isChunkLoaded(x, z)) {
-            return world.b.d(x, z).chunk;
+            return loadChunk(x, z);
         } else {
             return null;
         }
@@ -799,6 +820,7 @@ public class World {
      * @return true if the block is being powered
      */
     public boolean isBlockPowered(int x, int y, int z) {
+        // SRG return world.func_94577_B(x, y, z) > 0;
         return world.B(x, y, z) > 0;
     }
 
@@ -821,6 +843,7 @@ public class World {
      * @return true if the block is being indirectly powered
      */
     public boolean isBlockIndirectlyPowered(int x, int y, int z) {
+        // SRG return world.func_72864_z(x, y, z);
         return world.C(x, y, z);
     }
 
@@ -833,12 +856,15 @@ public class World {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.THUNDER_CHANGE, this, thundering)) {
             return;
         }
-        world.x.a(thundering); //could be wrong, hard to differentiate between booleans
+        // SRG world.field_72986_A.func_76069_a(thundering);
+        world.x.a(thundering);
 
         // Thanks to Bukkit for figuring out these numbers
         if (thundering) {
+            // SRG setThunderTime(world.field_73012_v.nextInt(12000) + 3600);
             setThunderTime(world.s.nextInt(12000) + 3600);
         } else {
+            // SRG setThunderTime(world.field_73012_v.nextInt(168000) + 12000);
             setThunderTime(world.s.nextInt(168000) + 12000);
         }
     }
@@ -849,6 +875,7 @@ public class World {
      * @param ticks ticks of thunder
      */
     public void setThunderTime(int ticks) {
+        // SRG world.field_72986_A.func_76090_f(ticks);
         world.x.f(ticks);
     }
 
@@ -861,12 +888,15 @@ public class World {
         if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.WEATHER_CHANGE, this, raining)) {
             return;
         }
+        // SRG world.field_72986_A.func_76084_b(raining);
         world.x.b(raining);
 
         // Thanks to Bukkit for figuring out these numbers
         if (raining) {
+            // SRG setRainTime(world.field_73012_v.nextInt(12000) + 3600);
             setRainTime(world.s.nextInt(12000) + 3600);
         } else {
+            // SRG setRainTime(world.field_73012_v.nextInt(168000) + 12000);
             setRainTime(world.s.nextInt(168000) + 12000);
         }
     }
@@ -877,6 +907,7 @@ public class World {
      * @param ticks ticks of rain
      */
     public void setRainTime(int ticks) {
+        // SRG world.field_72986_A.func_76080_g(ticks);
         world.x.g(ticks);
     }
 
@@ -886,6 +917,7 @@ public class World {
      * @return whether it's thundering
      */
     public boolean isThundering() {
+        // SRG return world.field_72986_A.func_76061_m();
         return world.x.n();
     }
 
@@ -895,6 +927,7 @@ public class World {
      * @return the thunder ticks
      */
     public int getThunderTime() {
+        // SRG return world.field_72986_A.func_76071_n();
         return world.x.o();
     }
 
@@ -904,6 +937,7 @@ public class World {
      * @return whether it's raining
      */
     public boolean isRaining() {
+        // SRG return world.field_72986_A.func_76059_o();
         return world.x.p();
     }
 
@@ -913,6 +947,7 @@ public class World {
      * @return the rain ticks
      */
     public int getRainTime() {
+        // SRG return world.field_72986_A.func_76083_p();
         return world.x.q();
     }
 
@@ -953,7 +988,7 @@ public class World {
      * @param doesDamage Whether or not this explosion deals damage.
      */
     public void explode(BaseEntity exploder, double x, double y, double z, float power, boolean doesDamage) {
-        world.a(exploder.entity, x, y, z, power, doesDamage);
+        explode(exploder, x, y, z, power, false, doesDamage);
     }
 
     /**
@@ -968,6 +1003,7 @@ public class World {
      * @param doesDamage Whether or not this explosion deals damage.
      */
     public void explode(BaseEntity exploder, double x, double y, double z, float power, boolean doesCauseFires, boolean doesDamage) {
+        // SRG world.func_72885_a(exploder.entity, x, y, z, power, doesCauseFires, doesDamage);
         world.a(exploder.entity, x, y, z, power, doesCauseFires, doesDamage);
     }
 
@@ -977,7 +1013,8 @@ public class World {
      * @return seed of the world
      */
     public long getRandomSeed() {
-        return world.J();
+        // SRG return world.func_72905_C();
+        return world.H();
     }
 
     /**
@@ -989,6 +1026,7 @@ public class World {
      * @param newlevel The light level.
      */
     public void setLightLevel(int x, int y, int z, int newlevel) {
+        // SRG this.getWorld().func_72915_b(OEnumSkyBlock.b, x, y, z, newlevel);
         this.getWorld().b(OEnumSkyBlock.b, x, y, z, newlevel);
     }
 
@@ -1001,6 +1039,7 @@ public class World {
      * @return Light level of the location.
      */
     public float getLightLevel(int x, int y, int z) {
+        // SRG return this.getWorld().func_72883_k(x, y, z);
         return this.getWorld().m(x, y, z);
     }
 
@@ -1015,6 +1054,7 @@ public class World {
         for (int x2 = x - 2; x2 <= x + 2; x2++) {
             for (int y2 = y - 2; y2 <= y + 2; y2++) {
                 for (int z2 = z - 2; z2 <= z + 2; z2++) {
+                    // SRG this.getWorld().func_72966_v(x2, y2, z2);
                     this.getWorld().A(x2, y2, z2);
                 }
             }
@@ -1026,15 +1066,17 @@ public class World {
     }
 
     public PlayerManager getPlayerManager() {
+        // SRG return world.func_73040_p().getCanaryPlayerManager();
         return world.s().getCanaryPlayerManager();
     }
 
     public void removePlayerFromWorld(Player player) {
+        // SRG world.func_72973_f((OEntity)player.getEntity());
         world.f((OEntity)player.getEntity());
     }
 
     public void addPlayerToWorld(Player player) {
-        world.d((OEntity)player.getEntity());
+        player.spawn();
     }
 
     /**
@@ -1050,6 +1092,7 @@ public class World {
      * @return The game mode for this world.
      */
     public int getGameMode() {
+        // SRG return world.field_72986_A.func_76077_q().field_77154_e;
         return world.x.r().e;
     }
 
@@ -1059,7 +1102,7 @@ public class World {
      * @param p The projectile to launch.
      */
     public void launchProjectile(Projectile p) {
-        getWorld().d(p.getEntity());
+        p.spawn();
     }
 
     /**
@@ -1070,6 +1113,7 @@ public class World {
      * @param z The z coordinate to strike.
      */
     public void strikeLightning(double x, double y, double z) {
+        // SRG getWorld().func_72942_c(new OEntityLightningBolt(getWorld(), x, y, z));
         getWorld().c(new OEntityLightningBolt(getWorld(), x, y, z));
     }
 
@@ -1091,7 +1135,7 @@ public class World {
      * @see Sound
      * @See Location
      */
-    public void playSound(Location location, Sound sound, float volume, float pitch){
+    public void playSound(Location location, Sound sound, float volume, float pitch) {
         playSound(location.x, location.y, location.z, sound, volume, pitch);
     }
 
@@ -1106,7 +1150,8 @@ public class World {
      * @see Sound
      * @See Location
      */
-    public void playSound(double x, double y, double z, Sound sound, float volume, float pitch){
+    public void playSound(double x, double y, double z, Sound sound, float volume, float pitch) {
+        // SRG world.func_72908_a(x, y, z, sound.getSoundString(), volume, pitch);
         world.a(x, y, z, sound.getSoundString(), volume, pitch);
     }
 
@@ -1144,6 +1189,7 @@ public class World {
      * @param pitch The pitch of the note (0-24?).
      */
     public void playNote(int x, int y, int z, Sound.Instrument instrument, int pitch) {
+        // SRG ((OBlockNote) OBlock.field_71973_m[25]).func_71883_b(getWorld(), x, y, z, instrument.ordinal(), pitch);
         ((OBlockNote) OBlock.s[25]).b(getWorld(), x, y, z, instrument.ordinal(), pitch);
     }
 
@@ -1153,6 +1199,7 @@ public class World {
      * @return The loaded chunks in Canary format.
      */
     public List<Chunk> getLoadedChunks() {
+        // SRG List<OChunk> nativeLoadedChunks = this.getWorld().field_73059_b.field_73245_g;
         List<OChunk> nativeLoadedChunks = this.getWorld().b.g;
         List<Chunk> loadedChunks = new ArrayList<Chunk>(nativeLoadedChunks.size());
         for (OChunk ochunk : nativeLoadedChunks) {

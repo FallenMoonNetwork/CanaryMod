@@ -56,17 +56,6 @@ public class Snowball extends Projectile {
     }
 
     @Override
-    public LivingEntityBase getShooter() {
-        return getEntity().h() == null ? null : getEntity().h().getEntity();
-    }
-
-    @Override
-    public boolean setShooter(LivingEntity shooter) {
-        getEntity().setShooter(shooter.getEntity());
-        return true;
-    }
-
-    @Override
     public OEntitySnowball getEntity() {
         return (OEntitySnowball) super.getEntity();
     }

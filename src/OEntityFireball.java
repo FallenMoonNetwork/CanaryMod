@@ -2,7 +2,7 @@ import java.util.List;
 
 public abstract class OEntityFireball extends OEntity {
 
-    protected int e = -1; // CanaryMod: private to protected
+    private int e = -1;
     private int f = -1;
     private int g = -1;
     private int h;
@@ -204,17 +204,17 @@ public abstract class OEntityFireball extends OEntity {
         return true;
     }
 
-    public float X() {
+    public float Y() {
         return 1.0F;
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.ap()) {
+        if (this.aq()) {
             return false;
         } else {
             this.J();
             if (odamagesource.i() != null) {
-                OVec3 ovec3 = odamagesource.i().Y();
+                OVec3 ovec3 = odamagesource.i().Z();
 
                 if (ovec3 != null) {
                     this.x = ovec3.c;

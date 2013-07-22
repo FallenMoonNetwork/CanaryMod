@@ -214,7 +214,7 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
                 }
             }
         } else {
-            OEntityItem oentityitem = a(ohopper.ay(), ohopper.az(), ohopper.aA() + 1.0D, ohopper.aB());
+            OEntityItem oentityitem = a(ohopper.az(), ohopper.aA(), ohopper.aB() + 1.0D, ohopper.aC());
 
             if (oentityitem != null) {
                 return a((OIInventory) ohopper, oentityitem);
@@ -338,11 +338,11 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
     private OIInventory v() {
         int i = OBlockHopper.c(this.p());
 
-        return b(this.ay(), (double) (this.l + OFacing.b[i]), (double) (this.m + OFacing.c[i]), (double) (this.n + OFacing.d[i]));
+        return b(this.az(), (double) (this.l + OFacing.b[i]), (double) (this.m + OFacing.c[i]), (double) (this.n + OFacing.d[i]));
     }
 
     public static OIInventory b(OHopper ohopper) {
-        return b(ohopper.ay(), ohopper.az(), ohopper.aA() + 1.0D, ohopper.aB());
+        return b(ohopper.az(), ohopper.aA(), ohopper.aB() + 1.0D, ohopper.aC());
     }
 
     public static OEntityItem a(OWorld oworld, double d0, double d1, double d2) {
@@ -385,15 +385,15 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
         return oitemstack.d != oitemstack1.d ? false : (oitemstack.k() != oitemstack1.k() ? false : (oitemstack.b > oitemstack.e() ? false : OItemStack.a(oitemstack, oitemstack1)));
     }
 
-    public double az() {
+    public double aA() {
         return (double) this.l;
     }
 
-    public double aA() {
+    public double aB() {
         return (double) this.m;
     }
 
-    public double aB() {
+    public double aC() {
         return (double) this.n;
     }
 

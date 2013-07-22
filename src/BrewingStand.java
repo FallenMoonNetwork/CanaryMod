@@ -17,6 +17,7 @@ public class BrewingStand extends BaseContainerBlock<OTileEntityBrewingStand> im
      * @return this stand's brew time
      */
     public int getBrewTime() {
+        // SRG return container.func_70355_t_();
         return container.x_();
     }
 

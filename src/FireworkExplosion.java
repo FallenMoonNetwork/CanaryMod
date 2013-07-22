@@ -48,11 +48,21 @@ public class FireworkExplosion {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof FireworkExplosion) {
+        if (obj instanceof FireworkExplosion) {
             FireworkExplosion ex = (FireworkExplosion) obj;
-            return shape == ex.shape && twinkle == ex.twinkle && trail == ex.trail;
+            return Arrays.equals(colors, ex.colors) && shape == ex.shape && twinkle == ex.twinkle && trail == ex.trail;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + (this.shape != null ? this.shape.hashCode() : 0);
+        hash = 71 * hash + Arrays.hashCode(this.colors);
+        hash = 71 * hash + (this.twinkle ? 1 : 0);
+        hash = 71 * hash + (this.trail ? 1 : 0);
+        return hash;
     }
 
     @Override

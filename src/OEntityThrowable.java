@@ -151,7 +151,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
 
         if (omovingobjectposition != null) {
             if (omovingobjectposition.a == OEnumMovingObjectType.a && this.q.a(omovingobjectposition.b, omovingobjectposition.c, omovingobjectposition.d) == OBlock.bj.cF) {
-                this.Z();
+                this.aa();
             } else {
                 this.a(omovingobjectposition);
             }
@@ -216,7 +216,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         onbttagcompound.a("shake", (byte) this.b);
         onbttagcompound.a("inGround", (byte) (this.a ? 1 : 0));
         if ((this.h == null || this.h.length() == 0) && this.g != null && this.g instanceof OEntityPlayer) {
-            this.h = this.g.al();
+            this.h = this.g.am();
         }
 
         onbttagcompound.a("ownerName", this.h == null ? "" : this.h);

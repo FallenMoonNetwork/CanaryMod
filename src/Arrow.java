@@ -64,6 +64,7 @@ public class Arrow extends Projectile {
      * @param shooter the entity that shot
      */
     public void setShooter(BaseEntity shooter) {
+        // SRG getEntity().field_70250_c = shooter.getEntity();
         getEntity().c = shooter.getEntity();
     }
 
@@ -75,6 +76,7 @@ public class Arrow extends Projectile {
 
     @Override
     public BaseEntity getShooter() {
+        // SRG return getEntity().field_70250_c == null ? null : getEntity().field_70250_c.getEntity();
         return getEntity().c == null ? null : getEntity().c.getEntity();
     }
 
@@ -84,6 +86,7 @@ public class Arrow extends Projectile {
      * @return
      */
     public boolean canPickup() {
+        // SRG return getEntity().field_70251_a == 1;
         return getEntity().a == 1;
     }
 
@@ -93,6 +96,7 @@ public class Arrow extends Projectile {
      * @param canPickup
      */
     public void setCanPickup(boolean canPickup) {
+        // SRG getEntity().field_70251_a = canPickup ? 1 : 0;
         getEntity().a = canPickup ? 1 : 0;
     }
 

@@ -40,6 +40,7 @@ public class NBTTagByte extends NBTBase {
      * @return
      */
     public byte getValue() {
+        // SRG return getBaseTag().field_74756_a;
         return getBaseTag().a;
     }
 
@@ -49,6 +50,7 @@ public class NBTTagByte extends NBTBase {
      * @param value
      */
     public void setValue(byte value) {
+        // SRG getBaseTag().field_74756_a = value;
         getBaseTag().a = value;
     }
 

@@ -167,7 +167,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             for (int i = 0; i < this.bn.j_(); ++i) {
                 OItemStack oitemstack = this.bn.a(i);
 
-                if (oitemstack != null && OItem.g[oitemstack.d].f() && this.a.e() <= 5) {
+                if (oitemstack != null && OItem.g[oitemstack.d].f() && this.a.f() <= 5) {
                     OPacket opacket = ((OItemMapBase) OItem.g[oitemstack.d]).c(oitemstack, this.q, this);
 
                     if (opacket != null) {
@@ -177,35 +177,35 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             }
 
             // CanaryMod: Update the health
-            if (this.aJ() != this.bP && bP != -1.0E8F) {
+            if (this.aM() != this.bP && bP != -1.0E8F) {
                 // updates your health when it is changed.
                 if (!etc.getInstance().isHealthEnabled()) {
-                    super.g(this.aP());
+                    super.g(this.aS());
                     this.M = false;
-                } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bP, this.aJ())) {
+                } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bP, this.aM())) {
                     super.g(this.bP);
                 }
             }
 
-            if (this.aJ() != this.bP || this.bQ != this.bq.a() || this.bq.e() == 0.0F != this.bR) {
+            if (this.aM() != this.bP || this.bQ != this.bq.a() || this.bq.e() == 0.0F != this.bR) {
                 //CanaryMod: convert health for values above 20
-                float health = this.aJ() / (this.aP() / 20);
-                health = (this.aJ() > 0 && health < 1) ? 1 : health;
+                float health = this.aM() / (this.aS() / 20);
+                health = (this.aM() > 0 && health < 1) ? 1 : health;
                 this.a.b(new OPacket8UpdateHealth(health, this.bq.a(), this.bq.e()));
-                this.bP = this.aJ();
+                this.bP = this.aM();
                 this.bQ = this.bq.a();
                 this.bR = this.bq.e() == 0.0F;
             }
 
-            if (this.aJ() + this.bj() != this.bO) {
-                this.bO = this.aJ() + this.bj();
-                Collection collection = this.bH().a(OScoreObjectiveCriteria.f);
+            if (this.aM() + this.bm() != this.bO) {
+                this.bO = this.aM() + this.bm();
+                Collection collection = this.bL().a(OScoreObjectiveCriteria.f);
                 Iterator iterator = collection.iterator();
 
                 while (iterator.hasNext()) {
                     OScoreObjective oscoreobjective = (OScoreObjective) iterator.next();
 
-                    this.bH().a(this.al(), oscoreobjective).a(Arrays.asList(new OEntityPlayer[] { this}));
+                    this.bL().a(this.am(), oscoreobjective).a(Arrays.asList(new OEntityPlayer[] { this}));
                 }
             }
 
@@ -236,9 +236,8 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     public void a(ODamageSource odamagesource) {
         manager.callHook(PluginLoader.Hook.DEATH, this.getEntity());
         if (etc.getInstance().deathMessages) { //CanaryMod: check if death messages are enabled
-            this.b.af().a(this.aN().b());
+            this.b.af().a(this.aQ().b());
         }
-
         if (!this.q.O().b("keepInventory")) {
             this.bn.m();
         }
@@ -248,12 +247,12 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
 
         while (iterator.hasNext()) {
             OScoreObjective oscoreobjective = (OScoreObjective) iterator.next();
-            OScore oscore = this.bH().a(this.al(), oscoreobjective);
+            OScore oscore = this.bL().a(this.am(), oscoreobjective);
 
             oscore.a();
         }
 
-        OEntityLivingBase oentitylivingbase = this.aO();
+        OEntityLivingBase oentitylivingbase = this.aR();
 
         if (oentitylivingbase != null) {
             oentitylivingbase.b(this, this.bb);
@@ -263,7 +262,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.ap()) {
+        if (this.aq()) {
             return false;
         } else {
             boolean flag = this.b.V() && this.b.Z() && "fall".equals(odamagesource.o);
@@ -397,7 +396,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     public void a(boolean flag, boolean flag1, boolean flag2) {
-        if (this.bd()) {
+        if (this.bg()) {
             this.p().q().b(this, new OPacket18Animation(this, 3));
         }
 
@@ -419,7 +418,14 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         super.a(d0, flag);
     }
 
-    private void bJ() {
+    public void a(OTileEntity otileentity) {
+        if (otileentity instanceof OTileEntitySign) {
+            ((OTileEntitySign) otileentity).a((OEntityPlayer) this);
+            this.a.b(new OPacket133TileEditorOpen(0, otileentity.l, otileentity.m, otileentity.n));
+        }
+    }
+
+    private void bM() {
         this.bX = this.bX % 100 + 1;
     }
 
@@ -440,7 +446,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         }
         //CanaryMod: end
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 1, name, 9, true));
         this.bp = container;
         this.bp.d = this.bX;
@@ -463,7 +469,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             name = inv.getName();
         }
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 4, name, 9, s != null));
         this.bp = container;
         this.bp.d = this.bX;
@@ -486,7 +492,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             name = inv.getName();
         }
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 8, name, 9, true));
         this.bp = container;
         this.bp.d = this.bX;
@@ -528,7 +534,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             this.i();
         }
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 0, oiinventory.b(), oiinventory.j_(), oiinventory.c()));
         // CanaryMod: Check if openend the chest in silence mode.
         this.bp = new OContainerChest(this.bn, oiinventory, (openInventoryParameters == null) ? false : openInventoryParameters.isSilenced());
@@ -552,7 +558,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             return;
         } //
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 9, otileentityhopper.b(), otileentityhopper.j_(), otileentityhopper.c()));
         this.bp = container;
         this.bp.d = this.bX;
@@ -571,7 +577,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             return;
         } //
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 9, oentityminecarthopper.b(), oentityminecarthopper.j_(), oentityminecarthopper.c()));
         this.bp = container;
         this.bp.d = this.bX;
@@ -586,7 +592,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             return;
         } //
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 2, otileentityfurnace.b(), otileentityfurnace.j_(), otileentityfurnace.c()));
         this.bp = new OContainerFurnace(this.bn, otileentityfurnace);
         this.bp.setInventory(inv); // CanaryMod: Set the inventory for the GUI
@@ -605,7 +611,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             return;
         } //
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, otileentitydispenser instanceof OTileEntityDropper ? 10 : 3, otileentitydispenser.b(), otileentitydispenser.j_(), otileentitydispenser.c()));
         this.bp = new OContainerDispenser(this.bn, otileentitydispenser);
         this.bp.setInventory(inv); // CanaryMod: set inventory for the GUI
@@ -622,7 +628,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             return;
         } // CanaryMod end
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 5, otileentitybrewingstand.b(), otileentitybrewingstand.j_(), otileentitybrewingstand.c()));
         this.bp = new OContainerBrewingStand(this.bn, otileentitybrewingstand);
         this.bp.setInventory(inv); // CanaryMod: set inventory for the GUI
@@ -639,7 +645,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             return;
         } //
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 7, otileentitybeacon.b(), otileentitybeacon.j_(), otileentitybeacon.c()));
         this.bp = new OContainerBeacon(this.bn, otileentitybeacon);
         this.bp.setInventory(inv); // CanaryMod: set inventory for the GUI
@@ -649,7 +655,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
     }
 
     public void a(OIMerchant oimerchant, String s) {
-        this.bJ();
+        this.bM();
         this.bp = new OContainerMerchant(this.bn, oimerchant, this.q);
         this.bp.d = this.bX;
         this.bp.a((OICrafting) this);
@@ -677,7 +683,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
             this.i();
         }
 
-        this.bJ();
+        this.bM();
         this.a.b(new OPacket100OpenWindow(this.bX, 11, oiinventory.b(), oiinventory.j_(), oiinventory.c(), oentityhorse.k));
         this.bp = new OContainerHorseInventory(this.bn, oiinventory, oentityhorse);
         this.bp.d = this.bX;
@@ -801,13 +807,13 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
         this.a.b(new OPacket41EntityEffect(this.k, opotioneffect));
     }
 
-    protected void b(OPotionEffect opotioneffect) {
-        super.b(opotioneffect);
+    protected void a(OPotionEffect opotioneffect, boolean flag) {
+        super.a(opotioneffect, flag);
         this.a.b(new OPacket41EntityEffect(this.k, opotioneffect));
     }
 
-    protected void c(OPotionEffect opotioneffect) {
-        super.c(opotioneffect);
+    protected void b(OPotionEffect opotioneffect) {
+        super.b(opotioneffect);
         this.a.b(new OPacket42RemoveEntityEffect(this.k, opotioneffect));
     }
 

@@ -9,12 +9,12 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
         super(oworld);
     }
 
-    protected void bg() {
+    protected void bj() {
         if (this.b() != 0) {
             this.bp = 0;
         }
 
-        super.bg();
+        super.bj();
     }
 
     public void c() {
@@ -51,7 +51,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
 
             OEntityPlayer oentityplayer = (OEntityPlayer) oentity;
 
-            if (oentityplayer.bt() == null || !this.c(oentityplayer.bt())) {
+            if (oentityplayer.bx() == null || !this.c(oentityplayer.bx())) {
                 this.j = null;
             }
         } else if (oentity instanceof OEntityAnimal) {
@@ -115,11 +115,11 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.ap()) {
+        if (this.aq()) {
             return false;
         } else {
             this.bo = 60;
-            if (!this.bb()) {
+            if (!this.be()) {
                 OAttributeInstance oattributeinstance = this.a(OSharedMonsterAttributes.d);
 
                 if (oattributeinstance.a(h) == null) {
@@ -147,7 +147,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
         this.bp = onbttagcompound.e("InLove");
     }
 
-    protected OEntity bH() {
+    protected OEntity bL() {
         if (this.bo > 0) {
             return null;
         } else {
@@ -171,7 +171,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
                 for (i = 0; i < list.size(); ++i) {
                     OEntityPlayer oentityplayer = (OEntityPlayer) list.get(i);
 
-                    if (oentityplayer.bt() != null && this.c(oentityplayer.bt())) {
+                    if (oentityplayer.bx() != null && this.c(oentityplayer.bx())) {
                         return oentityplayer;
                     }
                 }
@@ -190,12 +190,12 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
         }
     }
 
-    public boolean bo() {
+    public boolean bs() {
         int i = OMathHelper.c(this.u);
         int j = OMathHelper.c(this.E.b);
         int k = OMathHelper.c(this.w);
 
-        return this.q.a(i, j - 1, k) == OBlock.z.cF && this.q.m(i, j, k) > 8 && super.bo();
+        return this.q.a(i, j - 1, k) == OBlock.z.cF && this.q.m(i, j, k) > 8 && super.bs();
     }
 
     public int o() {
@@ -225,28 +225,28 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
                 }
             }
 
-            this.bT();
+            this.bX();
             return true;
         } else {
             return super.a(oentityplayer);
         }
     }
 
-    public void bT() {
+    public void bX() {
         this.bp = 600;
         this.j = null;
         this.q.a((OEntity) this, (byte) 18);
     }
 
-    public boolean bU() {
+    public boolean bY() {
         return this.bp > 0;
     }
 
-    public void bV() {
+    public void bZ() {
         this.bp = 0;
     }
 
     public boolean a(OEntityAnimal oentityanimal) {
-        return oentityanimal == this ? false : (oentityanimal.getClass() != this.getClass() ? false : this.bU() && oentityanimal.bU());
+        return oentityanimal == this ? false : (oentityanimal.getClass() != this.getClass() ? false : this.bY() && oentityanimal.bY());
     }
 }

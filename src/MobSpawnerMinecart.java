@@ -25,6 +25,7 @@ public class MobSpawnerMinecart extends Minecart {
      * @return This <tt>MobSpawnerMinecart</tt>'s {@link MobSpawnerLogic}
      */
     public MobSpawnerLogic getLogic() {
+        // SRG return this.getEntity().field_98040_a.logic;
         return this.getEntity().a.logic;
     }
 

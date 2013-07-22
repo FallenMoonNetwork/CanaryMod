@@ -115,7 +115,7 @@ public class OEntityFireworkRocket extends OEntity {
         return super.d(f);
     }
 
-    public boolean ao() {
+    public boolean ap() {
         return false;
     }
 

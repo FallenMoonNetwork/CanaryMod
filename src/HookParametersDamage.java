@@ -1,4 +1,3 @@
-
 public class HookParametersDamage extends HookParameters {
     private boolean isCanceled;
     private DamageSource ds;

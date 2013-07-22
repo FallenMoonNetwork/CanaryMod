@@ -4,7 +4,7 @@
  * @author gregthegeek
  *
  */
-public class Egg extends Projectile {
+public class Egg extends ThrowableProjectile {
 
     /**
      * Wraps an OEntityEgg
@@ -53,17 +53,6 @@ public class Egg extends Projectile {
      */
     public Egg(Location location) {
         this(location.getWorld(), location.x, location.y, location.z);
-    }
-
-    @Override
-    public LivingEntityBase getShooter() {
-        return getEntity().h() == null ? null : getEntity().h().getEntity();
-    }
-
-    @Override
-    public boolean setShooter(LivingEntity shooter) {
-        getEntity().setShooter(shooter.getEntity());
-        return true;
     }
 
     @Override

@@ -1,7 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * Block.java - Provides some way of making/editing blocks
  *
@@ -818,6 +817,7 @@ public class Block {
      * @return Whether or not the block responded.
      */
     public boolean rightClick(Player clicker) {
+        // SRG return OBlock.field_71973_m[getType()].func_71903_a(getWorld().getWorld(), getX(), getY(), getZ(), clicker != null ? clicker.getEntity() : null, 0, 0, 0, 0); // last four parameters aren't even used by lever or button
         return OBlock.s[getType()].a(getWorld().getWorld(), getX(), getY(), getZ(), clicker != null ? clicker.getEntity() : null, 0, 0, 0, 0); // last four parameters aren't even used by lever or button
     }
 

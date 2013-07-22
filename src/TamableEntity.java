@@ -9,7 +9,8 @@ public class TamableEntity extends Mob {
      * @return True if tamed.
      */
     public boolean isTame(){
-        return getEntity().bP();
+        // SRG return getEntity().func_70909_n();
+        return getEntity().bT();
     }
 
     /**
@@ -27,7 +28,8 @@ public class TamableEntity extends Mob {
      * @param name The name of the player who owns this animal.
      */
     public void setOwnerName(String name){
-        getEntity().a(name);
+        // SRG getEntity().func_70910_a(name);
+        getEntity().b(name);
     }
 
     /**
@@ -36,6 +38,7 @@ public class TamableEntity extends Mob {
      * @return The name of the player who owns this animal.
      */
     public String getOwnerName(){
+        // SRG return getEntity().func_70905_p();
         return getEntity().h_();
     }
 
@@ -45,9 +48,10 @@ public class TamableEntity extends Mob {
      * @return A Player instance of this animals owner, else null.
      */
     public Player getOwner(){
-        BaseEntity be = getEntity().d().getEntity();
-        if (be.isPlayer()){
-            return be.getPlayer();
+        // SRG OEntityLivingBase oentity = getEntity().func_130012_q();
+        OEntityLivingBase oentity = getEntity().bV();
+        if (oentity != null && oentity.getEntity().isPlayer()){
+            return oentity.getEntity().getPlayer();
         } else {
             return null;
         }
@@ -59,6 +63,7 @@ public class TamableEntity extends Mob {
      * @param tame True if the animal should be tame.
      */
     public void setTame(boolean tame){
+        // SRG getEntity().func_70903_f(tame);
         getEntity().j(tame);
     }
 
@@ -68,6 +73,7 @@ public class TamableEntity extends Mob {
      * @param sitting If this animal should be sitting.
      */
     public void setSitting(boolean sitting){
+        // SRG getEntity().func_70904_g(sitting);
         getEntity().k(sitting);
     }
 
@@ -77,7 +83,8 @@ public class TamableEntity extends Mob {
      * @return Sitting or not.
      */
     public boolean isSitting(){
-        return getEntity().bQ();
+        // SRG return getEntity().func_70906_o();
+        return getEntity().bU();
     }
 
     @Override

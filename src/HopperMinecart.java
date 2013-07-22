@@ -34,11 +34,13 @@ public class HopperMinecart extends ContainerMinecart implements Hopper {
 
     @Override
     public int getTranferCooldown() {
+        // SRG return this.getEntity().field_98044_b;
         return this.getEntity().b;
     }
 
     @Override
     public void setTransferCooldown(int cooldown) {
+        // SRG this.getEntity().field_98044_b = cooldown;
         this.getEntity().b = cooldown;
     }
 
@@ -54,7 +56,8 @@ public class HopperMinecart extends ContainerMinecart implements Hopper {
      * otherwise
      */
     public boolean isBlocked() {
-        return this.getEntity().ax();
+        // SRG return this.getEntity().func_96111_ay();
+        return this.getEntity().ay();
     }
 
     /**
@@ -64,6 +67,7 @@ public class HopperMinecart extends ContainerMinecart implements Hopper {
      * <tt>false</tt> otherwise.
      */
     public void setBlocked(boolean blocked) {
+        // SRG this.getEntity().func_96110_f(blocked);
         this.getEntity().f(blocked);
     }
 }

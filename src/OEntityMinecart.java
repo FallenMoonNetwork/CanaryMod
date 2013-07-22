@@ -82,7 +82,7 @@ public abstract class OEntityMinecart extends OEntity {
         manager.callHook(PluginLoader.Hook.VEHICLE_CREATE, this.getEntity()); // CanaryMod: Creation of the cart
     }
 
-    public double W() {
+    public double X() {
         return (double) this.P * 0.0D - 0.30000001192092896D;
     }
 
@@ -99,7 +99,7 @@ public abstract class OEntityMinecart extends OEntity {
         }
 
         if (!this.q.I && !this.M) {
-            if (this.ap()) {
+            if (this.aq()) {
                 return false;
             } else {
                 this.h(-this.k());
@@ -187,7 +187,7 @@ public abstract class OEntityMinecart extends OEntity {
                 if (ominecraftserver.u()) {
                     if (this.o == null && this.aq++ >= i) {
                         this.aq = i;
-                        this.ao = this.aa();
+                        this.ao = this.ab();
                         byte b0;
 
                         if (this.q.t.i == -1) {
@@ -816,8 +816,8 @@ public abstract class OEntityMinecart extends OEntity {
         this.c = s;
     }
 
-    public String al() {
-        return this.c != null ? this.c : super.al();
+    public String am() {
+        return this.c != null ? this.c : super.am();
     }
 
     public boolean c() {

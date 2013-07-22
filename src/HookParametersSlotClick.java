@@ -37,7 +37,9 @@ public class HookParametersSlotClick {
         if(openInventory == null || clickedOutside())
             return null;
 
+        // SRG OSlot slot = openContainer.func_75139_a(inventorySlot);
         OSlot slot = openContainer.a(inventorySlot);
+        // SRG OItemStack itemstack = slot.func_75211_c();
         OItemStack itemstack = slot.d();
         return itemstack == null ? null : new Item(itemstack);
     }
@@ -46,8 +48,10 @@ public class HookParametersSlotClick {
         if(openInventory == null || clickedOutside())
             return;
 
+        // SRG OSlot slot = openContainer.func_75139_a(inventorySlot);
         OSlot slot = openContainer.a(inventorySlot);
-        slot.c(item == null ? null : item.getBaseItem());
+        // SRG slot.func_75215_d((OItemStack) (item == null ? null : item.getBaseItem()));
+        slot.c((OItemStack) (item == null ? null : item.getBaseItem()));
     }
 
     public Item getCursorItem() {

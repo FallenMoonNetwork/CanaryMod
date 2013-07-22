@@ -1,5 +1,3 @@
-
-
 /**
  * Chunk.java - Interface to chunks, especially for generating chunks.
  * @author phi
@@ -54,6 +52,7 @@ public class Chunk {
      * @return true if chunk is loaded
      */
     public boolean isLoaded() {
+        // SRG return chunk.field_76636_d;
         return chunk.d;
     }
 
@@ -62,6 +61,7 @@ public class Chunk {
      * @return world
      */
     public World getWorld() {
+        // SRG return chunk.field_76637_e.world;
         return chunk.e.world;
     }
 
@@ -70,6 +70,7 @@ public class Chunk {
      * @return x
      */
     public int getX() {
+        // SRG return chunk.field_76635_g;
         return chunk.g;
     }
 
@@ -78,6 +79,7 @@ public class Chunk {
      * @return z
      */
     public int getZ() {
+        // SRG return chunk.field_76647_h;
         return chunk.h;
     }
 
@@ -94,6 +96,7 @@ public class Chunk {
             // handles notification
             return getWorld().setBlockAt(id, (x & 0xF) | (getX() << 4), y, (z & 0xF) | (getZ() << 4));
         } else {
+            // SRG return chunk.func_76592_a(x, y, z, id, 0);
             return chunk.a(x, y, z, id, 0);
         }
     }
@@ -106,6 +109,7 @@ public class Chunk {
      * @return block type
      */
     public int getBlockIdAt(int x, int y, int z) {
+        // SRG return chunk.func_76610_a(x, y, z);
         return chunk.a(x, y, z);
     }
 
@@ -121,6 +125,7 @@ public class Chunk {
             // handles notification
             getWorld().setBlockData((x & 0xF) | (getX() << 4), y, (z & 0xF) | (getZ() << 4), data);
         } else {
+            // SRG chunk.func_76589_b(x, y, z, data);
             chunk.b(x, y, z, data);
         }
     }
@@ -133,6 +138,7 @@ public class Chunk {
      * @return block data
      */
     public int getBlockDataAt(int x, int y, int z) {
+        // SRG return chunk.func_76628_c(x, y, z);
         return chunk.c(x, y, z);
     }
 
@@ -142,6 +148,7 @@ public class Chunk {
      * @return biomedata
      */
     public byte[] getBiomeData() {
+        // SRG return chunk.func_76605_m();
         return chunk.m();
     }
 
@@ -152,6 +159,7 @@ public class Chunk {
      */
     public void setBiomeData(byte[] biomedata) {
         if (biomedata.length != 256) return;
+        // SRG chunk.func_76616_a(biomedata);
         chunk.a(biomedata);
     }
 
@@ -159,7 +167,8 @@ public class Chunk {
      * resends chunk data to clients
      */
     public void update() {
-        etc.getMCServer().af().a(new OPacket51MapChunk(chunk, true, 0));
+        // SRG etc.getMCServer().func_71203_ab().sendPacketToDimension(new OPacket51MapChunk(chunk, true, 0), getWorld().getName(), getWorld().getType().getId());
+        etc.getMCServer().af().sendPacketToDimension(new OPacket51MapChunk(chunk, true, 0), getWorld().getName(), getWorld().getType().getId());
     }
 
     /**

@@ -7,21 +7,22 @@
 public class Warp {
 
     /**
-     * Warp ID - Used in database transactions
+     * Warp ID - Used in database transactions.
      */
     public int      ID;
 
     /**
-     * Warp name
+     * Warp name.
      */
+    public String   Name;
 
     /**
-     * Warp group
+     * Warp group.
      */
-    public String   Name, Group;
+    public String   Group;
 
     /**
-     * Warp's location
+     * Warp's location.
      */
     public Location Location;
 }

@@ -88,16 +88,16 @@ public class OEntityMinecartTNT extends OEntityMinecart {
         }
     }
 
-    public boolean ax() {
+    public boolean ay() {
         return this.a > -1;
     }
 
     public float a(OExplosion oexplosion, OWorld oworld, int i, int j, int k, OBlock oblock) {
-        return this.ax() && (OBlockRailBase.e_(oblock.cF) || OBlockRailBase.d_(oworld, i, j + 1, k)) ? 0.0F : super.a(oexplosion, oworld, i, j, k, oblock);
+        return this.ay() && (OBlockRailBase.e_(oblock.cF) || OBlockRailBase.d_(oworld, i, j + 1, k)) ? 0.0F : super.a(oexplosion, oworld, i, j, k, oblock);
     }
 
     public boolean a(OExplosion oexplosion, OWorld oworld, int i, int j, int k, int l, float f) {
-        return this.ax() && (OBlockRailBase.e_(l) || OBlockRailBase.d_(oworld, i, j + 1, k)) ? false : super.a(oexplosion, oworld, i, j, k, l, f);
+        return this.ay() && (OBlockRailBase.e_(l) || OBlockRailBase.d_(oworld, i, j + 1, k)) ? false : super.a(oexplosion, oworld, i, j, k, l, f);
     }
 
     protected void a(ONBTTagCompound onbttagcompound) {

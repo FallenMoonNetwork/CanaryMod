@@ -41,6 +41,7 @@ public class NBTTagByteArray extends NBTBase {
      * @return
      */
     public byte[] getValue() {
+        // SRG return this.getBaseTag().field_74754_a;
         return this.getBaseTag().a;
     }
 
@@ -50,6 +51,7 @@ public class NBTTagByteArray extends NBTBase {
      * @param value the new value
      */
     public void setValue(byte[] value) {
+        // SRG this.getBaseTag().field_74754_a = value;
         this.getBaseTag().a = value;
     }
 

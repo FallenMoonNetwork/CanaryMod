@@ -39,6 +39,8 @@ public class OItemSign extends OItem {
                 return false;
             } else if (!OBlock.aI.c(oworld, i, j, k)) {
                 return false;
+            } else if (oworld.I) {
+                return true;
             } else {
                 // CanaryMod: Now we can call itemUse :)
                 Block blockPlaced = new Block(oworld.world, (l == 1 ? 63 : 68), i, j, k);
@@ -50,9 +52,9 @@ public class OItemSign extends OItem {
                 if (l == 1) {
                     int i1 = OMathHelper.c((double) ((oentityplayer.A + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
 
-                    oworld.f(i, j, k, OBlock.aI.cF, i1, 2);
+                    oworld.f(i, j, k, OBlock.aI.cF, i1, 3);
                 } else {
-                    oworld.f(i, j, k, OBlock.aN.cF, l, 2);
+                    oworld.f(i, j, k, OBlock.aN.cF, l, 3);
                 }
 
                 --oitemstack.b;

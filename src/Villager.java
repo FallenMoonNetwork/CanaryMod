@@ -54,7 +54,8 @@ public class Villager extends Mob {
      * @return
      */
     public Profession getProfession() {
-        return Profession.values()[getEntity().bP()];
+        // SRG return Profession.values()[getEntity().func_70946_n()];
+        return Profession.values()[getEntity().bT()];
     }
 
     /**
@@ -63,6 +64,7 @@ public class Villager extends Mob {
      * @param profession
      */
     public void setProfession(Profession profession) {
+        // SRG getEntity().func_70938_b(profession.ordinal());
         getEntity().p(profession.ordinal());
     }
 
@@ -77,10 +79,12 @@ public class Villager extends Mob {
      * @return
      */
     public VillagerTrade[] getTrades() {
+        // SRG OMerchantRecipeList list = getEntity().func_70934_b((OEntityPlayer) null);
         OMerchantRecipeList list = getEntity().b((OEntityPlayer) null);
+        
         VillagerTrade[] rt = new VillagerTrade[list.size()];
-        for(int i=0; i<rt.length; i++) {
-            rt[i] = new VillagerTrade((OMerchantRecipe) list.get(i));
+        for (int i=0; i<rt.length; i++) {
+            rt[i] = ((OMerchantRecipe) list.get(i)).getVillagerTrade();
         }
         return rt;
     }
@@ -91,6 +95,7 @@ public class Villager extends Mob {
      * @param trade
      */
     public void addTrade(VillagerTrade trade) {
+        // SRG getEntity().func_70934_b((OEntityPlayer) null).add(trade.getRecipe());
         getEntity().b((OEntityPlayer) null).add(trade.getRecipe());
     }
 
@@ -100,6 +105,7 @@ public class Villager extends Mob {
      * @param index the index of the trade to remove
      */
     public void removeTrade(int index) {
+        // SRG getEntity().func_70934_b((OEntityPlayer) null).remove(index);
         getEntity().b((OEntityPlayer) null).remove(index);
     }
 }

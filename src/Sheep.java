@@ -21,8 +21,9 @@ public class Sheep extends Mob {
      *
      * @param sheared Sheared or not
      */
-    public void setSheared(boolean sheared){
-        getEntity().f(sheared);
+    public void setSheared(boolean sheared) {
+        // SRG getEntity().func_70893_e(sheared);
+        getEntity().i(sheared);
     }
 
     /**
@@ -30,8 +31,9 @@ public class Sheep extends Mob {
      *
      * @return If this sheep has wool.
      */
-    public boolean isSheared(){
-        return getEntity().bQ();
+    public boolean isSheared() {
+        // SRG return getEntity().func_70892_o();
+        return getEntity().bU();
     }
 
     /**
@@ -39,7 +41,8 @@ public class Sheep extends Mob {
      *
      * @param color int value of the new color.
      */
-    public void setWoolColor(int color){
+    public void setWoolColor(int color) {
+        // SRG getEntity().func_70891_b(color);
         getEntity().p(color);
     }
 
@@ -48,8 +51,9 @@ public class Sheep extends Mob {
      *
      * @return int value of wool color.
      */
-    public int getColor(){
-        return getEntity().bP();
+    public int getColor() {
+        // SRG return getEntity().func_70896_n();
+        return getEntity().bT();
     }
 
     /**
@@ -57,10 +61,11 @@ public class Sheep extends Mob {
      *
      * @return Cloth.Color of the wool. This is useful for getting the name of the wool.
      */
-    public Cloth.Color getClothColor(){
+    public Cloth.Color getClothColor() {
         return Cloth.Color.getColor(getColor());
     }
 
+    @Override
     public OEntitySheep getEntity() {
         return (OEntitySheep) entity;
     }

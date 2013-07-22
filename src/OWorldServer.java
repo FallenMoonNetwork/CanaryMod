@@ -125,7 +125,7 @@ public class OWorldServer extends OWorld {
         while (iterator.hasNext()) {
             OEntityPlayer oentityplayer = (OEntityPlayer) iterator.next();
 
-            if (!oentityplayer.bd()) {
+            if (!oentityplayer.bg()) {
                 this.N = false;
                 break;
             }
@@ -139,7 +139,7 @@ public class OWorldServer extends OWorld {
         while (iterator.hasNext()) {
             OEntityPlayer oentityplayer = (OEntityPlayer) iterator.next();
 
-            if (oentityplayer.bd()) {
+            if (oentityplayer.bg()) {
                 oentityplayer.a(false, false, true);
             }
         }
@@ -172,7 +172,7 @@ public class OWorldServer extends OWorld {
                 }
 
                 oentityplayer = (OEntityPlayer) iterator.next();
-            } while (oentityplayer.by());
+            } while (oentityplayer.bC());
 
             return false;
         } else {
@@ -466,21 +466,7 @@ public class OWorldServer extends OWorld {
             oentity.w();
         }
 
-        if (!(oentity.n instanceof OEntityPlayer)) {
-            super.a(oentity, flag);
-        }
-    }
-
-    public void b(OEntity oentity, boolean flag) {
-        try {
-            super.a(oentity, flag);
-        } catch (Throwable throwable) {
-            OCrashReport ocrashreport = OCrashReport.a(throwable, "Forcefully ticking entity");
-            OCrashReportCategory ocrashreportcategory = ocrashreport.a("Entity being force ticked");
-
-            oentity.a(ocrashreportcategory);
-            throw new OReportedException(ocrashreport);
-        }
+        super.a(oentity, flag);
     }
 
     protected OIChunkProvider j() {
@@ -622,7 +608,7 @@ public class OWorldServer extends OWorld {
     protected void a(OEntity oentity) {
         super.a(oentity);
         this.V.a(oentity.k, oentity);
-        OEntity[] aoentity = oentity.am();
+        OEntity[] aoentity = oentity.an();
 
         if (aoentity != null) {
             for (int i = 0; i < aoentity.length; ++i) {
@@ -634,7 +620,7 @@ public class OWorldServer extends OWorld {
     protected void b(OEntity oentity) {
         super.b(oentity);
         this.V.d(oentity.k);
-        OEntity[] aoentity = oentity.am();
+        OEntity[] aoentity = oentity.an();
 
         if (aoentity != null) {
             for (int i = 0; i < aoentity.length; ++i) {

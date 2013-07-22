@@ -25,6 +25,7 @@ public class Stat {
      * @return
      */
     public int getID() {
+        // SRG return statBase.field_75975_e;
         return statBase.e;
     }
 
@@ -43,6 +44,7 @@ public class Stat {
      * @return
      */
     public boolean isIndependent() {
+        // SRG return statBase.field_75972_f;
         return statBase.f;
     }
 

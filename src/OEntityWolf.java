@@ -1,6 +1,3 @@
-import java.util.Iterator;
-import java.util.List;
-
 public class OEntityWolf extends OEntityTameable {
 
     private float bq;
@@ -30,53 +27,39 @@ public class OEntityWolf extends OEntityTameable {
         this.d.a(2, new OEntityAIOwnerHurtTarget(this));
         this.d.a(3, new OEntityAIHurtByTarget(this, true));
         this.d.a(4, new OEntityAITargetNonTamed(this, OEntitySheep.class, 200, false));
-        this.k(false);
+        this.j(false);
     }
 
-    protected void ax() {
-        super.ax();
+    protected void ay() {
+        super.ay();
         this.a(OSharedMonsterAttributes.d).a(0.30000001192092896D);
-        if (this.bP()) {
+        if (this.bT()) {
             this.a(OSharedMonsterAttributes.a).a(20.0D);
         } else {
             this.a(OSharedMonsterAttributes.a).a(8.0D);
         }
     }
 
-    public boolean bb() {
+    public boolean be() {
         return true;
     }
 
-    public void c(OEntityLivingBase oentitylivingbase) {
-        super.c(oentitylivingbase);
+    public void d(OEntityLivingBase oentitylivingbase) {
+        super.d(oentitylivingbase);
         if (oentitylivingbase == null) {
-            if (!this.bY()) {
-                return;
-            }
-
-            this.m(false);
-            List list = this.q.a(this.getClass(), OAxisAlignedBB.a().a(this.u, this.v, this.w, this.u + 1.0D, this.v + 1.0D, this.w + 1.0D).b(16.0D, 10.0D, 16.0D));
-            Iterator iterator = list.iterator();
-
-            while (iterator.hasNext()) {
-                OEntityWolf oentitywolf = (OEntityWolf) iterator.next();
-
-                if (this != oentitywolf) {
-                    oentitywolf.m(false);
-                }
-            }
-        } else {
-            this.m(true);
+            this.l(false);
+        } else if (!this.bT()) {
+            this.l(true);
         }
     }
 
-    protected void bg() {
-        this.ah.b(18, Float.valueOf(this.aJ()));
+    protected void bj() {
+        this.ah.b(18, Float.valueOf(this.aM()));
     }
 
     protected void a() {
         super.a();
-        this.ah.a(18, new Float(this.aJ()));
+        this.ah.a(18, new Float(this.aM()));
         this.ah.a(19, new Byte((byte) 0));
         this.ah.a(20, new Byte((byte) OBlockColored.j_(1)));
     }
@@ -87,31 +70,31 @@ public class OEntityWolf extends OEntityTameable {
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("Angry", this.bY());
-        onbttagcompound.a("CollarColor", (byte) this.bZ());
+        onbttagcompound.a("Angry", this.cc());
+        onbttagcompound.a("CollarColor", (byte) this.cd());
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
         super.a(onbttagcompound);
-        this.m(onbttagcompound.n("Angry"));
+        this.l(onbttagcompound.n("Angry"));
         if (onbttagcompound.b("CollarColor")) {
             this.p(onbttagcompound.c("CollarColor"));
         }
     }
 
     protected String r() {
-        return this.bY() ? "mob.wolf.growl" : (this.ab.nextInt(3) == 0 ? (this.bP() && this.ah.d(18) < 10.0F ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
+        return this.cc() ? "mob.wolf.growl" : (this.ab.nextInt(3) == 0 ? (this.bT() && this.ah.d(18) < 10.0F ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
     }
 
-    protected String aK() {
+    protected String aN() {
         return "mob.wolf.hurt";
     }
 
-    protected String aL() {
+    protected String aO() {
         return "mob.wolf.death";
     }
 
-    protected float aW() {
+    protected float aZ() {
         return 0.4F;
     }
 
@@ -121,7 +104,7 @@ public class OEntityWolf extends OEntityTameable {
 
     public void c() {
         super.c();
-        if (!this.q.I && this.bs && !this.bt && !this.bI() && this.F) {
+        if (!this.q.I && this.bs && !this.bt && !this.bM() && this.F) {
             this.bt = true;
             this.bu = 0.0F;
             this.bv = 0.0F;
@@ -132,13 +115,13 @@ public class OEntityWolf extends OEntityTameable {
     public void l_() {
         super.l_();
         this.br = this.bq;
-        if (this.ca()) {
+        if (this.ce()) {
             this.bq += (1.0F - this.bq) * 0.4F;
         } else {
             this.bq += (0.0F - this.bq) * 0.4F;
         }
 
-        if (this.ca()) {
+        if (this.ce()) {
             this.g = 10;
         }
 
@@ -149,7 +132,7 @@ public class OEntityWolf extends OEntityTameable {
             this.bv = 0.0F;
         } else if ((this.bs || this.bt) && this.bt) {
             if (this.bu == 0.0F) {
-                this.a("mob.wolf.shake", this.aW(), (this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F);
+                this.a("mob.wolf.shake", this.aZ(), (this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F);
             }
 
             this.bv = this.bu;
@@ -179,12 +162,12 @@ public class OEntityWolf extends OEntityTameable {
         return this.P * 0.8F;
     }
 
-    public int bl() {
-        return this.bQ() ? 20 : super.bl();
+    public int bp() {
+        return this.bU() ? 20 : super.bp();
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.ap()) {
+        if (this.aq()) {
             return false;
         } else {
             OEntity oentity = odamagesource.i();
@@ -199,13 +182,13 @@ public class OEntityWolf extends OEntityTameable {
     }
 
     public boolean m(OEntity oentity) {
-        int i = this.bP() ? 4 : 2;
+        int i = this.bT() ? 4 : 2;
 
         return oentity.a(ODamageSource.a((OEntityLivingBase) this), (float) i);
     }
 
-    public void k(boolean flag) {
-        super.k(flag);
+    public void j(boolean flag) {
+        super.j(flag);
         if (flag) {
             this.a(OSharedMonsterAttributes.a).a(20.0D);
         } else {
@@ -216,7 +199,7 @@ public class OEntityWolf extends OEntityTameable {
     public boolean a(OEntityPlayer oentityplayer) {
         OItemStack oitemstack = oentityplayer.bn.h();
 
-        if (this.bP()) {
+        if (this.bT()) {
             if (oitemstack != null) {
                 if (OItem.g[oitemstack.d] instanceof OItemFood) {
                     OItemFood oitemfood = (OItemFood) OItem.g[oitemstack.d];
@@ -236,7 +219,7 @@ public class OEntityWolf extends OEntityTameable {
                 } else if (oitemstack.d == OItem.aY.cv) {
                     int i = OBlockColored.j_(oitemstack.k());
 
-                    if (i != this.bZ()) {
+                    if (i != this.cd()) {
                         this.p(i);
                         if (!oentityplayer.bG.d && --oitemstack.b <= 0) {
                             oentityplayer.bn.a(oentityplayer.bn.c, (OItemStack) null);
@@ -248,11 +231,13 @@ public class OEntityWolf extends OEntityTameable {
             }
 
             if (oentityplayer.c_().equalsIgnoreCase(this.h_()) && !this.q.I && !this.c(oitemstack)) {
-                this.bp.a(!this.bQ());
+                this.bp.a(!this.bU());
                 this.bd = false;
                 this.a((OPathEntity) null);
+                this.b((OEntity) null);
+                this.d((OEntityLivingBase) null);
             }
-        } else if (oitemstack != null && oitemstack.d == OItem.aZ.cv && !this.bY()) {
+        } else if (oitemstack != null && oitemstack.d == OItem.aZ.cv && !this.cc()) {
             if (!oentityplayer.bG.d) {
                 --oitemstack.b;
             }
@@ -270,17 +255,16 @@ public class OEntityWolf extends OEntityTameable {
 
                 // if taming succeeded normally (tameResult == 0) or plugin hook result is allow (force taming)
                 if (tameResult == 0 && res == PluginLoader.HookResult.DEFAULT_ACTION || res == PluginLoader.HookResult.ALLOW_ACTION) {
-
-                    this.k(true);
+                    this.j(true);
                     this.a((OPathEntity) null);
-                    this.c((OEntityLivingBase) null);
+                    this.d((OEntityLivingBase) null);
                     this.bp.a(true);
                     this.g(20.0F);
                     this.b(oentityplayer.c_());
-                    this.j(true);
+                    this.i(true);
                     this.q.a((OEntity) this, (byte) 7);
                 } else {
-                    this.j(false);
+                    this.i(false);
                     this.q.a((OEntity) this, (byte) 6);
                 }
             }
@@ -295,15 +279,15 @@ public class OEntityWolf extends OEntityTameable {
         return oitemstack == null ? false : (!(OItem.g[oitemstack.d] instanceof OItemFood) ? false : ((OItemFood) OItem.g[oitemstack.d]).j());
     }
 
-    public int br() {
+    public int bv() {
         return 8;
     }
 
-    public boolean bY() {
+    public boolean cc() {
         return (this.ah.a(16) & 2) != 0;
     }
 
-    public void m(boolean flag) {
+    public void l(boolean flag) {
         byte b0 = this.ah.a(16);
 
         if (flag) {
@@ -313,7 +297,7 @@ public class OEntityWolf extends OEntityTameable {
         }
     }
 
-    public int bZ() {
+    public int cd() {
         return this.ah.a(20) & 15;
     }
 
@@ -327,13 +311,13 @@ public class OEntityWolf extends OEntityTameable {
 
         if (s != null && s.trim().length() > 0) {
             oentitywolf.b(s);
-            oentitywolf.k(true);
+            oentitywolf.j(true);
         }
 
         return oentitywolf;
     }
 
-    public void n(boolean flag) {
+    public void m(boolean flag) {
         if (flag) {
             this.ah.b(19, Byte.valueOf((byte) 1));
         } else {
@@ -344,23 +328,39 @@ public class OEntityWolf extends OEntityTameable {
     public boolean a(OEntityAnimal oentityanimal) {
         if (oentityanimal == this) {
             return false;
-        } else if (!this.bP()) {
+        } else if (!this.bT()) {
             return false;
         } else if (!(oentityanimal instanceof OEntityWolf)) {
             return false;
         } else {
             OEntityWolf oentitywolf = (OEntityWolf) oentityanimal;
 
-            return !oentitywolf.bP() ? false : (oentitywolf.bQ() ? false : this.bU() && oentitywolf.bU());
+            return !oentitywolf.bT() ? false : (oentitywolf.bU() ? false : this.bY() && oentitywolf.bY());
         }
     }
 
-    public boolean ca() {
+    public boolean ce() {
         return this.ah.a(19) == 1;
     }
 
     protected boolean t() {
-        return !this.bP() && this.ac > 2400;
+        return !this.bT() && this.ac > 2400;
+    }
+
+    public boolean a(OEntityLivingBase oentitylivingbase, OEntityLivingBase oentitylivingbase1) {
+        if (!(oentitylivingbase instanceof OEntityCreeper) && !(oentitylivingbase instanceof OEntityGhast)) {
+            if (oentitylivingbase instanceof OEntityWolf) {
+                OEntityWolf oentitywolf = (OEntityWolf) oentitylivingbase;
+
+                if (oentitywolf.bT() && oentitywolf.bV() == oentitylivingbase1) {
+                    return false;
+                }
+            }
+
+            return oentitylivingbase instanceof OEntityPlayer && oentitylivingbase1 instanceof OEntityPlayer && !((OEntityPlayer) oentitylivingbase1).a((OEntityPlayer) oentitylivingbase) ? false : !(oentitylivingbase instanceof OEntityHorse) || !((OEntityHorse) oentitylivingbase).bW();
+        } else {
+            return false;
+        }
     }
 
     public OEntityAgeable a(OEntityAgeable oentityageable) {

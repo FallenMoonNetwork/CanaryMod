@@ -34,7 +34,7 @@ public class OEntityEnderPearl extends OEntityThrowable {
                     OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) this.h();
 
                     if (!oentityplayermp.a.b && oentityplayermp.q == this.q) {
-                    if (this.h().ae()) {
+                    if (this.h().af()) {
                         this.h().a((OEntity) null);
                     }
 

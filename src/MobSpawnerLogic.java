@@ -5,28 +5,34 @@ public class MobSpawnerLogic {
 
     private OMobSpawnerBaseLogic logic;
 
+    @SuppressWarnings("LeakingThisInConstructor")
     public MobSpawnerLogic(OMobSpawnerBaseLogic logic) {
         this.logic = logic;
         this.logic.logic = this;
     }
 
     public int getX() {
+        // SRG return logic.func_98275_b();
         return logic.b();
     }
 
     public int getY() {
+        // SRG return logic.func_98274_c();
         return logic.c();
     }
 
     public int getZ() {
+        // SRG return logic.func_98266_d();
         return logic.d();
     }
 
     public World getWorld() {
+        // SRG return logic.func_98271_a().world;
         return logic.a().world;
     }
 
     public void update() {
+        // SRG logic.func_98278_g();
         logic.g();
     }
 
@@ -38,6 +44,7 @@ public class MobSpawnerLogic {
      * @see #setSpawnedEntity(Item)
      */
     public void setSpawn(String spawn) {
+        // SRG logic.func_98272_a(spawn);
         logic.a(spawn);
         update();
     }
@@ -48,17 +55,30 @@ public class MobSpawnerLogic {
      * @return
      */
     public String getSpawn() {
+        // SRG return logic.func_98276_e();
         return logic.e();
+    }
+
+    /**
+     * Returns the current delay of the spawner. When this reaches 0, the
+     * spawner tries to spawn a mob.
+     * @return The current delay in ticks.
+     */
+    public int getDelay() {
+        // SRG return logic.field_98286_b;
+        return logic.b;
     }
 
     /**
      * Allows delay of what to spawn to change on-the-fly.
      * Modification of this is near-useless as delays get randomized after
-     * spawn.
+     * spawn. Setting this to 0 causes the spawner to try to spawn a mob on the
+     * next tick.
      *
-     * @param delay
+     * @param delay The new delay
      */
     public void setDelay(int delay) {
+        // SRG logic.field_98286_b = delay;
         logic.b = delay;
     }
 
@@ -69,6 +89,7 @@ public class MobSpawnerLogic {
      * @return
      */
     public int getMinDelay() {
+        // SRG return logic.field_98283_g;
         return logic.g;
     }
 
@@ -80,6 +101,7 @@ public class MobSpawnerLogic {
      * @param delay
      */
     public void setMinDelay(int delay) {
+        // SRG logic.field_98283_g = delay;
         logic.g = delay;
     }
 
@@ -90,6 +112,7 @@ public class MobSpawnerLogic {
      * @return
      */
     public int getMaxDelay() {
+        // SRG return logic.field_98293_h;
         return logic.h;
     }
 
@@ -101,6 +124,7 @@ public class MobSpawnerLogic {
      * @param delay
      */
     public void setMaxDelay(int delay) {
+        // SRG logic.field_98293_h = delay;
         logic.h = delay;
     }
 
@@ -110,6 +134,7 @@ public class MobSpawnerLogic {
      * @return
      */
     public int getSpawnCount() {
+        // SRG return logic.field_98294_i;
         return logic.i;
     }
 
@@ -120,6 +145,7 @@ public class MobSpawnerLogic {
      * @param count
      */
     public void setSpawnCount(int count) {
+        // SRG logic.field_98294_i = count;
         logic.i = count;
     }
 
@@ -130,6 +156,7 @@ public class MobSpawnerLogic {
      * @return
      */
     public int getMaxNearbyEntities() {
+        // SRG return logic.field_98292_k;
         return logic.k;
     }
 
@@ -141,6 +168,7 @@ public class MobSpawnerLogic {
      * @param entities
      */
     public void setMaxNearbyEntities(int entities) {
+        // SRG logic.field_98292_k = entities;
         logic.k = entities;
     }
 
@@ -150,6 +178,7 @@ public class MobSpawnerLogic {
      * @return
      */
     public int getRequiredPlayerRange() {
+        // SRG return logic.field_98289_l;
         return logic.l;
     }
 
@@ -160,6 +189,7 @@ public class MobSpawnerLogic {
      * @param range
      */
     public void setRequiredPlayerRange(int range) {
+        // SRG logic.field_98289_l = range;
         logic.l = range;
     }
 
@@ -169,6 +199,7 @@ public class MobSpawnerLogic {
      * @return
      */
     public int getSpawnRange() {
+        // SRG return logic.field_98290_m;
         return logic.m;
     }
 
@@ -179,6 +210,7 @@ public class MobSpawnerLogic {
      * @param range
      */
     public void setSpawnRange(int range) {
+        // SRG logic.field_98290_m = range;
         logic.m = range;
     }
 
@@ -207,20 +239,17 @@ public class MobSpawnerLogic {
      */
     public void setSpawnedEntity(OEntity entity) {
         // gets the tag with the id for this entity
-        NBTTagCompound id = new NBTTagCompound();
-        entity.d(id.getBaseTag());
+        NBTTagCompound properties = new NBTTagCompound();
+        entity.getEntity().writeToTag(properties, true);
 
         //sets the entity and weight for this spawn
         NBTTagCompound entry = new NBTTagCompound();
-        entry.add("Type", id.getString("id"));
+        entry.add("Type", properties.getString("id"));
         entry.add("Weight", 1);
 
-        //sets the properties of this spawn.
-        NBTTagCompound properties= new NBTTagCompound();
-        entity.b(properties.getBaseTag());
-
         entry.add("Properties", properties);
-        logic.a(new OWeightedRandomMinecart(logic, entry.getBaseTag(), id.getString("id")));
+        // SRG logic.func_98277_a(new OWeightedRandomMinecart(logic, entry.getBaseTag(), properties.getString("id")));
+        logic.a(new OWeightedRandomMinecart(logic, entry.getBaseTag(), properties.getString("id")));
     }
 
     /**
@@ -256,7 +285,7 @@ public class MobSpawnerLogic {
      */
     public void setSpawnedEntity(Object[] entities) {
         NBTTagCompound toSet = new NBTTagCompound();
-        logic.b(toSet.getBaseTag());
+        writeToTag(toSet);
         NBTTagList list = new NBTTagList();
         for (Object object : entities) {
             if (!(object instanceof OEntity)) {
@@ -264,26 +293,47 @@ public class MobSpawnerLogic {
             }
             OEntity entity = (OEntity)object;
             // gets the tag with the id for this entity
-            NBTTagCompound id = new NBTTagCompound();
-            entity.d(id.getBaseTag());
+            NBTTagCompound properties = new NBTTagCompound();
+            entity.getEntity().writeToTag(properties, true);
 
-            //sets the entity and weight for this spawn
+            // sets the entity and weight for this spawn
             NBTTagCompound entry = new NBTTagCompound();
-            entry.add("Type", id.getString("id"));
+            entry.add("Type", properties.getString("id"));
             entry.add("Weight", 1);
 
-            //sets the properties of this spawn.
-            NBTTagCompound properties= new NBTTagCompound();
-            entity.b(properties.getBaseTag());
-
+            // sets the properties of this spawn.
             entry.add("Properties", properties);
             list.add(entry);
         }
         toSet.add("SpawnPotentials", list);
-        logic.a(toSet.getBaseTag());
+        readFromTag(toSet);
     }
 
+    /**
+     * Returns the wrapped (native) logic object.
+     * @return the wrapped <tt>OMobSpawnerBaseLogic</tt>
+     */
     public OMobSpawnerBaseLogic getLogic() {
         return logic;
+    }
+
+    /**
+     * Writes this logic's data to an NBTTagCompound.
+     *
+     * @param tag the tag to write the data to
+     */
+    public void writeToTag(NBTTagCompound tag) {
+        // SRG logic.func_98280_b(tag.getBaseTag());
+        logic.b(tag.getBaseTag());
+    }
+
+    /**
+     * Reads this logic's data from an NBTTagCompound.
+     *
+     * @param tag the tag to read the data from
+     */
+    public void readFromTag(NBTTagCompound tag) {
+        // SRG logic.func_98270_a(tag.getBaseTag());
+        logic.a(tag.getBaseTag());
     }
 }

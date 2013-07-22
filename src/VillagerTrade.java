@@ -61,6 +61,7 @@ public class VillagerTrade {
      * @return
      */
     public Item getBuyingOne() {
+        // SRG return new Item(getRecipe().func_77394_a());
         return new Item(getRecipe().a());
     }
 
@@ -70,6 +71,7 @@ public class VillagerTrade {
      * @param item The item
      */
     public void setBuyingOne(Item item) {
+        // SRG getRecipe().field_77403_a = item.getBaseItem();
         getRecipe().a = item.getBaseItem();
     }
 
@@ -79,6 +81,7 @@ public class VillagerTrade {
      * @return
      */
     public Item getBuyingTwo() {
+        // SRG return new Item(getRecipe().func_77396_b());
         return new Item(getRecipe().b());
     }
 
@@ -88,6 +91,7 @@ public class VillagerTrade {
      * @param item The item
      */
     public void setBuyingTwo(Item item) {
+        // SRG getRecipe().func_77396_b = item.getBaseItem();
         getRecipe().b = item.getBaseItem();
     }
 
@@ -97,6 +101,7 @@ public class VillagerTrade {
      * @return true if the player must give two items, false if the player must give only one
      */
     public boolean requiresTwoItems() {
+        // SRG return getRecipe().func_77398_c();
         return getRecipe().c();
     }
 
@@ -106,6 +111,7 @@ public class VillagerTrade {
      * @return
      */
     public Item getSelling() {
+        // SRG return new Item(getRecipe().func_77397_d());
         return new Item(getRecipe().d());
     }
 
@@ -115,6 +121,7 @@ public class VillagerTrade {
      * @param item
      */
     public void setSelling(Item item) {
+        // SRG getRecipe().field_77402_c = item.getBaseItem();
         getRecipe().c = item.getBaseItem();
     }
 
@@ -122,6 +129,7 @@ public class VillagerTrade {
      * Increase the number of times this was used by one.
      */
     public void use() {
+        // SRG getRecipe().func_77399_f();
         getRecipe().f();
     }
 
@@ -132,6 +140,7 @@ public class VillagerTrade {
      * @param increase the amount to increase it buy
      */
     public void increaseMaxUses(int increase) {
+        // SRG getRecipe().func_82783_a(increase);
         getRecipe().a(increase);
     }
 
@@ -141,6 +150,7 @@ public class VillagerTrade {
      * @return
      */
     public boolean isUsedUp() {
+        // SRG return getRecipe().func_82784_g();
         return getRecipe().g();
     }
 
@@ -150,6 +160,7 @@ public class VillagerTrade {
      * @return
      */
     public NBTTagCompound getDataAsTag() {
+        // SRG return new NBTTagCompound(getRecipe().func_77395_g());
         return new NBTTagCompound(getRecipe().i());
     }
 
@@ -159,6 +170,7 @@ public class VillagerTrade {
      * @param tag the tag to read the data from
      */
     public void readFromTag(NBTTagCompound tag) {
+        // SRG getRecipe().func_77390_a(tag.getBaseTag());
         getRecipe().a(tag.getBaseTag());
     }
 

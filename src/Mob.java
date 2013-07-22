@@ -35,7 +35,8 @@ public class Mob extends LivingEntity {
      */
     public Mob(String mob, World world) {
         this((OEntityLiving) OEntityList.a(mob, world.getWorld()));
-        this.getEntity().a(); // initCreature
+        // SRG this.getEntity().func_70088_a();
+        this.getEntity().a();
     }
 
     /**
@@ -69,7 +70,8 @@ public class Mob extends LivingEntity {
 
             return ghast.getTarget();
         }
-        return ((OEntityCreature) getEntity()).bu;
+        // SRG return getEntity().field_70776_bF;
+        return getEntity().bu;
     }
 
     /**
@@ -84,15 +86,22 @@ public class Mob extends LivingEntity {
             ghast.setTarget(target);
             return;
         }
-        ((OEntityCreature) getEntity()).bu = target;
+        // SRG getEntity().field_70776_bF = target;
+        getEntity().bu = target;
     }
 
     @Override
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         super.setHealth(health);
         if (health <= 0) {
             dropLoot();
         }
+    }
+
+    @Override
+    @Deprecated
+    public void setHealth(int health) {
+        super.setHealth(health);
     }
 
     /**
@@ -116,6 +125,7 @@ public class Mob extends LivingEntity {
             return false;
         }
 
+        // SRG OEntity c = OEntityList.func_75620_a(mob, etc.getServer().getDefaultWorld().getWorld());
         OEntity c = OEntityList.a(mob, etc.getServer().getDefaultWorld().getWorld());
 
         return c instanceof OIMob || c instanceof OIAnimals;
@@ -123,7 +133,8 @@ public class Mob extends LivingEntity {
 
     public boolean isInLove(){
         if (getEntity() instanceof OEntityAnimal){
-            return ((OEntityAnimal) getEntity()).bU();
+            // SRG return ((OEntityAnimal) getEntity()).func_70880_s();
+            return ((OEntityAnimal) getEntity()).bY();
         }
         return false;
     }

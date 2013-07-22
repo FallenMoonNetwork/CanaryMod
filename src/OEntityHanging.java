@@ -180,7 +180,7 @@ public abstract class OEntityHanging extends OEntity {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.ap()) {
+        if (this.aq()) {
             return false;
         } else {
             if (!this.M && !this.q.I) {
@@ -274,6 +274,10 @@ public abstract class OEntityHanging extends OEntity {
     public abstract int e();
 
     public abstract void b(OEntity oentity);
+
+    protected boolean O() {
+        return false;
+    }
     
     //CanaryMod: our methods go here :3
     @Override

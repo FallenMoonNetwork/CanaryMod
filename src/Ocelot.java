@@ -1,12 +1,12 @@
 
-public class Ocelot extends TamableEntity{
+public class Ocelot extends TamableEntity {
 
     /**
      * Basic ocelot constructor.
      *
      * @param entity An instance of OEntityOcelot to wrap around.
      */
-    public Ocelot(OEntityOcelot entity){
+    public Ocelot(OEntityOcelot entity) {
         super(entity);
     }
 
@@ -20,7 +20,8 @@ public class Ocelot extends TamableEntity{
      * 3 - Siamese,
      * Any other value defaults to normal.
      */
-    public void setSkin(int skin){
+    public void setSkin(int skin) {
+        // SRG getEntity().func_70912_b(skin);
         getEntity().p(skin);
     }
 
@@ -29,12 +30,13 @@ public class Ocelot extends TamableEntity{
      *
      * @return 0, 1, 2 or 3. See {@link Ocelot#setSkin(int)} for skin ids.
      */
-    public int getSkin(){
-
-        return getEntity().bW();
+    public int getSkin() {
+        // SRG return getEntity().func_70913_u();
+        return getEntity().ca();
     }
 
-    public OEntityOcelot getEntity(){
+    @Override
+    public OEntityOcelot getEntity() {
         return (OEntityOcelot) entity;
     }
 

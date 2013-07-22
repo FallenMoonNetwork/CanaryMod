@@ -15,6 +15,7 @@ public class MobSpawner extends MobSpawnerLogic implements ComplexBlock {
      * @param spawner
      */
     public MobSpawner(OTileEntityMobSpawner spawner) {
+        // SRG super(spawner.func_98049_a());
         super(spawner.a());
         this.spawner = spawner;
     }
@@ -31,6 +32,7 @@ public class MobSpawner extends MobSpawnerLogic implements ComplexBlock {
      */
     @Override
     public void readFromTag(NBTTagCompound tag) {
+        // SRG this.spawner.func_70307_a(tag.getBaseTag());
         this.spawner.a(tag.getBaseTag());
     }
 
@@ -41,6 +43,7 @@ public class MobSpawner extends MobSpawnerLogic implements ComplexBlock {
      */
     @Override
     public void writeToTag(NBTTagCompound tag) {
+        // SRG this.spawner.func_70310_b(tag.getBaseTag());
         this.spawner.b(tag.getBaseTag());
     }
 
@@ -52,6 +55,7 @@ public class MobSpawner extends MobSpawnerLogic implements ComplexBlock {
     @Override
     public void update() {
         super.update();
+        // SRG this.spawner.func_70316_g();
         this.spawner.h();
     }
 }

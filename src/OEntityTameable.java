@@ -22,7 +22,7 @@ public abstract class OEntityTameable extends OEntityAnimal implements OEntityOw
             onbttagcompound.a("Owner", this.h_());
         }
 
-        onbttagcompound.a("Sitting", this.bQ());
+        onbttagcompound.a("Sitting", this.bU());
     }
 
     public void a(ONBTTagCompound onbttagcompound) {
@@ -31,14 +31,14 @@ public abstract class OEntityTameable extends OEntityAnimal implements OEntityOw
 
         if (s.length() > 0) {
             this.b(s);
-            this.k(true);
+            this.j(true);
         }
 
         this.bp.a(onbttagcompound.n("Sitting"));
-        this.l(onbttagcompound.n("Sitting"));
+        this.k(onbttagcompound.n("Sitting"));
     }
 
-    protected void j(boolean flag) {
+    protected void i(boolean flag) {
         String s = "heart";
 
         if (!flag) {
@@ -54,11 +54,11 @@ public abstract class OEntityTameable extends OEntityAnimal implements OEntityOw
         }
     }
 
-    public boolean bP() {
+    public boolean bT() {
         return (this.ah.a(16) & 4) != 0;
     }
 
-    public void k(boolean flag) {
+    public void j(boolean flag) {
         byte b0 = this.ah.a(16);
 
         if (flag) {
@@ -68,11 +68,11 @@ public abstract class OEntityTameable extends OEntityAnimal implements OEntityOw
         }
     }
 
-    public boolean bQ() {
+    public boolean bU() {
         return (this.ah.a(16) & 1) != 0;
     }
 
-    public void l(boolean flag) {
+    public void k(boolean flag) {
         byte b0 = this.ah.a(16);
 
         if (flag) {
@@ -90,16 +90,48 @@ public abstract class OEntityTameable extends OEntityAnimal implements OEntityOw
         this.ah.b(17, s);
     }
 
-    public OEntityLivingBase bR() {
+    public OEntityLivingBase bV() {
         return this.q.a(this.h_());
     }
 
-    public OEntityAISit bS() {
+    public OEntityAISit bW() {
         return this.bp;
     }
 
+    public boolean a(OEntityLivingBase oentitylivingbase, OEntityLivingBase oentitylivingbase1) {
+        return true;
+    }
+
+    public OTeam bn() {
+        if (this.bT()) {
+            OEntityLivingBase oentitylivingbase = this.bV();
+
+            if (oentitylivingbase != null) {
+                return oentitylivingbase.bn();
+            }
+        }
+
+        return super.bn();
+    }
+
+    public boolean c(OEntityLivingBase oentitylivingbase) {
+        if (this.bT()) {
+            OEntityLivingBase oentitylivingbase1 = this.bV();
+
+            if (oentitylivingbase == oentitylivingbase1) {
+                return true;
+            }
+
+            if (oentitylivingbase1 != null) {
+                return oentitylivingbase1.c(oentitylivingbase);
+            }
+        }
+
+        return super.c(oentitylivingbase);
+    }
+
     public OEntity d() {
-        return this.bR();
+        return this.bV();
     }
 
     @Override

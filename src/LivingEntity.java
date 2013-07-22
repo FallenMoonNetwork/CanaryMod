@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * Interface for living entities.
  */
@@ -53,7 +49,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     @Deprecated
     public void increaseHealth(int health) {
-        getEntity().f(health);
+        this.increaseHealth((float) health);
     }
 
     /**
@@ -75,6 +71,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     // TODO: pull up
     public int getDeathTicks() {
+        // SRG return getEntity().field_70725_aQ;
         return getEntity().aB;
     }
 
@@ -85,6 +82,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     // TODO: pull up
     public void setDeathTicks(int ticks) {
+        // SRG getEntity().field_70725_aQ = ticks;
         getEntity().aB = ticks;
     }
 
@@ -118,6 +116,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     // TODO: pull up
     public int getBaseNoDamageTicks() {
+        // SRG return getEntity().field_70771_an;
         return getEntity().aI;
     }
 
@@ -148,6 +147,7 @@ public class LivingEntity extends LivingEntityBase {
      * Drops this mob's loot. Automatically called if health is set to 0.
      */
     public void dropLoot() {
+        // SRG getEntity().func_82160_b(true, 0);
         getEntity().a(true, 0);
     }
 
@@ -157,6 +157,7 @@ public class LivingEntity extends LivingEntityBase {
      * @param item
      */
     public void setItemInHand(Item item) {
+        // SRG getEntity().func_70062_b(0, item.getBaseItem());
         getEntity().c(0, item.getBaseItem());
     }
 
@@ -166,7 +167,8 @@ public class LivingEntity extends LivingEntityBase {
      * @return
      */
     public Item getItemStackInHand() {
-        OItemStack stack = getEntity().aV();
+        // SRG OItemStack stack = getEntity().func_70694_bm();
+        OItemStack stack = getEntity().aY();
         return stack == null ? null : new Item(stack);
     }
 
@@ -180,6 +182,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     public void setArmorSlot(int slot, Item armor) {
         if(slot >= 0 && slot <= 3) {
+            // SRG getEntity().func_70062_b(slot + 1, armor.getBaseItem());
             getEntity().c(slot + 1, armor.getBaseItem());
         }
     }
@@ -195,6 +198,7 @@ public class LivingEntity extends LivingEntityBase {
         if(slot < 0 || slot > 3) {
             return null;
         }
+        // SRG OItemStack stack = getEntity().func_130225_q(slot);
         OItemStack stack = getEntity().o(slot);
         return stack == null ? null : new Item(stack);
     }
@@ -205,6 +209,7 @@ public class LivingEntity extends LivingEntityBase {
      * @return
      */
     public boolean isPersistent() {
+        // SRG return getEntity().field_82179_bU;
         return getEntity().bt;
     }
 
@@ -214,6 +219,7 @@ public class LivingEntity extends LivingEntityBase {
      * @param isPersistent
      */
     public void setPersistent(boolean isPersistent) {
+        // SRG getEntity().field_82179_bU = isPersistent;
         getEntity().bt = isPersistent;
     }
 
@@ -225,6 +231,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     public float getDropChance(int slot) {
         if(slot >= 0 && slot <= 4) {
+            // SRG return getEntity().field_82174_bp[slot];
             return getEntity().e[slot];
         }
         return 0;
@@ -238,6 +245,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     public void setDropChance(int slot, float chance) {
         if(slot >= 0 && slot <= 4) {
+            // SRG getEntity().field_82174_bp[slot] = chance;
             getEntity().e[slot] = chance;
         }
     }
@@ -248,7 +256,8 @@ public class LivingEntity extends LivingEntityBase {
      * @return
      */
     public boolean canPickUpLoot() {
-        return getEntity().bz();
+        // SRG return getEntity().func_98052_bS();
+        return getEntity().bD();
     }
 
     /**
@@ -257,6 +266,7 @@ public class LivingEntity extends LivingEntityBase {
      * @param flag
      */
     public void setCanPickUpLoot(boolean flag) {
+        // SRG getEntity().func_98053_h(flag);
         getEntity().h(flag);
     }
 
@@ -269,7 +279,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     @Deprecated
     public void applyDamage(PluginLoader.DamageType type, int amount) {
-        getEntity().d(type.getDamageSource(), (float) amount);
+        applyDamage(type.getDamageSource().damageSource, (float) amount);
     }
 
     /**
@@ -281,7 +291,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     @Deprecated
     public void applyDamage(DamageType type, int amount) {
-        getEntity().d(type.getDamageSource().getDamageSource(), (float) amount);
+        applyDamage(type.getDamageSource(), (float) amount);
     }
 
     /**
@@ -293,7 +303,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     @Deprecated
     public void applayDamage(DamageSource source, int amount) {
-        getEntity().d(source.getDamageSource(), amount);
+        applyDamage(source, (float) amount);
     }
 
     /**
@@ -303,6 +313,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     // TODO: pull up
     public void applyDamage(DamageSource source, float amount) {
+        // SRG getEntity().func_70665_d(source.getDamageSource(), amount);
         getEntity().d(source.getDamageSource(), amount);
     }
 
@@ -311,7 +322,8 @@ public class LivingEntity extends LivingEntityBase {
      * @return This entity's custom name if it has one, an empty string otherwise
      */
     public String getCustomName() {
-        return getEntity().bw();
+        // SRG return getEntity().func_94057_bL();
+        return getEntity().bA();
     }
 
     /**
@@ -319,6 +331,7 @@ public class LivingEntity extends LivingEntityBase {
      * @param name This entity's new custom name
      */
     public void setCustomName(String name) {
+        // SRG getEntity().func_94058_c(name);
         getEntity().a(name);
     }
 
@@ -328,7 +341,8 @@ public class LivingEntity extends LivingEntityBase {
      * otherwise.
      */
     public boolean hasCustomName() {
-        return getEntity().bx();
+        // SRG return getEntity().func_94056_bM();
+        return getEntity().bB();
     }
 
     /**
@@ -337,7 +351,8 @@ public class LivingEntity extends LivingEntityBase {
      * otherwise.
      */
     public boolean isCustomNameVisible() {
-        return getEntity().by();
+        // SRG return getEntity().func_94062_bN();
+        return getEntity().bC();
     }
 
     /**
@@ -346,6 +361,7 @@ public class LivingEntity extends LivingEntityBase {
      * <tt>false</tt> to hide it.
      */
     public void setCustomNameVisible(boolean visible) {
+        // SRG getEntity().func_94061_f(visible);
         getEntity().g(visible);
     }
 }

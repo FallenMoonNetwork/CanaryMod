@@ -26,18 +26,22 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
     }
 
     public int getX() {
+        // SRG return this.container.field_70329_l;
         return this.container.l;
     }
 
     public int getY() {
+        // SRG return this.container.field_70330_m;
         return this.container.m;
     }
 
     public int getZ() {
+        // SRG return this.container.field_70327_n;
         return this.container.n;
     }
 
     public World getWorld() {
+        // SRG return this.container.field_70331_k.world;
         return this.container.k.world;
     }
 
@@ -47,8 +51,10 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
 
     @Override
     public void update() {
-        this.container.h(); // TileEntity.updateEntity
-        this.container.k_(); // IInventory.onInventoryChanged
+        // SRG this.container.func_70316_g();
+        this.container.h();
+        // SRG this.container.func_70296_d();
+        this.container.e();
     }
 
     @Override
@@ -122,6 +128,7 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
      * @param tag the tag to read from
      */
     public void readFromTag(NBTTagCompound tag) {
+        // SRG container.func_70307_a(tag.getBaseTag());
         container.a(tag.getBaseTag());
     }
 
@@ -131,6 +138,7 @@ public abstract class BaseContainerBlock<C extends OTileEntity & OIInventory & C
      * @param tag the tag to write to
      */
     public void writeToTag(NBTTagCompound tag) {
+        // SRG container.func_70310_b(tag.getBaseTag());
         container.b(tag.getBaseTag());
     }
 

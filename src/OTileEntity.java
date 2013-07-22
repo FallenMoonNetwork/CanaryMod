@@ -26,7 +26,7 @@ public class OTileEntity {
         }
     }
 
-    public OWorld ay() {
+    public OWorld az() {
         return this.k;
     }
 

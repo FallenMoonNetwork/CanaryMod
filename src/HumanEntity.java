@@ -1,7 +1,3 @@
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class HumanEntity extends LivingEntityBase {
     protected PlayerInventory inventory;
 
@@ -38,6 +34,7 @@ public class HumanEntity extends LivingEntityBase {
     @Override
     public String getName() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : oep.field_71092_bJ;
         return oep == null ? null : oep.bu;
     }
 
@@ -68,6 +65,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean isDamageDisabled() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : oep.field_71075_bZ.field_75102_a;
         return oep == null ? null : oep.bG.a;
     }
 
@@ -78,6 +76,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setDamageDisabled(boolean disabled) {
         if (getEntity() != null) {
+            // SRG getEntity().field_71075_bZ.field_75102_a = disabled;
             getEntity().bG.a = disabled;
         }
     }
@@ -88,6 +87,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean isFlying() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : oep.field_71075_bZ.field_75100_b;
         return oep == null ? null : oep.bG.b;
     }
 
@@ -98,6 +98,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setFlying(boolean flying) {
         if (getEntity() != null) {
+            // SRG getEntity().field_71075_bZ.field_75100_b = flying;
             getEntity().bG.b = flying;
         }
     }
@@ -108,6 +109,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean canFly() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : oep.field_71075_bZ.field_75101_c;
         return oep == null ? null : oep.bG.c;
     }
 
@@ -118,6 +120,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setCanFly(boolean allow) {
         if (getEntity() != null) {
+            // SRG getEntity().field_71075_bZ.field_75101_c = allow;
             getEntity().bG.c = allow;
         }
     }
@@ -130,6 +133,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean hasCreativePerks() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : oep.field_71075_bZ.field_75098_d;
         return oep == null ? null : oep.bG.d;
     }
 
@@ -142,6 +146,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setCreativePerks(boolean creativePerks) {
         if (getEntity() != null) {
+            // SRG getEntity().field_71075_bZ.field_75098_d = creativePerks;
             getEntity().bG.d = creativePerks;
         }
     }
@@ -152,6 +157,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean hasAdventureRestrictions() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : !oep.field_71075_bZ.field_75099_e;
         return oep == null ? null : !oep.bG.e;
     }
 
@@ -162,6 +168,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setAdventureRestrictions(boolean restrict) {
         if (getEntity() != null) {
+            // SRG getEntity().field_71075_bZ.field_75099_e = !restrict;
             getEntity().bG.e = !restrict;
         }
     }
@@ -173,6 +180,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public float getFlyingSpeed() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : oep.field_71075_bZ.func_75093_a();
         return oep == null ? null : oep.bG.a();
     }
 
@@ -183,6 +191,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public float getWalkingSpeed() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : oep.field_71075_bZ.func_75094_b();
         return oep == null ? null : oep.bG.b();
     }
 
@@ -192,7 +201,8 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void updateCapabilities() {
         if (getEntity() != null) {
-            getEntity().n();
+            // SRG getEntity().func_71016_p();
+            getEntity().o();
         }
     }
 
@@ -202,6 +212,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public boolean isSleeping() {
         OEntityPlayer oep = getEntity();
+        // SRG return oep == null ? null : oep.field_71083_bS;
         return oep == null ? null : oep.bC;
     }
 
@@ -212,6 +223,7 @@ public class HumanEntity extends LivingEntityBase {
      * @param amount the amount of experience points to add.
      */
     public void addXP(int amount) {
+        // SRG this.getEntity().func_71023_q(amount);
         this.getEntity().s(amount);
         this.updateXP();
     }
@@ -307,6 +319,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return
      */
     public float getFoodExhaustionLevel() {
+        // SRG return getEntity().field_71100_bB.field_75126_c;
         return getEntity().bq.c;
     }
 
@@ -316,6 +329,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return player food level
      */
     public int getFoodLevel() {
+        // SRG return getEntity().field_71100_bB.field_75127_a;
         return getEntity().bq.a;
     }
 
@@ -324,6 +338,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return
      */
     public float getFoodSaturationLevel() {
+        // SRG return getEntity().field_71100_bB.field_75125_b;
         return getEntity().bq.b;
     }
 
@@ -350,10 +365,8 @@ public class HumanEntity extends LivingEntityBase {
      * @return item id
      */
     public int getItemInHand() {
-        if (this.getEntity().bn.h() != null) {
-            return this.getEntity().bn.h().c;
-        }
-        return -1;
+        Item inHand = this.getItemStackInHand();
+        return inHand == null ? null : inHand.getItemId();
     }
 
     /**
@@ -362,20 +375,8 @@ public class HumanEntity extends LivingEntityBase {
      * @return Item
      */
     public Item getItemStackInHand() {
-        OItemStack result = getEntity().bn.h();
-        if (result != null) {
-            return new Item(result, getEntity().bn.c);
-        }
-        return null;
-    }
-
-    /**
-     * Get experience level for this Player.
-     *
-     * @return
-     */
-    public int getLevel() {
-        return getEntity().bH;
+        int slot = inventory.getSelectedSlot();
+        return slot >= 0 && slot < 9 ? inventory.getItemFromSlot(slot) : null;
     }
 
     /**
@@ -385,8 +386,10 @@ public class HumanEntity extends LivingEntityBase {
      */
     public Location getRespawnLocation() {
         Location spawn = etc.getServer().getDefaultWorld().getSpawnLocation();
-        OChunkCoordinates loc = getEntity().bA();
+        // SRG OChunkCoordinates loc = getEntity().func_70997_bJ();
+        OChunkCoordinates loc = getEntity().bE();
         if (loc != null) {
+            // SRG spawn = new Location(etc.getServer().getDefaultWorld(), loc.field_71574_a, loc.field_71572_b, loc.field_71573_c);
             spawn = new Location(etc.getServer().getDefaultWorld(), loc.a, loc.b, loc.c);
         }
         return spawn;
@@ -397,7 +400,18 @@ public class HumanEntity extends LivingEntityBase {
      * @return the score for this Player.
      */
     public int getScore() {
-        return getEntity().br();
+        // SRG return getEntity().func_71037_bA();
+        return getEntity().bv();
+    }
+
+    /**
+     * Get experience level for this Player.
+     *
+     * @return
+     */
+    public int getLevel() {
+        // SRG return getEntity().field_71068_ca;
+        return getEntity().bH;
     }
 
     /**
@@ -406,7 +420,26 @@ public class HumanEntity extends LivingEntityBase {
      * @return
      */
     public int getXP() {
+        // SRG return getEntity().field_71067_cb;
         return getEntity().bI;
+    }
+
+    /**
+     * Returns the "progress" of the XP bar, in percents.
+     * @return the "progress" of the XP bar, in percents.s
+     */
+    public float getXPBarProgress() {
+        // SRG return getEntity().field_71106_cc;
+        return getEntity().bJ;
+    }
+
+    /**
+     * Gets the amount of XP needed to fill the bar.
+     * @return the amount of XP needed to fill the bar
+     */
+    public int getXPBarMax() {
+        // SRG return getEntity().func_71050_bK();
+        return getEntity().bG();
     }
 
     /**
@@ -432,20 +465,38 @@ public class HumanEntity extends LivingEntityBase {
     }
 
     /**
-     * Gives the player this item by dropping it in front of them<br>
-     * NOTE:  using this method calls Hook PluginLoader.Hook.ITEM_DROP
+     * Gives the player this item by dropping it in front of them.<br>
+     * <strong>NOTE:</strong> using this method calls the
+     * PluginLoader.Hook.ITEM_DROP hook.
      *
-     * @param item
+     * @param toDrop
      * @see PluginLoader.Hook.ITEM_DROP
      * @see PluginListener.onItemDrop(Player player, ItemEntity item)
      */
-    public void giveItemDrop(Item item) {
-        giveItemDrop(item.getItemId(), item.getAmount(), item.getDamage());
+    public void giveItemDrop(Item toDrop) {
+        Item item = toDrop.clone();
+        OEntityPlayer player = getEntity();
+        if (item.getAmount() == -1) {
+            item.setAmount(255);
+            // SRG player.func_71021_b(item.getBaseItem());
+            player.b(item.getBaseItem());
+        } else {
+            while (item.getAmount() > 0) {
+                if (item.getAmount() - item.getMaxAmount() >= item.getMaxAmount()) {
+                    // SRG player.func_71021_b(item.split(item.getMaxAmount()).getBaseItem());
+                    player.b(item.split(item.getMaxAmount()).getBaseItem());
+                } else {
+                    // SRG player.func_71021_b(item.getBaseItem());
+                    player.b(item.getBaseItem());
+                }
+            }
+        }
     }
 
     /**
-     * Gives the player this item by dropping it in front of them<br>
-     * NOTE:  using this method calls Hook PluginLoader.Hook.ITEM_DROP
+     * Gives the player this item by dropping it in front of them.<br>
+     * <strong>NOTE:</strong> using this method calls the
+     * PluginLoader.Hook.ITEM_DROP hook.
      *
      * @param itemId
      * @param amount
@@ -457,8 +508,9 @@ public class HumanEntity extends LivingEntityBase {
     }
 
     /**
-     * Gives the player this item by dropping it in front of them<br>
-     * NOTE:  using this method calls Hook PluginLoader.Hook.ITEM_DROP
+     * Gives the player this item by dropping it in front of them.<br>
+     * <strong>NOTE:</strong> using this method calls the
+     * PluginLoader.Hook.ITEM_DROP hook.
      *
      * @param itemId
      * @param amount
@@ -467,20 +519,7 @@ public class HumanEntity extends LivingEntityBase {
      * @see PluginListener.onItemDrop(Player player, ItemEntity item)
      */
     public void giveItemDrop(int itemId, int amount, int damage) {
-        OEntityPlayer player = getEntity();
-        if (amount == -1) {
-            player.c(new OItemStack(itemId, 255, damage));
-        } else {
-            int temp = amount;
-            do {
-                if (temp - 64 >= 64) {
-                    player.c(new OItemStack(itemId, 64, damage));
-                } else {
-                    player.c(new OItemStack(itemId, temp, damage));
-                }
-                temp -= 64;
-            } while (temp > 0);
-        }
+        this.giveItemDrop(new Item(itemId, amount, -1, damage));
     }
 
     public boolean hasItem(Item item) {
@@ -508,6 +547,7 @@ public class HumanEntity extends LivingEntityBase {
      * @param foodExhaustionLevel
      */
     public void setFoodExhaustionLevel(float foodExhaustionLevel) {
+        // SRG getEntity().field_71100_bB.field_75126_c = Math.min(foodExhaustionLevel, 40.0F);
         getEntity().bq.c = Math.min(foodExhaustionLevel, 40.0F);
         updateLevels();
     }
@@ -519,6 +559,7 @@ public class HumanEntity extends LivingEntityBase {
      *         new food level, between 1 and 20
      */
     public void setFoodLevel(int foodLevel) {
+        // SRG getEntity().field_71100_bB.field_75127_a = Math.min(foodLevel, 20);
         getEntity().bq.a = Math.min(foodLevel, 20);
         updateLevels();
     }
@@ -529,6 +570,7 @@ public class HumanEntity extends LivingEntityBase {
      * @param foodSaturationLevel
      */
     public void setFoodSaturationLevel(float foodSaturationLevel) {
+        // SRG getEntity().field_71100_bB.field_75125_b = Math.min(foodSaturationLevel, getFoodLevel());
         getEntity().bq.b = Math.min(foodSaturationLevel, getFoodLevel());
         updateLevels();
     }
@@ -541,13 +583,14 @@ public class HumanEntity extends LivingEntityBase {
     }
 
     /**
-     * Sets a player's respawn location
+     * Sets a player's respawn location. Only x, y and z apply, world will be
+     * the default world.
      *
-     * @param location
+     * @param location The {@link Location} containing the x, y and z
+     * coordinates for the respawn location
      */
     public void setRespawnLocation(Location location) {
-        OChunkCoordinates loc = new OChunkCoordinates((int) Math.floor(location.x), (int) Math.floor(location.y), (int) Math.floor(location.z));
-        getEntity().a(loc, true);
+        this.setRespawnLocation(etc.floor(location.x), etc.floor(location.y), etc.floor(location.z));
     }
 
     /**
@@ -559,6 +602,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public void setRespawnLocation(int x, int y, int z) {
         OChunkCoordinates loc = new OChunkCoordinates(x, y, z);
+        // SRG getEntity().func_71063_a(loc, true);
         getEntity().a(loc, true);
     }
 
@@ -611,6 +655,7 @@ public class HumanEntity extends LivingEntityBase {
      * @return this player's {@link EnderChestInventory} for modification
      */
     public EnderChestInventory getEnderChest() {
-        return new EnderChestInventory(getEntity().bF(), this);
+        // SRG return new EnderChestInventory(getEntity().func_71005_bN(), this);
+        return new EnderChestInventory(getEntity().bJ(), this);
     }
 }

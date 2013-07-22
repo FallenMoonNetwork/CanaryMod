@@ -1,4 +1,3 @@
-
 /**
  * Interface for hanging entities (paintings, item frames, etc)
  *
@@ -56,7 +55,7 @@ public class HangingEntity extends BaseEntity {
      *
      */
     public void place() {
-        getEntity().q.d(getEntity());
+        this.spawn();
     }
 
     @Override
@@ -70,6 +69,7 @@ public class HangingEntity extends BaseEntity {
      * @return
      */
     public Position getPosition() {
+        // SRG return Position.values()[getEntity().field_82332_a];
         return Position.values()[getEntity().a];
     }
 
@@ -79,6 +79,7 @@ public class HangingEntity extends BaseEntity {
      * @param position The position to set it to
      */
     public void setPosition(Position position) {
+        // SRG getEntity().func_82328_a(position.ordinal());
         getEntity().a(position.ordinal());
     }
 }

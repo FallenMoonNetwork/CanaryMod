@@ -27,6 +27,7 @@ public class BaseEntity implements Metadatable {
      * @return id
      */
     public int getId() {
+        // SRG return this.entity.field_70157_k;
         return this.entity.k;
     }
 
@@ -40,6 +41,7 @@ public class BaseEntity implements Metadatable {
      * @param pitch
      */
     public void teleportTo(double x, double y, double z, float rotation, float pitch) {
+        // SRG this.entity.func_70012_b(x, y, z, rotation, pitch);
         this.entity.b(x, y, z, rotation, pitch);
     }
 
@@ -69,6 +71,7 @@ public class BaseEntity implements Metadatable {
      * @return x
      */
     public double getX() {
+        // SRG return this.entity.field_70165_t;
         return this.entity.u;
     }
 
@@ -88,6 +91,7 @@ public class BaseEntity implements Metadatable {
      * @return y
      */
     public double getY() {
+        // SRG return this.entity.field_70163_u;
         return this.entity.v;
     }
 
@@ -107,6 +111,7 @@ public class BaseEntity implements Metadatable {
      * @return z
      */
     public double getZ() {
+        // SRG return this.entity.field_70161_v;
         return this.entity.w;
     }
 
@@ -126,6 +131,7 @@ public class BaseEntity implements Metadatable {
      * @return pitch
      */
     public float getPitch() {
+        // SRG return this.entity.field_70125_A;
         return this.entity.B;
     }
 
@@ -145,6 +151,7 @@ public class BaseEntity implements Metadatable {
      * @return rotation
      */
     public float getRotation() {
+        // SRG return this.entity.field_70177_z;
         return this.entity.A;
     }
 
@@ -280,6 +287,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public int getNoDamageTicks() {
+        // SRG return this.getEntity().field_70172_ad;
         return this.getEntity().af;
     }
 
@@ -293,6 +301,7 @@ public class BaseEntity implements Metadatable {
      * @param ticks
      */
     public void setNoDamageTicks(int ticks) {
+        // SRG this.getEntity().field_70172_ad = ticks;
         this.getEntity().af = ticks;
     }
 
@@ -305,7 +314,8 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public int getAirTicks() {
-        return this.getEntity().aj();
+        // SRG return this.getEntity().func_70086_ai();
+        return this.getEntity().ak();
     }
 
     /**
@@ -317,6 +327,7 @@ public class BaseEntity implements Metadatable {
      * @param ticks the number of ticks you have air
      */
     public void setAirTicks(int ticks) {
+        // SRG this.getEntity().func_70050_g(ticks);
         this.getEntity().g(ticks);
     }
 
@@ -329,6 +340,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public int getFireTicks() {
+        // SRG return this.getEntity().field_70151_c;
         return this.getEntity().d;
     }
 
@@ -341,6 +353,7 @@ public class BaseEntity implements Metadatable {
      * @param ticks the amount of fire ticks
      */
     public void setFireTicks(int ticks) {
+        // SRG this.getEntity().field_70151_c = ticks;
         this.getEntity().d = ticks;
     }
 
@@ -349,6 +362,7 @@ public class BaseEntity implements Metadatable {
      * @return the World this entity is in
      */
     public World getWorld() {
+        // SRG return this.getEntity().field_70170_p.world;
         return this.getEntity().q.world;
     }
 
@@ -358,6 +372,7 @@ public class BaseEntity implements Metadatable {
      * @return x-motion
      */
     public double getMotionX() {
+        // SRG return this.entity.field_70159_w;
         return this.entity.x;
     }
 
@@ -367,6 +382,7 @@ public class BaseEntity implements Metadatable {
      * @return y-motion
      */
     public double getMotionY() {
+        // SRG return this.entity.field_70181_x;
         return this.entity.y;
     }
 
@@ -376,6 +392,7 @@ public class BaseEntity implements Metadatable {
      * @return z-motion
      */
     public double getMotionZ() {
+        // SRG return this.entity.field_70179_y;
         return this.entity.z;
     }
 
@@ -399,7 +416,9 @@ public class BaseEntity implements Metadatable {
      * motion to set
      */
     public void setMotionX(double motion) {
+        // SRG this.entity.field_70159_w = motion;
         this.entity.x = motion;
+        // SRG this.entity.field_70133_I = true;
         this.entity.J = true;
     }
 
@@ -410,7 +429,9 @@ public class BaseEntity implements Metadatable {
      * motion to set
      */
     public void setMotionY(double motion) {
+        // SRG this.entity.field_70181_x = motion;
         this.entity.y = motion;
+        // SRG this.entity.field_70133_I = true;
         this.entity.J = true;
     }
 
@@ -421,7 +442,9 @@ public class BaseEntity implements Metadatable {
      * motion to set
      */
     public void setMotionZ(double motion) {
+        // SRG this.entity.field_70179_y = motion;
         this.entity.z = motion;
+        // SRG this.entity.field_70133_I = true;
         this.entity.J = true;
     }
 
@@ -429,6 +452,7 @@ public class BaseEntity implements Metadatable {
      * Destroys this entity
      */
     public void destroy() {
+        // SRG this.entity.func_70106_y();
         this.entity.w();
     }
 
@@ -438,6 +462,7 @@ public class BaseEntity implements Metadatable {
      * @return name
      */
     public String getName() {
+        // SRG return OEntityList.func_75621_b(this.entity);
         return OEntityList.b(this.entity);
     }
 
@@ -446,7 +471,8 @@ public class BaseEntity implements Metadatable {
      * @return the sprinting state
      */
     public boolean getSprinting() {
-        return this.entity.ag();
+        // SRG return this.entity.func_70051_ag();
+        return this.entity.ah();
     }
 
     /**
@@ -455,6 +481,7 @@ public class BaseEntity implements Metadatable {
      * @param sprinting
      */
     public void setSprinting(boolean sprinting) {
+        // SRG this.entity.func_70031_b(sprinting);
         this.entity.c(sprinting);
     }
 
@@ -467,8 +494,10 @@ public class BaseEntity implements Metadatable {
      */
     public boolean writeToTag(NBTTagCompound tag, boolean includeId) {
         if (includeId) {
+            // SRG return getEntity().func_98035_c(tag.getBaseTag());
             return getEntity().c(tag.getBaseTag());
         }
+        // SRG getEntity().func_70109_d(tag.getBaseTag());
         getEntity().e(tag.getBaseTag());
         return true;
     }
@@ -479,6 +508,7 @@ public class BaseEntity implements Metadatable {
      * @param tag the tag to read the data from
      */
     public void readFromTag(NBTTagCompound tag) {
+        // SRG getEntity().func_70020_e(tag.getBaseTag());
         getEntity().f(tag.getBaseTag());
     }
 
@@ -517,17 +547,19 @@ public class BaseEntity implements Metadatable {
      * @param rider
      */
     public void spawn(LivingEntity rider) {
-        OWorld world = entity.q;
+        OWorld world = this.getWorld().getWorld();
 
-        entity.b(getX(), getY(), getZ(), getRotation(), getPitch());
+        this.teleportTo(getX(), getY(), getZ(), getRotation(), getPitch());
+        // SRG world.func_72838_d(entity);
         world.d(entity);
 
         if (rider != null) {
             OEntityLiving mob2 = rider.getEntity();
 
-            mob2.b(getX(), getY(), getZ(), getRotation(), 0f);
+            rider.teleportTo(getX(), getY(), getZ(), getRotation(), 0f);
+            // SRG world.func_72838_d(mob2);
             world.d(mob2);
-            mob2.a(entity);
+            rider.setRidingEntity(this);
         }
     }
 
@@ -537,7 +569,8 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public boolean isInvulnerable() {
-        return getEntity().ap();
+        // SRG return getEntity().func_85032_ar();
+        return getEntity().aq();
     }
 
     /**
@@ -546,12 +579,13 @@ public class BaseEntity implements Metadatable {
      * @param isInvulnerable
      */
     public void setInvulnerable(boolean isInvulnerable) {
+        // SRG entity.field_83001_bt = isInvulnerable;
         entity.h = isInvulnerable;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof BaseEntity) {
+        if (obj instanceof BaseEntity) {
             return ((BaseEntity) obj).getId() == getId();
         }
         return false;
@@ -568,9 +602,8 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public BaseEntity getRiddenByEntity() {
-        if (this.entity.n == null)
-            return null;
-        return this.entity.n.getEntity();
+        // SRG return this.entity.field_70153_n == null ? null : this.entity.field_70153_n.getEntity();
+        return this.entity.n == null ? null : this.entity.n.getEntity();
     }
 
     /**
@@ -578,7 +611,13 @@ public class BaseEntity implements Metadatable {
      * @param entity
      */
     public void setRiddenByEntity(BaseEntity entity) {
-        entity.getEntity().a(this.getEntity());
+        if (entity == null) {
+            if (this.getRiddenByEntity() != null) {
+                this.getRiddenByEntity().dismount();
+            }
+        } else {
+            entity.setRidingEntity(this);
+        }
     }
 
     /**
@@ -587,9 +626,8 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public BaseEntity getRidingEntity() {
-        if (this.entity.o == null)
-            return null;
-        return this.entity.o.getEntity();
+        // SRG return this.entity.field_70154_o == null ? null : this.entity.field_70154_o.getEntity();
+        return this.entity.o == null ? null : this.entity.o.getEntity();
     }
 
     /**
@@ -598,10 +636,8 @@ public class BaseEntity implements Metadatable {
      * @param entity
      */
     public void setRidingEntity(BaseEntity entity) {
-        if(entity == null)
-            this.entity.a((OEntity)null);
-        else
-            this.entity.a(entity.getEntity());
+        // SRG this.entity.func_70078_a((OEntity) (entity == null ? null : entity.getEntity()));
+        this.entity.a((OEntity) (entity == null ? null : entity.getEntity()));
     }
 
     /**
@@ -617,6 +653,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public boolean isDead() {
+        // SRG return this.entity.field_70128_L;
         return this.entity.M;
     }
 
@@ -626,6 +663,7 @@ public class BaseEntity implements Metadatable {
      * @return boolean True if on ground, false if in midair.
      */
     public boolean isOnGround() {
+        // SRG return this.entity.field_70122_E;
         return this.entity.F;
     }
 
@@ -635,6 +673,7 @@ public class BaseEntity implements Metadatable {
      * @return
      */
     public float getEyeHeight() {
+        // SRG return getEntity().func_70047_e();
         return getEntity().f();
     }
 
@@ -644,7 +683,8 @@ public class BaseEntity implements Metadatable {
      * @return true if sneaking
      */
     public boolean getSneaking() {
-        return getEntity().af();
+        // SRG return getEntity().func_70093_af();
+        return getEntity().ag();
     }
 
     /**
@@ -654,6 +694,7 @@ public class BaseEntity implements Metadatable {
      *            true if sneaking
      */
     public void setSneaking(boolean sneaking) {
+        // SRG getEntity().func_70095_a(sneaking);
         getEntity().b(sneaking);
     }
 

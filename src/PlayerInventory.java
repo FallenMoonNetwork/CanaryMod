@@ -14,6 +14,7 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> {
         this(null, human);
     }
     public PlayerInventory(OContainer oContainer, HumanEntity human) {
+        // SRG super(oContainer, human.getEntity().field_71071_by);
         super(oContainer, human.getEntity().bn);
         user = human.getEntity();
     }
@@ -36,6 +37,7 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> {
 
     @Override
     public void update() {
+        // SRG user.func_70071_h_();
         user.l_();
     }
 
@@ -78,11 +80,22 @@ public class PlayerInventory extends ItemArray<OInventoryPlayer> {
      * @return Item
      */
     public Item getCursorItem() {
+        // SRG OItemStack itemstack = container.func_70445_o();
         OItemStack itemstack = container.o();
         return itemstack == null ? null : new Item(itemstack);
     }
 
     public void setCursorItem(Item item) {
+        // SRG container.func_70437_b(item.getBaseItem());
         container.b(item.getBaseItem());
+    }
+
+    /**
+     * Returns the highlighted slot on the quickbar (0-8).
+     * @return
+     */
+    public int getSelectedSlot() {
+        // SRG return container.field_70461_c;
+        return container.c;
     }
 }

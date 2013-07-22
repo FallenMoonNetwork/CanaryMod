@@ -88,11 +88,13 @@ public class HopperBlock extends BaseContainerBlock<OTileEntityHopper> implement
 
     @Override
     public int getTranferCooldown() {
+        // SRG return hopper.field_98048_c;
         return hopper.c;
     }
 
     @Override
     public void setTransferCooldown(int cooldown) {
+        // SRG hopper.field_98048_c = cooldown;
         hopper.c = cooldown;
     }
 }

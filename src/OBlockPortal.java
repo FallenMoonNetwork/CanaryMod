@@ -20,7 +20,7 @@ public class OBlockPortal extends OBlockBreakable {
                 OEntity oentity = OItemMonsterPlacer.a(oworld, 57, (double) i + 0.5D, (double) l + 1.1D, (double) k + 0.5D);
 
                 if (oentity != null) {
-                    oentity.ao = oentity.aa();
+                    oentity.ao = oentity.ab();
                 }
             }
         }
@@ -162,7 +162,7 @@ public class OBlockPortal extends OBlockBreakable {
 
     public void a(OWorld oworld, int i, int j, int k, OEntity oentity) {
         if (oentity.o == null && oentity.n == null) {
-            oentity.Z();
+            oentity.aa();
         }
     }
 }

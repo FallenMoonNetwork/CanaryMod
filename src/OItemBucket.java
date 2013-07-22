@@ -128,7 +128,8 @@ public class OItemBucket extends OItem {
         if (this.a <= 0) {
             return false;
         } else {
-            boolean flag = !oworld.g(i, j, k).a();
+            OMaterial omaterial = oworld.g(i, j, k);
+            boolean flag = !omaterial.a();
 
             if (!oworld.c(i, j, k) && !flag) {
                 return false;
@@ -143,10 +144,6 @@ public class OItemBucket extends OItem {
                     }
                 }
 
-                if (!oworld.I && flag) {
-                    oworld.a(i, j, k, true);
-                }
-
                 if (oworld.t.f && this.a == OBlock.F.cF) {
                     oworld.a((double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), "random.fizz", 0.5F, 2.6F + (oworld.s.nextFloat() - oworld.s.nextFloat()) * 0.8F);
 
@@ -154,6 +151,10 @@ public class OItemBucket extends OItem {
                         oworld.a("largesmoke", (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
                     }
                 } else {
+                    if (!oworld.I && flag && !omaterial.d()) {
+                        oworld.a(i, j, k, true);
+                    }
+
                     oworld.f(i, j, k, this.a, 0, 3);
                 }
 

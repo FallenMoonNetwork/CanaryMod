@@ -22,6 +22,7 @@ public class DamageSource {
      * @return
      */
     public String getDeathMessage(Player player) {
+        // SRG return osource.func_76360_b(player.getEntity()).func_111062_i();
         return osource.b(player.getEntity()).i();
     }
 
@@ -31,6 +32,7 @@ public class DamageSource {
      * @return
      */
     public String getName() {
+        // SRG return osource.field_76373_n;
         return osource.o;
     }
 
@@ -41,10 +43,8 @@ public class DamageSource {
      * @return the source entity
      */
     public BaseEntity getSourceEntity() {
-        if(osource.i() != null) {
-            return osource.i().getEntity();
-        }
-        return null;
+        // SRG return osource.func_76346_g() != null ? osource.func_76346_g().getEntity() : null;
+        return osource.i() != null ? osource.i().getEntity() : null;
     }
 
     /**
@@ -54,6 +54,7 @@ public class DamageSource {
      * @return the damaging entity
      */
     public BaseEntity getDamagingEntity() {
+        // SRG return osource.func_76364_f() != null ? osource.func_76364_f().getEntity() : null;
         return osource.h() != null ? osource.h().getEntity() : null;
     }
 
@@ -62,6 +63,7 @@ public class DamageSource {
      * @return true if projectile, false otherwise
      */
     public boolean isProjectileDamage() {
+        // SRG return osource.func_76352_a();
         return osource.a();
     }
 
@@ -70,6 +72,7 @@ public class DamageSource {
      * @return this
      */
     public DamageSource setProjectileDamage() {
+        // SRG osource.func_76349_b();
         osource.b();
         return this;
     }
@@ -79,6 +82,7 @@ public class DamageSource {
      * @return true if is explosion, false otherwise
      */
     public boolean isExplosionDamage() {
+        // SRG return osource.func_94541_c();
         return osource.c();
     }
 
@@ -87,6 +91,7 @@ public class DamageSource {
      * @return this
      */
     public DamageSource setExplosionDamage() {
+        // SRG osource.func_94540_d();
         osource.d();
         return this;
     }
@@ -96,6 +101,7 @@ public class DamageSource {
      * @return true if fire damage, false otherwise
      */
     public boolean isFireDamage() {
+        // SRG return osource.func_76347_k();
         return osource.m();
     }
 
@@ -104,6 +110,7 @@ public class DamageSource {
      * @return true if magic damage, false otherwise
      */
     public boolean isMagicDamage() {
+        // SRG return osource.func_82725_o();
         return osource.q();
     }
 
@@ -112,6 +119,7 @@ public class DamageSource {
      * @return this
      */
     public DamageSource setMagicDamage() {
+        // SRG osource.func_82726_p();
         osource.r();
         return this;
     }
@@ -120,6 +128,7 @@ public class DamageSource {
      * @return
      */
     public boolean isUnblockable() {
+        // SRG return osource.func_76363_c();
         return osource.e();
     }
 
@@ -128,6 +137,7 @@ public class DamageSource {
      * @return
      */
     public boolean canDamageInCreativeMode() {
+        // SRG return osource.func_76357_e();
         return osource.g();
     }
 
@@ -152,6 +162,7 @@ public class DamageSource {
      * @return
      */
     public float getHungerImpact() {
+        // SRG return osource.func_76345_d();
         return osource.f();
     }
 
@@ -160,6 +171,7 @@ public class DamageSource {
      * @return
      */
     public boolean isDifficultyScaled() {
+        // SRG return osource.func_76350_n();
         return osource.p();
     }
 
@@ -168,7 +180,8 @@ public class DamageSource {
      * @return
      */
     public DamageSource setDifficultyScaled() {
-        osource.q();
+        // SRG osource.func_76351_m();
+        osource.o();
         return this;
     }
 

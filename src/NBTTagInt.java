@@ -44,6 +44,7 @@ public class NBTTagInt extends NBTBase {
      * @return
      */
     public int getValue() {
+        // SRG return this.getBaseTag().field_74748_a;
         return this.getBaseTag().a;
     }
 
@@ -53,6 +54,7 @@ public class NBTTagInt extends NBTBase {
      * @param value the new value
      */
     public void setValue(int value) {
+        // SRG this.getBaseTag().field_74748_a = value;
         this.getBaseTag().a = value;
     }
 

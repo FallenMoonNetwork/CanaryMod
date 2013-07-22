@@ -22,6 +22,7 @@ public class Beacon extends BaseContainerBlock<OTileEntityBeacon> implements Com
      * @return
      */
     public boolean isValidEffect(PotionEffect.Type effect) {
+        // SRG return isValidEffectAtLevels(effect, OTileEntityBeacon.field_82139_a.length);
         return isValidEffectAtLevels(effect, OTileEntityBeacon.a.length);
     }
 
@@ -33,11 +34,14 @@ public class Beacon extends BaseContainerBlock<OTileEntityBeacon> implements Com
      * @return
      */
     public boolean isValidEffectAtLevels(PotionEffect.Type effect, int levels) {
+        // SRG OPotion[][] potions = OTileEntityBeacon.field_82139_a;
         OPotion[][] potions = OTileEntityBeacon.a;
-        for(int i = 0; i < levels && i < potions.length; i++) {
-            for(int j = 0; j < potions[i].length; j++) {
-                if(potions[i][j].H == effect.getId())
+        for (int i = 0; i < levels && i < potions.length; i++) {
+            for (int j = 0; j < potions[i].length; j++) {
+                // SRG if (potions[i][j].field_76415_H == effect.getId()) {
+                if (potions[i][j].H == effect.getId()) {
                     return true;
+                }
             }
         }
         return false;

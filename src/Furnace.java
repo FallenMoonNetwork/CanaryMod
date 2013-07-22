@@ -17,6 +17,7 @@ public class Furnace extends BaseContainerBlock<OTileEntityFurnace> implements C
      * @return burn time ticks
      */
     public short getBurnTime() {
+        // SRG return (short) container.field_70407_a;
         return (short) container.a;
     }
 
@@ -25,6 +26,7 @@ public class Furnace extends BaseContainerBlock<OTileEntityFurnace> implements C
      * @param time ticks of burning left
      */
     public void setBurnTime(short time) {
+        // SRG container.field_70407_a = time;
         container.a = time;
     }
 
@@ -34,6 +36,7 @@ public class Furnace extends BaseContainerBlock<OTileEntityFurnace> implements C
      * @return cook time ticks
      */
     public short getCookTime() {
+        // SRG return (short) container.field_70406_c;
         return (short) container.c;
     }
 
@@ -43,6 +46,7 @@ public class Furnace extends BaseContainerBlock<OTileEntityFurnace> implements C
      * @param time ticks of cooking
      */
     public void setCookTime(short time) {
+        // SRG container.field_70406_c = time;
         container.c = time;
     }
 }

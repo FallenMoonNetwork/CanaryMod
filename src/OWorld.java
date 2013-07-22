@@ -1240,10 +1240,10 @@ public abstract class OWorld implements OIBlockAccess {
             oentity.C = oentity.A;
             oentity.D = oentity.B;
             if (flag && oentity.ai) {
+                ++oentity.ac;
                 if (oentity.o != null) {
-                    oentity.T();
+                    oentity.U();
                 } else {
-                    ++oentity.ac;
                     oentity.l_();
                 }
             }
@@ -1442,7 +1442,7 @@ public abstract class OWorld implements OIBlockAccess {
                 }
             }
 
-            if (ovec3.b() > 0.0D && oentity.av()) {
+            if (ovec3.b() > 0.0D && oentity.aw()) {
                 ovec3 = ovec3.a();
                 double d1 = 0.014D;
 
@@ -2212,7 +2212,7 @@ public abstract class OWorld implements OIBlockAccess {
         for (int j = 0; j < this.e.size(); ++j) {
             OEntity oentity = (OEntity) this.e.get(j);
 
-            if ((!(oentity instanceof OEntityLiving) || !((OEntityLiving) oentity).bA()) && oclass.isAssignableFrom(oentity.getClass())) {
+            if ((!(oentity instanceof OEntityLiving) || !((OEntityLiving) oentity).bE()) && oclass.isAssignableFrom(oentity.getClass())) {
                 ++i;
             }
         }
@@ -2397,16 +2397,16 @@ public abstract class OWorld implements OIBlockAccess {
         for (int i = 0; i < this.h.size(); ++i) {
             OEntityPlayer oentityplayer1 = (OEntityPlayer) this.h.get(i);
 
-            if (!oentityplayer1.bG.a && oentityplayer1.R()) {
+            if (!oentityplayer1.bG.a && oentityplayer1.S()) {
                 double d5 = oentityplayer1.e(d0, d1, d2);
                 double d6 = d3;
 
-                if (oentityplayer1.af()) {
+                if (oentityplayer1.ag()) {
                     d6 = d3 * 0.800000011920929D;
                 }
 
-                if (oentityplayer1.ah()) {
-                    float f = oentityplayer1.bs();
+                if (oentityplayer1.ai()) {
+                    float f = oentityplayer1.bw();
 
                     if (f < 0.1F) {
                         f = 0.1F;

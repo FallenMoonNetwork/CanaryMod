@@ -1,4 +1,3 @@
-
 public class InventoryMerchant extends ItemArray<OInventoryMerchant> {
 
     public InventoryMerchant(OContainer oContainer, OInventoryMerchant container) {
@@ -7,7 +6,8 @@ public class InventoryMerchant extends ItemArray<OInventoryMerchant> {
 
     @Override
     public void update() {
-        container.k_();
+        // SRG container.func_70296_d();
+        container.e();
     }
 
     @Override

@@ -39,6 +39,7 @@ public class Zombie extends Mob {
      * @return
      */
     public boolean isBaby() {
+        // SRG return getEntity().func_70631_g_();
         return getEntity().g_();
     }
 
@@ -48,7 +49,9 @@ public class Zombie extends Mob {
      * @param isBaby
      */
     public void setBaby(boolean isBaby) {
+        // SRG getEntity().func_82227_f(isBaby);
         getEntity().a(isBaby);
+
     }
 
     /**
@@ -57,7 +60,8 @@ public class Zombie extends Mob {
      * @return
      */
     public boolean isVillager() {
-        return getEntity().bP();
+        // SRG return getEntity().func_82231_m();
+        return getEntity().bT();
     }
 
     /**
@@ -66,7 +70,8 @@ public class Zombie extends Mob {
      * @param isVillager
      */
     public void setVillager(boolean isVillager) {
-        getEntity().j(isVillager);
+        // SRG getEntity().func_82229_g(isVillager);
+        getEntity().i(isVillager);
     }
 
     @Override

@@ -26,6 +26,7 @@ public class TNTMinecart extends Minecart {
      * Activates the TNT as if the cart passed over an activator rail.
      */
     public void activate() {
+        // SRG this.getEntity().func_94105_c();
         this.getEntity().d();
     }
 
@@ -35,6 +36,7 @@ public class TNTMinecart extends Minecart {
      * @param power The power at which the cart should explode, squared
      */
     public void explode(double power) {
+        // SRG this.getEntity().func_94103_c(power);
         this.getEntity().c(power);
     }
 
@@ -44,6 +46,7 @@ public class TNTMinecart extends Minecart {
      * @return The fuse time in ticks for the TNT if lit, -1 otherwise.
      */
     public int getFuseTime() {
+        // SRG return this.getEntity().field_94106_a;
         return this.getEntity().a;
     }
 
@@ -54,6 +57,7 @@ public class TNTMinecart extends Minecart {
      * @param time The fuse time in ticks.
      */
     public void setFuseTime(int time) {
+        // SRG this.getEntity().field_94106_a = time;
         this.getEntity().a = time;
     }
 
@@ -63,6 +67,7 @@ public class TNTMinecart extends Minecart {
      * @return <tt>true</tt> if the fuse is lit, <tt>false</tt> otherwise.
      */
     public boolean isFuseLit() {
-        return this.getEntity().ax();
+        // SRG return this.getEntity().func_96096_ay();
+        return this.getEntity().ay();
     }
 }

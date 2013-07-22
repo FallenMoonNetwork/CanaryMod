@@ -30,9 +30,9 @@ public class ONetLoginHandler extends ONetHandler {
         this.a.e = 0;
     }
 
-    public void c() {
+    public void d() {
         if (this.h) {
-            this.d();
+            this.e();
         }
 
         if (this.f++ == 600) {
@@ -44,7 +44,7 @@ public class ONetLoginHandler extends ONetHandler {
 
     public void a(String s) {
         try {
-            this.e.an().a("Disconnecting " + this.e() + ": " + s);
+            this.e.an().a("Disconnecting " + this.f() + ": " + s);
             this.a.a((OPacket) (new OPacket255KickDisconnect(s)));
             this.a.d();
             this.b = true;
@@ -60,8 +60,8 @@ public class ONetLoginHandler extends ONetHandler {
         } else {
             PublicKey publickey = this.e.H().getPublic();
 
-            if (opacket2clientprotocol.d() != 73) {
-                if (opacket2clientprotocol.d() > 73) {
+            if (opacket2clientprotocol.d() != 74) {
+                if (opacket2clientprotocol.d() > 74) {
                     this.a("Outdated server!");
                 } else {
                     this.a("Outdated client!");
@@ -104,7 +104,7 @@ public class ONetLoginHandler extends ONetHandler {
 
     public void a(OPacket1Login opacket1login) {}
 
-    public void d() {
+    public void e() {
         String s = this.e.af().a(this.a.c(), this.g);
 
         if (s != null) {
@@ -121,7 +121,7 @@ public class ONetLoginHandler extends ONetHandler {
     }
 
     public void a(String s, Object[] aobject) {
-        this.e.an().a(this.e() + " lost connection");
+        this.e.an().a(this.f() + " lost connection");
         this.b = true;
     }
 
@@ -138,7 +138,7 @@ public class ONetLoginHandler extends ONetHandler {
             if (opacket254serverping.d()) {
                 s = this.e.ac() + "\u00a7" + oserverconfigurationmanager.k() + "\u00a7" + oserverconfigurationmanager.l();
             } else {
-                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(73), this.e.z(), this.e.ac(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
+                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(74), this.e.z(), this.e.ac(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
 
                 Object object;
 
@@ -174,12 +174,16 @@ public class ONetLoginHandler extends ONetHandler {
         this.a("Protocol error");
     }
 
-    public String e() {
+    public String f() {
         return this.g != null ? this.g + " [" + this.a.c().toString() + "]" : this.a.c().toString();
     }
 
     public boolean a() {
         return true;
+    }
+
+    public boolean c() {
+        return this.b;
     }
 
     static String a(ONetLoginHandler onetloginhandler) {

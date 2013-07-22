@@ -1,3 +1,6 @@
+
+import java.util.Random;
+
 /**
  * Interface for a projectile
  *
@@ -30,11 +33,14 @@ public class Projectile extends BaseEntity {
      */
     public BaseEntity getShooter() {
         OEntity me = getEntity();
-        if(me instanceof OEntityThrowable) {
+        if (me instanceof OEntityThrowable) {
+            // SRG return ((OEntityThrowable) me).func_85052_h() == null ? null : ((OEntityThrowable) me).func_85052_h().getEntity();
             return ((OEntityThrowable) me).h() == null ? null : ((OEntityThrowable) me).h().getEntity();
         } else if(me instanceof OEntityArrow) {
+            // SRG return ((OEntityArrow) me).field_70250_c == null ? null : ((OEntityArrow) me).field_70250_c.getEntity();
             return ((OEntityArrow) me).c == null ? null : ((OEntityArrow) me).c.getEntity();
         } else if(me instanceof OEntityFireball) {
+            // SRG return ((OEntityFireball) me).field_70235_a == null ? null : ((OEntityFireball) me).field_70235_a.getEntity();
             return ((OEntityFireball) me).a == null ? null : ((OEntityFireball) me).a.getEntity();
         }
         return null;
@@ -52,9 +58,11 @@ public class Projectile extends BaseEntity {
             ((OEntityThrowable) me).setShooter(shooter.getEntity());
             return true;
         } else if(me instanceof OEntityArrow) {
+            // SRG ((OEntityArrow) me).field_70250_c = shooter.getEntity();
             ((OEntityArrow) me).c = shooter.getEntity();
             return true;
         } else if(me instanceof OEntityFireball) {
+            // SRG ((OEntityFireball) me).field_70235_a = shooter.getEntity();
             ((OEntityFireball) me).a = shooter.getEntity();
             return true;
         }
@@ -72,21 +80,40 @@ public class Projectile extends BaseEntity {
      * @param inaccuracy The inaccuracy with which it will be fired.
      */
     public void aimAt(double x, double y, double z, float power, float inaccuracy) { //pretty much copied directly from OEntityArrow.c()
-        double var6 = x - entity.u;
-        double var8 = y + (double)0 - 0.699999988079071D - entity.v;
-        double var10 = z - entity.w;
-        double var12 = (double)OMathHelper.a(var6 * var6 + var10 * var10);
-        if(var12 >= 1.0E-7D) {
-           float var14 = (float)(Math.atan2(var10, var6) * 180.0D / 3.1415927410125732D) - 90.0F;
-           float var15 = (float)(-(Math.atan2(var8, var12) * 180.0D / 3.1415927410125732D));
-           double var16 = var6 / var12;
-           double var18 = var10 / var12;
-           entity.b(entity.u + var16, entity.v, entity.w + var18, var14, var15);
-           entity.N = 0.0F;
-           if(getEntity() instanceof OIProjectile) {
-               float var20 = (float)var12 * 0.2F;
-                  ((OIProjectile) getEntity()).c(var6, var8 + (double)var20, var10, power, inaccuracy);
-           }
+        if (entity instanceof OIProjectile) { // We have a method to do exactly this!
+            ((OIProjectile) entity).c(x - getX(), y - getY(), z - getZ(), power, inaccuracy);
+        } else {
+            // SRG Random random = entity.ab; // Use this entity's random generator
+            Random random = entity.ab; // Use this entity's random generator
+            OEntityFireball fireball = (OEntityFireball) entity;
+
+            // Turn into vector
+            x -= getX();
+            y -= getY();
+            z -= getZ();
+
+            // Convert to unit vector
+            double vecLen = Math.sqrt(x * x + y * y + z * z);
+            x /= vecLen;
+            y /= vecLen;
+            z /= vecLen;
+
+            // Add inaccuracy
+            x += random.nextGaussian() * (random.nextBoolean() ? -1 : 1) * 0.0075 * inaccuracy;
+            y += random.nextGaussian() * (random.nextBoolean() ? -1 : 1) * 0.0075 * inaccuracy;
+            z += random.nextGaussian() * (random.nextBoolean() ? -1 : 1) * 0.0075 * inaccuracy;
+            // Add power
+            x *= power;
+            y *= power;
+            z *= power;
+
+            // Set acceleration!
+            // SRG fireball.field_70232_b = x;
+            fireball.b = x;
+            // SRG fireball.field_70233_c = y;
+            fireball.c = y;
+            // SRG fireball.field_70230_d = z;
+            fireball.d = z;
         }
     }
 

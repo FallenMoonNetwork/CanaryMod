@@ -1,73 +1,28 @@
 /**
- * Class used for interfacing with note blocks.
+ * Class used for interfacing with tileEntity blocks.
  * @author 14mRh4X0r
  */
-public class NoteBlock implements ComplexBlock {
-
-    OTileEntityNote note;
+public class NoteBlock extends ComplexBlockBase<OTileEntityNote> {
 
     public NoteBlock(OTileEntityNote note) {
-        this.note = note;
-    }
-
-    @Override
-    public int getX() {
-        return note.l;
-    }
-
-    @Override
-    public int getY() {
-        return note.m;
-    }
-
-    @Override
-    public int getZ() {
-        return note.n;
-    }
-
-    @Override
-    public void update() {
-        note.h();
-    }
-
-    @Override
-    public Block getBlock() {
-        return getWorld().getBlockAt(getX(), getY(), getZ());
-    }
-
-    @Override
-    public World getWorld() {
-        return note.k.world;
+        super(note);
     }
 
     /**
-     * Returns the current pitch of the note block.
+     * Returns the current pitch of the tileEntity block.
      * @return current pitch
      */
     public byte getNote() {
-        return note.a;
+        // SRG return tileEntity.field_70416_a;
+        return tileEntity.a;
     }
 
     /**
-     * Sets the pitch of the note block to a given value.
-     * @param note The new pitch
+     * Sets the pitch of the tileEntity block to a given value.
+     * @param tileEntity The new pitch
      */
-    public void setNote(byte note) {
-        this.note.a = note;
-    }
-
-    @Override
-    public NBTTagCompound getMetaTag() {
-        return note.metadata;
-    }
-
-    @Override
-    public void writeToTag(NBTTagCompound tag) {
-        note.b(tag.getBaseTag());
-    }
-
-    @Override
-    public void readFromTag(NBTTagCompound tag) {
-        note.a(tag.getBaseTag());
+    public void setNote(byte tileEntity) {
+        // SRG this.tileEntity.field_70416_a = tileEntity;
+        this.tileEntity.a = tileEntity;
     }
 }

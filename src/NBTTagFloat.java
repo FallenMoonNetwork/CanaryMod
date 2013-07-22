@@ -44,6 +44,7 @@ public class NBTTagFloat extends NBTBase {
      * @return
      */
     public float getValue() {
+        // SRG return this.getBaseTag().field_74750_a;
         return this.getBaseTag().a;
     }
 
@@ -53,6 +54,7 @@ public class NBTTagFloat extends NBTBase {
      * @param value the new value
      */
     public void setValue(float value) {
+        // SRG this.getBaseTag().field_74750_a = value;
         this.getBaseTag().a = value;
     }
 

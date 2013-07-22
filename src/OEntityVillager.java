@@ -40,7 +40,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         this.c.a(2, new OEntityAIMoveIndoors(this));
         this.c.a(3, new OEntityAIRestrictOpenDoor(this));
         this.c.a(4, new OEntityAIOpenDoor(this, true));
-        this.c.a(5, new OEntityAIMoveTwardsRestriction(this, 0.6D));
+        this.c.a(5, new OEntityAIMoveTowardsRestriction(this, 0.6D));
         this.c.a(6, new OEntityAIVillagerMate(this));
         this.c.a(7, new OEntityAIFollowGolem(this));
         this.c.a(8, new OEntityAIPlay(this, 0.32D));
@@ -50,22 +50,22 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         this.c.a(10, new OEntityAIWatchClosest(this, OEntityLiving.class, 8.0F));
     }
 
-    protected void ax() {
-        super.ax();
+    protected void ay() {
+        super.ay();
         this.a(OSharedMonsterAttributes.d).a(0.5D);
     }
 
-    public boolean bb() {
+    public boolean be() {
         return true;
     }
 
-    protected void bg() {
+    protected void bj() {
         if (--this.bq <= 0) {
             this.q.A.a(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w));
             this.bq = 70 + this.ab.nextInt(50);
             this.bp = this.q.A.a(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w), 32);
             if (this.bp == null) {
-                this.bN();
+                this.bR();
             } else {
                 OChunkCoordinates ochunkcoordinates = this.bp.a();
 
@@ -77,7 +77,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
             }
         }
 
-        if (!this.bS() && this.bv > 0) {
+        if (!this.bW() && this.bv > 0) {
             --this.bv;
             if (this.bv <= 0) {
                 if (this.bw) {
@@ -101,11 +101,11 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
                     }
                 }
 
-                this.d(new OPotionEffect(OPotion.l.H, 200, 0));
+                this.c(new OPotionEffect(OPotion.l.H, 200, 0));
             }
         }
 
-        super.bg();
+        super.bj();
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
@@ -117,10 +117,10 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         }
         boolean flag = oitemstack != null && oitemstack.d == OItem.bE.cv;
 
-        if (!flag && this.R() && !this.bS() && !this.g_()) {
+        if (!flag && this.S() && !this.bW() && !this.g_()) {
             if (!this.q.I) {
                 this.a_(oentityplayer);
-                oentityplayer.a((OIMerchant) this, this.bw());
+                oentityplayer.a((OIMerchant) this, this.bA());
             }
 
             return true;
@@ -136,7 +136,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
 
     public void b(ONBTTagCompound onbttagcompound) {
         super.b(onbttagcompound);
-        onbttagcompound.a("Profession", this.bP());
+        onbttagcompound.a("Profession", this.bT());
         onbttagcompound.a("Riches", this.bx);
         if (this.bu != null) {
             onbttagcompound.a("Offers", this.bu.a());
@@ -159,14 +159,14 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
     }
 
     protected String r() {
-        return this.bS() ? "mob.villager.haggle" : "mob.villager.idle";
+        return this.bW() ? "mob.villager.haggle" : "mob.villager.idle";
     }
 
-    protected String aK() {
+    protected String aN() {
         return "mob.villager.hit";
     }
 
-    protected String aL() {
+    protected String aO() {
         return "mob.villager.death";
     }
 
@@ -174,23 +174,23 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         this.ah.b(16, Integer.valueOf(i));
     }
 
-    public int bP() {
+    public int bT() {
         return this.ah.c(16);
     }
 
-    public boolean bQ() {
+    public boolean bU() {
         return this.br;
     }
 
-    public void j(boolean flag) {
+    public void i(boolean flag) {
         this.br = flag;
     }
 
-    public void k(boolean flag) {
+    public void j(boolean flag) {
         this.bs = flag;
     }
 
-    public boolean bR() {
+    public boolean bV() {
         return this.bs;
     }
 
@@ -206,7 +206,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
                 }
 
                 this.bp.a(((OEntityPlayer) oentitylivingbase).c_(), b0);
-                if (this.R()) {
+                if (this.S()) {
                     this.q.a((OEntity) this, (byte) 13);
                 }
             }
@@ -243,14 +243,14 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         return this.bt;
     }
 
-    public boolean bS() {
+    public boolean bW() {
         return this.bt != null;
     }
 
     public void a(OMerchantRecipe omerchantrecipe) {
         omerchantrecipe.f();
         this.a_ = -this.o();
-        this.a("mob.villager.yes", this.aW(), this.aX());
+        this.a("mob.villager.yes", this.aZ(), this.ba());
         if (omerchantrecipe.a((OMerchantRecipe) this.bu.get(this.bu.size() - 1))) {
             this.bv = 40;
             this.bw = true;
@@ -270,9 +270,9 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         if (!this.q.I && this.a_ > -this.o() + 20) {
             this.a_ = -this.o();
             if (oitemstack != null) {
-                this.a("mob.villager.yes", this.aW(), this.aX());
+                this.a("mob.villager.yes", this.aZ(), this.ba());
             } else {
-                this.a("mob.villager.no", this.aW(), this.aX());
+                this.a("mob.villager.no", this.aZ(), this.ba());
             }
         }
     }
@@ -285,7 +285,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         return this.bu;
     }
 
-    private float o(float f) {
+    private float p(float f) {
         float f1 = f + this.bA;
 
         return f1 > 0.9F ? 0.9F - (f1 - 0.9F) : f1;
@@ -304,34 +304,34 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         int j;
 
         label50:
-        switch (this.bP()) {
+        switch (this.bT()) {
             case 0:
-                a(omerchantrecipelist, OItem.V.cv, this.ab, this.o(0.9F));
-                a(omerchantrecipelist, OBlock.ag.cF, this.ab, this.o(0.5F));
-                a(omerchantrecipelist, OItem.bm.cv, this.ab, this.o(0.5F));
-                a(omerchantrecipelist, OItem.aX.cv, this.ab, this.o(0.4F));
-                b(omerchantrecipelist, OItem.W.cv, this.ab, this.o(0.9F));
-                b(omerchantrecipelist, OItem.bh.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.l.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.be.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.bg.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.k.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.bn.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.n.cv, this.ab, this.o(0.5F));
-                if (this.ab.nextFloat() < this.o(0.5F)) {
+                a(omerchantrecipelist, OItem.V.cv, this.ab, this.p(0.9F));
+                a(omerchantrecipelist, OBlock.ag.cF, this.ab, this.p(0.5F));
+                a(omerchantrecipelist, OItem.bm.cv, this.ab, this.p(0.5F));
+                a(omerchantrecipelist, OItem.aX.cv, this.ab, this.p(0.4F));
+                b(omerchantrecipelist, OItem.W.cv, this.ab, this.p(0.9F));
+                b(omerchantrecipelist, OItem.bh.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.l.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.be.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.bg.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.k.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.bn.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.n.cv, this.ab, this.p(0.5F));
+                if (this.ab.nextFloat() < this.p(0.5F)) {
                     omerchantrecipelist.add(new OMerchantRecipe(new OItemStack(OBlock.K, 10), new OItemStack(OItem.bJ), new OItemStack(OItem.ar.cv, 4 + this.ab.nextInt(2), 0)));
                 }
                 break;
 
             case 1:
-                a(omerchantrecipelist, OItem.aM.cv, this.ab, this.o(0.8F));
-                a(omerchantrecipelist, OItem.aN.cv, this.ab, this.o(0.8F));
-                a(omerchantrecipelist, OItem.bI.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OBlock.as.cF, this.ab, this.o(0.8F));
-                b(omerchantrecipelist, OBlock.R.cF, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.aS.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.aU.cv, this.ab, this.o(0.2F));
-                if (this.ab.nextFloat() < this.o(0.07F)) {
+                a(omerchantrecipelist, OItem.aM.cv, this.ab, this.p(0.8F));
+                a(omerchantrecipelist, OItem.aN.cv, this.ab, this.p(0.8F));
+                a(omerchantrecipelist, OItem.bI.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OBlock.as.cF, this.ab, this.p(0.8F));
+                b(omerchantrecipelist, OBlock.R.cF, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.aS.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.aU.cv, this.ab, this.p(0.2F));
+                if (this.ab.nextFloat() < this.p(0.07F)) {
                     OEnchantment oenchantment = OEnchantment.c[this.ab.nextInt(OEnchantment.c.length)];
                     int k = OMathHelper.a(this.ab, oenchantment.d(), oenchantment.b());
                     OItemStack oitemstack = OItem.bY.a(new OEnchantmentData(oenchantment, k));
@@ -342,10 +342,10 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
                 break;
 
             case 2:
-                b(omerchantrecipelist, OItem.bC.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.bF.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.aE.cv, this.ab, this.o(0.4F));
-                b(omerchantrecipelist, OBlock.bi.cF, this.ab, this.o(0.3F));
+                b(omerchantrecipelist, OItem.bC.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.bF.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.aE.cv, this.ab, this.p(0.4F));
+                b(omerchantrecipelist, OBlock.bi.cF, this.ab, this.p(0.3F));
                 int[] aint = new int[] { OItem.s.cv, OItem.B.cv, OItem.ag.cv, OItem.ak.cv, OItem.j.cv, OItem.E.cv, OItem.i.cv, OItem.D.cv};
                 int[] aint1 = aint;
                 int l = aint.length;
@@ -359,7 +359,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
 
                     int i1 = aint1[j];
 
-                    if (this.ab.nextFloat() < this.o(0.05F)) {
+                    if (this.ab.nextFloat() < this.p(0.05F)) {
                         omerchantrecipelist.add(new OMerchantRecipe(new OItemStack(i1, 1, 0), new OItemStack(OItem.bJ, 2 + this.ab.nextInt(3), 0), OEnchantmentHelper.a(this.ab, new OItemStack(i1, 1, 0), 5 + this.ab.nextInt(15))));
                     }
 
@@ -367,45 +367,45 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
                 }
 
             case 3:
-                a(omerchantrecipelist, OItem.o.cv, this.ab, this.o(0.7F));
-                a(omerchantrecipelist, OItem.q.cv, this.ab, this.o(0.5F));
-                a(omerchantrecipelist, OItem.r.cv, this.ab, this.o(0.5F));
-                a(omerchantrecipelist, OItem.p.cv, this.ab, this.o(0.5F));
-                b(omerchantrecipelist, OItem.s.cv, this.ab, this.o(0.5F));
-                b(omerchantrecipelist, OItem.B.cv, this.ab, this.o(0.5F));
-                b(omerchantrecipelist, OItem.j.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.E.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.i.cv, this.ab, this.o(0.5F));
-                b(omerchantrecipelist, OItem.D.cv, this.ab, this.o(0.5F));
-                b(omerchantrecipelist, OItem.h.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.C.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.R.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.S.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.ai.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.am.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.af.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.aj.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.ag.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.ak.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.ah.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.al.cv, this.ab, this.o(0.2F));
-                b(omerchantrecipelist, OItem.ae.cv, this.ab, this.o(0.1F));
-                b(omerchantrecipelist, OItem.ab.cv, this.ab, this.o(0.1F));
-                b(omerchantrecipelist, OItem.ac.cv, this.ab, this.o(0.1F));
-                b(omerchantrecipelist, OItem.ad.cv, this.ab, this.o(0.1F));
+                a(omerchantrecipelist, OItem.o.cv, this.ab, this.p(0.7F));
+                a(omerchantrecipelist, OItem.q.cv, this.ab, this.p(0.5F));
+                a(omerchantrecipelist, OItem.r.cv, this.ab, this.p(0.5F));
+                a(omerchantrecipelist, OItem.p.cv, this.ab, this.p(0.5F));
+                b(omerchantrecipelist, OItem.s.cv, this.ab, this.p(0.5F));
+                b(omerchantrecipelist, OItem.B.cv, this.ab, this.p(0.5F));
+                b(omerchantrecipelist, OItem.j.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.E.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.i.cv, this.ab, this.p(0.5F));
+                b(omerchantrecipelist, OItem.D.cv, this.ab, this.p(0.5F));
+                b(omerchantrecipelist, OItem.h.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.C.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.R.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.S.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.ai.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.am.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.af.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.aj.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.ag.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.ak.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.ah.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.al.cv, this.ab, this.p(0.2F));
+                b(omerchantrecipelist, OItem.ae.cv, this.ab, this.p(0.1F));
+                b(omerchantrecipelist, OItem.ab.cv, this.ab, this.p(0.1F));
+                b(omerchantrecipelist, OItem.ac.cv, this.ab, this.p(0.1F));
+                b(omerchantrecipelist, OItem.ad.cv, this.ab, this.p(0.1F));
                 break;
 
             case 4:
-                a(omerchantrecipelist, OItem.o.cv, this.ab, this.o(0.7F));
-                a(omerchantrecipelist, OItem.as.cv, this.ab, this.o(0.5F));
-                a(omerchantrecipelist, OItem.bk.cv, this.ab, this.o(0.5F));
-                b(omerchantrecipelist, OItem.aC.cv, this.ab, this.o(0.1F));
-                b(omerchantrecipelist, OItem.Y.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.aa.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.X.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.Z.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.at.cv, this.ab, this.o(0.3F));
-                b(omerchantrecipelist, OItem.bl.cv, this.ab, this.o(0.3F));
+                a(omerchantrecipelist, OItem.o.cv, this.ab, this.p(0.7F));
+                a(omerchantrecipelist, OItem.as.cv, this.ab, this.p(0.5F));
+                a(omerchantrecipelist, OItem.bk.cv, this.ab, this.p(0.5F));
+                b(omerchantrecipelist, OItem.aC.cv, this.ab, this.p(0.1F));
+                b(omerchantrecipelist, OItem.Y.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.aa.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.X.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.Z.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.at.cv, this.ab, this.p(0.3F));
+                b(omerchantrecipelist, OItem.bl.cv, this.ab, this.p(0.3F));
         }
 
         if (omerchantrecipelist.isEmpty()) {
@@ -472,7 +472,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         return oentitylivingdata;
     }
 
-    public void bT() {
+    public void bX() {
         this.bz = true;
     }
 
@@ -483,7 +483,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         return oentityvillager;
     }
 
-    public boolean bC() {
+    public boolean bG() {
         return false;
     }
 

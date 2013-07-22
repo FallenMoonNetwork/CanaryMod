@@ -22,6 +22,7 @@ public class NBTBase {
      * @return String
      */
     public String getName() {
+        // SRG return getBaseTag().func_74740_e();
         return getBaseTag().e();
     }
 
@@ -31,6 +32,7 @@ public class NBTBase {
      * @param name the new name for the tag
      */
     public void setName(String name) {
+        // SRG getBaseTag().func_74738_o(name);
         getBaseTag().p(name);
     }
 
@@ -59,6 +61,7 @@ public class NBTBase {
      * @return byte
      */
     public byte getType() {
+        // SRG return getBaseTag().func_74732_a();
         return getBaseTag().a();
     }
 
@@ -74,6 +77,7 @@ public class NBTBase {
      * @return String
      */
     public static String getTagName(byte type) {
+        // SRG return ONBTBase.func_74736_a(type);
         return ONBTBase.a(type);
     }
 
@@ -84,29 +88,30 @@ public class NBTBase {
      * @return NBTBase
      */
     public static NBTBase wrap(ONBTBase tag) {
-        switch(tag.a()) {
-        case 1:
-            return new NBTTagByte((ONBTTagByte) tag);
-        case 2:
-            return new NBTTagShort((ONBTTagShort) tag);
-        case 3:
-            return new NBTTagInt((ONBTTagInt) tag);
-        case 4:
-            return new NBTTagLong((ONBTTagLong) tag);
-        case 5:
-            return new NBTTagFloat((ONBTTagFloat) tag);
-        case 6:
-            return new NBTTagDouble((ONBTTagDouble) tag);
-        case 7:
-            return new NBTTagByteArray((ONBTTagByteArray) tag);
-        case 8:
-            return new NBTTagString((ONBTTagString) tag);
-        case 9:
-            return new NBTTagList((ONBTTagList) tag);
-        case 10:
-            return new NBTTagCompound((ONBTTagCompound) tag);
-        case 11:
-            return new NBTTagIntArray((ONBTTagIntArray) tag);
+        // SRG switch (tag.func_74732_a()) {
+        switch (tag.a()) {
+            case 1:
+                return new NBTTagByte((ONBTTagByte) tag);
+            case 2:
+                return new NBTTagShort((ONBTTagShort) tag);
+            case 3:
+                return new NBTTagInt((ONBTTagInt) tag);
+            case 4:
+                return new NBTTagLong((ONBTTagLong) tag);
+            case 5:
+                return new NBTTagFloat((ONBTTagFloat) tag);
+            case 6:
+                return new NBTTagDouble((ONBTTagDouble) tag);
+            case 7:
+                return new NBTTagByteArray((ONBTTagByteArray) tag);
+            case 8:
+                return new NBTTagString((ONBTTagString) tag);
+            case 9:
+                return new NBTTagList((ONBTTagList) tag);
+            case 10:
+                return new NBTTagCompound((ONBTTagCompound) tag);
+            case 11:
+                return new NBTTagIntArray((ONBTTagIntArray) tag);
         }
         return new NBTBase(tag);
     }

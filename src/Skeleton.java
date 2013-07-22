@@ -39,7 +39,8 @@ public class Skeleton extends Mob {
      * @return
      */
     public boolean isWither() {
-        return getEntity().o() == 1;
+        // SRG return getEntity().func_82202_m() == 1;
+        return getEntity().bV() == 1;
     }
 
     /**
@@ -48,6 +49,7 @@ public class Skeleton extends Mob {
      * @param isWither
      */
     public void setWither(boolean isWither) {
+        // SRG getEntity().func_82201_a(isWither ? 1 : 0);
         getEntity().a(isWither ? 1 : 0);
     }
 
@@ -57,11 +59,24 @@ public class Skeleton extends Mob {
     }
 
     /**
-     * Make this skeleton launch an arrow at the living entity
+     * Make this skeleton launch an arrow at the living entity.
+     * This method mimics Minecraft's force calculation.
      *
-     * @param e the entity to shoot at
+     * @param ent the entity to shoot at
      */
-    public void shootAt(LivingEntity e) {
-        getEntity().d(e.getEntity());
+    public void shootAt(LivingEntity ent) {
+        double distanceToEntity = this.getLocation().distanceTo(ent.getLocation());
+        float power = Math.min(Math.max(0.1F, (float) distanceToEntity / 15F), 1.0F);
+        this.shootAt(ent, power);
+    }
+
+    /**
+     * Make this skeleton launch an arrow at the entity with specified power.
+     * @param ent The entity to shoot at
+     * @param power The power to shoot with (0.0-1.0)
+     */
+    public void shootAt(LivingEntity ent, float power) {
+        // SRG getEntity().func_82196_d(ent.getEntity(), power);
+        getEntity().a(ent.getEntity(), power);
     }
 }

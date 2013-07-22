@@ -368,6 +368,13 @@ public abstract class ItemArray<C extends Container<OItemStack>> implements Inve
     }
 
     @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Arrays.hashCode(getContents());
+        return hash;
+    }
+
+    @Override
     public String toString() {
         return String.format("ItemArray[size=%d, contents=%s]", getContentsSize(), Arrays.toString(getContents()));
     }

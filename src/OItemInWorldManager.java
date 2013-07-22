@@ -177,7 +177,7 @@ public class OItemInWorldManager {
     public boolean b(int i, int j, int k) {
         if (this.c.c() && !this.b.d(i, j, k)) {
             return false;
-        } else if (this.c.d() && this.b.aV() != null && this.b.aV().b() instanceof OItemSword) {
+        } else if (this.c.d() && this.b.aY() != null && this.b.aY().b() instanceof OItemSword) {
             return false;
         } else {
             // CanaryMod start - portal destroy
@@ -233,13 +233,13 @@ public class OItemInWorldManager {
             if (this.d()) {
                 this.b.a.b(new OPacket53BlockChange(i, j, k, this.a));
             } else {
-                OItemStack oitemstack = this.b.bt();
+                OItemStack oitemstack = this.b.bx();
                 boolean flag1 = this.b.a(OBlock.s[l]);
 
                 if (oitemstack != null) {
                     oitemstack.a(this.a, l, i, j, k, this.b);
                     if (oitemstack.b == 0) {
-                        this.b.bu();
+                        this.b.by();
                     }
                 }
 
@@ -272,7 +272,7 @@ public class OItemInWorldManager {
                 oentityplayer.bn.a[oentityplayer.bn.c] = null;
             }
 
-            if (!oentityplayer.bm()) {
+            if (!oentityplayer.bq()) {
                 ((OEntityPlayerMP) oentityplayer).a(oentityplayer.bo);
             }
 
@@ -307,7 +307,7 @@ public class OItemInWorldManager {
     public boolean a(OEntityPlayer oentityplayer, OWorld oworld, OItemStack oitemstack, int i, int j, int k, int l, float f, float f1, float f2) {
         int i1;
 
-        if (!oentityplayer.af() || oentityplayer.aV() == null) {
+        if (!oentityplayer.ag() || oentityplayer.aY() == null) {
             i1 = oworld.a(i, j, k);
             if (i1 > 0 && OBlock.s[i1].a(oworld, i, j, k, oentityplayer, l, f, f1, f2)) {
                 return true;
