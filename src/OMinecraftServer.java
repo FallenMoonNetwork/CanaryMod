@@ -1038,8 +1038,8 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
     // CanaryMod start: Custom Stop Message
     public void stopServer(String stopMsg){
-    	this.stopMsg = stopMsg;
-    	this.n();
+        this.stopMsg = stopMsg;
+        this.p();
     }
     // CanaryMod end
 }
