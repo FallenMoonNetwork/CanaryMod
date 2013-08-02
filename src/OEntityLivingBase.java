@@ -156,7 +156,7 @@ public abstract class OEntityLivingBase extends OEntity {
                     this.g(0);
 
                     // CanaryMod Damage hook: Drowning
-                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, this.getEntity(), DamageType.WATER.getDamageSource(), 2));
+                    HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, this.getEntity(), DamageType.WATER.getDamageSource(), 2.0F));
                     if (!ev.isCanceled()) {
                         for (int i = 0; i < 8; ++i) {
                             float f = this.ab.nextFloat() - this.ab.nextFloat();
@@ -479,7 +479,7 @@ public abstract class OEntityLivingBase extends OEntity {
 
     public void c(OPotionEffect opotioneffect) {
         // CanaryMod - POTION_EFFECT HOOK
-        PotionEffect pe = (PotionEffect) etc.getLoader().callHook(PluginLoader.Hook.POTION_EFFECT, this.entity, opotioneffect.potionEffect);
+        PotionEffect pe = (PotionEffect) etc.getLoader().callHook(PluginLoader.Hook.POTION_EFFECT, this.getEntity(), opotioneffect.potionEffect);
 
         if (pe == null) {
             return;
@@ -537,7 +537,7 @@ public abstract class OEntityLivingBase extends OEntity {
     }
 
     protected void b(OPotionEffect opotioneffect) {
-        etc.getLoader().callHook(PluginLoader.Hook.POTION_EFFECTFINISHED, this.entity, opotioneffect.potionEffect);
+        etc.getLoader().callHook(PluginLoader.Hook.POTION_EFFECTFINISHED, this.getEntity(), opotioneffect.potionEffect);
         this.h = true;
         if (!this.q.I) {
             OPotion.a[opotioneffect.a()].a(this, this.aW(), opotioneffect.c());

@@ -1320,6 +1320,7 @@ public abstract class OEntity {
 
     public void a(OEntityLightningBolt oentitylightningbolt) {
         //CanaryMod Damage Hook: Lightning
+        @SuppressWarnings("deprecation")
         HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, this.getEntity(), DamageType.LIGHTNING.getDamageSource(), 5));
         if (ev.isCanceled()) {
             return;

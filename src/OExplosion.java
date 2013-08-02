@@ -107,7 +107,7 @@ public class OExplosion {
             blocksAffected.add(new Block(this.k.world, this.k.world.getBlockIdAt(ocp.a, ocp.b, ocp.c), ocp.a, ocp.b, ocp.c));
         }
 
-        cancel = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLOSION, block, (this.f != null ? this.f.entity : null), blocksAffected) || cancel;
+        cancel = (Boolean) etc.getLoader().callHook(PluginLoader.Hook.EXPLOSION, block, (this.f != null ? this.f.getEntity() : null), blocksAffected) || cancel;
 
         // Repopulate hashset according to blocksAffected.
         hashset.clear();
