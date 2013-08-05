@@ -491,9 +491,26 @@ public class PluginListener {
      * @param newValue
      *            new lives value
      * @return return true to stop the change.
+     * @deprecated Minecraft measures health in floats now. Use {@link #onHealthChange(Player, float, float)} instead.
      */
+    @Deprecated
     public boolean onHealthChange(Player player, int oldValue, int newValue) {
         return false;
+    }
+
+    /**
+     * Called when a players health changes.
+     *
+     * @param player
+     *            the player which health is changed.
+     * @param oldValue
+     *            old lives value
+     * @param newValue
+     *            new lives value
+     * @return return true to stop the change.
+     */
+    public boolean onHealthChange(Player player, float oldValue, float newValue) {
+        return onHealthChange(player, (int) oldValue, (int) newValue);
     }
 
     /**
@@ -748,7 +765,7 @@ public class PluginListener {
      * @return <tt>true</tt> if the damage should be canceled, <tt>false</tt> otherwise.
      */
     public boolean onAttack(LivingEntity attacker, LivingEntity defender, float amount) {
-        return false;
+        return onAttack(attacker, defender, (int) amount);
     }
 
 
