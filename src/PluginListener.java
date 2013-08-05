@@ -729,10 +729,28 @@ public class PluginListener {
      * @param amount
      *            of damage the entity tries to do
      * @return
+     * @deprecated Minecraft measures health in floats now. Use {@link #onAttack(LivingEntity, LivingEntity, float)} instead.
      */
+    @Deprecated
     public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
         return false;
     }
+
+    /**
+     * Called when an entity (attacker) tries to hurt a player (defender). Returning 'true' prevents all damage, returning 'false' lets the game handle it. Remember that the damage will be lessened by the amount of {@link LivingEntity#getLastDamage()} the defender has.
+     *
+     * @param attacker
+     *            the attacking entity
+     * @param defender
+     *            the defending entity
+     * @param amount
+     *            the amount of damage the entity tries to do
+     * @return <tt>true</tt> if the damage should be canceled, <tt>false</tt> otherwise.
+     */
+    public boolean onAttack(LivingEntity attacker, LivingEntity defender, float amount) {
+        return false;
+    }
+
 
     /**
      * Called when a player attempts to open an inventory; whether it's a workbench, a chest or their own player inventory

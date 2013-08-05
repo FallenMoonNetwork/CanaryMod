@@ -113,11 +113,11 @@ public class PluginLoader {
          */
         MOB_SPAWN, //
         /**
-         * Calls {@link PluginListener#onDamage(PluginLoader.DamageType, BaseEntity, BaseEntity, int) }
+         * Calls {@link PluginListener#onDamage(HookParametersDamage) }
          */
         DAMAGE, //
         /**
-         * Calls {@link PluginListener#onHealthChange(Player, int, int) }
+         * Calls {@link PluginListener#onHealthChange(Player, float, float) }
          */
         HEALTH_CHANGE, //
         /**
@@ -181,7 +181,7 @@ public class PluginLoader {
          */
         LIQUID_DESTROY, //
         /**
-         * Calls {@link PluginListener#onAttack(LivingEntity, LivingEntity, java.lang.Integer) }
+         * Calls {@link PluginListener#onAttack(LivingEntity, LivingEntity, float) }
          */
         ATTACK, //
         /**
@@ -1049,7 +1049,7 @@ public class PluginLoader {
                                 break;
 
                             case HEALTH_CHANGE:
-                                if (listener.onHealthChange((Player) parameters[0], (Integer) parameters[1], (Integer) parameters[2])) {
+                                if (listener.onHealthChange((Player) parameters[0], (Float) parameters[1], (Float) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;
@@ -1131,7 +1131,7 @@ public class PluginLoader {
                                 break;
 
                             case ATTACK:
-                                if (listener.onAttack((LivingEntity) parameters[0], (LivingEntity) parameters[1], (Integer) parameters[2])) {
+                                if (listener.onAttack((LivingEntity) parameters[0], (LivingEntity) parameters[1], (Float) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;
