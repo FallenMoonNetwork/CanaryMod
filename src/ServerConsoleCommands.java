@@ -4,12 +4,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@SuppressWarnings("LoggerStringConcat")
 public class ServerConsoleCommands extends CommandHandler {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final Logger log = Logger.getLogger("Minecraft-Server");
     private static ServerConsoleCommands instance;
     private final LinkedHashMap<String, BaseCommand> commands = new LinkedHashMap<String, BaseCommand>();
 
@@ -76,7 +76,7 @@ public class ServerConsoleCommands extends CommandHandler {
             for (Player p : etc.getServer().getPlayerList()) {
                 p.getUser().reloadPlayer();
             }
-            log.info("CanaryMod reloaded by " + caller.getName());
+            log.log(Level.INFO, "CanaryMod reloaded by {0}", caller.getName());
             caller.notify("Successfully reloaded config");
         }
 
@@ -144,7 +144,7 @@ public class ServerConsoleCommands extends CommandHandler {
                         saveChanges(player, newUser);
                     }
 
-                    log.info("Modifed user " + player.getOfflineName() + ". " + key + " => " + value + " by " + caller.getName());
+                    log.log(Level.INFO, "Modifed user {0}. {1} => {2} by {3}", new Object[]{player.getOfflineName(), key, value, caller.getName()});
                 }
                 caller.notify("Modified user.");
             } else {
@@ -195,7 +195,7 @@ public class ServerConsoleCommands extends CommandHandler {
                 // log too,
                 // regardless of
                 // caller.
-                log.info("Modifed user " + player.getOfflineName() + ". " + key + " => " + value + " by " + caller.getName());
+                log.log(Level.INFO, "Modifed user {0}. {1} => {2} by {3}", new Object[]{player.getOfflineName(), key, value, caller.getName()});
             }
         }
 
@@ -485,7 +485,7 @@ public class ServerConsoleCommands extends CommandHandler {
 
                 etc.getLoader().callHook(PluginLoader.Hook.IPBAN, new Object[]{(caller instanceof Player) ? (Player) caller : null, player, split.length >= 3 ? etc.combineSplit(2, split, " ") : ""});
 
-                log.info("IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
+                log.log(Level.INFO, "IP Banning {0} (IP: {1})", new Object[]{player.getName(), player.getIP()});
                 caller.notify("IP Banning " + player.getName() + " (IP: " + player.getIP() + ")");
 
                 if (split.length > 2) {
@@ -524,12 +524,12 @@ public class ServerConsoleCommands extends CommandHandler {
                 } else {
                     player.kick("Banned by " + caller.getName() + ".");
                 }
-                log.info(caller.getName() + ": banning " + player.getName());
+                log.log(Level.INFO, "{0}: banning {1}", new Object[]{caller.getName(), player.getName()});
                 caller.notify("Banning " + player.getName());
             } else {
                 if (!etc.getDataSource().isOnBanList(split[1], null)) {
                     etc.getDataSource().addBan(new Ban(split[1]));
-                    log.info(caller.getName() + ": banning " + split[1]);
+                    log.log(Level.INFO, "{0}: banning {1}", new Object[]{caller.getName(), split[1]});
                     caller.notify("Banning " + split[1]);
                 } else {
                     caller.notify(String.format("%s is already banned from this server", split[1]));
@@ -619,7 +619,7 @@ public class ServerConsoleCommands extends CommandHandler {
                     } else {
                         player.kick("Banned by " + caller.getName() + ".");
                     }
-                    log.info(caller.getName() + ": banning " + player.getName());
+                    log.log(Level.INFO, "{0}: banning {1}", new Object[]{caller.getName(), player.getName()});
                     caller.notify("Banning " + player.getName());
                 } else if (byIp) {
                     if (!etc.getDataSource().isOnBanList(null, split[1])) {
@@ -627,7 +627,7 @@ public class ServerConsoleCommands extends CommandHandler {
                         b.setIp(split[1]);
                         b.setTimestamp((int) (matchFutureDate(split[2]) / 1000));
                         etc.getDataSource().addBan(b);
-                        log.info(caller.getName() + ": banning " + split[1]);
+                        log.log(Level.INFO, "{0}: banning {1}", new Object[]{caller.getName(), split[1]});
                         caller.notify("Banning " + split[1]);
                     }
                 } else {
@@ -635,7 +635,7 @@ public class ServerConsoleCommands extends CommandHandler {
                         Ban b = new Ban(split[1]);
                         b.setTimestamp((int) (matchFutureDate(split[2]) / 1000));
                         etc.getDataSource().addBan(b);
-                        log.info(caller.getName() + ": banning " + split[1]);
+                        log.log(Level.INFO, "{0}: banning {1}", new Object[]{caller.getName(), split[1]});
                         caller.notify("Banning " + split[1]);
                     } else {
                         caller.notify(String.format("%s is already banned from this server", split[1]));
@@ -728,7 +728,7 @@ public class ServerConsoleCommands extends CommandHandler {
                 } else {
                     player.kick("Kicked by " + caller.getName() + ".");
                 }
-                log.info("Kicking " + player.getName());
+                log.log(Level.INFO, "Kicking {0}", player.getName());
                 caller.notify("Kicking " + player.getName());
             } else {
                 caller.notify("Can't find user " + split[1] + ".");

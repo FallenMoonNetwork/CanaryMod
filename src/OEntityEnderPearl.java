@@ -9,9 +9,9 @@ public class OEntityEnderPearl extends OEntityThrowable {
     }
 
     protected void a(OMovingObjectPosition omovingobjectposition) {
-        if(!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
             if (omovingobjectposition.g != null) {
-            omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), 0.0F);
+                omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), 0.0F);
             }
             // CanaryMod start - Fix enderpearl dupe bug
             Player p = null;

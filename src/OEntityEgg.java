@@ -15,9 +15,9 @@ public class OEntityEgg extends OEntityThrowable {
     }
 
     protected void a(OMovingObjectPosition omovingobjectposition) {
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, new Egg(this), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
             if (omovingobjectposition.g != null) {
-            omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), 0.0F);
+                omovingobjectposition.g.a(ODamageSource.a((OEntity) this, this.h()), 0.0F);
             }
 
             if (!this.q.I && this.ab.nextInt(8) == 0) {

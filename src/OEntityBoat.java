@@ -287,7 +287,7 @@ public class OEntityBoat extends OEntity {
             this.b(this.A, this.B);
             if (!this.q.I) {
                 if ((int) this.u != (int) prevX || (int) this.v != (int) prevY || (int) this.w != (int) prevZ) {
-                    manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, boat, (int) this.t, (int) this.s, (int) this.t);
+                    manager.callHook(PluginLoader.Hook.VEHICLE_POSITIONCHANGE, boat, (int) this.u, (int) this.v, (int) this.w);
                 }
 
                 List list = this.q.b((OEntity) this, this.E.b(0.20000000298023224D, 0.0D, 0.20000000298023224D));

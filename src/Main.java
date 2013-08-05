@@ -25,7 +25,7 @@ public class Main {
     public static final long   jarjar = 0x4e724d4dL;
     public static final long   rules = 0x4b212947L;
 
-    public static final Logger log = Logger.getLogger("Minecraft");
+    public static final Logger log = Logger.getLogger("Minecraft-Server");
 
     private static boolean     newIsCrow = false;
 

@@ -129,7 +129,7 @@ public class OEntityOcelot extends OEntityTameable {
                 // randomize the tame result. if its 0 - tame success.
                 int tameResult = this.ab.nextInt(3);
                 // Call hook
-                PluginLoader.HookResult res = (PluginLoader.HookResult) manager.callHook(PluginLoader.Hook.TAME, oentityplayer.entity.getPlayer(), new Mob(this), tameResult == 0);
+                PluginLoader.HookResult res = (PluginLoader.HookResult) manager.callHook(PluginLoader.Hook.TAME, oentityplayer.entity.getPlayer(), this.getEntity(), tameResult == 0);
 
                 // if taming succeeded normally (tameResult == 0) or plugin hook result is allow (force taming)
                 if (tameResult == 0 && res == PluginLoader.HookResult.DEFAULT_ACTION || res == PluginLoader.HookResult.ALLOW_ACTION) {

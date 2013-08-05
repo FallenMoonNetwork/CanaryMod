@@ -17,7 +17,7 @@ final class ODispenserBehaviorFireball extends OBehaviorDefaultDispenseItem {
         double d5 = random.nextGaussian() * 0.05D + (double) oenumfacing.e();
 
         OEntitySmallFireball oentitysmallfireball = new OEntitySmallFireball(oworld, d0, d1, d2, d3, d4, d5);
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), new BaseEntity(oentitysmallfireball))) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, ((OTileEntityDispenser) oiblocksource.j()).getComplexBlock(), oentitysmallfireball.getEntity())) {
             oworld.d((OEntity) oentitysmallfireball);
             oitemstack.a(1);
         }

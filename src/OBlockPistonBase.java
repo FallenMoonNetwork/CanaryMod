@@ -57,7 +57,7 @@ public class OBlockPistonBase extends OBlock {
             if (flag && !e(l)) {
                 if (e(oworld, i, j, k, i1)) {
                     // CanaryMod hook onPistonExtend
-                    boolean allowExtension = !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PISTON_EXTEND, new Block(oworld.world, (this.a) ? Block.Type.StickyPiston.getType() : Block.Type.Piston.getType(), i, j, k, l));
+                    boolean allowExtension = !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PISTON_EXTEND, new Block(oworld.world, this.a ? Block.Type.StickyPiston.getType() : Block.Type.Piston.getType(), i, j, k, l));
 
                     if (allowExtension) {
                         oworld.d(i, j, k, this.cF, 0, i1);
@@ -66,7 +66,7 @@ public class OBlockPistonBase extends OBlock {
             } else if (!flag && e(l)) {
                 // CanaryMod hook onPistonRetract
                 // hook result is saved in attemptRetractBlock because later in the code the block is actually moved, and only there we should deny retraction.
-                this.attemptRetractBlock = !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PISTON_RETRACT, new Block(oworld.world, (this.a) ? Block.Type.StickyPiston.getType() : Block.Type.Piston.getType(), i, j, k, l));
+                this.attemptRetractBlock = !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PISTON_RETRACT, new Block(oworld.world, this.a ? Block.Type.StickyPiston.getType() : Block.Type.Piston.getType(), i, j, k, l));
 
                 oworld.b(i, j, k, i1, 2);
                 oworld.d(i, j, k, this.cF, 1, i1);

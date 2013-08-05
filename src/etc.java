@@ -17,9 +17,8 @@ import java.util.logging.Logger;
  *
  * @author James
  */
-@SuppressWarnings("LoggerStringConcat")
 public class etc {
-    private static final Logger           log = Logger.getLogger("Minecraft");
+    private static final Logger           log = Logger.getLogger("Minecraft-Server");
     private static final etc              instance = new etc();
     private static OMinecraftServer       server;
     private String                        configDir = "config/";
@@ -103,7 +102,7 @@ public class etc {
                 try {
                     storage.add(Integer.parseInt(id));
                 } catch (NumberFormatException e) {
-                    log.log(Level.SEVERE, "While parsing the config: '" + id + "' is not a number");
+                    log.log(Level.SEVERE, "While parsing the config: ''{0}'' is not a number", id);
                 }
             }
         }
@@ -113,7 +112,7 @@ public class etc {
      * Loads or reloads the mod
      */
     public final void load() {
-        log.setParent(Logger.getLogger("Minecraft-Server"));
+        Logger.getLogger("Minecraft").setParent(log);
 
         if (configDir == null) {
             configDir = "config/";
@@ -1112,10 +1111,10 @@ public class etc {
     public int getVersion() {
         return (int) version;
     }
-    
+
     /**
      * Get the version with both major and minor build numbers
-     * 
+     *
      * @return the version in the form major.minor
      */
     public double getVersionMajorMinor() {
@@ -1352,7 +1351,7 @@ public class etc {
                     continue lb1;
                 }
             }
-            log.warning("Invalid mobType '" + i + "' in group '" + groupname + "', please remove it from your config file!");
+            log.log(Level.WARNING, "Invalid mobType ''{0}'' in group ''{1}'', please remove it from your config file!", new Object[]{i, groupname});
             System.exit(0);
         }
     }

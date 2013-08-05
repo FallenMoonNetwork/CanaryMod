@@ -182,7 +182,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
                 if (!etc.getInstance().isHealthEnabled()) {
                     super.g(this.aS());
                     this.M = false;
-                } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), bP, this.aM())) {
+                } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), this.bP, this.aM())) {
                     super.g(this.bP);
                 }
             }
@@ -215,7 +215,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
                 if (!etc.getInstance().isExpEnabled()) {
                     this.bI = 0;
                     this.bH = 0;
-                } else if ((Boolean) manager.callHook(PluginLoader.Hook.EXPERIENCE_CHANGE, getPlayer(), bS, bI)) {
+                } else if ((Boolean) manager.callHook(PluginLoader.Hook.EXPERIENCE_CHANGE, getPlayer(), this.bS, this.bI)) {
                     this.bI = this.bS;
                 }
             }

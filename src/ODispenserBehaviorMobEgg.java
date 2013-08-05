@@ -13,7 +13,7 @@ final class ODispenserBehaviorMobEgg extends OBehaviorDefaultDispenseItem {
             ((OEntityLiving) oentity).a(oitemstack.s());
         }
 
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), oentity.getEntity())) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, ((OTileEntityDispenser) oiblocksource.j()).getComplexBlock(), oentity.getEntity())) {
             oiblocksource.k().d(oentity); // CanaryMod: now we spawn the entity
             oitemstack.a(1);
         }

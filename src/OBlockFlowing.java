@@ -298,7 +298,7 @@ public class OBlockFlowing extends OBlockFluid {
     private boolean o(OWorld oworld, int i, int j, int k) {
         // CanaryMod: See if this liquid can destroy this block.
         Block block = new Block(oworld.world, oworld.world.getBlockIdAt(i, j, k), i, j, k);
-        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, this.cz, block);
+        PluginLoader.HookResult ret = (PluginLoader.HookResult) etc.getLoader().callHook(PluginLoader.Hook.LIQUID_DESTROY, this.cF, block);
 
         if (ret == PluginLoader.HookResult.PREVENT_ACTION) {
             return false;

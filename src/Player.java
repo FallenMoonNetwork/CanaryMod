@@ -10,10 +10,9 @@ import java.util.regex.Pattern;
  *
  * @author James
  */
-@SuppressWarnings("LoggerStringConcat")
 public class Player extends HumanEntity implements MessageReceiver {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final Logger log = Logger.getLogger("Minecraft-Server");
     private int id = -1;
     private String prefix = "";
     private String[] commands = new String[] { "" };
@@ -155,7 +154,7 @@ public class Player extends HumanEntity implements MessageReceiver {
 
             String chat = chatPrefix.toString() + " " + sbMessage.toString();
 
-            log.log(Level.INFO, "<" + getName() + "> " + sbMessage.toString());
+            log.log(Level.INFO, "<{0}> {1}", new Object[]{getName(), sbMessage.toString()});
 
             //etc.getServer().messageAll(chat);
             for (Player player : receivers) {
@@ -180,7 +179,7 @@ public class Player extends HumanEntity implements MessageReceiver {
     public void command(String command) {
         try {
             if (etc.getInstance().isLogging()) {
-                log.info("Command used by " + getName() + " " + command);
+                log.log(Level.INFO, "Command used by {0}: {1}", new Object[]{getName(), command});
             }
 
             String[] split = command.split(" ");
@@ -198,14 +197,14 @@ public class Player extends HumanEntity implements MessageReceiver {
             if (command.startsWith("/#") && this.isOp()) {
                 String str = command.substring(2);
 
-                log.info(getName() + " issued server command: " + str);
+                log.log(Level.INFO, "{0} issued server command: {1}", new Object[]{getName(), str});
                 etc.getServer().useConsoleCommand(str);
                 return;
             }
 
             // Remove '/' before checking.
             if (!ServerConsoleCommands.parseServerConsoleCommand(this, cmd.substring(1), split) && !PlayerCommands.parsePlayerCommand(this, cmd.substring(1), split)) {
-                log.info(getName() + " tried command " + command);
+                log.log(Level.INFO, "{0} tried command {1}", new Object[]{getName(), command});
                 if (etc.getInstance().showUnknownCommand()) {
                     sendMessage(Colors.Rose + "Unknown command");
                 }

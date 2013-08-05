@@ -11,7 +11,6 @@ import java.util.logging.Logger;
  *
  * @author James
  */
-@SuppressWarnings("LoggerStringConcat")
 public class PluginLoader {
 
     /**
@@ -566,7 +565,7 @@ public class PluginLoader {
         }
     }
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final Logger log = Logger.getLogger("Minecraft-Server");
     private static final Object lock = new Object();
     private List<Plugin> plugins = new ArrayList<Plugin>();
     private EnumMap<Hook, List<PluginRegisteredListener>> listeners =
@@ -608,7 +607,7 @@ public class PluginLoader {
             }
             loadPlugin(sclass.trim());
         }
-        log.info("CanaryMod: Loaded " + plugins.size() + " plugins.");
+        log.log(Level.INFO, "CanaryMod: Loaded {0} plugins.", plugins.size());
         loaded = true;
     }
 
@@ -644,7 +643,7 @@ public class PluginLoader {
             }
             loadPlugin(sclass.trim());
         }
-        log.info("CanaryMod: Loaded " + plugins.size() + " plugins.");
+        log.log(Level.INFO, "CanaryMod: Loaded {0} plugins.", plugins.size());
         loadedpreload = true;
     }
 
@@ -703,7 +702,7 @@ public class PluginLoader {
             File file = new File("plugins/" + fileName + ".jar");
 
             if (!file.exists()) {
-                log.log(Level.SEVERE, "Failed to find plugin file: plugins/" + fileName + ".jar. Please ensure the file exists");
+                log.log(Level.SEVERE, "Failed to find plugin file: plugins/{0}.jar. Please ensure the file exists", fileName);
                 return false;
             }
             MyClassLoader child;
@@ -1425,7 +1424,7 @@ public class PluginLoader {
                 PluginInterface listener = customListeners.get(name);
 
                 if (listener == null) {
-                    log.log(Level.SEVERE, "Cannot find custom hook: " + name);
+                    log.log(Level.SEVERE, "Cannot find custom hook: {0}", name);
                     return false;
                 }
 
@@ -1488,10 +1487,10 @@ public class PluginLoader {
     public void addCustomListener(PluginInterface listener) {
         synchronized (lock) {
             if (customListeners.get(listener.getName()) != null) {
-                log.log(Level.SEVERE, "Replacing existing listener: " + listener.getName());
+                log.log(Level.WARNING, "Replacing existing listener: {0}", listener.getName());
             }
             customListeners.put(listener.getName(), listener);
-            log.info("Registered custom hook: " + listener.getName());
+            log.log(Level.INFO, "Registered custom hook: {0}", listener.getName());
         }
     }
 

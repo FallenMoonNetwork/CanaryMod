@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("LoggerStringConcat")
 public class PlayerCommands extends CommandHandler {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final Logger log = Logger.getLogger("Minecraft-Server");
     private static PlayerCommands instance;
 
     public PlayerCommands() {
@@ -217,7 +217,7 @@ public class PlayerCommands extends CommandHandler {
                             }
                         }
 
-                        log.info(caller.getName() + " got a kit!");
+                        log.log(Level.INFO, "{0} got a kit!", caller.getName());
                         toGive.notify("Enjoy this kit!");
                         for (Entry<String, Integer> entry : kit.IDs.entrySet()) {
                             try {
@@ -231,7 +231,7 @@ public class PlayerCommands extends CommandHandler {
 
                                 toGive.giveItem(itemId, entry.getValue());
                             } catch (Exception e1) {
-                                log.info("Got an exception while giving out a kit (Kit name \"" + kit.Name + "\"). Are you sure all the Ids are numbers?");
+                                log.log(Level.INFO, "Got an exception while giving out a kit (Kit name \"{0}\"). Are you sure all the Ids are numbers?", kit.Name);
                                 caller.notify("The server encountered a problem while giving the kit :(");
                             }
                         }
@@ -286,7 +286,7 @@ public class PlayerCommands extends CommandHandler {
                 return;
             }
 
-            log.info(caller.getName() + " teleported to " + player.getName());
+            log.log(Level.INFO, "{0} teleported to {1}", new Object[]{caller.getName(), player.getName()});
             ((Player) caller).teleportTo(player);
         }
 
@@ -324,7 +324,7 @@ public class PlayerCommands extends CommandHandler {
                 caller.notify("Wow look at that! You teleported yourself to yourself!");
                 return;
             }
-            log.info(caller.getName() + " teleported " + player.getName() + " to their self.");
+            log.log(Level.INFO, "{0} teleported {1} to their self.", new Object[]{caller.getName(), player.getName()});
             player.teleportTo((Player) caller);
         }
 
@@ -425,7 +425,7 @@ public class PlayerCommands extends CommandHandler {
                         } else {
                             Item i = new Item(itemId, amount, -1, damage);
 
-                            log.info("Giving " + toGive.getName() + " some " + i.toString());
+                            log.log(Level.INFO, "Giving {0} some {1}", new Object[]{toGive.getName(), i.toString()});
                             // toGive.giveItem(itemId, amount);
                             Inventory inv = toGive.getInventory();
                             inv.insertItem(i);
@@ -560,7 +560,7 @@ public class PlayerCommands extends CommandHandler {
                     i.setDamage(15 - i.getDamage());
                 }
                 i.setAmount(amount);
-                log.info("Giving " + caller.getName() + " some " + i.toString());
+                log.log(Level.INFO, "Giving {0} some {1}", new Object[]{caller.getName(), i.toString()});
 
                 Inventory inv = toGive.getInventory();
                 ArrayList<Item> list = new ArrayList<Item>();
@@ -662,7 +662,7 @@ public class PlayerCommands extends CommandHandler {
             }
             String paramString2 = "* " + (caller instanceof Player ? ((Player) caller).getColor() : "") + caller.getName() + Colors.White + " " + etc.combineSplit(1, split, " ");
 
-            log.info("* " + caller.getName() + " " + etc.combineSplit(1, split, " "));
+            log.log(Level.INFO, "* {0} {1}", new Object[]{caller.getName(), etc.combineSplit(1, split, " ")});
             etc.getServer().messageAll(paramString2);
         }
     };

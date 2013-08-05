@@ -14,6 +14,8 @@ public abstract class OEntityFireball extends OEntity {
     public double c;
     public double d;
 
+    private Projectile projectile = new Projectile(this); // CanaryMod: reference to wrapper
+
     public OEntityFireball(OWorld oworld) {
         super(oworld);
         this.a(1.0F, 1.0F);
@@ -239,4 +241,10 @@ public abstract class OEntityFireball extends OEntity {
     public float d(float f) {
         return 1.0F;
     }
+
+    // CanaryMod start
+    @Override
+    public Projectile getEntity() {
+        return projectile;
+    } // CanaryMod end
 }

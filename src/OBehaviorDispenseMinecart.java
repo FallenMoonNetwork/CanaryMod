@@ -28,7 +28,7 @@ final class OBehaviorDispenseMinecart extends OBehaviorDefaultDispenseItem {
 
         OEntityMinecart oentityminecart = OEntityMinecart.a(oworld, d0, d1 + d3, d2, ((OItemMinecart) oitemstack.b()).a);
 
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), new Minecart(oentityminecart))) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, ((OTileEntityDispenser) oiblocksource.j()).getComplexBlock(), oentityminecart.getEntity())) {
             if (oitemstack.u()) {
                 oentityminecart.a(oitemstack.s());
             }

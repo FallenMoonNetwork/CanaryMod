@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class ConnectionGuard implements Runnable {
 
     private ConnectionService cp;
-    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final Logger log = Logger.getLogger("Minecraft-Server");
 
     public ConnectionGuard(ConnectionService cp) {
         log.info("CanaryMod: Starting connection cleanup thread.");

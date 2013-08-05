@@ -52,7 +52,7 @@ public class OEntityPotion extends OEntityThrowable {
     }
 
     protected void a(OMovingObjectPosition omovingobjectposition) {
-        if (!this.q.I && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
+        if (!this.q.I && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition == null || omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
             List list = OItem.bu.g(this.c);
 
             if (list != null && !list.isEmpty()) {

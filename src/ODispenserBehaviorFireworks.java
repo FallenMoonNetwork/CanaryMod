@@ -9,7 +9,7 @@ final class ODispenserBehaviorFireworks extends OBehaviorDefaultDispenseItem {
         double d2 = oiblocksource.c() + (double) oenumfacing.e();
         OEntityFireworkRocket oentityfireworkrocket = new OEntityFireworkRocket(oiblocksource.k(), d0, d1, d2, oitemstack);
 
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), new Firework(oentityfireworkrocket))) { //CanaryMod: call dispense hook
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, ((OTileEntityDispenser) oiblocksource.j()).getComplexBlock(), oentityfireworkrocket.getEntity())) { // CanaryMod: call dispense hook
             oiblocksource.k().d((OEntity) oentityfireworkrocket);
             oitemstack.a(1);
         }

@@ -202,13 +202,13 @@ public class OEntityArrow extends OEntity implements OIProjectile {
             float f3;
 
             if (omovingobjectposition != null) {
-
-                if (omovingobjectposition.g != null  && (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, new Arrow(this), omovingobjectposition == null || omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity()))) {
-                    f2 = OMathHelper.a(this.x * this.x + this.y * this.y + this.z * this.z);
-                    int i1 = OMathHelper.f((double) f2 * this.av);
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity())) {
+                    if (omovingobjectposition.g != null) {
+                        f2 = OMathHelper.a(this.x * this.x + this.y * this.y + this.z * this.z);
+                        int i1 = OMathHelper.f((double) f2 * this.av);
 
                         if (this.d()) {
-                        i1 += this.ab.nextInt(i1 / 2 + 2);
+                            i1 += this.ab.nextInt(i1 / 2 + 2);
                         }
 
                         ODamageSource odamagesource = null;
@@ -219,27 +219,27 @@ public class OEntityArrow extends OEntity implements OIProjectile {
                             odamagesource = ODamageSource.a(this, this.c);
                         }
 
-                    if (this.ae() && !(omovingobjectposition.g instanceof OEntityEnderman)) {
-                        omovingobjectposition.g.d(5);
+                        if (this.ae() && !(omovingobjectposition.g instanceof OEntityEnderman)) {
+                            omovingobjectposition.g.d(5);
                         }
 
-                    if (omovingobjectposition.g.a(odamagesource, (float) i1)) {
-                        if (omovingobjectposition.g instanceof OEntityLivingBase) {
-                            OEntityLivingBase oentitylivingbase = (OEntityLivingBase) omovingobjectposition.g;
+                        if (omovingobjectposition.g.a(odamagesource, (float) i1)) {
+                            if (omovingobjectposition.g instanceof OEntityLivingBase) {
+                                OEntityLivingBase oentitylivingbase = (OEntityLivingBase) omovingobjectposition.g;
 
-                            if (!this.q.I) {
-                                oentitylivingbase.m(oentitylivingbase.aT() + 1);
+                                if (!this.q.I) {
+                                    oentitylivingbase.m(oentitylivingbase.aT() + 1);
                                 }
 
-                            if (this.aw > 0) {
-                                f3 = OMathHelper.a(this.x * this.x + this.z * this.z);
+                                if (this.aw > 0) {
+                                    f3 = OMathHelper.a(this.x * this.x + this.z * this.z);
                                     if (f3 > 0.0F) {
-                                    omovingobjectposition.g.g(this.x * (double) this.aw * 0.6000000238418579D / (double) f3, 0.1D, this.z * (double) this.aw * 0.6000000238418579D / (double) f3);
+                                        omovingobjectposition.g.g(this.x * (double) this.aw * 0.6000000238418579D / (double) f3, 0.1D, this.z * (double) this.aw * 0.6000000238418579D / (double) f3);
                                     }
                                 }
 
                                 if (this.c != null) {
-                                OEnchantmentThorns.a(this.c, oentitylivingbase, this.ab);
+                                    OEnchantmentThorns.a(this.c, oentitylivingbase, this.ab);
                                 }
 
                                 if (this.c != null && omovingobjectposition.g != this.c && omovingobjectposition.g instanceof OEntityPlayer && this.c instanceof OEntityPlayerMP) {
@@ -247,37 +247,38 @@ public class OEntityArrow extends OEntity implements OIProjectile {
                                 }
                             }
 
-                        this.a("random.bowhit", 1.0F, 1.2F / (this.ab.nextFloat() * 0.2F + 0.9F));
+                            this.a("random.bowhit", 1.0F, 1.2F / (this.ab.nextFloat() * 0.2F + 0.9F));
                             if (!(omovingobjectposition.g instanceof OEntityEnderman)) {
-                            this.w();
+                                this.w();
                             }
                         } else {
                             this.x *= -0.10000000149011612D;
                             this.y *= -0.10000000149011612D;
-                        this.z *= -0.10000000149011612D;
-                        this.A += 180.0F;
-                        this.C += 180.0F;
-                        this.au = 0;
+                            this.z *= -0.10000000149011612D;
+                            this.A += 180.0F;
+                            this.C += 180.0F;
+                            this.au = 0;
                         }
-                } else {
-                    this.d = omovingobjectposition.b;
-                    this.e = omovingobjectposition.c;
-                    this.f = omovingobjectposition.d;
-                    this.g = this.q.a(this.d, this.e, this.f);
-                    this.h = this.q.h(this.d, this.e, this.f);
-                    this.x = (double) ((float) (omovingobjectposition.f.c - this.u));
-                    this.y = (double) ((float) (omovingobjectposition.f.d - this.v));
-                    this.z = (double) ((float) (omovingobjectposition.f.e - this.w));
-                    f2 = OMathHelper.a(this.x * this.x + this.y * this.y + this.z * this.z);
-                    this.u -= this.x / (double) f2 * 0.05000000074505806D;
-                    this.v -= this.y / (double) f2 * 0.05000000074505806D;
-                    this.w -= this.z / (double) f2 * 0.05000000074505806D;
-                    this.a("random.bowhit", 1.0F, 1.2F / (this.ab.nextFloat() * 0.2F + 0.9F));
-                    this.i = true;
-                    this.b = 7;
-                    this.a(false);
-                    if (this.g != 0) {
-                        OBlock.s[this.g].a(this.q, this.d, this.e, this.f, (OEntity) this);
+                    } else {
+                        this.d = omovingobjectposition.b;
+                        this.e = omovingobjectposition.c;
+                        this.f = omovingobjectposition.d;
+                        this.g = this.q.a(this.d, this.e, this.f);
+                        this.h = this.q.h(this.d, this.e, this.f);
+                        this.x = (double) ((float) (omovingobjectposition.f.c - this.u));
+                        this.y = (double) ((float) (omovingobjectposition.f.d - this.v));
+                        this.z = (double) ((float) (omovingobjectposition.f.e - this.w));
+                        f2 = OMathHelper.a(this.x * this.x + this.y * this.y + this.z * this.z);
+                        this.u -= this.x / (double) f2 * 0.05000000074505806D;
+                        this.v -= this.y / (double) f2 * 0.05000000074505806D;
+                        this.w -= this.z / (double) f2 * 0.05000000074505806D;
+                        this.a("random.bowhit", 1.0F, 1.2F / (this.ab.nextFloat() * 0.2F + 0.9F));
+                        this.i = true;
+                        this.b = 7;
+                        this.a(false);
+                        if (this.g != 0) {
+                            OBlock.s[this.g].a(this.q, this.d, this.e, this.f, (OEntity) this);
+                        }
                     }
                 }
             }

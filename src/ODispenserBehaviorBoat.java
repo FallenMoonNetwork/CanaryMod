@@ -28,7 +28,7 @@ final class ODispenserBehaviorBoat extends OBehaviorDefaultDispenseItem {
 
         OEntityBoat oentityboat = new OEntityBoat(oworld, d0, d1 + d3, d2);
 
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), new Boat(oentityboat))) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, ((OTileEntityDispenser) oiblocksource.j()).getComplexBlock(), oentityboat.getEntity())) {
             oworld.d((OEntity) oentityboat);
             oitemstack.a(1);
         }

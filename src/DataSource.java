@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public abstract class DataSource {
 
-    protected static final Logger  log = Logger.getLogger("Minecraft");
+    protected static final Logger  log = Logger.getLogger("Minecraft-Server");
     protected List<Group>          groups = new ArrayList<Group>();
     protected List<Kit>            kits = new ArrayList<Kit>();
     protected List<Warp>           homes = new ArrayList<Warp>();

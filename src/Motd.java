@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author Talmor
  */
 public class Motd {
-    private static final Logger           log = Logger.getLogger("Minecraft");
+    private static final Logger           log = Logger.getLogger("Minecraft-Server");
 
     public static String getMotd(MessageReceiver caller) {
         try {

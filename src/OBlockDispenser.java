@@ -69,7 +69,7 @@ public class OBlockDispenser extends OBlockContainer {
             int l = otileentitydispenser.j();
 
             if (l < 0) {
-                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser(otileentitydispenser), null)) {
+                if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, otileentitydispenser.getComplexBlock(), null)) {
                     oworld.e(1001, i, j, k, 0);
                 }
             } else {

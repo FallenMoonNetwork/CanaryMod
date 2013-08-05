@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  */
 public final class PropertiesFile {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final Logger log = Logger.getLogger("Minecraft-Server");
     private String              fileName;
     private Properties          props = new Properties();
 
@@ -41,7 +42,7 @@ public final class PropertiesFile {
                 save();
             }
         } catch (IOException ex) {
-            log.severe("[PropertiesFile] Unable to load " + fileName + "!");
+            log.log(Level.SEVERE, "[PropertiesFile] Unable to load {0}!", fileName);
         }
     }
 
@@ -68,7 +69,7 @@ public final class PropertiesFile {
                 save();
             }
         } catch (IOException ex) {
-            log.severe("[PropertiesFile] Unable to load " + this.fileName + "!");
+            log.log(Level.SEVERE, "[PropertiesFile] Unable to load {0}!", this.fileName);
         }
     }
 

@@ -26,7 +26,7 @@ final class ODispenserBehaviorEmptyBucket extends OBehaviorDefaultDispenseItem {
 
         oworld.i(i, j, k);
         if (--oitemstack.b == 0) {
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), null)) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, ((OTileEntityDispenser) oiblocksource.j()).getComplexBlock(), null)) {
                 oitemstack.d = oitem.cv;
                 oitemstack.b = 1;
             }

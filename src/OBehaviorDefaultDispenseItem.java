@@ -11,7 +11,7 @@ public class OBehaviorDefaultDispenseItem implements OIBehaviorDispenseItem {
     }
 
     protected OItemStack b(OIBlockSource oiblocksource, OItemStack oitemstack) {
-        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), null)) {
+        if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, ((OTileEntityDispenser) oiblocksource.j()).getComplexBlock(), null)) {
             OEnumFacing oenumfacing = OBlockDispenser.l_(oiblocksource.h());
             OIPosition oiposition = OBlockDispenser.a(oiblocksource);
             OItemStack oitemstack1 = oitemstack.a(1);

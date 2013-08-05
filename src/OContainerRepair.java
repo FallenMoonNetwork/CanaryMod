@@ -81,7 +81,7 @@ public class OContainerRepair extends OContainer {
                     if (l <= 0) {
                         this.f.a(0, (OItemStack) null);
                         this.a = 0;
-                        etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new Object[] {new Anvil(this, this.f, RESULT_START_INDEX)}); //CanaryMod: call onAnvilUse
+                        etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new Object[] {new Anvil(this, this.f, RESULT_START_INDEX)}); // CanaryMod: call onAnvilUse
                         return;
                     }
 
@@ -97,7 +97,7 @@ public class OContainerRepair extends OContainer {
                     if (!flag && (oitemstack1.d != oitemstack2.d || !oitemstack1.g())) {
                         this.f.a(0, (OItemStack) null);
                         this.a = 0;
-                        etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new Object[] {new Anvil(this, this.f, RESULT_START_INDEX)}); //CanaryMod: call onAnvilUse
+                        etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new Object[] {new Anvil(this, this.f, RESULT_START_INDEX)}); // CanaryMod: call onAnvilUse
                         return;
                     }
 
@@ -293,7 +293,7 @@ public class OContainerRepair extends OContainer {
         }
 
         // CanaryMod start
-        HookParametersAnvilUse hook = (HookParametersAnvilUse) etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new HookParametersAnvilUse(this.getInventory(), new Block(h.world, 145, i, j, k, l))); // CanaryMod: call onAnvilUse
+        HookParametersAnvilUse hook = (HookParametersAnvilUse) etc.getLoader().callHook(PluginLoader.Hook.ANVIL_USE, new HookParametersAnvilUse(this.getInventory(), new Block(this.h.world, 145, i, j, k, l))); // CanaryMod: call onAnvilUse
 
         // update the input slots
         setSlotWithoutUpdate(hook.slotOne, 0);

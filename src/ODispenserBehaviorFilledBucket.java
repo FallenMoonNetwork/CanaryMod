@@ -12,7 +12,7 @@ final class ODispenserBehaviorFilledBucket extends OBehaviorDefaultDispenseItem 
         OEnumFacing oenumfacing = OBlockDispenser.l_(oiblocksource.h());
 
         if (oitembucket.a(oiblocksource.k(), i + oenumfacing.c(), j + oenumfacing.d(), k + oenumfacing.e())) {
-            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, new Dispenser((OTileEntityDispenser) oiblocksource.j()), null)) {
+            if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.DISPENSE, ((OTileEntityDispenser) oiblocksource.j()).getComplexBlock(), null)) {
                 oitemstack.d = OItem.ay.cv;
                 oitemstack.b = 1;
             }
