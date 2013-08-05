@@ -1141,7 +1141,7 @@ public class PlayerCommands extends CommandHandler {
             p.sendMessage("Pos X: " + p.getX() + " Y: " + p.getY() + " Z: " + p.getZ());
             p.sendMessage("Rotation: " + p.getRotation() + " Pitch: " + p.getPitch());
 
-            double degreeRotation = ((p.getRotation() - 90) % 360);
+            double degreeRotation = ((p.getRotation() + 90) % 360);
 
             if (degreeRotation < 0) {
                 degreeRotation += 360.0;

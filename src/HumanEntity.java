@@ -366,7 +366,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public int getItemInHand() {
         Item inHand = this.getItemStackInHand();
-        return inHand == null ? null : inHand.getItemId();
+        return inHand == null ? 0 : inHand.getItemId();
     }
 
     /**
