@@ -746,7 +746,7 @@ public class PluginListener {
      * @param amount
      *            of damage the entity tries to do
      * @return
-     * @deprecated Minecraft measures health in floats now. Use {@link #onAttack(LivingEntity, LivingEntity, float)} instead.
+     * @deprecated Minecraft measures health in floats now. Use {@link #onAttack(LivingEntityBase, LivingEntityBase, float)} instead.
      */
     @Deprecated
     public boolean onAttack(LivingEntity attacker, LivingEntity defender, Integer amount) {
@@ -764,8 +764,12 @@ public class PluginListener {
      *            the amount of damage the entity tries to do
      * @return <tt>true</tt> if the damage should be canceled, <tt>false</tt> otherwise.
      */
-    public boolean onAttack(LivingEntity attacker, LivingEntity defender, float amount) {
-        return onAttack(attacker, defender, (int) amount);
+    public boolean onAttack(LivingEntityBase attacker, LivingEntityBase defender, float amount) {
+        if (attacker instanceof LivingEntity && defender instanceof LivingEntity) {
+            return onAttack(attacker, defender, Integer.valueOf((int) amount));
+        }
+
+        return false;
     }
 
 
@@ -1180,8 +1184,28 @@ public class PluginListener {
      *            the potion being effect applied
      *
      * @return modified potionEffect or null for no effect
+     * @deprecated Use {@link #onPotionEffect(LivingEntityBase, PotionEffect)}
+     * instead.
      */
+    @Deprecated
     public PotionEffect onPotionEffect(LivingEntity entity, PotionEffect potionEffect) {
+        return potionEffect;
+    }
+
+    /**
+     * Called when a potion effect is applied to the player
+     *
+     * @param entity
+     *            the affected entity
+     * @param potionEffect
+     *            the potion being effect applied
+     *
+     * @return modified potionEffect or null for no effect
+     */
+    public PotionEffect onPotionEffect(LivingEntityBase entity, PotionEffect potionEffect) {
+        if (entity instanceof LivingEntity) {
+            this.onPotionEffect((LivingEntity) entity, potionEffect);
+        }
         return potionEffect;
     }
 
@@ -1189,9 +1213,22 @@ public class PluginListener {
      * Called when a potion effect is finished on an entity
      * @param entity entity the effect applies to
      * @param potionEffect effect the potion is
+     * @deprecated Use
+     * {@link #onPotionEffectFinished(LivingEntityBase, PotionEffect)} instead
      */
-    public void onPotionEffectFinished(LivingEntity entity, PotionEffect potionEffect){
+    @Deprecated
+    public void onPotionEffectFinished(LivingEntity entity, PotionEffect potionEffect) {
+    }
 
+    /**
+     * Called when a potion effect is finished on an entity
+     * @param entity entity the effect applies to
+     * @param potionEffect effect the potion is
+     */
+    public void onPotionEffectFinished(LivingEntityBase entity, PotionEffect potionEffect) {
+        if (entity instanceof LivingEntity) {
+            this.onPotionEffectFinished((LivingEntity) entity, potionEffect);
+        }
     }
 
     /**
@@ -1277,7 +1314,10 @@ public class PluginListener {
      * @param player
      * @param mob
      * @return false to allow target to occur, true to cancel the target.
+     * @deprecated Use {@link #onMobTarget(LivingEntityBase, LivingEntityBase)}
+     * instead
      */
+    @Deprecated
     public boolean onMobTarget(Player player, LivingEntity mob) {
         return false;
     }
@@ -1290,10 +1330,28 @@ public class PluginListener {
      * @param target The entity being targeted
      * @param targeter The entity that wants to target <tt>target</tt>
      * @return false to allow target to occur, true to cancel the target
+     * @deprecated Use {@link #onMobTarget(LivingEntityBase, LivingEntityBase)}
+     * instead.
      */
+    @Deprecated
     public boolean onMobTarget(LivingEntity target, LivingEntity targeter) {
         return target.isPlayer()
                 ? this.onMobTarget(target.getPlayer(), targeter)
+                : false;
+    }
+
+    /**
+     * Called when one <tt>LivingEntityBase</tt> targets another for following
+     * and/or attacking.
+     * You can interrupt this by returning true.
+     *
+     * @param target The entity being targeted
+     * @param targeter The entity that wants to target <tt>target</tt>
+     * @return false to allow target to occur, true to cancel the target
+     */
+    public boolean onMobTarget(LivingEntityBase target, LivingEntityBase targeter) {
+        return target.isPlayer() && targeter instanceof LivingEntity
+                ? this.onMobTarget(target.getPlayer(), (LivingEntity) targeter)
                 : false;
     }
 
@@ -1365,8 +1423,22 @@ public class PluginListener {
      *
      * @param entity
      *            - Entity that has died.
+     * @deprecated Use {@link #onDeath(LivingEntityBase)} instead
      */
+    @Deprecated
     public void onDeath(LivingEntity entity) {
+    }
+
+    /**
+     * Called when a LivingEntityBase dies.
+     *
+     * @param entity
+     *            - Entity that has died.
+     */
+    public void onDeath(LivingEntityBase entity) {
+        if (entity instanceof LivingEntity) {
+            this.onDeath((LivingEntity) entity);
+        }
     }
 
     /**

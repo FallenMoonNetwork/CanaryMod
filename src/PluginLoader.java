@@ -602,7 +602,7 @@ public class PluginLoader {
         String[] classes = properties.getString("plugins", "").split(",");
 
         for (String sclass : classes) {
-            if (sclass.equals("")) {
+            if (sclass.isEmpty()) {
                 continue;
             }
             loadPlugin(sclass.trim());
@@ -638,7 +638,7 @@ public class PluginLoader {
         String[] classes = properties.getString("preloadplugins", "").split(",");
 
         for (String sclass : classes) {
-            if (sclass.equals("")) {
+            if (sclass.isEmpty()) {
                 continue;
             }
             loadPlugin(sclass.trim());
@@ -1131,7 +1131,7 @@ public class PluginLoader {
                                 break;
 
                             case ATTACK:
-                                if (listener.onAttack((LivingEntity) parameters[0], (LivingEntity) parameters[1], (Float) parameters[2])) {
+                                if (listener.onAttack((LivingEntityBase) parameters[0], (LivingEntityBase) parameters[1], (Float) parameters[2])) {
                                     toRet = true;
                                 }
                                 break;
@@ -1279,7 +1279,7 @@ public class PluginLoader {
                                 break;
 
                             case POTION_EFFECT:
-                                toRet = listener.onPotionEffect((LivingEntity) parameters[0], (PotionEffect) parameters[1]);
+                                toRet = listener.onPotionEffect((LivingEntityBase) parameters[0], (PotionEffect) parameters[1]);
                                 break;
 
                             case EXPERIENCE_CHANGE:
@@ -1314,7 +1314,7 @@ public class PluginLoader {
                                 break;
 
                             case MOB_TARGET:
-                                if (listener.onMobTarget((LivingEntity) parameters[0], (LivingEntity) parameters[1])) {
+                                if (listener.onMobTarget((LivingEntityBase) parameters[0], (LivingEntityBase) parameters[1])) {
                                     toRet = true;
                                 }
                                 break;
@@ -1338,11 +1338,11 @@ public class PluginLoader {
                                 break;
 
                             case POTION_EFFECTFINISHED:
-                                listener.onPotionEffectFinished((LivingEntity) parameters[0], (PotionEffect) parameters[1]);
+                                listener.onPotionEffectFinished((LivingEntityBase) parameters[0], (PotionEffect) parameters[1]);
                                 break;
 
                             case DEATH:
-                                listener.onDeath((LivingEntity) parameters[0]);
+                                listener.onDeath((LivingEntityBase) parameters[0]);
                                 break;
 
                             case PROJECTILE_HIT:
@@ -1395,7 +1395,7 @@ public class PluginLoader {
                     } catch (UnsupportedOperationException ex) {}
                 }
             } catch (Exception ex) {
-                String listenerString = listener == null ? "null(unknown listener)" : listener.getClass().toString();
+                String listenerString = listener == null ? "null (unknown listener)" : listener.getClass().toString();
 
                 log.log(Level.SEVERE, "Exception while calling plugin function in '" + listenerString + "' while calling hook: '" + h.toString() + "'.", ex);
             } catch (Throwable ex) { // The 'exception' thrown is so severe it's
