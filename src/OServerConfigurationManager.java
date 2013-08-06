@@ -77,11 +77,17 @@ public abstract class OServerConfigurationManager {
         this.b(oentityplayermp, oworldserver);
 
         // CanaryMod - onPlayerConnect Hook
-        HookParametersConnect hookResult = new HookParametersConnect(OChatMessageComponent.b("multiplayer.player.joined", new Object[] { oentityplayermp.ax()}).a(OEnumChatFormatting.o).i(), true);
+        HookParametersConnect hookResult = new HookParametersConnect(true, oentityplayermp.getPlayer().getName());
 
         hookResult = (HookParametersConnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_CONNECT, oentityplayermp.getPlayer(), hookResult);
         if (!hookResult.isHidden()) {
-            this.a((OPacket) (new OPacket3Chat(OChatMessageComponent.d(hookResult.getJoinMessage()))));
+            OChatMessageComponent message;
+            if (hookResult.getCustomMessage() == null) {
+                message = OChatMessageComponent.b("multiplayer.player.joined", hookResult.getPlayerName()).a(OEnumChatFormatting.o);
+            } else {
+                message = OChatMessageComponent.d(hookResult.getCustomMessage());
+            }
+            this.a((OPacket) (new OPacket3Chat(message)));
         }
 
         // CanaryMod - Check if player is listed as muted, and mute him

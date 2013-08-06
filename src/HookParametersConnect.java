@@ -4,39 +4,47 @@
  * @author James
  */
 
-public class HookParametersConnect extends HookParameters {
-    private String joinMessage;
+public class HookParametersConnect extends HookParametersConnectBase {
     private boolean applyPotionsEffects;
-    private boolean Hidden = false;
 
-    public boolean isHidden() {
-        return Hidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        Hidden = hidden;
-    }
-
+    /**
+     * Returns whether potion effects should be applied on join.
+     * Defaults to <tt>true</tt>.
+     * @return whether potion effects should be applied
+     */
     public boolean applyPotionsEffects() {
         return applyPotionsEffects;
     }
 
+    /**
+     * Sets whether potion effects should be applied on join.
+     * Defaults to <tt>true</tt>.
+     * @param applyPotionsEffects <tt>true</tt> to apply potion effects,
+     * <tt>false</tt> to not apply them
+     */
     public void setApplyPotionsEffects(boolean applyPotionsEffects) {
         this.applyPotionsEffects = applyPotionsEffects;
     }
 
+    @Deprecated
     public void setJoinMessage(String joinMessage) {
-        this.joinMessage = joinMessage;
+        this.message = joinMessage;
     }
 
+    @Deprecated
     public String getJoinMessage() {
-        return joinMessage;
+        return message == null ? Colors.Yellow + playerName + " joined the game" : message;
     }
 
+    @Deprecated
     public HookParametersConnect(String joinMessage, boolean potionEffects) {
-        super();
-        this.joinMessage = joinMessage;
+        super(null);
+        this.message = joinMessage;
         this.applyPotionsEffects = potionEffects;
     }
 
+    public HookParametersConnect(boolean potionEffects, String playerName) {
+        super(playerName);
+        this.applyPotionsEffects = potionEffects;
+    }
 }

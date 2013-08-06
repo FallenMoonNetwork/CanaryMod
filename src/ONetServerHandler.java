@@ -70,11 +70,17 @@ public class ONetServerHandler extends ONetHandler {
             this.b(new OPacket255KickDisconnect(s));
             this.a.d();
             // CanaryMod - onPlayerDisconnect Hook
-            HookParametersDisconnect hookResult = new HookParametersDisconnect(OChatMessageComponent.b("multiplayer.player.left", new Object[] { this.c.ax()}).a(OEnumChatFormatting.o).i(), s);
+            HookParametersDisconnect hookResult = new HookParametersDisconnect(null, this.getPlayer().getName(), s);
 
-            hookResult = (HookParametersDisconnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_DISCONNECT, this.c.getPlayer(), hookResult);
+            hookResult = (HookParametersDisconnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_DISCONNECT, this.getPlayer(), hookResult);
             if (!hookResult.isHidden()) {
-                this.d.af().a((OPacket) (new OPacket3Chat(OChatMessageComponent.d(hookResult.getLeaveMessage()))));
+                OChatMessageComponent message;
+                if (hookResult.getCustomMessage() != null) {
+                    message = OChatMessageComponent.d(hookResult.getCustomMessage());
+                } else {
+                    message = OChatMessageComponent.b("multiplayer.player.left", hookResult.getPlayerName()).a(OEnumChatFormatting.o);
+                }
+                this.d.af().a((OPacket) (new OPacket3Chat(message)));
             }
 
             this.d.af().e(this.c);
@@ -529,11 +535,17 @@ public class ONetServerHandler extends ONetHandler {
         this.d.an().a(this.c.c_() + " lost connection: " + s);
 
         // CanaryMod - onPlayerDisconnect Hook
-        HookParametersDisconnect hookResult = new HookParametersDisconnect(OChatMessageComponent.b("multiplayer.player.left", new Object[] { this.c.ax()}).a(OEnumChatFormatting.o).i(), s);
+        HookParametersDisconnect hookResult = new HookParametersDisconnect(null, this.getPlayer().getName(), s);
 
         hookResult = (HookParametersDisconnect) etc.getLoader().callHook(PluginLoader.Hook.PLAYER_DISCONNECT, this.getPlayer(), hookResult);
         if (!hookResult.isHidden()) {
-            this.d.af().a((OPacket) (new OPacket3Chat(OChatMessageComponent.d(hookResult.getLeaveMessage()))));
+            OChatMessageComponent message;
+            if (hookResult.getCustomMessage() == null) {
+                message = OChatMessageComponent.b("multiplayer.player.left", hookResult.getPlayerName()).a(OEnumChatFormatting.o);
+            } else {
+                message = OChatMessageComponent.d(hookResult.getCustomMessage());
+            }
+            this.d.af().a((OPacket) (new OPacket3Chat(message)));
         }
         this.d.af().e(this.c);
         this.b = true;
