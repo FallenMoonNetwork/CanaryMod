@@ -1477,7 +1477,7 @@ public abstract class OEntity {
 
             this.ar = i;
             if (j == 1 && i == 1) {
-                oworldserver1 = ominecraftserver.a(0);
+                oworldserver1 = ominecraftserver.getWorld(q.name, 0);
                 this.ar = 0;
             }
 
