@@ -8,11 +8,11 @@ import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Scanner;
-import java.util.zip.CheckedInputStream;
 import java.util.zip.CRC32;
+import java.util.zip.CheckedInputStream;
 
 
 public class Main {
@@ -54,8 +54,8 @@ public class Main {
 
             try {
                 com.tonicsystems.jarjar.Main.main(new String[] { "process", "rules.rules", "minecraft_server.jar", "minecraft_servero.jar" });
-            } catch (Throwable t) {
-                log.log(Level.SEVERE, null, t);
+            } catch (Exception ex) {
+                log.log(Level.SEVERE, "Error while trying to convert minecraft_server.jar", ex);
             }
             checkCRC32("minecraft_servero.jar", minecraft_servero);
 
@@ -82,7 +82,7 @@ public class Main {
         // This mod works with GUI now :D
         try {
             OMinecraftServer.main(args);
-        } catch (Throwable t) {
+        } catch (Exception t) {
             log.log(Level.SEVERE, null, t);
         }
         new DeadLockDetector();
@@ -142,7 +142,7 @@ public class Main {
             log("This means some of your files are either corrupted, outdated or too new. (minecraft got updated?)");
             log("If you still want to run the server, delete version.txt to run the server in tainted mode.");
             log("-----------------------------");
-            System.exit(0);
+            System.exit(1);
         }
     }
 
@@ -187,13 +187,13 @@ public class Main {
         Class<?> sysclass = URLClassLoader.class;
 
         try {
-            Method method = sysclass.getDeclaredMethod("addURL", new Class[] { URL.class });
+            Method method = sysclass.getDeclaredMethod("addURL", URL.class);
 
             method.setAccessible(true);
-            method.invoke(sysloader, new Object[] { (new File(fileName)).toURI().toURL() });
-        } catch (Throwable t) {
-            t.printStackTrace();
-            throw new IOException("Error, could not add URL to system classloader");
+            method.invoke(sysloader, sysloader.getResource("minecraft_server.jar"));
+        } catch (Exception ex) {
+            log.log(Level.SEVERE, "Could not add URL to class loader", ex);
+            System.exit(1);
         }
     }
 
