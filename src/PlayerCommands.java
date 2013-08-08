@@ -1550,7 +1550,7 @@ public class PlayerCommands extends CommandHandler {
                 }
                 if (killer.hasControlOver(victim)) {
                     victim.dropInventory();
-                    victim.setHealth(0);
+                    victim.setHealth(0F);
                     killer.notify(victim.getName() + " has been killed!");
                 } else {
                     killer.notify("You cannot kill " + victim.getName());
@@ -1558,7 +1558,7 @@ public class PlayerCommands extends CommandHandler {
 
             } else {
                 killer.dropInventory();
-                killer.setHealth(0);
+                killer.setHealth(0F);
                 killer.notify("You suicided.");
             }
 
