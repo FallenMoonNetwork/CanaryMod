@@ -708,7 +708,8 @@ public class Player extends HumanEntity implements MessageReceiver {
             this.dismount();
         }
 
-        super.teleportTo(x, y, z, rotation, pitch);
+        // SRG this.getEntity().field_71135_a.func_72569_a(x, y, z, rotation, pitch);
+        this.getEntity().a.a(x, y, z, rotation, pitch);
     }
 
     /**
