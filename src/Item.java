@@ -562,7 +562,7 @@ public class Item implements Cloneable, Metadatable {
      * @return amount
      */
     public int getMaxAmount() {
-        // SRG return this.itemStack.func_77976_d();
+        // SRG return this.getBaseItem().func_77976_d();
         return this.getBaseItem().e();
     }
 
@@ -573,7 +573,7 @@ public class Item implements Cloneable, Metadatable {
      * @param amount
      */
     public void setMaxAmount(int amount) {
-        // SRG this.itemStack.func_77973_b().func_77625_d(amount);
+        // SRG this.getBaseItem().func_77973_b().func_77625_d(amount);
         this.getBaseItem().b().d(amount);
     }
 
@@ -776,7 +776,7 @@ public class Item implements Cloneable, Metadatable {
     public Enchantment[] getEnchantments() {
         Enchantment[] enchantments = new Enchantment[0];
         if (this.getBaseItem().r() != null && this.isEnchantable()) {
-            // SRG NBTTagList nbtTagList = new NBTTagList(itemStack.func_77986_q());
+            // SRG NBTTagList nbtTagList = new NBTTagList(getBaseItem().func_77986_q());
             NBTTagList nbtTagList = new NBTTagList(getBaseItem().r());
             int size = nbtTagList.size();
             enchantments = new Enchantment[size];
@@ -818,7 +818,7 @@ public class Item implements Cloneable, Metadatable {
      * otherwise.
      */
     public boolean isEnchantable() {
-        // SRG return itemStack.func_77956_u();
+        // SRG return getBaseItem().func_77956_u();
         return getBaseItem().x();
     }
 
@@ -828,7 +828,7 @@ public class Item implements Cloneable, Metadatable {
      * @return The item name
      */
     public String getName() {
-        // SRG return itemStack.func_82833_r();
+        // SRG return getBaseItem().func_82833_r();
         return getBaseItem().s();
     }
 
@@ -838,7 +838,7 @@ public class Item implements Cloneable, Metadatable {
      * @param name The item's new name
      */
     public void setName(String name) {
-        // SRG itemStack.func_82834_c(name);
+        // SRG getBaseItem().func_82834_c(name);
         getBaseItem().c(name);
     }
 
@@ -997,7 +997,7 @@ public class Item implements Cloneable, Metadatable {
      * @param tag the data tag
      */
     public void setDataTag(NBTTagCompound tag) {
-        // SRG itemStack.func_77982_d(tag == null ? null : tag.getBaseTag());
+        // SRG getBaseItem().func_77982_d(tag == null ? null : tag.getBaseTag());
         getBaseItem().d(tag == null ? null : tag.getBaseTag());
     }
 
@@ -1007,7 +1007,7 @@ public class Item implements Cloneable, Metadatable {
      * otherwise.
      */
     public boolean hasDataTag() {
-        // SRG return itemStack.func_77942_o();
+        // SRG return getBaseItem().func_77942_o();
         return getBaseItem().p();
     }
 
@@ -1027,7 +1027,7 @@ public class Item implements Cloneable, Metadatable {
      * @return NBTTagCompound
      */
     public NBTTagCompound writeToTag(NBTTagCompound tag) {
-        // SRG return new NBTTagCompound(itemStack.func_77955_b(tag.getBaseTag()));
+        // SRG return new NBTTagCompound(getBaseItem().func_77955_b(tag.getBaseTag()));
         return new NBTTagCompound(getBaseItem().b(tag.getBaseTag()));
     }
 
@@ -1037,7 +1037,7 @@ public class Item implements Cloneable, Metadatable {
      * @param tag The tag to read from
      */
     public void readFromTag(NBTTagCompound tag) {
-        // SRG itemStack.func_77963_c(tag.getBaseTag());
+        // SRG getBaseItem().func_77963_c(tag.getBaseTag());
         getBaseItem().c(tag.getBaseTag());
     }
 
