@@ -986,6 +986,7 @@ public class Item implements Cloneable, Metadatable {
      * @return
      */
     public NBTTagCompound getDataTag() {
+        // SRG return this.hasDataTag() ? new NBTTagCompound(getBaseItem().func_77978_p()) : null;
         return this.hasDataTag() ? new NBTTagCompound(getBaseItem().q()) : null;
     }
 
