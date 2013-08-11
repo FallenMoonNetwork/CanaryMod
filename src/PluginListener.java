@@ -766,7 +766,7 @@ public class PluginListener {
      */
     public boolean onAttack(LivingEntityBase attacker, LivingEntityBase defender, float amount) {
         if (attacker instanceof LivingEntity && defender instanceof LivingEntity) {
-            return onAttack(attacker, defender, Integer.valueOf((int) amount));
+            return onAttack((LivingEntity) attacker, (LivingEntity) defender, Integer.valueOf((int) amount));
         }
 
         return false;
