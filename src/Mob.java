@@ -35,6 +35,8 @@ public class Mob extends LivingEntity {
      */
     public Mob(String mob, World world) {
         this((OEntityLiving) OEntityList.a(mob, world.getWorld()));
+	// SRG this.getEntity().func_110161_a((OEntityLivingData) null);
+	this.getEntity().a((OEntityLivingData) null);
     }
 
     /**

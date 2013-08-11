@@ -48,7 +48,14 @@
         </jar>
     </target>
 
-    <target name="dist" depends="jar" >
+    <target name="-get-version" unless="version">
+        <exec executable="git" outputproperty="version">
+            <arg value="describe" />
+        </exec>
+    </target>
+
+    <target name="dist" depends="jar,-get-version">
+        <echo file="files/version.txt">${version}${line.separator}</echo>
         <copy todir="${dist}">
             <fileset dir="files">
                 <include name="*.sql" />
