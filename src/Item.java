@@ -771,10 +771,10 @@ public class Item implements Cloneable, Metadatable {
     /**
      * Gets a list of enchantments.
      *
-     * @return An {@link Enchantment}-array containing all enchantments.
+     * @return An {@link Enchantment}-array containing all enchantments or <tt>null</tt> if none.
      */
     public Enchantment[] getEnchantments() {
-        Enchantment[] enchantments = new Enchantment[0];
+        Enchantment[] enchantments = null;
         if (this.getBaseItem().r() != null && this.isEnchantable()) {
             // SRG NBTTagList nbtTagList = new NBTTagList(getBaseItem().func_77986_q());
             NBTTagList nbtTagList = new NBTTagList(getBaseItem().r());
@@ -796,7 +796,7 @@ public class Item implements Cloneable, Metadatable {
      */
     public Enchantment getEnchantment(int index) {
         Enchantment[] enchs = getEnchantments();
-        if (index >= enchs.length || index < 0) {
+        if (enchs == null || index >= enchs.length || index < 0) {
             return null;
         } else {
             return enchs[index];
