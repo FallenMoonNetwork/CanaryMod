@@ -116,7 +116,7 @@ public final class PropertiesFile {
 
     /**
      * Returns a Map of all <code>key=value</code> properties in the file as
-     * <code>&lt;key (java.lang.String), value (java.lang.String)></code> <br />
+     * <code>&lt;key (java.lang.String), value (java.lang.String)></code>. <br />
      * <br />
      * Example: <blockquote>
      *
@@ -136,10 +136,9 @@ public final class PropertiesFile {
      * @return <code>map</code> - Simple Map HashMap of the entire
      *         <code>key=value</code> as
      *         <code>&lt;key (java.lang.String), value (java.lang.String)></code>
-     * @throws Exception
-     *             If the properties file doesn't exist.
      */
-    public Map<String, String> returnMap() throws Exception {
+    @SuppressWarnings("unchecked")
+    public Map<String, String> returnMap() {
         return (Map<String, String>) props.clone();
     }
 
