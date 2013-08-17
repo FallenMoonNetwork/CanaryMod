@@ -488,6 +488,7 @@ public class HumanEntity extends LivingEntityBase {
                 } else {
                     // SRG player.func_71021_b(item.getBaseItem());
                     player.b(item.getBaseItem());
+                    break;
                 }
             }
         }
