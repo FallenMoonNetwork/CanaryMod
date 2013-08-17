@@ -712,6 +712,20 @@ public class Player extends HumanEntity implements MessageReceiver {
         this.getEntity().a.a(x, y, z, rotation, pitch);
     }
 
+    @Override
+    public void teleportTo(BaseEntity entity) {
+        this.teleportTo(entity.getLocation());
+    }
+
+    @Override
+    public void teleportTo(Location loc) {
+        if (!loc.getWorld().equals(this.getWorld())) {
+            this.switchWorlds(loc.getWorld());
+        }
+
+        super.teleportTo(loc);
+    }
+
     /**
      * Returns true if the player is muted.
      *
