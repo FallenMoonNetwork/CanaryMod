@@ -43,9 +43,6 @@ public class Location implements java.io.Serializable {
      */
     public String world;
 
-    // Cache world for efficiency
-    private transient World worldRef;
-
     /**
      * Creates a location
      */
@@ -126,17 +123,13 @@ public class Location implements java.io.Serializable {
      *          dimension. May return null if the given world does not exist!
      */
     public World getWorld() {
-        if (worldRef == null) {
-            OWorld oworld = etc.getMCServer().getWorld(world, dimension);
-            worldRef = oworld == null ? null : oworld.world;
-        }
-        return worldRef;
+        OWorld oworld = etc.getMCServer().getWorld(world, dimension);
+        return oworld == null ? null : oworld.world;
     }
 
     public void setWorld(World newWorld) {
         world = newWorld.getName();
         dimension = newWorld.getType().getId();
-        worldRef = newWorld;
     }
 
     /**

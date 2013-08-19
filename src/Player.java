@@ -852,8 +852,7 @@ public class Player extends HumanEntity implements MessageReceiver {
                 || world.getType() == World.Dimension.NORMAL
                 && this.getWorld().getType() == World.Dimension.END) {
             Location loc = this.getLocation();
-            loc.world = world.getName(); // teleport to new world
-            loc.dimension = world.getType().getId();
+            loc.setWorld(world); // teleport to new world
 
             // SRG mcServer.func_71203_ab().func_72368_a(ent, loc.dimension, true, loc); // Respawn with location
             mcServer.af().a(ent, loc.dimension, true, loc); // Respawn with location
