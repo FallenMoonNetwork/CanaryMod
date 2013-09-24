@@ -27,7 +27,7 @@ public class OEntityOcelot extends OEntityTameable {
         this.ah.a(18, Byte.valueOf((byte) 0));
     }
 
-    public void bj() {
+    public void bk() {
         if (this.i().a()) {
             double d0 = this.i().b();
 
@@ -51,12 +51,12 @@ public class OEntityOcelot extends OEntityTameable {
         return !this.bT() && this.ac > 2400;
     }
 
-    public boolean be() {
+    public boolean bf() {
         return true;
     }
 
-    protected void ay() {
-        super.ay();
+    protected void az() {
+        super.az();
         this.a(OSharedMonsterAttributes.a).a(10.0D);
         this.a(OSharedMonsterAttributes.d).a(0.30000001192092896D);
     }
@@ -77,15 +77,15 @@ public class OEntityOcelot extends OEntityTameable {
         return this.bT() ? (this.bY() ? "mob.cat.purr" : (this.ab.nextInt(4) == 0 ? "mob.cat.purreow" : "mob.cat.meow")) : "";
     }
 
-    protected String aN() {
-        return "mob.cat.hitt";
-    }
-
     protected String aO() {
         return "mob.cat.hitt";
     }
 
-    protected float aZ() {
+    protected String aP() {
+        return "mob.cat.hitt";
+    }
+
+    protected float ba() {
         return 0.4F;
     }
 
@@ -98,7 +98,7 @@ public class OEntityOcelot extends OEntityTameable {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else {
             this.bp.a(false);
@@ -213,8 +213,8 @@ public class OEntityOcelot extends OEntityTameable {
         }
     }
 
-    public String am() {
-        return this.bB() ? this.bA() : (this.bT() ? "entity.Cat.name" : super.am());
+    public String an() {
+        return this.bB() ? this.bA() : (this.bT() ? "entity.Cat.name" : super.an());
     }
 
     public OEntityLivingData a(OEntityLivingData oentitylivingdata) {

@@ -126,7 +126,7 @@ public class ONetServerHandler extends ONetHandler {
                     float f = this.c.A;
                     float f1 = this.c.B;
 
-                    this.c.o.V();
+                    this.c.o.W();
                     d1 = this.c.u;
                     d2 = this.c.v;
                     d3 = this.c.w;
@@ -140,7 +140,7 @@ public class ONetServerHandler extends ONetHandler {
                     this.c.X = 0.0F;
                     this.c.a(d1, d2, d3, f, f1);
                     if (this.c.o != null) {
-                        this.c.o.V();
+                        this.c.o.W();
                     }
 
                     this.d.af().d(this.c);
@@ -154,7 +154,7 @@ public class ONetServerHandler extends ONetHandler {
                     return;
                 }
 
-                if (this.c.bg()) {
+                if (this.c.bh()) {
                     this.c.h();
                     this.c.a(this.n, this.o, this.p, this.c.A, this.c.B);
                     oworldserver.g(this.c);
@@ -182,7 +182,7 @@ public class ONetServerHandler extends ONetHandler {
                     d2 = opacket10flying.b;
                     d3 = opacket10flying.c;
                     d4 = opacket10flying.d - opacket10flying.b;
-                    if (!this.c.bg() && (d4 > 1.65D || d4 < 0.1D)) {
+                    if (!this.c.bh() && (d4 > 1.65D || d4 < 0.1D)) {
                         this.c("Illegal stance");
                         this.d.an().b(this.c.c_() + " had an illegal stance: " + d4);
                         return;
@@ -242,7 +242,7 @@ public class ONetServerHandler extends ONetHandler {
                 d10 = d4 * d4 + d5 * d5 + d6 * d6;
                 boolean flag1 = false;
 
-                if (d10 > 0.0625D && !this.c.bg() && !this.c.c.d()) {
+                if (d10 > 0.0625D && !this.c.bh() && !this.c.c.d()) {
                     flag1 = true;
                     this.d.an().b(this.c.c_() + " moved wrongly!");
                 }
@@ -250,7 +250,7 @@ public class ONetServerHandler extends ONetHandler {
                 this.c.a(d1, d2, d3, f2, f3);
                 boolean flag2 = oworldserver.a(this.c, this.c.E.c().e((double) f4, (double) f4, (double) f4)).isEmpty();
 
-                if (flag && (flag1 || !flag2) && !this.c.bg()) {
+                if (flag && (flag1 || !flag2) && !this.c.bh()) {
                     this.a(this.n, this.o, this.p, f2, f3);
                     return;
                 }
@@ -310,12 +310,13 @@ public class ONetServerHandler extends ONetHandler {
     public void a(OPacket14BlockDig opacket14blockdig) {
         OWorldServer oworldserver = this.d.getWorld(this.c.q.name, this.c.ar);
 
+        this.c.u();
         if (opacket14blockdig.e == 4) {
             this.c.a(false);
         } else if (opacket14blockdig.e == 3) {
             this.c.a(true);
         } else if (opacket14blockdig.e == 5) {
-            this.c.bs();
+            this.c.bt();
         } else {
             boolean flag = false;
 
@@ -421,6 +422,7 @@ public class ONetServerHandler extends ONetHandler {
         int k = opacket15place.g();
         int l = opacket15place.h();
 
+        this.c.u();
         if (opacket15place.h() == 255) {
             // ITEM_USE -- if we have a lastRightClicked then it could be a
             // usable location
@@ -547,6 +549,7 @@ public class ONetServerHandler extends ONetHandler {
             }
             this.d.af().a((OPacket) (new OPacket3Chat(message)));
         }
+
         this.d.af().e(this.c);
         this.b = true;
         if (this.d.K() && this.c.c_().equals(this.d.J())) {
@@ -589,6 +592,7 @@ public class ONetServerHandler extends ONetHandler {
     public void a(OPacket16BlockItemSwitch opacket16blockitemswitch) {
         if (opacket16blockitemswitch.a >= 0 && opacket16blockitemswitch.a < OInventoryPlayer.i()) {
             this.c.bn.c = opacket16blockitemswitch.a;
+            this.c.u();
         } else {
             this.d.an().b(this.c.c_() + " tried to set an invalid carried item");
         }
@@ -599,6 +603,7 @@ public class ONetServerHandler extends ONetHandler {
         if (this.c.t() == 2) {
             this.b(new OPacket3Chat(OChatMessageComponent.e("chat.cannotSend").a(OEnumChatFormatting.m)));
         } else {
+            this.c.u();
             String s = opacket3chat.a;
 
             if (s.length() > 100) {
@@ -621,7 +626,7 @@ public class ONetServerHandler extends ONetHandler {
                         return;
                     }
 
-                    OChatMessageComponent ochatmessagecomponent = OChatMessageComponent.b("chat.type.text", new Object[] { this.c.ax(), s});
+                    OChatMessageComponent ochatmessagecomponent = OChatMessageComponent.b("chat.type.text", new Object[] { this.c.ay(), s});
 
                     this.d.af().a(ochatmessagecomponent, false);
                 }
@@ -644,14 +649,16 @@ public class ONetServerHandler extends ONetHandler {
     */
 
     public void a(OPacket18Animation opacket18animation) {
+        this.c.u();
         if (opacket18animation.b == 1) {
             // CanaryMod: Swing the arm!
             OEntity.manager.callHook(PluginLoader.Hook.ARM_SWING, getPlayer());
-            this.c.aU();
+            this.c.aV();
         }
     }
 
     public void a(OPacket19EntityAction opacket19entityaction) {
+        this.c.u();
         if (opacket19entityaction.b == 1) {
             this.c.b(true);
         } else if (opacket19entityaction.b == 2) {
@@ -684,6 +691,7 @@ public class ONetServerHandler extends ONetHandler {
         OWorldServer oworldserver = this.d.getWorld(this.c.q.name, this.c.ar);
         OEntity oentity = oworldserver.a(opacket7useentity.b);
 
+        this.c.u();
         if (oentity != null) {
             boolean flag = this.c.o(oentity);
             double d0 = 36.0D;
@@ -709,6 +717,7 @@ public class ONetServerHandler extends ONetHandler {
     }
 
     public void a(OPacket205ClientCommand opacket205clientcommand) {
+        this.c.u();
         if (opacket205clientcommand.a == 1) {
             if (this.c.j) {
                 this.c = this.d.af().a(this.c, 0, true);
@@ -724,7 +733,7 @@ public class ONetServerHandler extends ONetHandler {
                     this.c.a.c("You have died. Game over, man, it\'s game over!");
                 }
             } else {
-                if (this.c.aM() > 0.0F) {
+                if (this.c.aN() > 0.0F) {
                     return;
                 }
 
@@ -744,6 +753,7 @@ public class ONetServerHandler extends ONetHandler {
     }
 
     public void a(OPacket102WindowClick opacket102windowclick) {
+        this.c.u();
         if (this.c.bp.d == opacket102windowclick.a && this.c.bp.c(this.c)) {
 
             // CanaryMod: onSlotClick
@@ -793,6 +803,7 @@ public class ONetServerHandler extends ONetHandler {
     }
 
     public void a(OPacket108EnchantItem opacket108enchantitem) {
+        this.c.u();
         if (this.c.bp.d == opacket108enchantitem.a && this.c.bp.c(this.c)) {
             this.c.bp.a((OEntityPlayer) this.c, opacket108enchantitem.b);
             this.c.bp.b();
@@ -835,6 +846,7 @@ public class ONetServerHandler extends ONetHandler {
     }
 
     public void a(OPacket130UpdateSign opacket130updatesign) {
+        this.c.u();
         OWorldServer oworldserver = this.d.getWorld(this.c.q.name, this.c.ar);
 
         if (oworldserver.f(opacket130updatesign.a, opacket130updatesign.b, opacket130updatesign.c)) {
@@ -855,17 +867,15 @@ public class ONetServerHandler extends ONetHandler {
             for (j = 0; j < 4; ++j) {
                 boolean flag = true;
 
-                /* CanaryMod: Remove the char limit, for plugins.
                 if (opacket130updatesign.d[j].length() > 15) {
                     flag = false;
                 } else {
-                */
-                for (i = 0; i < opacket130updatesign.d[j].length(); ++i) {
-                    if (OChatAllowedCharacters.a.indexOf(opacket130updatesign.d[j].charAt(i)) < 0) {
-                        flag = false;
+                    for (i = 0; i < opacket130updatesign.d[j].length(); ++i) {
+                        if (OChatAllowedCharacters.a.indexOf(opacket130updatesign.d[j].charAt(i)) < 0) {
+                            flag = false;
+                        }
                     }
                 }
-                //}
 
                 if (!flag) {
                     opacket130updatesign.d[j] = "!?";
@@ -926,7 +936,7 @@ public class ONetServerHandler extends ONetHandler {
             }
         }
 
-        this.d.a.b(new OPacket203AutoComplete(stringbuilder.toString()));
+        this.c.a.b(new OPacket203AutoComplete(stringbuilder.toString()));
         */
         String result = this.getPlayer().autoComplete(opacket203autocomplete.d());
 

@@ -21,7 +21,7 @@ public abstract class OEntityCreature extends OEntityLiving {
         return false;
     }
 
-    protected void bk() {
+    protected void bl() {
         this.q.C.a("ai");
         if (this.bo > 0 && --this.bo == 0) {
             OAttributeInstance oattributeinstance = this.a(OSharedMonsterAttributes.d);
@@ -40,7 +40,7 @@ public abstract class OEntityCreature extends OEntityLiving {
             if (this.j != null) {
                 this.bp = this.q.a(this, this.j, f11, true, false, false, true);
             }
-        } else if (this.j.S()) {
+        } else if (this.j.T()) {
             float f1 = this.j.d((OEntity) this);
 
             if (this.o(this.j)) {
@@ -58,8 +58,8 @@ public abstract class OEntityCreature extends OEntityLiving {
         }
 
         int i = OMathHelper.c(this.E.b + 0.5D);
-        boolean flag = this.G();
-        boolean flag1 = this.I();
+        boolean flag = this.H();
+        boolean flag1 = this.J();
 
         this.B = 0.0F;
         if (this.bp != null && this.ab.nextInt(100) != 0) {
@@ -125,7 +125,7 @@ public abstract class OEntityCreature extends OEntityLiving {
 
             this.q.C.b();
         } else {
-            super.bk();
+            super.bl();
             this.bp = null;
         }
     }

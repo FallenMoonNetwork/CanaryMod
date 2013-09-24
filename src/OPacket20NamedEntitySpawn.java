@@ -29,7 +29,7 @@ public class OPacket20NamedEntitySpawn extends OPacket {
         OItemStack oitemstack = oentityplayer.bn.h();
 
         this.h = oitemstack == null ? 0 : oitemstack.d;
-        this.i = oentityplayer.u();
+        this.i = oentityplayer.v();
     }
 
     public void a(DataInput datainput) throws IOException {

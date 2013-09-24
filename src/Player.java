@@ -768,7 +768,7 @@ public class Player extends HumanEntity implements MessageReceiver {
     // TODO pull up
     public boolean isBlocking() {
         // SRG return getEntity().func_71039_bw();
-        return getEntity().bq();
+        return getEntity().br();
     }
 
     /**

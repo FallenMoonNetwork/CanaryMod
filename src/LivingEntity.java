@@ -52,7 +52,7 @@ public class LivingEntity extends LivingEntityBase {
      */
     public Item getItemStackInHand() {
         // SRG OItemStack stack = getEntity().func_70694_bm();
-        OItemStack stack = getEntity().aY();
+        OItemStack stack = getEntity().aZ();
         return stack == null ? null : new Item(stack);
     }
 

@@ -116,7 +116,7 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
         super.b(i);
     }
 
-    public void w() {
+    public void x() {
         if (this.b) {
             for (int i = 0; i < this.j_(); ++i) {
                 OItemStack oitemstack = this.a(i);
@@ -151,7 +151,7 @@ public abstract class OEntityMinecartContainer extends OEntityMinecart implement
             }
         }
 
-        super.w();
+        super.x();
     }
 
     protected void b(ONBTTagCompound onbttagcompound) {

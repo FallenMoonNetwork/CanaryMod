@@ -635,7 +635,7 @@ public class OChunk {
                     "Entity not in this chunk! Chunk: {0}, {1} Entity: {2}",
                     new Object[] {this.g, this.h, oentity});
             this.e.Y().c("Destroying entity to prevent trouble", new RuntimeException());
-            oentity.w();
+            oentity.x(); // XXX: update me
             return;
         }
 
@@ -753,7 +753,7 @@ public class OChunk {
             while (iterator.hasNext()) {
                 OEntity oentity = (OEntity) iterator.next();
 
-                oentity.Q();
+                oentity.R();
             }
 
             this.e.a(this.j[i]);
@@ -801,7 +801,7 @@ public class OChunk {
 
                 if (oentity1 != oentity && oentity1.E.b(oaxisalignedbb) && (oientityselector == null || oientityselector.a(oentity1))) {
                     list.add(oentity1);
-                    OEntity[] aoentity = oentity1.an();
+                    OEntity[] aoentity = oentity1.ao();
 
                     if (aoentity != null) {
                         for (int i1 = 0; i1 < aoentity.length; ++i1) {

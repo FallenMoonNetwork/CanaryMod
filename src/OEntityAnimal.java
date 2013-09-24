@@ -9,12 +9,12 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
         super(oworld);
     }
 
-    protected void bj() {
+    protected void bk() {
         if (this.b() != 0) {
             this.bp = 0;
         }
 
-        super.bj();
+        super.bk();
     }
 
     public void c() {
@@ -51,7 +51,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
 
             OEntityPlayer oentityplayer = (OEntityPlayer) oentity;
 
-            if (oentityplayer.bx() == null || !this.c(oentityplayer.bx())) {
+            if (oentityplayer.by() == null || !this.c(oentityplayer.by())) {
                 this.j = null;
             }
         } else if (oentity instanceof OEntityAnimal) {
@@ -115,11 +115,11 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else {
             this.bo = 60;
-            if (!this.be()) {
+            if (!this.bf()) {
                 OAttributeInstance oattributeinstance = this.a(OSharedMonsterAttributes.d);
 
                 if (oattributeinstance.a(h) == null) {
@@ -171,7 +171,7 @@ public abstract class OEntityAnimal extends OEntityAgeable implements OIAnimals 
                 for (i = 0; i < list.size(); ++i) {
                     OEntityPlayer oentityplayer = (OEntityPlayer) list.get(i);
 
-                    if (oentityplayer.bx() != null && this.c(oentityplayer.bx())) {
+                    if (oentityplayer.by() != null && this.c(oentityplayer.by())) {
                         return oentityplayer;
                     }
                 }

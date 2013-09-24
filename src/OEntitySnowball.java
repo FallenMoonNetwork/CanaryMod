@@ -31,7 +31,7 @@ public class OEntitySnowball extends OEntityThrowable {
             }
 
             if (!this.q.I) {
-                this.w();
+            this.x();
             }
         }
     }

@@ -348,7 +348,7 @@ public class OServerCommandScoreboard extends OCommandBase {
         String s;
 
         if (oicommandsender instanceof OEntityPlayer && i == astring.length) {
-            s = b(oicommandsender).am();
+            s = b(oicommandsender).an();
             oscoreboard.a(s, oscoreplayerteam);
             hashset.add(s);
         } else {
@@ -371,7 +371,7 @@ public class OServerCommandScoreboard extends OCommandBase {
         String s;
 
         if (oicommandsender instanceof OEntityPlayer && i == astring.length) {
-            s = b(oicommandsender).am();
+            s = b(oicommandsender).an();
             if (oscoreboard.g(s)) {
                 hashset.add(s);
             } else {

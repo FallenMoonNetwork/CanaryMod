@@ -11,7 +11,7 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
     }
 
     public void c() {
-        this.aV();
+        this.aW();
         float f = this.d(1.0F);
 
         if (f > 0.5F) {
@@ -24,7 +24,7 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
     public void l_() {
         super.l_();
         if (!this.q.I && this.q.r == 0) {
-            this.w();
+            this.x();
         }
     }
 
@@ -35,7 +35,7 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else if (super.a(odamagesource, f)) {
             OEntity oentity = odamagesource.i();
@@ -126,9 +126,9 @@ public abstract class OEntityMob extends OEntityCreature implements OIMob {
         return this.q.r > 0 && this.i_() && super.bs();
     }
 
-    protected void ay() {
-        super.ay();
-        this.aW().b(OSharedMonsterAttributes.e);
+    protected void az() {
+        super.az();
+        this.aX().b(OSharedMonsterAttributes.e);
     }
 
     @Override

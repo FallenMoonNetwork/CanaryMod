@@ -40,12 +40,12 @@ public class OEntityMinecartHopper extends OEntityMinecartContainer implements O
     public void a(int i, int j, int k, boolean flag) {
         boolean flag1 = !flag;
 
-        if (flag1 != this.ay()) {
+        if (flag1 != this.u()) {
             this.f(flag1);
         }
     }
 
-    public boolean ay() {
+    public boolean u() {
         return this.a;
     }
 
@@ -71,7 +71,7 @@ public class OEntityMinecartHopper extends OEntityMinecartContainer implements O
 
     public void l_() {
         super.l_();
-        if (!this.q.I && this.S() && this.ay()) {
+        if (!this.q.I && this.T() && this.u()) {
             --this.b;
             if (!this.aE()) {
                 this.l(0);

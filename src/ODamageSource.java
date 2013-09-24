@@ -117,11 +117,11 @@ public class ODamageSource {
     }
 
     public OChatMessageComponent b(OEntityLivingBase oentitylivingbase) {
-        OEntityLivingBase oentitylivingbase1 = oentitylivingbase.aR();
+        OEntityLivingBase oentitylivingbase1 = oentitylivingbase.aS();
         String s = "death.attack." + this.o;
         String s1 = s + ".player";
 
-        return oentitylivingbase1 != null && OStatCollector.b(s1) ? OChatMessageComponent.b(s1, new Object[] { oentitylivingbase.ax(), oentitylivingbase1.ax()}) : OChatMessageComponent.b(s, new Object[] { oentitylivingbase.ax()});
+        return oentitylivingbase1 != null && OStatCollector.b(s1) ? OChatMessageComponent.b(s1, new Object[] { oentitylivingbase.ay(), oentitylivingbase1.ay()}) : OChatMessageComponent.b(s, new Object[] { oentitylivingbase.ay()});
     }
 
     public boolean m() {

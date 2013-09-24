@@ -171,7 +171,7 @@ public class OBlockLeaves extends OBlockLeavesBase {
     }
 
     public void a(OWorld oworld, OEntityPlayer oentityplayer, int i, int j, int k, int l) {
-        if (!oworld.I && oentityplayer.bx() != null && oentityplayer.bx().d == OItem.bg.cv) {
+        if (!oworld.I && oentityplayer.by() != null && oentityplayer.by().d == OItem.bg.cv) {
             oentityplayer.a(OStatList.C[this.cF], 1);
             this.b(oworld, i, j, k, new OItemStack(OBlock.P.cF, 1, l & 3));
         } else {

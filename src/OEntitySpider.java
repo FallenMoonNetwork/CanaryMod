@@ -17,8 +17,8 @@ public class OEntitySpider extends OEntityMob {
         }
     }
 
-    protected void ay() {
-        super.ay();
+    protected void az() {
+        super.az();
         this.a(OSharedMonsterAttributes.a).a(16.0D);
         this.a(OSharedMonsterAttributes.d).a(0.800000011920929D);
     }
@@ -39,11 +39,11 @@ public class OEntitySpider extends OEntityMob {
         return "mob.spider.say";
     }
 
-    protected String aN() {
+    protected String aO() {
         return "mob.spider.say";
     }
 
-    protected String aO() {
+    protected String aP() {
         return "mob.spider.death";
     }
 
@@ -88,9 +88,9 @@ public class OEntitySpider extends OEntityMob {
         return this.bT();
     }
 
-    public void al() {}
+    public void am() {}
 
-    public OEnumCreatureAttribute aX() {
+    public OEnumCreatureAttribute aY() {
         return OEnumCreatureAttribute.c;
     }
 

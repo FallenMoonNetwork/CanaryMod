@@ -57,7 +57,7 @@ public class HopperMinecart extends ContainerMinecart implements Hopper {
      */
     public boolean isBlocked() {
         // SRG return this.getEntity().func_96111_ay();
-        return this.getEntity().ay();
+        return this.getEntity().u();
     }
 
     /**

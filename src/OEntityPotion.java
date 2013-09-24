@@ -95,7 +95,7 @@ public class OEntityPotion extends OEntityThrowable {
             }
 
             this.q.e(2002, (int) Math.round(this.u), (int) Math.round(this.v), (int) Math.round(this.w), this.i());
-            this.w();
+            this.x();
         }
     }
 
@@ -108,7 +108,7 @@ public class OEntityPotion extends OEntityThrowable {
         }
 
         if (this.c == null) {
-            this.w();
+            this.x();
         }
     }
 

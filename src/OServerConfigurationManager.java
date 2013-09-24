@@ -106,7 +106,7 @@ public abstract class OServerConfigurationManager {
 
         // CanaryMod: apply potion effects?
         if (hookResult.applyPotionsEffects()) {
-            Iterator iterator = oentityplayermp.aK().iterator();
+            Iterator iterator = oentityplayermp.aL().iterator();
 
             while (iterator.hasNext()) {
                 OPotionEffect opotioneffect = (OPotionEffect) iterator.next();
@@ -364,8 +364,8 @@ public abstract class OServerConfigurationManager {
         oentityplayermp.p().s().c(oentityplayermp);
         this.a.remove(oentityplayermp);
         this.e.getWorld(oentityplayermp.getPlayer().getWorld().getName(), oentityplayermp.ar).f(oentityplayermp);
-        OChunkCoordinates ochunkcoordinates = oentityplayermp.bE();
-        boolean flag1 = oentityplayermp.bF();
+        OChunkCoordinates ochunkcoordinates = oentityplayermp.bF();
+        boolean flag1 = oentityplayermp.bG();
 
         oentityplayermp.ar = i;
         OItemInWorldManager oiteminworldmanager;
@@ -424,7 +424,8 @@ public abstract class OServerConfigurationManager {
         oworldserver.d(oentityplayermp1);
         this.a.add(oentityplayermp1);
         oentityplayermp1.d();
-        oentityplayermp1.g(oentityplayermp1.aM());
+        oentityplayermp1.g(oentityplayermp1.aN());
+
         etc.getLoader().callHook(PluginLoader.Hook.PLAYER_RESPAWN, oentityplayermp1.getPlayer(), location);
         return oentityplayermp1;
     }
@@ -450,7 +451,7 @@ public abstract class OServerConfigurationManager {
         oentityplayermp.c.a(oworldserver1);
         this.b(oentityplayermp, oworldserver1);
         this.f(oentityplayermp);
-        Iterator iterator = oentityplayermp.aK().iterator();
+        Iterator iterator = oentityplayermp.aL().iterator();
 
         while (iterator.hasNext()) {
             OPotionEffect opotioneffect = (OPotionEffect) iterator.next();
@@ -477,14 +478,14 @@ public abstract class OServerConfigurationManager {
             d0 /= d2;
             d1 /= d2;
             oentity.b(d0, oentity.v, d1, oentity.A, oentity.B);
-            if (oentity.S()) {
+            if (oentity.T()) {
                 oworldserver.a(oentity, false);
             }
         } else if (oentity.ar == 0) {
             d0 *= d2;
             d1 *= d2;
             oentity.b(d0, oentity.v, d1, oentity.A, oentity.B);
-            if (oentity.S()) {
+            if (oentity.T()) {
                 oworldserver.a(oentity, false);
             }
         } else {
@@ -500,7 +501,7 @@ public abstract class OServerConfigurationManager {
             oentity.v = (double) ochunkcoordinates.b;
             d1 = (double) ochunkcoordinates.c;
             oentity.b(d0, oentity.v, d1, 90.0F, 0.0F);
-            if (oentity.S()) {
+            if (oentity.T()) {
                 oworldserver.a(oentity, false);
             }
         }
@@ -510,7 +511,7 @@ public abstract class OServerConfigurationManager {
             oworldserver.C.a("placing");
             d0 = (double) OMathHelper.a((int) d0, -29999872, 29999872);
             d1 = (double) OMathHelper.a((int) d1, -29999872, 29999872);
-            if (oentity.S()) {
+            if (oentity.T()) {
                 oworldserver1.d(oentity);
                 oentity.b(d0, oentity.v, d1, oentity.A, oentity.B);
                 oworldserver1.a(oentity, false);
@@ -649,9 +650,9 @@ public abstract class OServerConfigurationManager {
             for (int i2 = 0; i2 < this.a.size(); ++i2) {
                 OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) this.a.get(i2);
 
-                if ((oworld == null || oentityplayermp.q == oworld) && (s == null || flag1 != s.equalsIgnoreCase(oentityplayermp.am()))) {
+                if ((oworld == null || oentityplayermp.q == oworld) && (s == null || flag1 != s.equalsIgnoreCase(oentityplayermp.an()))) {
                     if (s1 != null) {
-                        OTeam oteam = oentityplayermp.bn();
+                        OTeam oteam = oentityplayermp.bo();
                         String s2 = oteam == null ? "" : oteam.b();
 
                         if (flag2 == s1.equalsIgnoreCase(s2)) {
@@ -711,14 +712,14 @@ public abstract class OServerConfigurationManager {
                     s = s.substring(0, s.length() - 4);
                 }
 
-                OScoreboard oscoreboard = oentityplayer.bL();
+                OScoreboard oscoreboard = oentityplayer.bM();
                 OScoreObjective oscoreobjective = oscoreboard.b(s);
 
                 if (oscoreobjective == null) {
                     return false;
                 }
 
-                OScore oscore = oentityplayer.bL().a(oentityplayer.am(), oscoreobjective);
+                OScore oscore = oentityplayer.bM().a(oentityplayer.an(), oscoreobjective);
 
                 i = oscore.c();
                 if (i < ((Integer) entry.getValue()).intValue() && flag) {

@@ -20,7 +20,7 @@ public class OEntityEnderPearl extends OEntityThrowable {
                 p = new Player((OEntityPlayerMP) this.h());
             }
             if ((p != null) && !(etc.getServer().getPlayerList().contains(p))) {
-                this.w(); // kill this entity
+                this.x(); // kill this entity
                 return;
             }
             // CanaryMod end
@@ -34,9 +34,9 @@ public class OEntityEnderPearl extends OEntityThrowable {
                     OEntityPlayerMP oentityplayermp = (OEntityPlayerMP) this.h();
 
                     if (!oentityplayermp.a.b && oentityplayermp.q == this.q) {
-                    if (this.h().af()) {
-                        this.h().a((OEntity) null);
-                    }
+                        if (this.h().ag()) {
+                            this.h().a((OEntity) null);
+                        }
 
                         this.h().a(this.u, this.v, this.w);
                         this.h().T = 0.0F;
@@ -46,7 +46,7 @@ public class OEntityEnderPearl extends OEntityThrowable {
                         } //
                     }
                 }
-                this.w();
+                this.x();
             }
         }
     }

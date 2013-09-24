@@ -55,7 +55,7 @@ public abstract class OEntityFireball extends OEntity {
 
     public void l_() {
         if (!this.q.I && (this.a != null && this.a.M || !this.q.f((int) this.u, (int) this.v, (int) this.w))) {
-            this.w();
+            this.x();
         } else {
             super.l_();
             this.d(1);
@@ -65,7 +65,7 @@ public abstract class OEntityFireball extends OEntity {
                 if (i == this.h) {
                     ++this.j;
                     if (this.j == 600) {
-                        this.w();
+                        this.x();
                     }
 
                     return;
@@ -98,7 +98,7 @@ public abstract class OEntityFireball extends OEntity {
             for (int j = 0; j < list.size(); ++j) {
                 OEntity oentity1 = (OEntity) list.get(j);
 
-                if (oentity1.K() && (!oentity1.h(this.a) || this.au >= 25)) {
+                if (oentity1.L() && (!oentity1.h(this.a) || this.au >= 25)) {
                     float f = 0.3F;
                     OAxisAlignedBB oaxisalignedbb = oentity1.E.b((double) f, (double) f, (double) f);
                     OMovingObjectPosition omovingobjectposition1 = oaxisalignedbb.a(ovec3, ovec31);
@@ -149,7 +149,7 @@ public abstract class OEntityFireball extends OEntity {
             this.A = this.C + (this.A - this.C) * 0.2F;
             float f2 = this.c();
 
-            if (this.G()) {
+            if (this.H()) {
                 for (int k = 0; k < 4; ++k) {
                     float f3 = 0.25F;
 
@@ -198,25 +198,25 @@ public abstract class OEntityFireball extends OEntity {
             this.y = ((ONBTTagDouble) onbttaglist.b(1)).a;
             this.z = ((ONBTTagDouble) onbttaglist.b(2)).a;
         } else {
-            this.w();
+            this.x();
         }
     }
 
-    public boolean K() {
+    public boolean L() {
         return true;
     }
 
-    public float Y() {
+    public float Z() {
         return 1.0F;
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else {
-            this.J();
+            this.K();
             if (odamagesource.i() != null) {
-                OVec3 ovec3 = odamagesource.i().Z();
+                OVec3 ovec3 = odamagesource.i().aa();
 
                 if (ovec3 != null) {
                     this.x = ovec3.c;

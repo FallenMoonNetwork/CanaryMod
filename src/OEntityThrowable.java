@@ -93,7 +93,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
             if (i == this.f) {
                 ++this.i;
                 if (this.i == 1200) {
-                    this.w();
+                    this.x();
                 }
 
                 return;
@@ -128,7 +128,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
             for (int j = 0; j < list.size(); ++j) {
                 OEntity oentity1 = (OEntity) list.get(j);
 
-                if (oentity1.K() && (oentity1 != oentitylivingbase || this.j >= 5)) {
+                if (oentity1.L() && (oentity1 != oentitylivingbase || this.j >= 5)) {
                     float f = 0.3F;
                     OAxisAlignedBB oaxisalignedbb = oentity1.E.b((double) f, (double) f, (double) f);
                     OMovingObjectPosition omovingobjectposition1 = oaxisalignedbb.a(ovec3, ovec31);
@@ -151,7 +151,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
 
         if (omovingobjectposition != null) {
             if (omovingobjectposition.a == OEnumMovingObjectType.a && this.q.a(omovingobjectposition.b, omovingobjectposition.c, omovingobjectposition.d) == OBlock.bj.cF) {
-                this.aa();
+                this.ab();
             } else {
                 this.a(omovingobjectposition);
             }
@@ -185,7 +185,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         float f2 = 0.99F;
         float f3 = this.e();
 
-        if (this.G()) {
+        if (this.H()) {
             for (int k = 0; k < 4; ++k) {
                 float f4 = 0.25F;
 
@@ -216,7 +216,7 @@ public abstract class OEntityThrowable extends OEntity implements OIProjectile {
         onbttagcompound.a("shake", (byte) this.b);
         onbttagcompound.a("inGround", (byte) (this.a ? 1 : 0));
         if ((this.h == null || this.h.length() == 0) && this.g != null && this.g instanceof OEntityPlayer) {
-            this.h = this.g.am();
+            this.h = this.g.an();
         }
 
         onbttagcompound.a("ownerName", this.h == null ? "" : this.h);

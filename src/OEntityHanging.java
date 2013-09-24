@@ -8,7 +8,7 @@ public abstract class OEntityHanging extends OEntity {
     public int b;
     public int c;
     public int d;
-    
+
     // CanaryMod: Our variables :3
     public HangingEntity hangingEntity = new HangingEntity(this);
     // CanaryMod: End
@@ -104,7 +104,7 @@ public abstract class OEntityHanging extends OEntity {
                 if((Boolean)etc.getLoader().callHook(PluginLoader.Hook.HANGING_ENTITY_DESTROYED, this.getEntity(), null)){
                     return;
                 }//
-                this.w();
+                this.x();
                 this.b((OEntity) null);
             }
         }
@@ -171,7 +171,7 @@ public abstract class OEntityHanging extends OEntity {
         }
     }
 
-    public boolean K() {
+    public boolean L() {
         return true;
     }
 
@@ -180,7 +180,7 @@ public abstract class OEntityHanging extends OEntity {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else {
             if (!this.M && !this.q.I) {
@@ -188,7 +188,8 @@ public abstract class OEntityHanging extends OEntity {
                 if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.HANGING_ENTITY_DESTROYED, this.getEntity(), odamagesource.damageSource)) {
                     return false;
                 } //
-                this.w();
+                this.x();
+                this.K();
                 this.b(odamagesource.i());
             }
 
@@ -202,7 +203,7 @@ public abstract class OEntityHanging extends OEntity {
             if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.HANGING_ENTITY_DESTROYED, this.getEntity())){
                 return;
             } //
-            this.w();
+            this.x();
             this.b((OEntity) null);
         }
     }
@@ -213,7 +214,7 @@ public abstract class OEntityHanging extends OEntity {
             if((Boolean)etc.getLoader().callHook(PluginLoader.Hook.HANGING_ENTITY_DESTROYED, this.getEntity())){
                 return;
             }//
-            this.w();
+            this.x();
             this.b((OEntity) null);
         }
     }
@@ -275,10 +276,10 @@ public abstract class OEntityHanging extends OEntity {
 
     public abstract void b(OEntity oentity);
 
-    protected boolean O() {
+    protected boolean P() {
         return false;
     }
-    
+
     //CanaryMod: our methods go here :3
     @Override
     public HangingEntity getEntity(){

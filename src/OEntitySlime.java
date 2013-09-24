@@ -24,7 +24,7 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
         this.a(0.6F * (float) i, 0.6F * (float) i);
         this.b(this.u, this.v, this.w);
         this.a(OSharedMonsterAttributes.a).a((double) (i * i));
-        this.g(this.aS());
+        this.g(this.aT());
         this.b = i;
     }
 
@@ -75,7 +75,7 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
             }
 
             if (this.bQ()) {
-                this.a(this.bP(), this.aZ(), ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+                this.a(this.bP(), this.ba(), ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) / 0.8F);
             }
 
             this.h = -0.5F;
@@ -90,8 +90,8 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
         }
     }
 
-    protected void bk() {
-        this.bo();
+    protected void bl() {
+        this.u();
         OEntityPlayer oentityplayer = this.q.b(this, 16.0D);
 
         if (oentityplayer != null && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.MOB_TARGET, oentityplayer.getEntity(), this.getEntity())) { // CanaryMod - MOB_TARGET
@@ -106,7 +106,7 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
 
             this.bd = true;
             if (this.bS()) {
-                this.a(this.bP(), this.aZ(), ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+                this.a(this.bP(), this.ba(), ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) * 0.8F);
             }
 
             this.be = 1.0F - this.ab.nextFloat() * 2.0F;
@@ -131,10 +131,10 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
         return new OEntitySlime(this.q);
     }
 
-    public void w() {
+    public void x() {
         int i = this.bR();
 
-        if (!this.q.I && i > 1 && this.aM() <= 0.0F) {
+        if (!this.q.I && i > 1 && this.aN() <= 0.0F) {
             int j = 2 + this.ab.nextInt(3);
 
             for (int k = 0; k < j; ++k) {
@@ -148,7 +148,7 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
             }
         }
 
-        super.w();
+        super.x();
     }
 
     public void b_(OEntityPlayer oentityplayer) {
@@ -169,11 +169,11 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
         return this.bR();
     }
 
-    protected String aN() {
+    protected String aO() {
         return "mob.slime." + (this.bR() > 1 ? "big" : "small");
     }
 
-    protected String aO() {
+    protected String aP() {
         return "mob.slime." + (this.bR() > 1 ? "big" : "small");
     }
 
@@ -203,7 +203,7 @@ public class OEntitySlime extends OEntityLiving implements OIMob {
         }
     }
 
-    protected float aZ() {
+    protected float ba() {
         return 0.4F * (float) this.bR();
     }
 

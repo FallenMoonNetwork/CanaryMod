@@ -41,7 +41,7 @@ public class OEntityEgg extends OEntityThrowable {
             }
 
             if (!this.q.I) {
-                this.w();
+            this.x();
             }
         }
     }

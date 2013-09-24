@@ -49,13 +49,13 @@ public class OEntityFallingSand extends OEntity {
 
     protected void a() {}
 
-    public boolean K() {
+    public boolean L() {
         return !this.M;
     }
 
     public void l_() {
         if (this.a == 0) {
-            this.w();
+            this.x();
         } else {
             this.r = this.u;
             this.s = this.v;
@@ -73,7 +73,7 @@ public class OEntityFallingSand extends OEntity {
 
                 if (this.c == 1) {
                     if (this.q.a(i, j, k) != this.a) {
-                        this.w();
+                        this.x();
                         return;
                     }
 
@@ -85,7 +85,7 @@ public class OEntityFallingSand extends OEntity {
                     this.z *= 0.699999988079071D;
                     this.y *= -0.5D;
                     if (this.q.a(i, j, k) != OBlock.ah.cF) {
-                        this.w();
+                        this.x();
                         if (!this.f && this.q.a(this.a, i, j, k, true, 1, (OEntity) null, (OItemStack) null) && !OBlockSand.a_(this.q, i, j - 1, k) && this.q.f(i, j, k, this.a, this.b, 3)) {
                             if (OBlock.s[this.a] instanceof OBlockSand) {
                                 ((OBlockSand) OBlock.s[this.a]).a_(this.q, i, j, k, this.b);
@@ -121,7 +121,7 @@ public class OEntityFallingSand extends OEntity {
                         this.a(new OItemStack(this.a, 1, OBlock.s[this.a].a(this.b)), 0.0F);
                     }
 
-                    this.w();
+                    this.x();
                 }
             }
         }

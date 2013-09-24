@@ -387,7 +387,7 @@ public class HumanEntity extends LivingEntityBase {
     public Location getRespawnLocation() {
         Location spawn = etc.getServer().getDefaultWorld().getSpawnLocation();
         // SRG OChunkCoordinates loc = getEntity().func_70997_bJ();
-        OChunkCoordinates loc = getEntity().bE();
+        OChunkCoordinates loc = getEntity().bF();
         if (loc != null) {
             // SRG spawn = new Location(etc.getServer().getDefaultWorld(), loc.field_71574_a, loc.field_71572_b, loc.field_71573_c);
             spawn = new Location(etc.getServer().getDefaultWorld(), loc.a, loc.b, loc.c);
@@ -401,7 +401,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public int getScore() {
         // SRG return getEntity().func_71037_bA();
-        return getEntity().bv();
+        return getEntity().bw();
     }
 
     /**
@@ -439,7 +439,7 @@ public class HumanEntity extends LivingEntityBase {
      */
     public int getXPBarMax() {
         // SRG return getEntity().func_71050_bK();
-        return getEntity().bG();
+        return getEntity().bH();
     }
 
     /**
@@ -657,6 +657,6 @@ public class HumanEntity extends LivingEntityBase {
      */
     public EnderChestInventory getEnderChest() {
         // SRG return new EnderChestInventory(getEntity().func_71005_bN(), this);
-        return new EnderChestInventory(getEntity().bJ(), this);
+        return new EnderChestInventory(getEntity().bK(), this);
     }
 }

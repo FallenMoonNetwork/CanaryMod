@@ -60,7 +60,7 @@ public class OFoodStats {
             }
         }
 
-        if (oentityplayer.q.O().b("naturalRegeneration") && this.a >= 18 && oentityplayer.bI()) {
+        if (oentityplayer.q.O().b("naturalRegeneration") && this.a >= 18 && oentityplayer.bJ()) {
             ++this.d;
             if (this.d >= 80) {
                 oentityplayer.f(1.0F);
@@ -70,7 +70,7 @@ public class OFoodStats {
         } else if (this.a <= 0) {
             ++this.d;
             if (this.d >= 80) {
-                if (oentityplayer.aM() > 10.0F || i >= 3 || oentityplayer.aM() > 1.0F && i >= 2) {
+                if (oentityplayer.aN() > 10.0F || i >= 3 || oentityplayer.aN() > 1.0F && i >= 2) {
                     // CanaryMod: DAMAGE From starvation
                     HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentityplayer.getEntity(), DamageType.STARVATION.getDamageSource(), 1.0F));
                     if (!ev.isCanceled()) {

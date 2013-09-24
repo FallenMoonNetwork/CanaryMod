@@ -68,13 +68,13 @@ public abstract class OEntityLivingBase extends OEntity {
     private float bp;
     private int bq;
     private float br;
-    
+
     private LivingEntityBase livingEntityBase = new LivingEntityBase(this);
 
     public OEntityLivingBase(OWorld oworld) {
         super(oworld);
-        this.ay();
-        this.g(this.aS());
+        this.az();
+        this.g(this.aT());
         this.m = true;
         this.aM = (float) (Math.random() + 1.0D) * 0.01F;
         this.b(this.u, this.v, this.w);
@@ -91,18 +91,18 @@ public abstract class OEntityLivingBase extends OEntity {
         this.ah.a(6, Float.valueOf(1.0F));
     }
 
-    protected void ay() {
-        this.aW().b(OSharedMonsterAttributes.a);
-        this.aW().b(OSharedMonsterAttributes.c);
-        this.aW().b(OSharedMonsterAttributes.d);
-        if (!this.be()) {
+    protected void az() {
+        this.aX().b(OSharedMonsterAttributes.a);
+        this.aX().b(OSharedMonsterAttributes.c);
+        this.aX().b(OSharedMonsterAttributes.d);
+        if (!this.bf()) {
             this.a(OSharedMonsterAttributes.d).a(0.10000000149011612D);
         }
     }
 
     protected void a(double d0, boolean flag) {
-        if (!this.G()) {
-            this.H();
+        if (!this.H()) {
+            this.I();
         }
 
         if (flag && this.T > 0.0F) {
@@ -127,15 +127,15 @@ public abstract class OEntityLivingBase extends OEntity {
         super.a(d0, flag);
     }
 
-    public boolean az() {
+    public boolean aA() {
         return false;
     }
 
-    public void x() {
+    public void y() {
         this.aD = this.aE;
-        super.x();
+        super.y();
         this.q.C.a("livingEntityBaseTick");
-        if (this.S() && this.T()) {
+        if (this.T() && this.U()) {
             // CanaryMod Damage hook: Suffocation
             HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, this.getEntity(), DamageType.SUFFOCATION.getDamageSource(), 1.0F));
             if (!ev.isCanceled()) {
@@ -143,16 +143,16 @@ public abstract class OEntityLivingBase extends OEntity {
             }
         }
 
-        if (this.E() || this.q.I) {
-            this.A();
+        if (this.F() || this.q.I) {
+            this.B();
         }
 
         boolean flag = this instanceof OEntityPlayer && ((OEntityPlayer) this).bG.a;
 
-        if (this.S() && this.a(OMaterial.h)) {
-            if (!this.az() && !this.i(OPotion.o.H) && !flag) {
-                this.g(this.h(this.ak()));
-                if (this.ak() == -20) {
+        if (this.T() && this.a(OMaterial.h)) {
+            if (!this.aA() && !this.i(OPotion.o.H) && !flag) {
+                this.g(this.h(this.al()));
+                if (this.al() == -20) {
                     this.g(0);
 
                     // CanaryMod Damage hook: Drowning
@@ -171,8 +171,8 @@ public abstract class OEntityLivingBase extends OEntity {
                 }
             }
 
-            this.A();
-            if (!this.q.I && this.af() && this.o instanceof OEntityLivingBase) {
+            this.B();
+            if (!this.q.I && this.ag() && this.o instanceof OEntityLivingBase) {
                 this.a((OEntity) null);
             }
         } else {
@@ -192,8 +192,8 @@ public abstract class OEntityLivingBase extends OEntity {
             --this.af;
         }
 
-        if (this.aM() <= 0.0F) {
-            this.aA();
+        if (this.aN() <= 0.0F) {
+            this.aB();
         }
 
         if (this.aT > 0) {
@@ -202,15 +202,15 @@ public abstract class OEntityLivingBase extends OEntity {
             this.aS = null;
         }
 
-        if (this.bn != null && !this.bn.S()) {
+        if (this.bn != null && !this.bn.T()) {
             this.bn = null;
         }
 
-        if (this.i != null && !this.i.S()) {
+        if (this.i != null && !this.i.T()) {
             this.b((OEntityLivingBase) null);
         }
 
-        this.aI();
+        this.aJ();
         this.aZ = this.aY;
         this.aO = this.aN;
         this.aQ = this.aP;
@@ -223,12 +223,12 @@ public abstract class OEntityLivingBase extends OEntity {
         return false;
     }
 
-    protected void aA() {
+    protected void aB() {
         ++this.aB;
         if (this.aB == 20) {
             int i;
 
-            if (!this.q.I && (this.aT > 0 || this.aB()) && !this.g_() && this.q.O().b("doMobLoot")) {
+            if (!this.q.I && (this.aT > 0 || this.aC()) && !this.g_() && this.q.O().b("doMobLoot")) {
                 i = this.e(this.aS);
 
                 while (i > 0) {
@@ -239,7 +239,7 @@ public abstract class OEntityLivingBase extends OEntity {
                 }
             }
 
-            this.w();
+            this.x();
 
             for (i = 0; i < 20; ++i) {
                 double d0 = this.ab.nextGaussian() * 0.02D;
@@ -261,19 +261,19 @@ public abstract class OEntityLivingBase extends OEntity {
         return 0;
     }
 
-    protected boolean aB() {
+    protected boolean aC() {
         return false;
     }
 
-    public Random aC() {
+    public Random aD() {
         return this.ab;
     }
 
-    public OEntityLivingBase aD() {
+    public OEntityLivingBase aE() {
         return this.i;
     }
 
-    public int aE() {
+    public int aF() {
         return this.j;
     }
 
@@ -282,11 +282,11 @@ public abstract class OEntityLivingBase extends OEntity {
         this.j = this.ac;
     }
 
-    public OEntityLivingBase aF() {
+    public OEntityLivingBase aG() {
         return this.bn;
     }
 
-    public int aG() {
+    public int aH() {
         return this.bo;
     }
 
@@ -300,18 +300,18 @@ public abstract class OEntityLivingBase extends OEntity {
         this.bo = this.ac;
     }
 
-    public int aH() {
+    public int aI() {
         return this.aV;
     }
 
     public void b(ONBTTagCompound onbttagcompound) {
-        onbttagcompound.a("HealF", this.aM());
-        onbttagcompound.a("Health", (short) ((int) Math.ceil((double) this.aM())));
+        onbttagcompound.a("HealF", this.aN());
+        onbttagcompound.a("Health", (short) ((int) Math.ceil((double) this.aN())));
         onbttagcompound.a("HurtTime", (short) this.ay);
         onbttagcompound.a("DeathTime", (short) this.aB);
         onbttagcompound.a("AttackTime", (short) this.aC);
-        onbttagcompound.a("AbsorptionAmount", this.bm());
-        OItemStack[] aoitemstack = this.ad();
+        onbttagcompound.a("AbsorptionAmount", this.bn());
+        OItemStack[] aoitemstack = this.ae();
         int i = aoitemstack.length;
 
         int j;
@@ -324,8 +324,8 @@ public abstract class OEntityLivingBase extends OEntity {
             }
         }
 
-        onbttagcompound.a("Attributes", (ONBTBase) OSharedMonsterAttributes.a(this.aW()));
-        aoitemstack = this.ad();
+        onbttagcompound.a("Attributes", (ONBTBase) OSharedMonsterAttributes.a(this.aX()));
+        aoitemstack = this.ae();
         i = aoitemstack.length;
 
         for (j = 0; j < i; ++j) {
@@ -352,7 +352,7 @@ public abstract class OEntityLivingBase extends OEntity {
     public void a(ONBTTagCompound onbttagcompound) {
         this.m(onbttagcompound.g("AbsorptionAmount"));
         if (onbttagcompound.b("Attributes") && this.q != null && !this.q.I) {
-            OSharedMonsterAttributes.a(this.aW(), onbttagcompound.m("Attributes"), this.q == null ? null : this.q.Y());
+            OSharedMonsterAttributes.a(this.aX(), onbttagcompound.m("Attributes"), this.q == null ? null : this.q.Y());
         }
 
         if (onbttagcompound.b("ActiveEffects")) {
@@ -372,7 +372,7 @@ public abstract class OEntityLivingBase extends OEntity {
             ONBTBase onbtbase = onbttagcompound.a("Health");
 
             if (onbtbase == null) {
-                this.g(this.aS());
+                this.g(this.aT());
             } else if (onbtbase.a() == 5) {
                 this.g(((ONBTTagFloat) onbtbase).a);
             } else if (onbtbase.a() == 2) {
@@ -385,7 +385,7 @@ public abstract class OEntityLivingBase extends OEntity {
         this.aC = onbttagcompound.d("AttackTime");
     }
 
-    protected void aI() {
+    protected void aJ() {
         Iterator iterator = this.f.keySet().iterator();
 
         while (iterator.hasNext()) {
@@ -427,7 +427,7 @@ public abstract class OEntityLivingBase extends OEntity {
         if (i > 0) {
             boolean flag1 = false;
 
-            if (!this.ai()) {
+            if (!this.aj()) {
                 flag1 = this.ab.nextBoolean();
             } else {
                 flag1 = this.ab.nextInt(15) == 0;
@@ -447,7 +447,7 @@ public abstract class OEntityLivingBase extends OEntity {
         }
     }
 
-    public void aJ() {
+    public void aK() {
         Iterator iterator = this.f.keySet().iterator();
 
         while (iterator.hasNext()) {
@@ -461,7 +461,7 @@ public abstract class OEntityLivingBase extends OEntity {
         }
     }
 
-    public Collection aK() {
+    public Collection aL() {
         return this.f.values();
     }
 
@@ -498,7 +498,7 @@ public abstract class OEntityLivingBase extends OEntity {
     }
 
     public boolean d(OPotionEffect opotioneffect) {
-        if (this.aX() == OEnumCreatureAttribute.b) {
+        if (this.aY() == OEnumCreatureAttribute.b) {
             int i = opotioneffect.a();
 
             if (i == OPotion.l.H || i == OPotion.u.H) {
@@ -509,8 +509,8 @@ public abstract class OEntityLivingBase extends OEntity {
         return true;
     }
 
-    public boolean aL() {
-        return this.aX() == OEnumCreatureAttribute.b;
+    public boolean aM() {
+        return this.aY() == OEnumCreatureAttribute.b;
     }
 
     public void k(int i) {
@@ -524,15 +524,15 @@ public abstract class OEntityLivingBase extends OEntity {
     protected void a(OPotionEffect opotioneffect) {
         this.h = true;
         if (!this.q.I) {
-            OPotion.a[opotioneffect.a()].b(this, this.aW(), opotioneffect.c());
+            OPotion.a[opotioneffect.a()].b(this, this.aX(), opotioneffect.c());
         }
     }
 
     protected void a(OPotionEffect opotioneffect, boolean flag) {
         this.h = true;
         if (flag && !this.q.I) {
-            OPotion.a[opotioneffect.a()].a(this, this.aW(), opotioneffect.c());
-            OPotion.a[opotioneffect.a()].b(this, this.aW(), opotioneffect.c());
+            OPotion.a[opotioneffect.a()].a(this, this.aX(), opotioneffect.c());
+            OPotion.a[opotioneffect.a()].b(this, this.aX(), opotioneffect.c());
         }
     }
 
@@ -540,34 +540,34 @@ public abstract class OEntityLivingBase extends OEntity {
         etc.getLoader().callHook(PluginLoader.Hook.POTION_EFFECTFINISHED, this.getEntity(), opotioneffect.potionEffect);
         this.h = true;
         if (!this.q.I) {
-            OPotion.a[opotioneffect.a()].a(this, this.aW(), opotioneffect.c());
+            OPotion.a[opotioneffect.a()].a(this, this.aX(), opotioneffect.c());
         }
     }
 
     public void f(float f) {
-        float f1 = this.aM();
+        float f1 = this.aN();
 
         if (f1 > 0.0F) {
             this.g(f1 + f);
         }
     }
 
-    public final float aM() {
+    public final float aN() {
         return this.ah.d(6);
     }
 
     public void g(float f) {
-        this.ah.b(6, Float.valueOf(OMathHelper.a(f, 0.0F, this.aS())));
+        this.ah.b(6, Float.valueOf(OMathHelper.a(f, 0.0F, this.aT())));
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else if (this.q.I) {
             return false;
         } else {
             this.aV = 0;
-            if (this.aM() <= 0.0F) {
+            if (this.aN() <= 0.0F) {
                 return false;
             } else if (odamagesource.m() && this.a(OPotion.n)) {
                 return false;
@@ -597,7 +597,7 @@ public abstract class OEntityLivingBase extends OEntity {
                     if (f <= this.bc) {
                         return false;
                     }
-                    
+
                     HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(attacker, this.getEntity(), odamagesource.damageSource, f - this.bc));
                     if (attacker != null && ev.isCanceled()) {
                         return false;
@@ -613,7 +613,7 @@ public abstract class OEntityLivingBase extends OEntity {
                     }
 
                     this.bc = f;
-                    this.ax = this.aM();
+                    this.ax = this.aN();
                     this.af = this.aI;
                     this.d(ev.getDamageSource().getDamageSource(), ev.getDamageAmountFloat());
                     this.ay = this.az = 10;
@@ -643,7 +643,7 @@ public abstract class OEntityLivingBase extends OEntity {
                 if (flag) {
                     this.q.a((OEntity) this, (byte) 2);
                     if (odamagesource != ODamageSource.e) {
-                        this.J();
+                        this.K();
                     }
 
                     if (oentity != null) {
@@ -662,14 +662,14 @@ public abstract class OEntityLivingBase extends OEntity {
                     }
                 }
 
-                if (this.aM() <= 0.0F) {
+                if (this.aN() <= 0.0F) {
                     if (flag) {
-                        this.a(this.aO(), this.aZ(), this.ba());
+                        this.a(this.aP(), this.ba(), this.bb());
                     }
 
                     this.a(odamagesource);
                 } else if (flag) {
-                    this.a(this.aN(), this.aZ(), this.ba());
+                    this.a(this.aO(), this.ba(), this.bb());
                 }
 
                 return true;
@@ -698,7 +698,7 @@ public abstract class OEntityLivingBase extends OEntity {
         manager.callHook(PluginLoader.Hook.DEATH, this.getEntity()); // CanaryMod: call DEATH hook
 
         OEntity oentity = odamagesource.i();
-        OEntityLivingBase oentitylivingbase = this.aR();
+        OEntityLivingBase oentitylivingbase = this.aS();
 
         if (this.bb >= 0 && oentitylivingbase != null) {
             oentitylivingbase.b(this, this.bb);
@@ -752,11 +752,11 @@ public abstract class OEntityLivingBase extends OEntity {
         }
     }
 
-    protected String aN() {
+    protected String aO() {
         return "damage.hit";
     }
 
-    protected String aO() {
+    protected String aP() {
         return "damage.hit";
     }
 
@@ -773,8 +773,8 @@ public abstract class OEntityLivingBase extends OEntity {
         return l == OBlock.aK.cF || l == OBlock.bz.cF;
     }
 
-    public boolean S() {
-        return !this.M && this.aM() > 0.0F;
+    public boolean T() {
+        return !this.M && this.aN() > 0.0F;
     }
 
     protected void b(float f) {
@@ -805,9 +805,9 @@ public abstract class OEntityLivingBase extends OEntity {
         }
     }
 
-    public int aP() {
+    public int aQ() {
         int i = 0;
-        OItemStack[] aoitemstack = this.ad();
+        OItemStack[] aoitemstack = this.ae();
         int j = aoitemstack.length;
 
         for (int k = 0; k < j; ++k) {
@@ -827,7 +827,7 @@ public abstract class OEntityLivingBase extends OEntity {
 
     protected float b(ODamageSource odamagesource, float f) {
         if (!odamagesource.e()) {
-            int i = 25 - this.aP();
+            int i = 25 - this.aQ();
             float f1 = f * (float) i;
 
             this.h(f);
@@ -856,7 +856,7 @@ public abstract class OEntityLivingBase extends OEntity {
         if (f <= 0.0F) {
             return 0.0F;
         } else {
-            i = OEnchantmentHelper.a(this.ad(), odamagesource);
+            i = OEnchantmentHelper.a(this.ae(), odamagesource);
             if (i > 20) {
                 i = 20;
             }
@@ -872,36 +872,36 @@ public abstract class OEntityLivingBase extends OEntity {
     }
 
     protected void d(ODamageSource odamagesource, float f) {
-        if (!this.aq()) {
+        if (!this.ar()) {
             f = this.b(odamagesource, f);
             f = this.c(odamagesource, f);
             float f1 = f;
 
-            f = Math.max(f - this.bm(), 0.0F);
-            this.m(this.bm() - (f1 - f));
+            f = Math.max(f - this.bn(), 0.0F);
+            this.m(this.bn() - (f1 - f));
             if (f != 0.0F) {
-                float f2 = this.aM();
+                float f2 = this.aN();
 
                 this.g(f2 - f);
-                this.aQ().a(odamagesource, f2, f);
-                this.m(this.bm() - f);
+                this.aR().a(odamagesource, f2, f);
+                this.m(this.bn() - f);
             }
         }
     }
 
-    public OCombatTracker aQ() {
+    public OCombatTracker aR() {
         return this.e;
     }
 
-    public OEntityLivingBase aR() {
+    public OEntityLivingBase aS() {
         return (OEntityLivingBase) (this.e.c() != null ? this.e.c() : (this.aS != null ? this.aS : (this.i != null ? this.i : null)));
     }
 
-    public final float aS() {
+    public final float aT() {
         return (float) this.a(OSharedMonsterAttributes.a).e();
     }
 
-    public final int aT() {
+    public final int aU() {
         return this.ah.a(9);
     }
 
@@ -913,7 +913,7 @@ public abstract class OEntityLivingBase extends OEntity {
         return this.a(OPotion.e) ? 6 - (1 + this.b(OPotion.e).c()) * 1 : (this.a(OPotion.f) ? 6 + (1 + this.b(OPotion.f).c()) * 2 : 6);
     }
 
-    public void aU() {
+    public void aV() {
         if (!this.au || this.av >= this.h() / 2 || this.av < 0) {
             this.av = -1;
             this.au = true;
@@ -923,11 +923,11 @@ public abstract class OEntityLivingBase extends OEntity {
         }
     }
 
-    protected void B() {
+    protected void C() {
         this.a(ODamageSource.i, 4.0F);
     }
 
-    protected void aV() {
+    protected void aW() {
         int i = this.h();
 
         if (this.au) {
@@ -944,10 +944,10 @@ public abstract class OEntityLivingBase extends OEntity {
     }
 
     public OAttributeInstance a(OAttribute oattribute) {
-        return this.aW().a(oattribute);
+        return this.aX().a(oattribute);
     }
 
-    public OBaseAttributeMap aW() {
+    public OBaseAttributeMap aX() {
         if (this.d == null) {
             this.d = new OServersideAttributeMap();
         }
@@ -955,11 +955,11 @@ public abstract class OEntityLivingBase extends OEntity {
         return this.d;
     }
 
-    public OEnumCreatureAttribute aX() {
+    public OEnumCreatureAttribute aY() {
         return OEnumCreatureAttribute.a;
     }
 
-    public abstract OItemStack aY();
+    public abstract OItemStack aZ();
 
     public abstract OItemStack n(int i);
 
@@ -978,18 +978,18 @@ public abstract class OEntityLivingBase extends OEntity {
         }
     }
 
-    public abstract OItemStack[] ad();
+    public abstract OItemStack[] ae();
 
-    protected float aZ() {
+    protected float ba() {
         return 1.0F;
     }
 
-    protected float ba() {
+    protected float bb() {
         return this.g_() ? (this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.5F : (this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F;
     }
 
-    protected boolean bb() {
-        return this.aM() <= 0.0F;
+    protected boolean bc() {
+        return this.aN() <= 0.0F;
     }
 
     public void a(double d0, double d1, double d2) {
@@ -1027,13 +1027,13 @@ public abstract class OEntityLivingBase extends OEntity {
         this.a(d0, d1, d2);
     }
 
-    protected void bd() {
+    protected void be() {
         this.y = 0.41999998688697815D;
         if (this.a(OPotion.j)) {
             this.y += (double) ((float) (this.b(OPotion.j).c() + 1) * 0.1F);
         }
 
-        if (this.ah()) {
+        if (this.ai()) {
             float f = this.A * 0.017453292F;
 
             this.x -= (double) (OMathHelper.a(f) * 0.2F);
@@ -1046,9 +1046,9 @@ public abstract class OEntityLivingBase extends OEntity {
     public void e(float f, float f1) {
         double d0;
 
-        if (this.G() && (!(this instanceof OEntityPlayer) || !((OEntityPlayer) this).bG.b)) {
+        if (this.H() && (!(this instanceof OEntityPlayer) || !((OEntityPlayer) this).bG.b)) {
             d0 = this.v;
-            this.a(f, f1, this.be() ? 0.04F : 0.02F);
+            this.a(f, f1, this.bf() ? 0.04F : 0.02F);
             this.d(this.x, this.y, this.z);
             this.x *= 0.800000011920929D;
             this.y *= 0.800000011920929D;
@@ -1057,7 +1057,7 @@ public abstract class OEntityLivingBase extends OEntity {
             if (this.G && this.c(this.x, this.y + 0.6000000238418579D - this.v + d0, this.z)) {
                 this.y = 0.30000001192092896D;
             }
-        } else if (this.I() && (!(this instanceof OEntityPlayer) || !((OEntityPlayer) this).bG.b)) {
+        } else if (this.J() && (!(this instanceof OEntityPlayer) || !((OEntityPlayer) this).bG.b)) {
             d0 = this.v;
             this.a(f, f1, 0.02F);
             this.d(this.x, this.y, this.z);
@@ -1084,7 +1084,7 @@ public abstract class OEntityLivingBase extends OEntity {
             float f4;
 
             if (this.F) {
-                f4 = this.bf() * f3;
+                f4 = this.bg() * f3;
             } else {
                 f4 = this.aR;
             }
@@ -1124,7 +1124,7 @@ public abstract class OEntityLivingBase extends OEntity {
                     this.y = -0.15D;
                 }
 
-                boolean flag = this.ag() && this instanceof OEntityPlayer;
+                boolean flag = this.ah() && this instanceof OEntityPlayer;
 
                 if (flag && this.y < 0.0D) {
                     this.y = 0.0D;
@@ -1164,12 +1164,12 @@ public abstract class OEntityLivingBase extends OEntity {
         this.aH += this.aG;
     }
 
-    protected boolean be() {
+    protected boolean bf() {
         return false;
     }
 
-    public float bf() {
-        return this.be() ? this.bp : 0.1F;
+    public float bg() {
+        return this.bf() ? this.bp : 0.1F;
     }
 
     public void i(float f) {
@@ -1181,14 +1181,14 @@ public abstract class OEntityLivingBase extends OEntity {
         return false;
     }
 
-    public boolean bg() {
+    public boolean bh() {
         return false;
     }
 
     public void l_() {
         super.l_();
         if (!this.q.I) {
-            int i = this.aT();
+            int i = this.aU();
 
             if (i > 0) {
                 if (this.aw <= 0) {
@@ -1329,7 +1329,7 @@ public abstract class OEntityLivingBase extends OEntity {
             --this.bh;
             this.b(d0, d1, d2);
             this.b(this.A, this.B);
-        } else if (!this.bl()) {
+        } else if (!this.bm()) {
             this.x *= 0.98D;
             this.y *= 0.98D;
             this.z *= 0.98D;
@@ -1348,19 +1348,19 @@ public abstract class OEntityLivingBase extends OEntity {
         }
 
         this.q.C.a("ai");
-        if (this.bb()) {
+        if (this.bc()) {
             this.bd = false;
             this.be = 0.0F;
             this.bf = 0.0F;
             this.bg = 0.0F;
-        } else if (this.bl()) {
-            if (this.be()) {
+        } else if (this.bm()) {
+            if (this.bf()) {
                 this.q.C.a("newAi");
-                this.bh();
+                this.bi();
                 this.q.C.b();
             } else {
                 this.q.C.a("oldAi");
-                this.bk();
+                this.bl();
                 this.q.C.b();
                 this.aP = this.A;
             }
@@ -1369,9 +1369,9 @@ public abstract class OEntityLivingBase extends OEntity {
         this.q.C.b();
         this.q.C.a("jump");
         if (this.bd) {
-            if (!this.G() && !this.I()) {
+            if (!this.H() && !this.J()) {
                 if (this.F && this.bq == 0) {
-                    this.bd();
+                    this.be();
                     this.bq = 10;
                 }
             } else {
@@ -1390,22 +1390,22 @@ public abstract class OEntityLivingBase extends OEntity {
         this.q.C.b();
         this.q.C.a("push");
         if (!this.q.I) {
-            this.bi();
+            this.bj();
         }
 
         this.q.C.b();
     }
 
-    protected void bh() {}
+    protected void bi() {}
 
-    protected void bi() {
+    protected void bj() {
         List list = this.q.b((OEntity) this, this.E.b(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
         if (list != null && !list.isEmpty()) {
             for (int i = 0; i < list.size(); ++i) {
                 OEntity oentity = (OEntity) list.get(i);
 
-                if (oentity.L()) {
+                if (oentity.M()) {
                     this.n(oentity);
                 }
             }
@@ -1416,16 +1416,16 @@ public abstract class OEntityLivingBase extends OEntity {
         oentity.f((OEntity) this);
     }
 
-    public void U() {
-        super.U();
+    public void V() {
+        super.V();
         this.aW = this.aX;
         this.aX = 0.0F;
         this.T = 0.0F;
     }
 
-    protected void bj() {}
+    protected void bk() {}
 
-    protected void bk() {
+    protected void bl() {
         ++this.aV;
     }
 
@@ -1455,7 +1455,7 @@ public abstract class OEntityLivingBase extends OEntity {
         return this.q.a(this.q.V().a(this.u, this.v + (double) this.f(), this.w), this.q.V().a(oentity.u, oentity.v + (double) oentity.f(), oentity.w)) == null;
     }
 
-    public OVec3 Z() {
+    public OVec3 aa() {
         return this.j(1.0F);
     }
 
@@ -1483,15 +1483,15 @@ public abstract class OEntityLivingBase extends OEntity {
         }
     }
 
-    public boolean bl() {
+    public boolean bm() {
         return !this.q.I;
     }
 
-    public boolean K() {
+    public boolean L() {
         return !this.M;
     }
 
-    public boolean L() {
+    public boolean M() {
         return !this.M;
     }
 
@@ -1499,15 +1499,15 @@ public abstract class OEntityLivingBase extends OEntity {
         return this.P * 0.85F;
     }
 
-    protected void J() {
+    protected void K() {
         this.J = this.ab.nextDouble() >= this.a(OSharedMonsterAttributes.c).e();
     }
 
-    public float ao() {
+    public float ap() {
         return this.aP;
     }
 
-    public float bm() {
+    public float bn() {
         return this.br;
     }
 
@@ -1519,18 +1519,18 @@ public abstract class OEntityLivingBase extends OEntity {
         this.br = f;
     }
 
-    public OTeam bn() {
+    public OTeam bo() {
         return null;
     }
 
     public boolean c(OEntityLivingBase oentitylivingbase) {
-        return this.a(oentitylivingbase.bn());
+        return this.a(oentitylivingbase.bo());
     }
 
     public boolean a(OTeam oteam) {
-        return this.bn() != null ? this.bn().a(oteam) : false;
+        return this.bo() != null ? this.bo().a(oteam) : false;
     }
-    
+
     // CanaryMod start: add getEntity
     @Override
     public LivingEntityBase getEntity() {

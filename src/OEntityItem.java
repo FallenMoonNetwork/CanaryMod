@@ -41,7 +41,7 @@ public class OEntityItem extends OEntity {
     }
 
     protected void a() {
-        this.u().a(10, 5);
+        this.v().a(10, 5);
     }
 
     public void l_() {
@@ -86,7 +86,7 @@ public class OEntityItem extends OEntity {
             // It does touch the ground now, but didn't in last tick
             if (!tmpTouchesGround) {
                 if ((Boolean) etc.getLoader().callHook(PluginLoader.Hook.ITEM_TOUCH_GROUND, item)) {
-                    this.w(); // kill the item
+                    this.x(); // kill the item
                 }
             }// CanaryMod end
         }
@@ -102,7 +102,7 @@ public class OEntityItem extends OEntity {
         if (!this.q.I && this.a >= 6000) {
             // CanaryMod onEntityDespawn
             if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.ENTITY_DESPAWN, item)) {
-                this.w();
+                this.x();
             } else {
                 this.b = 0;
             }
@@ -122,7 +122,7 @@ public class OEntityItem extends OEntity {
     public boolean a(OEntityItem oentityitem) {
         if (oentityitem == this) {
             return false;
-        } else if (oentityitem.S() && this.S()) {
+        } else if (oentityitem.T() && this.T()) {
             OItemStack oitemstack = this.d();
             OItemStack oitemstack1 = oentityitem.d();
 
@@ -143,7 +143,7 @@ public class OEntityItem extends OEntity {
                 oentityitem.b = Math.max(oentityitem.b, this.b);
                 oentityitem.a = Math.min(oentityitem.a, this.a);
                 oentityitem.a(oitemstack1);
-                this.w();
+                this.x();
                 return true;
             }
         } else {
@@ -155,7 +155,7 @@ public class OEntityItem extends OEntity {
         this.a = 4800;
     }
 
-    public boolean H() {
+    public boolean I() {
         return this.q.a(this.E, OMaterial.h, (OEntity) this);
     }
 
@@ -164,15 +164,15 @@ public class OEntityItem extends OEntity {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else if (this.d() != null && this.d().d == OItem.bU.cv && odamagesource.c()) {
             return false;
         } else {
-            this.J();
+            this.K();
             this.d = (int) ((float) this.d - f);
             if (this.d <= 0) {
-                this.w();
+                this.x();
             }
 
             return false;
@@ -194,7 +194,7 @@ public class OEntityItem extends OEntity {
 
         this.a(OItemStack.a(onbttagcompound1));
         if (this.d() == null) {
-            this.w();
+            this.x();
         }
     }
 
@@ -226,17 +226,17 @@ public class OEntityItem extends OEntity {
                 this.a("random.pop", 0.2F, ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 oentityplayer.a((OEntity) this, i);
                 if (oitemstack.b <= 0) {
-                    this.w();
+                    this.x();
                 }
             }
         }
     }
 
-    public String am() {
+    public String an() {
         return OStatCollector.a("item." + this.d().a());
     }
 
-    public boolean ap() {
+    public boolean aq() {
         return false;
     }
 
@@ -248,7 +248,7 @@ public class OEntityItem extends OEntity {
     }
 
     public OItemStack d() {
-        OItemStack oitemstack = this.u().f(10);
+        OItemStack oitemstack = this.v().f(10);
 
         if (oitemstack == null) {
             if (this.q != null) {
@@ -262,8 +262,8 @@ public class OEntityItem extends OEntity {
     }
 
     public void a(OItemStack oitemstack) {
-        this.u().b(10, oitemstack);
-        this.u().h(10);
+        this.v().b(10, oitemstack);
+        this.v().h(10);
     }
 
     // CanaryMod start: add getEntity

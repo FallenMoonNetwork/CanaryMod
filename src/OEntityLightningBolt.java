@@ -54,7 +54,7 @@ public class OEntityLightningBolt extends OEntityWeatherEffect {
         --this.b;
         if (this.b < 0) {
             if (this.c == 0) {
-                this.w();
+                this.x();
             } else if (this.b < -this.ab.nextInt(10)) {
                 --this.c;
                 this.b = 1;

@@ -14,14 +14,14 @@ public class OEntityPigZombie extends OEntityZombie {
         this.ag = true;
     }
 
-    protected void ay() {
-        super.ay();
+    protected void az() {
+        super.az();
         this.a(bp).a(0.0D);
         this.a(OSharedMonsterAttributes.d).a(0.5D);
         this.a(OSharedMonsterAttributes.e).a(5.0D);
     }
 
-    protected boolean be() {
+    protected boolean bf() {
         return false;
     }
 
@@ -37,7 +37,7 @@ public class OEntityPigZombie extends OEntityZombie {
 
         this.bu = this.j;
         if (this.bt > 0 && --this.bt == 0) {
-            this.a("mob.zombiepig.zpigangry", this.aZ() * 2.0F, ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) * 1.8F);
+            this.a("mob.zombiepig.zpigangry", this.ba() * 2.0F, ((this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F) * 1.8F);
         }
 
         super.l_();
@@ -62,7 +62,7 @@ public class OEntityPigZombie extends OEntityZombie {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else {
             OEntity oentity = odamagesource.i();
@@ -99,11 +99,11 @@ public class OEntityPigZombie extends OEntityZombie {
         return "mob.zombiepig.zpig";
     }
 
-    protected String aN() {
+    protected String aO() {
         return "mob.zombiepig.zpighurt";
     }
 
-    protected String aO() {
+    protected String aP() {
         return "mob.zombiepig.zpigdeath";
     }
 

@@ -883,7 +883,7 @@ public abstract class OWorld implements OIBlockAccess {
             oentity.a((OEntity) null);
         }
 
-        oentity.w();
+        oentity.x();
         if (oentity instanceof OEntityPlayer) {
             this.h.remove(oentity);
             this.c();
@@ -891,7 +891,7 @@ public abstract class OWorld implements OIBlockAccess {
     }
 
     public void f(OEntity oentity) {
-        oentity.w();
+        oentity.x();
         if (oentity instanceof OEntityPlayer) {
             this.h.remove(oentity);
             this.c();
@@ -949,7 +949,7 @@ public abstract class OWorld implements OIBlockAccess {
 
         for (int j2 = 0; j2 < list.size(); ++j2) {
             OEntity oentity1 = (OEntity) list.get(j2); // CanaryMod: split these two lines
-            OAxisAlignedBB oaxisalignedbb1 = oentity1.D();
+            OAxisAlignedBB oaxisalignedbb1 = oentity1.E();
 
             if (oaxisalignedbb1 != null && oaxisalignedbb1.b(oaxisalignedbb)) {
                 // CanaryMod start: this collided with a boat
@@ -1242,7 +1242,7 @@ public abstract class OWorld implements OIBlockAccess {
             if (flag && oentity.ai) {
                 ++oentity.ac;
                 if (oentity.o != null) {
-                    oentity.U();
+                    oentity.V();
                 } else {
                     oentity.l_();
                 }
@@ -1442,7 +1442,7 @@ public abstract class OWorld implements OIBlockAccess {
                 }
             }
 
-            if (ovec3.b() > 0.0D && oentity.aw()) {
+            if (ovec3.b() > 0.0D && oentity.ax()) {
                 ovec3 = ovec3.a();
                 double d1 = 0.014D;
 
@@ -2397,16 +2397,16 @@ public abstract class OWorld implements OIBlockAccess {
         for (int i = 0; i < this.h.size(); ++i) {
             OEntityPlayer oentityplayer1 = (OEntityPlayer) this.h.get(i);
 
-            if (!oentityplayer1.bG.a && oentityplayer1.S()) {
+            if (!oentityplayer1.bG.a && oentityplayer1.T()) {
                 double d5 = oentityplayer1.e(d0, d1, d2);
                 double d6 = d3;
 
-                if (oentityplayer1.ag()) {
+                if (oentityplayer1.ah()) {
                     d6 = d3 * 0.800000011920929D;
                 }
 
-                if (oentityplayer1.ai()) {
-                    float f = oentityplayer1.bw();
+                if (oentityplayer1.aj()) {
+                    float f = oentityplayer1.bx();
 
                     if (f < 0.1F) {
                         f = 0.1F;

@@ -80,7 +80,7 @@ public class OEntityFireworkRocket extends OEntity {
 
         if (!this.q.I && this.a > this.b && !(Boolean) etc.getLoader().callHook(PluginLoader.Hook.FIREWORK_EXPLODE, this.getEntity())) { // CanaryMod: call onFireworkExplode when the rocket explodes
             this.q.a((OEntity) this, (byte) 17);
-            this.w();
+            this.x();
         }
     }
 
@@ -115,7 +115,7 @@ public class OEntityFireworkRocket extends OEntity {
         return super.d(f);
     }
 
-    public boolean ap() {
+    public boolean aq() {
         return false;
     }
 

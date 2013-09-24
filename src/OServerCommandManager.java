@@ -43,6 +43,7 @@ public class OServerCommandManager extends OCommandHandler implements OIAdminCom
             this.a(new OCommandServerKick());
             this.a(new OCommandServerList());
             this.a(new OCommandServerWhitelist());
+            this.a(new OCommandSetPlayerTimeout());
         } else {
             this.a(new OCommandServerPublishLocal());
         }

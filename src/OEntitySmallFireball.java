@@ -18,7 +18,7 @@ public class OEntitySmallFireball extends OEntityFireball {
     protected void a(OMovingObjectPosition omovingobjectposition) {
         if (!(Boolean) etc.getLoader().callHook(PluginLoader.Hook.PROJECTILE_HIT, this.getEntity(), omovingobjectposition.g == null ? null : omovingobjectposition.g.getEntity()) && !this.q.I) {
             if (omovingobjectposition.g != null) {
-                if (!omovingobjectposition.g.E() && omovingobjectposition.g.a(ODamageSource.a((OEntityFireball) this, this.a), 5.0F)) {
+                if (!omovingobjectposition.g.F() && omovingobjectposition.g.a(ODamageSource.a((OEntityFireball) this, this.a), 5.0F)) {
                     omovingobjectposition.g.d(5);
                 }
             } else {
@@ -61,11 +61,11 @@ public class OEntitySmallFireball extends OEntityFireball {
                 }
             }
 
-            this.w();
+            this.x();
         }
     }
 
-    public boolean K() {
+    public boolean L() {
         return false;
     }
 

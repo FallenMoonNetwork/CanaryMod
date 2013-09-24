@@ -315,7 +315,7 @@ public class BaseEntity implements Metadatable {
      */
     public int getAirTicks() {
         // SRG return this.getEntity().func_70086_ai();
-        return this.getEntity().ak();
+        return this.getEntity().al();
     }
 
     /**
@@ -453,7 +453,7 @@ public class BaseEntity implements Metadatable {
      */
     public void destroy() {
         // SRG this.entity.func_70106_y();
-        this.entity.w();
+        this.entity.x();
     }
 
     /**
@@ -472,7 +472,7 @@ public class BaseEntity implements Metadatable {
      */
     public boolean getSprinting() {
         // SRG return this.entity.func_70051_ag();
-        return this.entity.ah();
+        return this.entity.ai();
     }
 
     /**
@@ -570,7 +570,7 @@ public class BaseEntity implements Metadatable {
      */
     public boolean isInvulnerable() {
         // SRG return getEntity().func_85032_ar();
-        return getEntity().aq();
+        return getEntity().ar();
     }
 
     /**
@@ -684,7 +684,7 @@ public class BaseEntity implements Metadatable {
      */
     public boolean getSneaking() {
         // SRG return getEntity().func_70093_af();
-        return getEntity().ag();
+        return getEntity().ah();
     }
 
     /**

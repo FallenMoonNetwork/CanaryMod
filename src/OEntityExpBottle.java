@@ -36,7 +36,7 @@ public class OEntityExpBottle extends OEntityThrowable {
                 this.q.d((OEntity) (new OEntityXPOrb(this.q, this.u, this.v, this.w, j)));
             }
 
-            this.w();
+            this.x();
         }
     }
 }

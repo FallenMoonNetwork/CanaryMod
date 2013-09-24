@@ -55,26 +55,26 @@ public class ONetLoginHandler extends ONetHandler {
 
     public void a(OPacket2ClientProtocol opacket2clientprotocol) {
         if (this.g != null) {
-            this.a(this.g.equalsIgnoreCase(opacket2clientprotocol.f()) ? "Quit repeating yourself." : "You just told me something else!");
-            return;
-        }
-        this.g = opacket2clientprotocol.f();
-        if (!this.g.toLowerCase().matches("[a-z0-9_-]{2,16}")) {
-            this.a("Invalid username!");
+            this.a("Quit repeating yourself!");
         } else {
-            PublicKey publickey = this.e.H().getPublic();
-
-            if (opacket2clientprotocol.d() != 74) {
-                if (opacket2clientprotocol.d() > 74) {
-                    this.a("Outdated server!");
-                } else {
-                    this.a("Outdated client!");
-                }
+            this.g = opacket2clientprotocol.f();
+            if (!this.g.toLowerCase().matches("[a-z0-9_-]{2,16}")) {
+                this.a("Invalid username!");
             } else {
-                this.i = this.e.W() ? Long.toString(c.nextLong(), 16) : "-";
-                this.d = new byte[4];
-                c.nextBytes(this.d);
-                this.a.a((OPacket) (new OPacket253ServerAuthData(this.i, publickey, this.d)));
+                PublicKey publickey = this.e.H().getPublic();
+
+                if (opacket2clientprotocol.d() != 78) {
+                    if (opacket2clientprotocol.d() > 78) {
+                        this.a("Outdated server!");
+                    } else {
+                        this.a("Outdated client!");
+                    }
+                } else {
+                    this.i = this.e.W() ? Long.toString(c.nextLong(), 16) : "-";
+                    this.d = new byte[4];
+                    c.nextBytes(this.d);
+                    this.a.a((OPacket) (new OPacket253ServerAuthData(this.i, publickey, this.d)));
+                }
             }
         }
     }
@@ -142,7 +142,7 @@ public class ONetLoginHandler extends ONetHandler {
             if (opacket254serverping.d()) {
                 s = this.e.ac() + "\u00a7" + oserverconfigurationmanager.k() + "\u00a7" + oserverconfigurationmanager.l();
             } else {
-                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(74), this.e.z(), this.e.ac(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
+                List list = Arrays.asList(new Serializable[] { Integer.valueOf(1), Integer.valueOf(78), this.e.z(), this.e.ac(), Integer.valueOf(oserverconfigurationmanager.k()), Integer.valueOf(oserverconfigurationmanager.l())});
 
                 Object object;
 

@@ -125,7 +125,7 @@ public class OWorldServer extends OWorld {
         while (iterator.hasNext()) {
             OEntityPlayer oentityplayer = (OEntityPlayer) iterator.next();
 
-            if (!oentityplayer.bg()) {
+            if (!oentityplayer.bh()) {
                 this.N = false;
                 break;
             }
@@ -139,7 +139,7 @@ public class OWorldServer extends OWorld {
         while (iterator.hasNext()) {
             OEntityPlayer oentityplayer = (OEntityPlayer) iterator.next();
 
-            if (oentityplayer.bg()) {
+            if (oentityplayer.bh()) {
                 oentityplayer.a(false, false, true);
             }
         }
@@ -172,7 +172,7 @@ public class OWorldServer extends OWorld {
                 }
 
                 oentityplayer = (OEntityPlayer) iterator.next();
-            } while (oentityplayer.bC());
+            } while (oentityplayer.bD());
 
             return false;
         } else {
@@ -459,11 +459,11 @@ public class OWorldServer extends OWorld {
 
     public void a(OEntity oentity, boolean flag) {
         if (!this.a.X() && (oentity instanceof OEntityAnimal || oentity instanceof OEntityWaterMob)) {
-            oentity.w();
+            oentity.x();
         }
 
         if (!this.a.Y() && oentity instanceof OINpc) {
-            oentity.w();
+            oentity.x();
         }
 
         super.a(oentity, flag);
@@ -608,7 +608,7 @@ public class OWorldServer extends OWorld {
     protected void a(OEntity oentity) {
         super.a(oentity);
         this.V.a(oentity.k, oentity);
-        OEntity[] aoentity = oentity.an();
+        OEntity[] aoentity = oentity.ao();
 
         if (aoentity != null) {
             for (int i = 0; i < aoentity.length; ++i) {
@@ -620,7 +620,7 @@ public class OWorldServer extends OWorld {
     protected void b(OEntity oentity) {
         super.b(oentity);
         this.V.d(oentity.k);
-        OEntity[] aoentity = oentity.an();
+        OEntity[] aoentity = oentity.ao();
 
         if (aoentity != null) {
             for (int i = 0; i < aoentity.length; ++i) {

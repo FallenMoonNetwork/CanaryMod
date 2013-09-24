@@ -72,7 +72,7 @@ public class OCommandHandler implements OICommandManager {
                     for (int l = 0; l < k; ++l) {
                         OEntityPlayerMP oentityplayermp = aoentityplayermp1[l];
 
-                        astring[i] = oentityplayermp.am();
+                        astring[i] = oentityplayermp.an();
 
                         try {
                             oicommand.b(oicommandsender, astring);

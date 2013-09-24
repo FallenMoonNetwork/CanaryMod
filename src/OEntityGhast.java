@@ -18,7 +18,7 @@ public class OEntityGhast extends OEntityFlying implements OIMob {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else if ("fireball".equals(odamagesource.n()) && odamagesource.i() instanceof OEntityPlayer) {
             super.a(odamagesource, 1000.0F);
@@ -34,17 +34,17 @@ public class OEntityGhast extends OEntityFlying implements OIMob {
         this.ah.a(16, Byte.valueOf((byte) 0));
     }
 
-    protected void ay() {
-        super.ay();
+    protected void az() {
+        super.az();
         this.a(OSharedMonsterAttributes.a).a(10.0D);
     }
 
-    protected void bk() {
+    protected void bl() {
         if (!this.q.I && this.q.r == 0) {
-            this.w();
+            this.x();
         }
 
-        this.bo();
+        this.u();
         this.bo = this.bp;
         double d0 = this.i - this.u;
         double d1 = this.j - this.v;
@@ -155,11 +155,11 @@ public class OEntityGhast extends OEntityFlying implements OIMob {
         return "mob.ghast.moan";
     }
 
-    protected String aN() {
+    protected String aO() {
         return "mob.ghast.scream";
     }
 
-    protected String aO() {
+    protected String aP() {
         return "mob.ghast.death";
     }
 
@@ -183,7 +183,7 @@ public class OEntityGhast extends OEntityFlying implements OIMob {
         }
     }
 
-    protected float aZ() {
+    protected float ba() {
         return 10.0F;
     }
 

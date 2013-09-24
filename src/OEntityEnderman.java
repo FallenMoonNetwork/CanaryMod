@@ -21,8 +21,8 @@ public class OEntityEnderman extends OEntityMob {
         this.Y = 1.0F;
     }
 
-    protected void ay() {
-        super.ay();
+    protected void az() {
+        super.az();
         this.a(OSharedMonsterAttributes.a).a(40.0D);
         this.a(OSharedMonsterAttributes.d).a(0.30000001192092896D);
         this.a(OSharedMonsterAttributes.e).a(7.0D);
@@ -88,7 +88,7 @@ public class OEntityEnderman extends OEntityMob {
     }
 
     public void c() {
-        if (this.F()) {
+        if (this.G()) {
             this.a(ODamageSource.e, 1.0F);
         }
 
@@ -150,7 +150,7 @@ public class OEntityEnderman extends OEntityMob {
             }
         }
 
-        if (this.F() || this.ae()) {
+        if (this.G() || this.af()) {
             this.j = null;
             this.a(false);
             this.bv = false;
@@ -166,7 +166,7 @@ public class OEntityEnderman extends OEntityMob {
             this.a(this.j, 100.0F, 100.0F);
         }
 
-        if (!this.q.I && this.S()) {
+        if (!this.q.I && this.T()) {
             if (this.j != null) {
                 if (this.j instanceof OEntityPlayer && this.f((OEntityPlayer) this.j)) {
                     if (this.j.e((OEntity) this) < 16.0D) {
@@ -269,11 +269,11 @@ public class OEntityEnderman extends OEntityMob {
         return this.bX() ? "mob.endermen.scream" : "mob.endermen.idle";
     }
 
-    protected String aN() {
+    protected String aO() {
         return "mob.endermen.hit";
     }
 
-    protected String aO() {
+    protected String aP() {
         return "mob.endermen.death";
     }
 
@@ -310,7 +310,7 @@ public class OEntityEnderman extends OEntityMob {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else {
             this.a(true);

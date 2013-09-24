@@ -40,28 +40,29 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     private boolean B;
     private String C;
     private int D;
-    private long E;
+    private int E;
     private long F;
     private long G;
     private long H;
+    private long I;
     public final long[] f;
     public final long[] g;
     public final long[] h;
     public final long[] i;
     public final long[] j;
     //public long[][] k;
-    private KeyPair I;
-    private String J;
+    private KeyPair J;
     private String K;
-    private boolean M;
+    private String L;
     private boolean N;
     private boolean O;
-    private String P;
-    private boolean Q;
-    private long R;
-    private String S;
-    private boolean T;
+    private boolean P;
+    private String Q;
+    private boolean R;
+    private long S;
+    private String T;
     private boolean U;
+    private boolean V;
 
     // CanaryMod start: Multiworld \o/
     public Map<String, OWorldServer[]> worlds = new HashMap<String, OWorldServer[]>(1);
@@ -74,20 +75,21 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
     public OMinecraftServer(File file1) {
         this.c = Proxy.NO_PROXY;
+        this.E = 0;
         this.f = new long[100];
         this.g = new long[100];
         this.h = new long[100];
         this.i = new long[100];
         this.j = new long[100];
-        this.P = "";
+        this.Q = "";
         l = this;
         this.o = file1;
         this.q = new OServerCommandManager();
         this.m = new OAnvilSaveConverter(file1);
-        this.ar();
+        this.as();
     }
 
-    private void ar() {
+    private void as() {
         ODispenserBehaviors.a();
     }
 
@@ -102,7 +104,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     protected synchronized void b(String s) {
-        this.S = s;
+        this.T = s;
     }
 
     protected void a(String s, String s1, long i, OWorldType oworldtype, String s2) {
@@ -125,7 +127,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             oworldsettings = new OWorldSettings(oworldinfo);
         }
 
-        if (this.N) {
+        if (this.O) {
             oworldsettings.a();
         }
 
@@ -216,7 +218,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     protected void a(boolean flag) {
-        if (!this.O) {
+        if (!this.P) {
             for (OWorldServer[] aoworldserver : this.worlds.values()) {
                 int i = aoworldserver.length;
 
@@ -240,7 +242,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public void m() {
-        if (!this.O) {
+        if (!this.P) {
             this.an().a("Stopping server");
             if (this.ag() != null) {
                 this.ag().a();
@@ -296,14 +298,14 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
                 long i = aq();
 
-                for (long j = 0L; this.u; this.Q = true) {
+                for (long j = 0L; this.u; this.R = true) {
                     long k = aq();
                     long l = k - i;
 
-                    if (l > 2000L && i - this.R >= 15000L) {
+                    if (l > 2000L && i - this.S >= 15000L) {
                         this.an().b("Can\'t keep up! Did the system time change, or is the server overloaded?");
                         l = 2000L;
-                        this.R = i;
+                        this.S = i;
                     }
 
                     if (l < 0L) {
@@ -382,8 +384,8 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
         OAxisAlignedBB.a().a();
         ++this.w;
-        if (this.T) {
-            this.T = false;
+        if (this.U) {
+            this.U = false;
             this.a.a = true;
             this.a.a();
         }
@@ -399,14 +401,14 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
         this.a.a("tallying");
         this.j[this.w % 100] = System.nanoTime() - i;
-        this.f[this.w % 100] = OPacket.q - this.E;
-        this.E = OPacket.q;
-        this.g[this.w % 100] = OPacket.r - this.F;
-        this.F = OPacket.r;
-        this.h[this.w % 100] = OPacket.o - this.G;
-        this.G = OPacket.o;
-        this.i[this.w % 100] = OPacket.p - this.H;
-        this.H = OPacket.p;
+        this.f[this.w % 100] = OPacket.q - this.F;
+        this.F = OPacket.q;
+        this.g[this.w % 100] = OPacket.r - this.G;
+        this.G = OPacket.r;
+        this.h[this.w % 100] = OPacket.o - this.H;
+        this.H = OPacket.o;
+        this.i[this.w % 100] = OPacket.p - this.I;
+        this.I = OPacket.p;
         this.a.b();
         this.a.a("snooper");
         if (!this.n.d() && this.w > 100) {
@@ -573,7 +575,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
             }
 
             if (flag) {
-                odedicatedserver.at();
+                odedicatedserver.au();
             }
 
             odedicatedserver.v();
@@ -628,7 +630,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public String z() {
-        return "1.6.2";
+        return "1.6.4";
     }
 
     public int A() {
@@ -746,7 +748,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public KeyPair H() {
-        return this.I;
+        return this.J;
     }
 
     public int I() {
@@ -758,27 +760,27 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public String J() {
-        return this.J;
-    }
-
-    public void j(String s) {
-        this.J = s;
-    }
-
-    public boolean K() {
-        return this.J != null;
-    }
-
-    public String L() {
         return this.K;
     }
 
-    public void k(String s) {
+    public void j(String s) {
         this.K = s;
     }
 
+    public boolean K() {
+        return this.K != null;
+    }
+
+    public String L() {
+        return this.L;
+    }
+
+    public void k(String s) {
+        this.L = s;
+    }
+
     public void a(KeyPair keypair) {
-        this.I = keypair;
+        this.J = keypair;
     }
 
     public void c(int i) {
@@ -807,15 +809,15 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public boolean O() {
-        return this.M;
+        return this.N;
     }
 
     public void b(boolean flag) {
-        this.M = flag;
+        this.N = flag;
     }
 
     public void c(boolean flag) {
-        this.N = flag;
+        this.O = flag;
     }
 
     public OISaveFormat P() {
@@ -823,7 +825,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public void R() {
-        this.O = true;
+        this.P = true;
         this.P().d();
 
         for (OWorldServer[] level : this.worlds.values()) {
@@ -841,11 +843,11 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public String S() {
-        return this.P;
+        return this.Q;
     }
 
     public void m(String s) {
-        this.P = s;
+        this.Q = s;
     }
 
     public void a(OPlayerUsageSnooper oplayerusagesnooper) {
@@ -995,7 +997,7 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     }
 
     public void ak() {
-        this.T = true;
+        this.U = true;
     }
 
     public OChunkCoordinates b() {
@@ -1017,11 +1019,11 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
     public abstract OILogAgent an();
 
     public void i(boolean flag) {
-        this.U = flag;
+        this.V = flag;
     }
 
     public boolean ao() {
-        return this.U;
+        return this.V;
     }
 
     public Proxy ap() {
@@ -1030,6 +1032,14 @@ public abstract class OMinecraftServer implements OICommandSender, Runnable, OIP
 
     public static long aq() {
         return System.currentTimeMillis();
+    }
+
+    public int ar() {
+        return this.E;
+    }
+
+    public void e(int i) {
+        this.E = i;
     }
 
     public static OServerConfigurationManager a(OMinecraftServer ominecraftserver) {

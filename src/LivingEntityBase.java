@@ -38,7 +38,7 @@ public class LivingEntityBase extends BaseEntity {
      */
     public float getHealthFloat() {
         // SRG return getEntity().func_110143_aJ();
-        return getEntity().aM();
+        return getEntity().aN();
     }
 
     /**
@@ -104,7 +104,7 @@ public class LivingEntityBase extends BaseEntity {
      */
     public double getMaxHealthDouble() {
         // SRG return getEntity().func_110138_aP();
-        return getEntity().aS();
+        return getEntity().aT();
     }
 
     /**
@@ -222,7 +222,7 @@ public class LivingEntityBase extends BaseEntity {
     @SuppressWarnings("unchecked")
     public List<PotionEffect> getPotionEffects() {
         // SRG Collection<OPotionEffect> potionEffects = getEntity().func_70651_bq();
-        Collection<OPotionEffect> potionEffects = getEntity().aK();
+        Collection<OPotionEffect> potionEffects = getEntity().aL();
         ArrayList<PotionEffect> list = new ArrayList<PotionEffect>();
 
         for (OPotionEffect potionEffect : potionEffects) {

@@ -30,8 +30,8 @@ public class OEntityWolf extends OEntityTameable {
         this.j(false);
     }
 
-    protected void ay() {
-        super.ay();
+    protected void az() {
+        super.az();
         this.a(OSharedMonsterAttributes.d).a(0.30000001192092896D);
         if (this.bT()) {
             this.a(OSharedMonsterAttributes.a).a(20.0D);
@@ -40,7 +40,7 @@ public class OEntityWolf extends OEntityTameable {
         }
     }
 
-    public boolean be() {
+    public boolean bf() {
         return true;
     }
 
@@ -53,13 +53,13 @@ public class OEntityWolf extends OEntityTameable {
         }
     }
 
-    protected void bj() {
-        this.ah.b(18, Float.valueOf(this.aM()));
+    protected void bk() {
+        this.ah.b(18, Float.valueOf(this.aN()));
     }
 
     protected void a() {
         super.a();
-        this.ah.a(18, new Float(this.aM()));
+        this.ah.a(18, new Float(this.aN()));
         this.ah.a(19, new Byte((byte) 0));
         this.ah.a(20, new Byte((byte) OBlockColored.j_(1)));
     }
@@ -86,15 +86,15 @@ public class OEntityWolf extends OEntityTameable {
         return this.cc() ? "mob.wolf.growl" : (this.ab.nextInt(3) == 0 ? (this.bT() && this.ah.d(18) < 10.0F ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
     }
 
-    protected String aN() {
+    protected String aO() {
         return "mob.wolf.hurt";
     }
 
-    protected String aO() {
+    protected String aP() {
         return "mob.wolf.death";
     }
 
-    protected float aZ() {
+    protected float ba() {
         return 0.4F;
     }
 
@@ -125,14 +125,14 @@ public class OEntityWolf extends OEntityTameable {
             this.g = 10;
         }
 
-        if (this.F()) {
+        if (this.G()) {
             this.bs = true;
             this.bt = false;
             this.bu = 0.0F;
             this.bv = 0.0F;
         } else if ((this.bs || this.bt) && this.bt) {
             if (this.bu == 0.0F) {
-                this.a("mob.wolf.shake", this.aZ(), (this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F);
+                this.a("mob.wolf.shake", this.ba(), (this.ab.nextFloat() - this.ab.nextFloat()) * 0.2F + 1.0F);
             }
 
             this.bv = this.bu;
@@ -167,7 +167,7 @@ public class OEntityWolf extends OEntityTameable {
     }
 
     public boolean a(ODamageSource odamagesource, float f) {
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else {
             OEntity oentity = odamagesource.i();

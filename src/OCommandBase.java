@@ -119,7 +119,7 @@ public abstract class OCommandBase implements OICommand {
         OEntityPlayerMP oentityplayermp = OPlayerSelector.a(oicommandsender, s);
 
         if (oentityplayermp != null) {
-            return oentityplayermp.am();
+            return oentityplayermp.an();
         } else if (OPlayerSelector.b(s)) {
             throw new OPlayerNotFoundException();
         } else {
@@ -226,7 +226,7 @@ public abstract class OCommandBase implements OICommand {
 
         OEntityLivingBase oentitylivingbase;
 
-        for (Iterator iterator = collection.iterator(); iterator.hasNext(); astring[i++] = oentitylivingbase.ax()) {
+        for (Iterator iterator = collection.iterator(); iterator.hasNext(); astring[i++] = oentitylivingbase.ay()) {
             oentitylivingbase = (OEntityLivingBase) iterator.next();
         }
 

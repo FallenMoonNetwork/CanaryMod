@@ -68,6 +68,6 @@ public class TNTMinecart extends Minecart {
      */
     public boolean isFuseLit() {
         // SRG return this.getEntity().func_96096_ay();
-        return this.getEntity().ay();
+        return this.getEntity().u();
     }
 }

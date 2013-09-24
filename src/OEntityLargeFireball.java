@@ -17,7 +17,7 @@ public class OEntityLargeFireball extends OEntityFireball {
             }
 
             this.q.a((OEntity) null, this.u, this.v, this.w, (float) this.e, true, this.q.O().b("mobGriefing"));
-            this.w();
+            this.x();
         }
     }
 

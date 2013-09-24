@@ -72,11 +72,11 @@ public class OPotion {
 
     public void a(OEntityLivingBase oentitylivingbase, int i) {
         if (this.H == l.H) {
-            if (oentitylivingbase.aM() < oentitylivingbase.aS()) {
+            if (oentitylivingbase.aN() < oentitylivingbase.aT()) {
                 oentitylivingbase.f(1.0F);
             }
         } else if (this.H == u.H) {
-            if (oentitylivingbase.aM() > 1.0F) {
+            if (oentitylivingbase.aN() > 1.0F) {
                 // Canarymod: DAMAGE From Poison
                 HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentitylivingbase.getEntity(), DamageType.POTION.getDamageSource(), 1.0F));
                 if (!ev.isCanceled()) {
@@ -93,10 +93,10 @@ public class OPotion {
             ((OEntityPlayer) oentitylivingbase).j(0.025F * (float) (i + 1));
         } else if (this.H == y.H && oentitylivingbase instanceof OEntityPlayer) {
             if (!oentitylivingbase.q.I) {
-                ((OEntityPlayer) oentitylivingbase).bH().a(i + 1, 1.0F);
+                ((OEntityPlayer) oentitylivingbase).bI().a(i + 1, 1.0F);
             }
-        } else if ((this.H != h.H || oentitylivingbase.aL()) && (this.H != OPotion.i.H || !oentitylivingbase.aL())) {
-            if (this.H == OPotion.i.H && !oentitylivingbase.aL() || this.H == h.H && oentitylivingbase.aL()) {
+        } else if ((this.H != h.H || oentitylivingbase.aM()) && (this.H != OPotion.i.H || !oentitylivingbase.aM())) {
+            if (this.H == OPotion.i.H && !oentitylivingbase.aM() || this.H == h.H && oentitylivingbase.aM()) {
                 // Canarymod: harm/heal potion
                 HookParametersDamage ev = (HookParametersDamage) etc.getLoader().callHook(PluginLoader.Hook.DAMAGE, new HookParametersDamage(null, oentitylivingbase.getEntity(), DamageType.POTION.getDamageSource(), (float) (6 << i)));
                 if (!ev.isCanceled()) {
@@ -111,8 +111,8 @@ public class OPotion {
     public void a(OEntityLivingBase oentitylivingbase, OEntityLivingBase oentitylivingbase1, int i, double d0) {
         int j;
 
-        if ((this.H != h.H || oentitylivingbase1.aL()) && (this.H != OPotion.i.H || !oentitylivingbase1.aL())) {
-            if (this.H == OPotion.i.H && !oentitylivingbase1.aL() || this.H == h.H && oentitylivingbase1.aL()) {
+        if ((this.H != h.H || oentitylivingbase1.aM()) && (this.H != OPotion.i.H || !oentitylivingbase1.aM())) {
+            if (this.H == OPotion.i.H && !oentitylivingbase1.aM() || this.H == h.H && oentitylivingbase1.aM()) {
                 j = (int) (d0 * (double) (6 << i) + 0.5D);
                 if (oentitylivingbase == null) {
                     oentitylivingbase1.a(ODamageSource.k, (float) j);

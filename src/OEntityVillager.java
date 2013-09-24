@@ -50,16 +50,16 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         this.c.a(10, new OEntityAIWatchClosest(this, OEntityLiving.class, 8.0F));
     }
 
-    protected void ay() {
-        super.ay();
+    protected void az() {
+        super.az();
         this.a(OSharedMonsterAttributes.d).a(0.5D);
     }
 
-    public boolean be() {
+    public boolean bf() {
         return true;
     }
 
-    protected void bj() {
+    protected void bk() {
         if (--this.bq <= 0) {
             this.q.A.a(OMathHelper.c(this.u), OMathHelper.c(this.v), OMathHelper.c(this.w));
             this.bq = 70 + this.ab.nextInt(50);
@@ -105,7 +105,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
             }
         }
 
-        super.bj();
+        super.bk();
     }
 
     public boolean a(OEntityPlayer oentityplayer) {
@@ -117,7 +117,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         }
         boolean flag = oitemstack != null && oitemstack.d == OItem.bE.cv;
 
-        if (!flag && this.S() && !this.bW() && !this.g_()) {
+        if (!flag && this.T() && !this.bW() && !this.g_()) {
             if (!this.q.I) {
                 this.a_(oentityplayer);
                 oentityplayer.a((OIMerchant) this, this.bA());
@@ -162,11 +162,11 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         return this.bW() ? "mob.villager.haggle" : "mob.villager.idle";
     }
 
-    protected String aN() {
+    protected String aO() {
         return "mob.villager.hit";
     }
 
-    protected String aO() {
+    protected String aP() {
         return "mob.villager.death";
     }
 
@@ -206,7 +206,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
                 }
 
                 this.bp.a(((OEntityPlayer) oentitylivingbase).c_(), b0);
-                if (this.S()) {
+                if (this.T()) {
                     this.q.a((OEntity) this, (byte) 13);
                 }
             }
@@ -250,7 +250,7 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
     public void a(OMerchantRecipe omerchantrecipe) {
         omerchantrecipe.f();
         this.a_ = -this.o();
-        this.a("mob.villager.yes", this.aZ(), this.ba());
+        this.a("mob.villager.yes", this.ba(), this.bb());
         if (omerchantrecipe.a((OMerchantRecipe) this.bu.get(this.bu.size() - 1))) {
             this.bv = 40;
             this.bw = true;
@@ -270,9 +270,9 @@ public class OEntityVillager extends OEntityAgeable implements OIMerchant, OINpc
         if (!this.q.I && this.a_ > -this.o() + 20) {
             this.a_ = -this.o();
             if (oitemstack != null) {
-                this.a("mob.villager.yes", this.aZ(), this.ba());
+                this.a("mob.villager.yes", this.ba(), this.bb());
             } else {
-                this.a("mob.villager.no", this.aZ(), this.ba());
+                this.a("mob.villager.no", this.ba(), this.bb());
             }
         }
     }

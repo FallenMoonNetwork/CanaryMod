@@ -38,11 +38,11 @@ public class OEntityBoat extends OEntity {
         return oentity.E;
     }
 
-    public OAxisAlignedBB D() {
+    public OAxisAlignedBB E() {
         return this.E;
     }
 
-    public boolean L() {
+    public boolean M() {
         return true;
     }
 
@@ -61,7 +61,7 @@ public class OEntityBoat extends OEntity {
 
     }
 
-    public double X() {
+    public double Y() {
         return (double) this.P * 0.0D - 0.30000001192092896D;
     }
 
@@ -77,13 +77,13 @@ public class OEntityBoat extends OEntity {
         }
 
 
-        if (this.aq()) {
+        if (this.ar()) {
             return false;
         } else if (!this.q.I && !this.M) {
             this.c(-this.h());
             this.a(10);
             this.a(this.d() + f * 10.0F);
-            this.J();
+            this.K();
             boolean flag = odamagesource.i() instanceof OEntityPlayer && ((OEntityPlayer) odamagesource.i()).bG.d;
 
             if (flag || this.d() > 40.0F) {
@@ -95,7 +95,7 @@ public class OEntityBoat extends OEntity {
                     this.a(OItem.aG.cv, 1, 0.0F);
                 }
 
-                this.w();
+                this.x();
             }
 
             return true;
@@ -104,7 +104,7 @@ public class OEntityBoat extends OEntity {
         }
     }
 
-    public boolean K() {
+    public boolean L() {
         return !this.M;
     }
 
@@ -247,7 +247,7 @@ public class OEntityBoat extends OEntity {
             this.d(this.x, this.y, this.z);
             if (this.G && d3 > 0.2D) {
                 if (!this.q.I && !this.M) {
-                    this.w();
+                    this.x();
 
                     int k;
 
@@ -297,7 +297,7 @@ public class OEntityBoat extends OEntity {
                     for (l = 0; l < list.size(); ++l) {
                         OEntity oentity = (OEntity) list.get(l);
 
-                        if (oentity != this.n && oentity.L() && oentity instanceof OEntityBoat) {
+                        if (oentity != this.n && oentity.M() && oentity instanceof OEntityBoat) {
                             oentity.f((OEntity) this);
                         }
                     }
@@ -326,12 +326,12 @@ public class OEntityBoat extends OEntity {
         }
     }
 
-    public void V() {
+    public void W() {
         if (this.n != null) {
             double d0 = Math.cos((double) this.A * 3.141592653589793D / 180.0D) * 0.4D;
             double d1 = Math.sin((double) this.A * 3.141592653589793D / 180.0D) * 0.4D;
 
-            this.n.b(this.u + d0, this.v + this.X() + this.n.W(), this.w + d1);
+            this.n.b(this.u + d0, this.v + this.Y() + this.n.X(), this.w + d1);
         }
     }
 

@@ -39,8 +39,8 @@ public class OItemBoat extends OItem {
             for (i = 0; i < list.size(); ++i) {
                 OEntity oentity = (OEntity) list.get(i);
 
-                if (oentity.K()) {
-                    float f10 = oentity.Y();
+                if (oentity.L()) {
+                    float f10 = oentity.Z();
                     OAxisAlignedBB oaxisalignedbb = oentity.E.b((double) f10, (double) f10, (double) f10);
 
                     if (oaxisalignedbb.a(ovec3)) {

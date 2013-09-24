@@ -102,16 +102,16 @@ public abstract class OEntityTameable extends OEntityAnimal implements OEntityOw
         return true;
     }
 
-    public OTeam bn() {
+    public OTeam bo() {
         if (this.bT()) {
             OEntityLivingBase oentitylivingbase = this.bV();
 
             if (oentitylivingbase != null) {
-                return oentitylivingbase.bn();
+                return oentitylivingbase.bo();
             }
         }
 
-        return super.bn();
+        return super.bo();
     }
 
     public boolean c(OEntityLivingBase oentitylivingbase) {

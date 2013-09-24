@@ -265,7 +265,7 @@ public class OTileEntityHopper extends OTileEntity implements OHopper, Container
                 oentityitem.a(oitemstack1);
             } else {
                 flag = true;
-                oentityitem.w();
+                oentityitem.x();
             }
 
             return flag;
