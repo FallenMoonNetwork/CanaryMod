@@ -17,13 +17,13 @@ import java.util.zip.CheckedInputStream;
 
 public class Main {
 
-    public static final long   minecraft_server = 0x31499b82L;
+    public static final long   minecraft_server = 0x8aac726dL;
 
-    public static final long[] minecraft_servero = {0x79f5fcecL, 0x2f5fa676L};
+    public static final long[] minecraft_servero = {0x67b6204eL, 0xe3e2e6ddL};
 
     public static final long   mysql = 0xb2e59524L;
     public static final long   jarjar = 0x4e724d4dL;
-    public static final long   rules = 0x4b212947L;
+    public static final long   rules = 0x685d2713L;
 
     public static final Logger log = Logger.getLogger("Minecraft-Server");
 
@@ -43,7 +43,7 @@ public class Main {
 
             if (!fileExists("minecraft_server.jar")) {
                 log("Missing minecraft_servero.jar, Downloading minecraft_server.jar...");
-                downloadFile("https://s3.amazonaws.com/Minecraft.Download/versions/1.6.2/minecraft_server.1.6.2.jar", "minecraft_server.jar");
+                downloadFile("https://s3.amazonaws.com/Minecraft.Download/versions/1.6.4/minecraft_server.1.6.4.jar", "minecraft_server.jar");
                 checkCRC32("minecraft_server.jar", minecraft_server);
 
                 log("Finished downloading minecraft_server.jar, start converting minecraft_server.jar to minecraft_servero.jar...");
