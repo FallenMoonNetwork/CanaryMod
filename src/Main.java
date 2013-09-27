@@ -190,7 +190,7 @@ public class Main {
             Method method = sysclass.getDeclaredMethod("addURL", URL.class);
 
             method.setAccessible(true);
-            method.invoke(sysloader, sysloader.getResource("minecraft_server.jar"));
+            method.invoke(sysloader, (new File(fileName)).toURI().toURL());
         } catch (Exception ex) {
             log.log(Level.SEVERE, "Could not add URL to class loader", ex);
             System.exit(1);
