@@ -187,7 +187,7 @@ public class OEntityPlayerMP extends OEntityPlayer implements OICrafting {
                 if (!etc.getInstance().isHealthEnabled()) {
                     super.g(this.aT());
                     this.M = false;
-                } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), this.bP, this.aM())) {
+                } else if ((Boolean) manager.callHook(PluginLoader.Hook.HEALTH_CHANGE, getPlayer(), this.bP, this.aN())) {
                     super.g(this.bP);
                 }
             }
