@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  * @author James
  */
 public class etc {
+    private static final Logger           OLD_LOGGER = Logger.getLogger("Minecraft"); // Keep reference to keep parent setting
     private static final Logger           log = Logger.getLogger("Minecraft-Server");
     private static final etc              instance = new etc();
     private static OMinecraftServer       server;
@@ -112,7 +113,7 @@ public class etc {
      * Loads or reloads the mod
      */
     public final void load() {
-        Logger.getLogger("Minecraft").setParent(log);
+        OLD_LOGGER.setParent(log);
 
         if (configDir == null) {
             configDir = "config/";
