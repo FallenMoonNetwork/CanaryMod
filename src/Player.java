@@ -1230,4 +1230,12 @@ public class Player extends HumanEntity implements MessageReceiver {
         // SRG getEntity().field_71135_a.func_72567_b((OPacket) new OPacket43Experience(getEntity().field_71106_cc, getEntity().field_71068_ca, getEntity().field_71067_cb));
         getEntity().a.b((OPacket) new OPacket43Experience(getEntity().bJ, getEntity().bH, getEntity().bI));
     }
+    /**
+     * Method to send a specified OPacket to a player.
+     * @param player The specified Player entity.
+     * @param packet The specified OPacket.
+     */
+    public void sendPacket(OPacket packet){
+    	getEntity().a.b(packet);
+    }
 }
